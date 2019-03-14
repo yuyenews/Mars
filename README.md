@@ -1,6 +1,6 @@
 <h1 align="center">Java Web development framework that does not require a container</h1>
 
-<p align="center"><img width="400px" src="https://images.gitee.com/uploads/images/2019/0113/190655_bcd43f13_2331383.png" /></p>
+<p align="center"><img width="400px" src="https://images.gitee.com/uploads/images/2019/0314/211513_19b0cee2_2331383.png" /></p>
 
 <br/>
 
@@ -8,7 +8,7 @@
 
 <p>First of all, thanks to mybatis, fastjson, cglib, pagehelper, druid, jwt, jyaml, netty, hutool. Because of the integration of these open source projects, my framework can be developed smoothly.</p>
 
-<p>Goge-framework is a java development framework that mimics springboot. It supports functions similar to springboot: AOP, IOC, MVC also integrates mybatis as a persistence layer. Unlike springboot it is:</p>
+<p>Mars-java is a java development framework that mimics springboot. It supports functions similar to springboot: AOP, IOC, MVC also integrates mybatis as a persistence layer. Unlike springboot it is:</p>
 
 <p>
     &nbsp;&nbsp;
