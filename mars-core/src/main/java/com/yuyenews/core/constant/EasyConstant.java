@@ -8,7 +8,7 @@ public class EasyConstant {
     /**
      * 本地配置文件
      */
-    public static final String CONFIG_PATH = "/goge.yml";
+    public static final String CONFIG_PATH = "/mars.yml";
     /**
      * 所有的easyAfter类信息
      */
