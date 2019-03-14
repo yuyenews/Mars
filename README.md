@@ -1,1 +1,83 @@
-# Mars-java
+<h1 align="center">Java Web development framework that does not require a container</h1>
+
+<p align="center"><img width="400px" src="https://images.gitee.com/uploads/images/2019/0113/190655_bcd43f13_2331383.png" /></p>
+
+<br/>
+
+<h2>Introduction to the framework</h2>
+
+<p>First of all, thanks to mybatis, fastjson, cglib, pagehelper, druid, jwt, jyaml, netty, hutool. Because of the integration of these open source projects, my framework can be developed smoothly.</p>
+
+<p>Goge-framework is a java development framework that mimics springboot. It supports functions similar to springboot: AOP, IOC, MVC also integrates mybatis as a persistence layer. Unlike springboot it is:</p>
+
+<p>
+    &nbsp;&nbsp;
+    1. This framework uses netty as the http service
+    <br/>
+    &nbsp;&nbsp;
+    2. Session management with JWT
+    <br/>
+    &nbsp;&nbsp;
+    3. Only support the main method to start, can not play the war package
+    <br/>
+    &nbsp;&nbsp;
+    4. Controller can only return json, does not support forwarding and redirection
+</p>
+
+<h2>Document</h2>
+
+[Document](http://goge-framework.com/doc.html)
+
+<h2>Extension package</h2>
+
+<p>Support redis connection</p>
+
+<p>Encapsulated mail delivery, MD5, AES and other tools class</p>
+
+[Extension package](https://github.com/yuyenews/Goge-extends)
+
+<h2>Project structure</h2>
+
+<p>Red module is temporarily unavailable</p>
+<p><img src="http://goge-framework.com/img/jiagou.png"/></p>
+
+<h2>Simple contrast</h2>
+
+<table>
+    <tbody>
+        <tr class="firstRow">
+            <td>name</td>
+            <td>AOP</td>
+            <td>IOC</td>
+            <td>MVC</td>
+            <td>mybatis</td>
+            <td>configuration file</td>
+            <td>startup method</td>
+        </tr>
+        <tr>
+            <td>Goge</td>
+            <td>support</td>
+            <td>support</td>
+            <td>support</td>
+            <td>Direct integration</td>
+            <td>Only need one</td>
+            <td>main method</td>
+        </tr>
+        <tr>
+            <td>Springboot</td>
+            <td>support</td>
+            <td>support</td>
+            <td>support</td>
+            <td>Can be integration</td>
+            <td>Only need one</td>
+            <td>main method，war+tomcat</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Contact</h2>
+
+<p>If you have any questions, you can add my QQ group：773291321</p>
+
+<p><img src="https://images.gitee.com/uploads/images/2018/1224/230844_a8755140_2331383.png"/></p>
+
