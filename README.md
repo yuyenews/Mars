@@ -36,11 +36,6 @@
 
 [Extension package](https://github.com/yuyenews/Goge-extends)
 
-<h2>Project structure</h2>
-
-<p>Red module is temporarily unavailable</p>
-<p><img src="http://goge-framework.com/img/jiagou.png"/></p>
-
 <h2>Simple contrast</h2>
 
 <table>
@@ -55,7 +50,7 @@
             <td>startup method</td>
         </tr>
         <tr>
-            <td>Goge</td>
+            <td>Mars-java</td>
             <td>support</td>
             <td>support</td>
             <td>support</td>
