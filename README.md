@@ -1,5 +1,8 @@
 <h1>
     <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
+    <p align="center">
+        一个不需要容器的JavaWeb开发框架
+    </p>
 </h1>
 <br/>
 
@@ -10,7 +13,7 @@
     - 使用netty做的http服务
     <br/>
     &nbsp;
-    - 使用JWT做得会话管理
+    - 使用JWT做的会话管理
     <br/>
     &nbsp;
     - 支持AOP,IOC,MVC,Mybatis,事务管理
@@ -59,18 +62,18 @@
         </tr>
         <tr>
             <td>Mars-java</td>
-            <td>支持</td>
-            <td>支持</td>
-            <td>支持</td>
+            <td>ok</td>
+            <td>ok</td>
+            <td>ok</td>
             <td>目前支持mybatis，后面会支持jpa</td>
             <td>只有一个，并只支持远程配置</td>
             <td>Main方法</td>
         </tr>
         <tr>
             <td>Springboot</td>
-            <td>支持</td>
-            <td>支持</td>
-            <td>支持</td>
+            <td>ok</td>
+            <td>ok</td>
+            <td>ok</td>
             <td>支持大部分主流框架</td>
             <td>只有一个，并只支持远程配置</td>
             <td>Main方法，War包+Tomcat</td>
