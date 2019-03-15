@@ -4,75 +4,84 @@
 
 <br/>
 
-<h2>Introduction to the framework</h2>
-
-<p>First of all, thanks to mybatis, fastjson, cglib, pagehelper, druid, jwt, jyaml, netty, hutool. Because of the integration of these open source projects, my framework can be developed smoothly.</p>
-
-<p>Mars-java is a java development framework that mimics springboot. It supports functions similar to springboot: AOP, IOC, MVC also integrates mybatis as a persistence layer. Unlike springboot it is:</p>
+<h2>我能做什么</h2>
 
 <p>
-    &nbsp;&nbsp;
-    1. This framework uses netty as the http service
+    &nbsp;
+    - 使用netty做的http服务
     <br/>
-    &nbsp;&nbsp;
-    2. Session management with JWT
+    &nbsp;
+    - 使用JWT做得会话管理
     <br/>
-    &nbsp;&nbsp;
-    3. Only support the main method to start, can not play the war package
+    &nbsp;
+    - 支持AOP,IOC,MVC,Mybatis,事务管理
     <br/>
-    &nbsp;&nbsp;
-    4. Controller can only return json, does not support forwarding and redirection
+    &nbsp;
+    - 自带 Mars-config 远程配置中心【开发中】
+    <br/>
+    &nbsp;
+    - 通过 Mars-cloud 可以分布式部署【开发中】
 </p>
 
-<h2>Document</h2>
+<h2>我不能做什么</h2>
+
+<p>
+    &nbsp;
+    - 只支持main方法启动，不可以打war包
+    <br/>
+    &nbsp;
+    - 只能给前端返回json，二进制流，不支持转发和重定向
+</p>
+
+<h2>帮助文档</h2>
 
 [Document](http://goge-framework.com/doc.html)
 
-<h2>Extension package</h2>
+<h2>扩展包</h2>
 
-<p>Support redis connection</p>
+<p>支持redis连接</p>
 
-<p>Encapsulated mail delivery, MD5, AES and other tools class</p>
+<p>封装了 Email, MD5, AES 和 其他工具类 并 集成了hutool</p>
 
 [Extension package](https://github.com/yuyenews/Mars-extends)
 
-<h2>Simple contrast</h2>
+<h2>简单对比</h2>
 
 <table>
     <tbody>
         <tr class="firstRow">
-            <td>name</td>
+            <td>名称</td>
             <td>AOP</td>
             <td>IOC</td>
             <td>MVC</td>
-            <td>mybatis</td>
+            <td>持久层</td>
             <td>configuration file</td>
             <td>startup method</td>
         </tr>
         <tr>
             <td>Mars-java</td>
-            <td>support</td>
-            <td>support</td>
-            <td>support</td>
-            <td>Direct integration</td>
-            <td>Only need one</td>
-            <td>main method</td>
+            <td>支持</td>
+            <td>支持</td>
+            <td>支持</td>
+            <td>目前支持mybatis，后面会支持jpa</td>
+            <td>只有一个，并只支持远程配置</td>
+            <td>Main方法</td>
         </tr>
         <tr>
             <td>Springboot</td>
-            <td>support</td>
-            <td>support</td>
-            <td>support</td>
-            <td>Can be integration</td>
-            <td>Only need one</td>
-            <td>main method，war+tomcat</td>
+            <td>支持</td>
+            <td>支持</td>
+            <td>支持</td>
+            <td>支持大部分主流框架</td>
+            <td>只有一个，并只支持远程配置</td>
+            <td>Main方法，War包+Tomcat</td>
         </tr>
     </tbody>
 </table>
 
-<h2>Contact</h2>
+<h2>联系我</h2>
 
-<p>If you have any questions, you can add my QQ group：773291321</p>
+<p>如果你对此框架感兴趣，可以加我的QQ群：773291321</p>
 
 <p><img src="https://images.gitee.com/uploads/images/2019/0314/230940_795215de_2331383.png"/></p>
 
