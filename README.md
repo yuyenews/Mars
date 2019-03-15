@@ -1,7 +1,3 @@
-<h1 align="center">
-    不需要容器的JavaWeb开发框架
-</h1>
-
 <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
 
 <br/>
