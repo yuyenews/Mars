@@ -1,4 +1,6 @@
-<h1 align="center">Java Web development framework that does not require a container</h1>
+<h1 align="center">
+    不需要容器的JavaWeb开发框架
+</h1>
 
 <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
 
@@ -17,7 +19,7 @@
     - 支持AOP,IOC,MVC,Mybatis,事务管理
     <br/>
     &nbsp;
-    - 自带 Mars-config 远程配置中心【开发中】
+    - 通过 Mars-config 可以远程配置【开发中】
     <br/>
     &nbsp;
     - 通过 Mars-cloud 可以分布式部署【开发中】
