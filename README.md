@@ -1,6 +1,6 @@
 <h1 align="center">Java Web development framework that does not require a container</h1>
 
-<p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/tree/master/mars-logos/logo-long.png" /></p>
+<p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
 
 <br/>
 
