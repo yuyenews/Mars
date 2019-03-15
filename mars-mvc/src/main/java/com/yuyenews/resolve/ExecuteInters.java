@@ -5,7 +5,7 @@ import com.yuyenews.base.BaseInterceptor;
 import com.yuyenews.core.annotation.EasyInterceptor;
 import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.MatchUtil;
 import com.yuyenews.core.util.MesUtil;
 import com.yuyenews.easy.server.request.HttpRequest;
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class ExecuteInters {
 	
-	private static GogeLogger logger = GogeLogger.getLogger(ExecuteInters.class);
+	private static MarsLogger logger = MarsLogger.getLogger(ExecuteInters.class);
 
 	/**
 	 * 执行拦截器的开始方法

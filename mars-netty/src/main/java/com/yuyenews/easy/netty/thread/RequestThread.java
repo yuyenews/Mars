@@ -2,7 +2,7 @@ package com.yuyenews.easy.netty.thread;
 
 import com.alibaba.fastjson.JSON;
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.MesUtil;
 import com.yuyenews.easy.server.request.HttpRequest;
 import com.yuyenews.easy.server.request.HttpResponse;
@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
  */
 public class RequestThread implements Runnable {
 	
-	private GogeLogger log = GogeLogger.getLogger(RequestThread.class);
+	private MarsLogger log = MarsLogger.getLogger(RequestThread.class);
 
 	/**
 	 * netty的request对象

@@ -1,7 +1,7 @@
 package com.yuyenews.core.util;
 
 import com.alibaba.fastjson.JSON;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class FileUtil {
 
-    private static GogeLogger logger = GogeLogger.getLogger(FileUtil.class);
+    private static MarsLogger logger = MarsLogger.getLogger(FileUtil.class);
 
     public static String local = null;
 

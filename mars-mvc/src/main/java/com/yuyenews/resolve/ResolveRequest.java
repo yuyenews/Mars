@@ -1,7 +1,7 @@
 package com.yuyenews.resolve;
 
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.MesUtil;
 import com.yuyenews.easy.server.request.HttpRequest;
 import com.yuyenews.easy.server.request.HttpResponse;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class ResolveRequest {
 	
-	private static GogeLogger log = GogeLogger.getLogger(ResolveRequest.class);
+	private static MarsLogger log = MarsLogger.getLogger(ResolveRequest.class);
 
 	private static ResolveRequest resolveRequest;
 	

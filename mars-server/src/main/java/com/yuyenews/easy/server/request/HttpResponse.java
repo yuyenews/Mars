@@ -2,7 +2,7 @@ package com.yuyenews.easy.server.request;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.ConfigUtil;
 import com.yuyenews.core.util.FileUtil;
 import com.yuyenews.core.util.MesUtil;
@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class HttpResponse {
 
-    private GogeLogger logger = GogeLogger.getLogger(HttpResponse.class);
+    private MarsLogger logger = MarsLogger.getLogger(HttpResponse.class);
 
     /**
      * netty原生通道

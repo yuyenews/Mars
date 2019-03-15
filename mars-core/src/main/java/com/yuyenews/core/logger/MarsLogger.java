@@ -3,23 +3,25 @@ package com.yuyenews.core.logger;
 import com.alibaba.fastjson.JSONObject;
 import com.yuyenews.core.util.ConfigUtil;
 
-public abstract class GogeLogger {
+public abstract class MarsLogger {
 
 
     public abstract void info(String info);
 
     public abstract void warn(String info);
 
-    public abstract void error(String info,Throwable e);
+    public abstract void warn(String info,Throwable e);
 
     public abstract void error(String info);
+
+    public abstract void error(String info,Throwable e);
 
     /**
      * 获取GogeLogger 对象
      * @param cls
      * @return
      */
-    public static GogeLogger getLogger(Class cls){
+    public static MarsLogger getLogger(Class cls){
         boolean str = hasLog4j();
         if(str){
             return new LoggerSlf4j(cls);

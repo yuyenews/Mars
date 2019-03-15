@@ -5,7 +5,7 @@ import com.yuyenews.core.annotation.EasyMapping;
 import com.yuyenews.core.annotation.Resource;
 import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.model.EasyBeanModel;
 import com.yuyenews.proxy.MvcCglibProxy;
 import com.yuyenews.resolve.model.EasyMappingModel;
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class LoadController {
 	
-	private static GogeLogger log = GogeLogger.getLogger(LoadController.class);
+	private static MarsLogger log = MarsLogger.getLogger(LoadController.class);
 	
 	/**
 	 * 获取全局存储空间 

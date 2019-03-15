@@ -2,7 +2,7 @@ package com.yuyenews.easy.traction;
 
 import com.yuyenews.aop.base.BaseAop;
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.ThreadUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class TractionAop implements BaseAop {
 
-	private GogeLogger logger = GogeLogger.getLogger(TractionAop.class);
+	private MarsLogger logger = MarsLogger.getLogger(TractionAop.class);
 
 	private static EasySpace easySpace = EasySpace.getEasySpace();
 	

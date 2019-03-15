@@ -1,6 +1,6 @@
 package com.yuyenews.servlcet;
 
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.MesUtil;
 import com.yuyenews.easy.server.request.HttpRequest;
 import com.yuyenews.easy.server.request.HttpResponse;
@@ -14,7 +14,7 @@ import com.yuyenews.resolve.ResolveRequest;
  */
 public class EasyCoreServlet implements EasyServlet{
 	
-	private static GogeLogger log = GogeLogger.getLogger(EasyCoreServlet.class);
+	private static MarsLogger log = MarsLogger.getLogger(EasyCoreServlet.class);
 	
 	@Override
 	public Object doRequest(HttpRequest request, HttpResponse response) {

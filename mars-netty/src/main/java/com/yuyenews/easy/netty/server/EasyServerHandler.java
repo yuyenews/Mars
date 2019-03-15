@@ -1,6 +1,6 @@
 package com.yuyenews.easy.netty.server;
 
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.MesUtil;
 import com.yuyenews.easy.netty.thread.RequestThread;
 import com.yuyenews.easy.netty.thread.ThreadPool;
@@ -20,7 +20,7 @@ import java.net.InetAddress;
  */
 public class EasyServerHandler extends ChannelHandlerAdapter {
 
-	private GogeLogger log = GogeLogger.getLogger(EasyServerHandler.class);
+	private MarsLogger log = MarsLogger.getLogger(EasyServerHandler.class);
 
 	/**
 	 * 接收并处理 客户端请求

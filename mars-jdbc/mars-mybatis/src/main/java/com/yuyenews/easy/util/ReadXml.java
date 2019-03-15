@@ -1,6 +1,6 @@
 package com.yuyenews.easy.util;
 
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -22,7 +22,7 @@ import java.util.jar.JarFile;
  */
 public class ReadXml {
 	
-	private static GogeLogger log = GogeLogger.getLogger(ReadXml.class);
+	private static MarsLogger log = MarsLogger.getLogger(ReadXml.class);
 	
 
 	/**

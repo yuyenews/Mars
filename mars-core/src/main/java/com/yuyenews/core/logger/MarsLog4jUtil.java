@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class GogeLog4jUtil {
+public class MarsLog4jUtil {
 
     /**
      * 加载log4j配置文件
@@ -20,7 +20,7 @@ public class GogeLog4jUtil {
         if(path != null){
             if(path.startsWith("classPath-")){
                 String logCfgPath = path.replace("classPath-","");
-                InputStream inputStream = GogeLog4jUtil.class.getResourceAsStream("/"+logCfgPath);
+                InputStream inputStream = MarsLog4jUtil.class.getResourceAsStream("/"+logCfgPath);
                 initLog4jPath(inputStream);
             } else {
                 File file = new File(path);

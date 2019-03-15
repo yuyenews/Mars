@@ -1,6 +1,6 @@
 package com.yuyenews.easy.server.request;
 
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.easy.server.jwt.JwtManager;
 import com.yuyenews.easy.server.request.model.FileUpLoad;
 import io.netty.buffer.ByteBuf;
@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class HttpRequest {
 	
-	private GogeLogger logger = GogeLogger.getLogger(HttpRequest.class);
+	private MarsLogger logger = MarsLogger.getLogger(HttpRequest.class);
 	
 	/**
 	 * netty原生request

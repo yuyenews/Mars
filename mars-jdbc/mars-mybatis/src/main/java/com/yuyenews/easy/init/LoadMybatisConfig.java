@@ -3,14 +3,12 @@ package com.yuyenews.easy.init;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.ConfigUtil;
 import com.yuyenews.core.util.FileUtil;
 import com.yuyenews.easy.util.ReadXml;
 import com.yuyenews.easy.util.extend.MyDataSourceFactory;
 
-import java.io.IOException;
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +20,7 @@ import java.util.Set;
  */
 public class LoadMybatisConfig {
 	
-	private static GogeLogger logger = GogeLogger.getLogger(LoadMybatisConfig.class);
+	private static MarsLogger logger = MarsLogger.getLogger(LoadMybatisConfig.class);
 	
 	private static EasySpace easySpace = EasySpace.getEasySpace();
 

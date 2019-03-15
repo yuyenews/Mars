@@ -6,7 +6,7 @@ import com.yuyenews.core.annotation.EasyAopType;
 import com.yuyenews.core.annotation.Traction;
 import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.model.EasyBeanModel;
 
 import java.lang.reflect.Method;
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class BeanFactory {
 	
-	private static GogeLogger log = GogeLogger.getLogger(BeanFactory.class);
+	private static MarsLogger log = MarsLogger.getLogger(BeanFactory.class);
 
 	private static EasySpace constants = EasySpace.getEasySpace();
 	

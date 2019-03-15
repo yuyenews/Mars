@@ -1,7 +1,7 @@
 package com.yuyenews.easy.init;
 
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class LoadSqlSessionFactory {
 	
-	private GogeLogger logger = GogeLogger.getLogger(LoadSqlSessionFactory.class);
+	private MarsLogger logger = MarsLogger.getLogger(LoadSqlSessionFactory.class);
 	
 	private static LoadSqlSessionFactory factory;
 	

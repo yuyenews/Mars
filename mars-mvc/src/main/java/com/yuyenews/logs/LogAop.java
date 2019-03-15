@@ -1,7 +1,7 @@
 package com.yuyenews.logs;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.easy.server.request.HttpRequest;
 
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class LogAop {
 
-    private GogeLogger logger = GogeLogger.getLogger(LogAop.class);
+    private MarsLogger logger = MarsLogger.getLogger(LogAop.class);
 
     private Class cls;
     private String methodName;

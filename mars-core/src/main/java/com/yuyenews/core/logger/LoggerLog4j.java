@@ -4,7 +4,7 @@ package com.yuyenews.core.logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class LoggerLog4j extends GogeLogger {
+public class LoggerLog4j extends MarsLogger {
 
     private Logger logger;
 
@@ -23,14 +23,18 @@ public class LoggerLog4j extends GogeLogger {
     }
 
     @Override
+    public void error(String info) {
+        logger.error(info);
+    }
+
+    @Override
     public void warn(String info) {
         logger.warn(info);
     }
 
     @Override
-    public void error(String info) {
-        logger.error(info);
+    public void warn(String info, Throwable e) {
+        logger.warn(info,e);
     }
-
 
 }

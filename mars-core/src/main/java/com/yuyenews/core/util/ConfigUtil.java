@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
-import com.yuyenews.core.logger.GogeLog4jUtil;
+import com.yuyenews.core.logger.MarsLog4jUtil;
 
 /**
  * 配置文件工具类
@@ -35,7 +35,7 @@ public class ConfigUtil {
 			constants.setAttr("config", config);
 
 			/* 加载log4j配置文件 */
-            GogeLog4jUtil.initLog4jConfig(config);
+            MarsLog4jUtil.initLog4jConfig(config);
 		} catch (Exception e) {
 			throw new Exception("加载配置文件出错",e);
 		}

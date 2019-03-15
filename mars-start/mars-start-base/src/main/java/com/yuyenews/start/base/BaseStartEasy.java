@@ -5,7 +5,7 @@ import com.yuyenews.core.after.StartAfter;
 import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.load.LoadClass;
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.ConfigUtil;
 import com.yuyenews.easy.netty.server.EasyServer;
 import com.yuyenews.ioc.load.LoadEasyBean;
@@ -20,7 +20,7 @@ import com.yuyenews.servlcet.EasyCoreServlet;
  */
 public class BaseStartEasy {
 	
-	private static GogeLogger log = GogeLogger.getLogger(BaseStartEasy.class);
+	private static MarsLogger log = MarsLogger.getLogger(BaseStartEasy.class);
 	
 	/**
 	 * 获取全局存储空间 

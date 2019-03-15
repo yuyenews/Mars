@@ -1,6 +1,6 @@
 package com.yuyenews.easy.netty.server;
 
-import com.yuyenews.core.logger.GogeLogger;
+import com.yuyenews.core.logger.MarsLogger;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
@@ -14,7 +14,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class EasyServer {
 
-	private static GogeLogger log = GogeLogger.getLogger(EasyServer.class);
+	private static MarsLogger log = MarsLogger.getLogger(EasyServer.class);
 	
 	/**
 	 * 启动netty服务
