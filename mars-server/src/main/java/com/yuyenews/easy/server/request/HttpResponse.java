@@ -170,18 +170,30 @@ public class HttpResponse {
      * 设置跨域
      */
     private void crossDomain(FullHttpResponse response) {
-        JSONObject jsonObject = getConfig();
-        Object object = jsonObject.get("cross_domain");
-        if (object != null) {
-            JSONObject ob = JSONObject.parseObject(JSON.toJSONString(object));
+        try{
+            JSONObject jsonObject = getConfig();
+            Object object = jsonObject.get("cross_domain");
+            if (object != null) {
+                JSONObject ob = JSONObject.parseObject(JSON.toJSONString(object));
 
-            response.headers().set("Access-Control-Allow-Origin", ob.get("origin").toString());
-            response.headers().set("Access-Control-Allow-Methods", ob.get("methods").toString());
-            response.headers().set("Access-Control-Max-Age", ob.get("maxAge").toString());
-            response.headers().set("Access-Control-Allow-Headers", ob.get("headers").toString());
-            response.headers().set("Access-Control-Allow-Credentials", ob.get("credentials").toString());
+                response.headers().set("Access-Control-Allow-Origin", ob.get("origin").toString());
+                response.headers().set("Access-Control-Allow-Methods", ob.get("methods").toString());
+                response.headers().set("Access-Control-Max-Age", ob.get("maxAge").toString());
+                response.headers().set("Access-Control-Allow-Headers", ob.get("headers").toString());
+                response.headers().set("Access-Control-Allow-Credentials", ob.get("credentials").toString());
+            }
+        } catch (Exception e){
+
+            this.header.put("Access-Control-Allow-Origin", "*");
+            this.header.put("Access-Control-Allow-Methods", "GET,POST");
+            this.header.put("Access-Control-Max-Age", "9");
+            this.header.put("Access-Control-Allow-Headers", "x-requested-with,Cache-Control,Pragma,Content-Type,Token");
+            this.header.put("Access-Control-Allow-Credentials", "true");
+
+            logger.warn("跨域配置缺少参数，已启动默认配置",e);
         }
     }
+
 
     /**
      * 获取配置文件
