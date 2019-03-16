@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gitee.sherlockholmnes</groupId>
+	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars-java</artifactId>
 	<version>2.1.0</version>
 	<packaging>pom</packaging>
@@ -24,33 +24,33 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.gitee.sherlockholmnes</groupId>
+				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-aop</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.gitee.sherlockholmnes</groupId>
+				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-ioc</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.gitee.sherlockholmnes</groupId>
+				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-mvc</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.gitee.sherlockholmnes</groupId>
+				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-core</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.gitee.sherlockholmnes</groupId>
+				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-netty</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.gitee.sherlockholmnes</groupId>
+				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-server</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
@@ -156,18 +156,18 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	<scm>
-		<url>https://gitee.com/SherlockHolmnes/Goge-framework</url>
-		<connection>https://gitee.com/SherlockHolmnes/Goge-framework.git</connection>
-		<developerConnection>https://gitee.com/SherlockHolmnes/Goge-framework</developerConnection>
-	</scm>
-	<developers>
-		<developer>
-			<name>sherlockholmes</name>
-			<email>1784955689@qq.com</email>
-			<url>https://gitee.com/SherlockHolmnes/Goge-framework</url>
-		</developer>
-	</developers>
+	<!--<scm>-->
+		<!--<url>https://gitee.com/SherlockHolmnes/Goge-framework</url>-->
+		<!--<connection>https://gitee.com/SherlockHolmnes/Goge-framework.git</connection>-->
+		<!--<developerConnection>https://gitee.com/SherlockHolmnes/Goge-framework</developerConnection>-->
+	<!--</scm>-->
+	<!--<developers>-->
+		<!--<developer>-->
+			<!--<name>sherlockholmes</name>-->
+			<!--<email>1784955689@qq.com</email>-->
+			<!--<url>https://gitee.com/SherlockHolmnes/Goge-framework</url>-->
+		<!--</developer>-->
+	<!--</developers>-->
 
 	<build>
 		<plugins>
