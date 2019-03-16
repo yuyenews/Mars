@@ -26,6 +26,9 @@ public class RemoteConfigController {
     @EasyMapping(value = "reloadConfig",method = RequestMetohd.POST)
     @EasyLog
     public Map<String,Object> reloadConfig(HttpRequest request, HttpResponse response) {
+
+        /* TODO(功能开发中) */
+
         Object config = request.getParemeter("config");
         String result = RemoteConfigService.reloadConfig(config);
 

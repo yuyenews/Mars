@@ -30,9 +30,8 @@ public class RemoteConfigUtil {
 
             params.put("name",config.getString("name"));
             params.put("myIp",config.getString("myIp"));
-            params.put("port",object.getString("port"));
 
-            Object result = HttpUtil.post(url,params);
+            Object result = HttpUtil.get(url,params);
 
             JSONObject jsonObject = JSONObject.parseObject(result.toString());
             return jsonObject;
