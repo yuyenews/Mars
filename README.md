@@ -37,7 +37,7 @@
 
 <h2>帮助文档</h2>
 
-[Document](http://goge-framework.com/doc.html)
+[Document](http://mars.yuyenews.com/doc.html)
 
 <h2>扩展包</h2>
 
