@@ -46,7 +46,7 @@ jdbc:
 logFile: classPath-log4j2.xml
 
 
-#以下配置 必须在导入goge-extends 中的相应的jar包后 才生效
+#以下配置 必须在导入Mars-extends 中的相应的jar包后 才生效
 
 #redis配置
 redis:
