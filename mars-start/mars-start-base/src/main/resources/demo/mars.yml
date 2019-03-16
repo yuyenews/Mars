@@ -25,9 +25,9 @@ threadPool:
 
 #配置持久层
 jdbc:
-  #配置数据源，必须是数组
+  #配置数据源，必须是数组，必须是阿里巴巴的 druid数据源
   dataSource:
-    -
+    - #左边这条斜杠千万不能省略，缩进也必须有; 下面的属性请参照druid数据源
       name: dataSource
       url: jdbc:mysql://10.211.55.5:3306/test?serverTimezone=GMT%2B8
       username: root
@@ -40,9 +40,10 @@ jdbc:
   mappers: mappers
 
 #log4j2 配置文件的路径
-#相对路径必须以classPath- 开头，区分大小写
-#绝对路径直接写即可，不需要开头
-logFile: classpath-log4j2.xml
+#相对路径必须以classPath- 开头，区分大小写，并且文件必须直接或者间接在classpath目录下
+#不可以有多余的空格
+#绝对路径直接写即可，不需要classPath开头
+logFile: classPath-log4j2.xml
 
 
 #以下配置 必须在导入goge-extends 中的相应的jar包后 才生效

@@ -34,6 +34,12 @@ public class RemoteConfigUtil {
             Object result = HttpUtil.get(url,params);
 
             JSONObject jsonObject = JSONObject.parseObject(result.toString());
+
+            if(jsonObject.get("result") != null
+                    && jsonObject.getString("result").trim().equals("no")){
+                throw new Exception("配置中心没有相应的文件，已自动帮你创建了一个空的，需要你手动编辑后才可以启动本服务");
+            }
+
             return jsonObject;
         } catch (Exception e){
             throw new Exception("读取远程配置中心失败",e);
