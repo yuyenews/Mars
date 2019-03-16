@@ -156,18 +156,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	<!--<scm>-->
-		<!--<url>https://gitee.com/SherlockHolmnes/Goge-framework</url>-->
-		<!--<connection>https://gitee.com/SherlockHolmnes/Goge-framework.git</connection>-->
-		<!--<developerConnection>https://gitee.com/SherlockHolmnes/Goge-framework</developerConnection>-->
-	<!--</scm>-->
-	<!--<developers>-->
-		<!--<developer>-->
-			<!--<name>sherlockholmes</name>-->
-			<!--<email>1784955689@qq.com</email>-->
-			<!--<url>https://gitee.com/SherlockHolmnes/Goge-framework</url>-->
-		<!--</developer>-->
-	<!--</developers>-->
 
 	<build>
 		<plugins>
