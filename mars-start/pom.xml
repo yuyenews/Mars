@@ -12,7 +12,7 @@
     <modules>
         <module>mars-start-mybatis</module>
         <module>mars-start-simple</module>
-        <module>mars-start-jpa</module>
+        <module>mars-start-mj</module>
         <module>mars-start-base</module>
     </modules>
     <artifactId>mars-start</artifactId>

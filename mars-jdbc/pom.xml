@@ -13,7 +13,7 @@
 
     <modules>
         <module>mars-mybatis</module>
-        <module>mars-jpa</module>
+        <module>mars-mj</module>
         <module>mars-jdbc-base</module>
     </modules>
 
