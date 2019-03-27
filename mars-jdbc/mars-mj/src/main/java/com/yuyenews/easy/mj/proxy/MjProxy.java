@@ -1,4 +1,4 @@
-package com.yuyenews.easy.jpa.proxy;
+package com.yuyenews.easy.mj.proxy;
 
 
 import com.yuyenews.core.annotation.DataSource;
@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  * @author yuye
  *
  */
-public class JpaProxy extends BaseJdbcProxy implements MethodInterceptor {
+public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
 
     private EasySpace easySpace = EasySpace.getEasySpace();
 

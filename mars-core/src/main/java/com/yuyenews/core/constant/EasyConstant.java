@@ -6,6 +6,14 @@ package com.yuyenews.core.constant;
 public class EasyConstant {
 
     /**
+     * druid数据源加载类
+      */
+    public static final String DRUID_DATA_SOURCE = "com.alibaba.druid.pool.DruidDataSource";
+    /**
+     * 配置文件中数据源节点的属性名
+     */
+    public static final String DATA_SOURCE = "dataSource";
+    /**
      * 本地配置文件
      */
     public static final String CONFIG_PATH = "/mars.yml";

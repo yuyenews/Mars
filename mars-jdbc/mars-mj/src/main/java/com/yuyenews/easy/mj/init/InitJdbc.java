@@ -1,6 +1,6 @@
-package com.yuyenews.easy.jpa.init;
+package com.yuyenews.easy.mj.init;
 
-import com.yuyenews.easy.jpa.proxy.JpaProxy;
+import com.yuyenews.easy.mj.proxy.MjProxy;
 import com.yuyenews.jdbc.base.BaseInitJdbc;
 import com.yuyenews.jdbc.load.LoadDaos;
 
@@ -17,10 +17,10 @@ public class InitJdbc implements BaseInitJdbc {
 	@Override
 	public void init() throws Exception{
 
-		/* 加载jpa配置 */
+		/* 加载mj配置 */
 
 		/* 创建dao对象 */
-		LoadDaos.loadDao(new JpaProxy());
+		LoadDaos.loadDao(new MjProxy());
 		
 	}
 }
