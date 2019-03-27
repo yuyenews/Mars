@@ -7,7 +7,7 @@ import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.load.LoadClass;
 import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.ConfigUtil;
-import com.yuyenews.easy.netty.server.EasyServer;
+import com.yuyenews.netty.server.EasyServer;
 import com.yuyenews.ioc.load.LoadEasyBean;
 import com.yuyenews.jdbc.base.BaseInitJdbc;
 import com.yuyenews.resolve.LoadController;

@@ -8,8 +8,8 @@ import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.MatchUtil;
 import com.yuyenews.core.util.MesUtil;
-import com.yuyenews.easy.server.request.HttpRequest;
-import com.yuyenews.easy.server.request.HttpResponse;
+import com.yuyenews.server.server.request.HttpRequest;
+import com.yuyenews.server.server.request.HttpResponse;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

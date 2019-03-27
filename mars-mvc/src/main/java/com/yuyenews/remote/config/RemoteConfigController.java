@@ -5,8 +5,8 @@ import com.yuyenews.core.annotation.EasyLog;
 import com.yuyenews.core.annotation.EasyMapping;
 import com.yuyenews.core.annotation.enums.RequestMetohd;
 import com.yuyenews.core.remote.config.RemoteConfigService;
-import com.yuyenews.easy.server.request.HttpRequest;
-import com.yuyenews.easy.server.request.HttpResponse;
+import com.yuyenews.server.server.request.HttpRequest;
+import com.yuyenews.server.server.request.HttpResponse;
 
 import java.util.HashMap;
 import java.util.Map;

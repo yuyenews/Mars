@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Traction {
 
+    String className() default "com.yuyenews.traction.TractionAop";
 }

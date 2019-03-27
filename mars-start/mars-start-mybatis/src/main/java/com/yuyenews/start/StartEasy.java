@@ -1,6 +1,6 @@
 package com.yuyenews.start;
 
-import com.yuyenews.easy.init.InitJdbc;
+import com.yuyenews.mybatis.init.InitJdbc;
 import com.yuyenews.start.base.BaseStartEasy;
 
 /**

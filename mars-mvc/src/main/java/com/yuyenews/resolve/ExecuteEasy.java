@@ -3,9 +3,9 @@ package com.yuyenews.resolve;
 import com.yuyenews.base.BaseInterceptor;
 import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.MesUtil;
-import com.yuyenews.easy.server.request.HttpRequest;
-import com.yuyenews.easy.server.request.HttpResponse;
-import com.yuyenews.easy.util.RequestUtil;
+import com.yuyenews.server.server.request.HttpRequest;
+import com.yuyenews.server.server.request.HttpResponse;
+import com.yuyenews.server.util.RequestUtil;
 import com.yuyenews.resolve.model.EasyMappingModel;
 import io.netty.handler.codec.http.HttpMethod;
 

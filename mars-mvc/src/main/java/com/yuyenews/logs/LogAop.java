@@ -2,7 +2,7 @@ package com.yuyenews.logs;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuyenews.core.logger.MarsLogger;
-import com.yuyenews.easy.server.request.HttpRequest;
+import com.yuyenews.server.server.request.HttpRequest;
 
 import java.util.Map;
 

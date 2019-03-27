@@ -86,7 +86,7 @@ public class BeanFactory {
 			if(easyAop != null) {
 				list.put(method.getName(),easyAop.className());
 			} else if(traction != null) {
-				Class<?> aopClass = Class.forName("com.yuyenews.easy.traction.TractionAop");
+				Class<?> aopClass = Class.forName(traction.className());
 				list.put(method.getName(),aopClass);
 			}
 		}
