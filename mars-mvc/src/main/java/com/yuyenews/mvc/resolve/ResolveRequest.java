@@ -1,4 +1,4 @@
-package com.yuyenews.resolve;
+package com.yuyenews.mvc.resolve;
 
 import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.logger.MarsLogger;
@@ -6,7 +6,7 @@ import com.yuyenews.core.util.MesUtil;
 import com.yuyenews.server.server.request.HttpRequest;
 import com.yuyenews.server.server.request.HttpResponse;
 import com.yuyenews.server.util.RequestUtil;
-import com.yuyenews.resolve.model.EasyMappingModel;
+import com.yuyenews.mvc.resolve.model.EasyMappingModel;
 
 import java.util.Map;
 

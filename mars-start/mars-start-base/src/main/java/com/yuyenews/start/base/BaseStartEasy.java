@@ -10,8 +10,8 @@ import com.yuyenews.core.util.ConfigUtil;
 import com.yuyenews.netty.server.EasyServer;
 import com.yuyenews.ioc.load.LoadEasyBean;
 import com.yuyenews.jdbc.base.BaseInitJdbc;
-import com.yuyenews.resolve.LoadController;
-import com.yuyenews.servlcet.EasyCoreServlet;
+import com.yuyenews.mvc.resolve.LoadController;
+import com.yuyenews.mvc.servlcet.EasyCoreServlet;
 
 /**
  * 启动easy框架

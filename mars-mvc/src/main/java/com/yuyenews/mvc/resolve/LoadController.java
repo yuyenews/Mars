@@ -1,5 +1,6 @@
-package com.yuyenews.resolve;
+package com.yuyenews.mvc.resolve;
 
+import com.yuyenews.mvc.proxy.MvcCglibProxy;
 import com.yuyenews.core.annotation.Controller;
 import com.yuyenews.core.annotation.EasyMapping;
 import com.yuyenews.core.annotation.Resource;
@@ -7,8 +8,7 @@ import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.model.EasyBeanModel;
-import com.yuyenews.proxy.MvcCglibProxy;
-import com.yuyenews.resolve.model.EasyMappingModel;
+import com.yuyenews.mvc.resolve.model.EasyMappingModel;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

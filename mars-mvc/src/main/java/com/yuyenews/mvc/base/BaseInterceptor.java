@@ -1,4 +1,4 @@
-package com.yuyenews.base;
+package com.yuyenews.mvc.base;
 
 import com.yuyenews.server.server.request.HttpRequest;
 import com.yuyenews.server.server.request.HttpResponse;

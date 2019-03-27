@@ -1,4 +1,4 @@
-package com.yuyenews.logs;
+package com.yuyenews.mvc.logs;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuyenews.core.logger.MarsLogger;

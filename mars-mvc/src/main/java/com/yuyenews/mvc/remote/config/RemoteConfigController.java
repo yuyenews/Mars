@@ -1,4 +1,4 @@
-package com.yuyenews.remote.config;
+package com.yuyenews.mvc.remote.config;
 
 import com.yuyenews.core.annotation.Controller;
 import com.yuyenews.core.annotation.EasyLog;

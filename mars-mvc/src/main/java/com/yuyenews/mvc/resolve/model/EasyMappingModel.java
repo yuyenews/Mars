@@ -1,4 +1,4 @@
-package com.yuyenews.resolve.model;
+package com.yuyenews.mvc.resolve.model;
 
 import com.yuyenews.core.annotation.enums.RequestMetohd;
 

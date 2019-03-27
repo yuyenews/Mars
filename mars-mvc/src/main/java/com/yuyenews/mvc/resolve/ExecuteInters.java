@@ -1,7 +1,7 @@
-package com.yuyenews.resolve;
+package com.yuyenews.mvc.resolve;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yuyenews.base.BaseInterceptor;
+import com.yuyenews.mvc.base.BaseInterceptor;
 import com.yuyenews.core.annotation.EasyInterceptor;
 import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;

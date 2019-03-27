@@ -1,7 +1,7 @@
-package com.yuyenews.proxy;
+package com.yuyenews.mvc.proxy;
 
+import com.yuyenews.mvc.logs.LogAop;
 import com.yuyenews.core.annotation.EasyLog;
-import com.yuyenews.logs.LogAop;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
