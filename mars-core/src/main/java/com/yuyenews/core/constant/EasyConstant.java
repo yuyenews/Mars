@@ -6,6 +6,10 @@ package com.yuyenews.core.constant;
 public class EasyConstant {
 
     /**
+     * 所有数据源对象
+     */
+    public static final String DATA_SOURCE_MAP = "druidDataSourceMap";
+    /**
      * druid数据源加载类
       */
     public static final String DRUID_DATA_SOURCE = "com.alibaba.druid.pool.DruidDataSource";

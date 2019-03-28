@@ -1,6 +1,7 @@
 package com.yuyenews.traction;
 
 import com.yuyenews.aop.base.BaseAop;
+import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.ThreadUtil;
@@ -31,7 +32,7 @@ public class TractionAop implements BaseAop {
 	@SuppressWarnings("unchecked")
 	public void startMethod(Object[] args) {
 		try {
-			Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>)easySpace.getAttr("sqlSessionFactorys");
+			Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>)easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
 			
 			Map<String,SqlSession> sqlSessions = new HashMap<>();
 			
@@ -52,7 +53,6 @@ public class TractionAop implements BaseAop {
 	 */
 	public void endMethod(Object[] args) {
 		try {
-			@SuppressWarnings("unchecked")
 			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : sqlSessions.keySet()) {
@@ -74,7 +74,6 @@ public class TractionAop implements BaseAop {
 	 */
 	public void exp(Throwable e) {
 		try {
-			@SuppressWarnings("unchecked")
 			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : sqlSessions.keySet()) {

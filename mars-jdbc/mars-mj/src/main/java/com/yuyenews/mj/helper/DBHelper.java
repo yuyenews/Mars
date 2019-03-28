@@ -19,9 +19,9 @@ import java.util.Map;
 public class DBHelper {
 
     /**
-     * JDBC连接集合
+     * 数据源对象集合
      */
-    private static Map<String, Connection> connections;
+    private static Map<String, DruidDataSource> druidDataSources;
     /**
      * sql语句预编译处理接口
      */
@@ -141,14 +141,26 @@ public class DBHelper {
     }
 
     /**
+     * 获取所有的数据源对象
+     * @return
+     * @throws Exception
+     */
+    public static Map<String,DruidDataSource> getDruidDataSources() throws Exception {
+        init();
+        return druidDataSources;
+    }
+
+    /**
      * 获取数据库连接
      *
      * @return
      * @throws Exception
      */
-    public static Map<String, Connection> getConnections() throws Exception {
+    public static Connection getConnection(String dataSourceName) throws Exception {
         init();
-        return connections;
+        Connection connection = druidDataSources.get(dataSourceName).getConnection();
+        connection.setAutoCommit(true);
+        return connection;
     }
 
     /**
@@ -158,7 +170,7 @@ public class DBHelper {
      * @throws Exception
      */
     private static void init() throws Exception {
-        if (connections == null) {
+        if (druidDataSources == null) {
             initConnections();
         }
     }
@@ -169,18 +181,21 @@ public class DBHelper {
      * @throws Exception
      */
     private static void initConnections() throws Exception {
-        JSONObject jdbcConfig = ConfigUtil.getJdbcConfig();
+        if(druidDataSources == null){
+            druidDataSources = new HashMap<>();
 
-        JSONArray dataSourceList = jdbcConfig.getJSONArray(EasyConstant.DATA_SOURCE);
-        if (dataSourceList != null) {
-            for (int i = 0; i < dataSourceList.size(); i++) {
-                JSONObject dataSource = dataSourceList.getJSONObject(i);
-                DruidDataSource druidDataSource = initDataSource(dataSource);
-                Connection connection = druidDataSource.getConnection();
-                connection.setAutoCommit(false);
-                connections.put(dataSource.getString("name"), connection);
+            JSONObject jdbcConfig = ConfigUtil.getJdbcConfig();
+
+            JSONArray dataSourceList = jdbcConfig.getJSONArray(EasyConstant.DATA_SOURCE);
+            if (dataSourceList != null) {
+                for (int i = 0; i < dataSourceList.size(); i++) {
+                    JSONObject dataSource = dataSourceList.getJSONObject(i);
+                    DruidDataSource druidDataSource = initDataSource(dataSource);
+                    druidDataSources.put(dataSource.getString("name"), druidDataSource);
+                }
             }
         }
+
     }
 
     /**

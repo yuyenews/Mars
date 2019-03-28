@@ -1,5 +1,6 @@
 package com.yuyenews.mybatis.init;
 
+import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.logger.MarsLogger;
 import org.apache.ibatis.session.SqlSession;
@@ -70,7 +71,7 @@ public class LoadSqlSessionFactory {
 			InputStream inputStream = new ByteArrayInputStream(resource.getBytes());
 			maps.put(str, new SqlSessionFactoryBuilder().build(inputStream,str));
 		}
-		easySpace.setAttr("sqlSessionFactorys", maps);
+		easySpace.setAttr(EasyConstant.DATA_SOURCE_MAP, maps);
 	}
 	
 	/**
@@ -86,7 +87,7 @@ public class LoadSqlSessionFactory {
 	 * @return session
 	 */
 	public SqlSession getSqlSession(String dataSourceName,Boolean autoCommit) {
-		Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>) easySpace.getAttr("sqlSessionFactorys");
+		Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>) easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
 		if(dataSourceName == null) {
 			Object defDa = easySpace.getAttr("defaultDataSource");
 			return maps.get(defDa.toString()).openSession(autoCommit);

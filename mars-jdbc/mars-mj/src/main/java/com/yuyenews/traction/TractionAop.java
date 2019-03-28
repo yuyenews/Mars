@@ -1,9 +1,15 @@
 package com.yuyenews.traction;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.yuyenews.aop.base.BaseAop;
+import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.logger.MarsLogger;
 import com.yuyenews.core.util.ThreadUtil;
+
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 事务管理aop
@@ -27,6 +33,17 @@ public class TractionAop implements BaseAop {
 	public void startMethod(Object[] args) {
 		try {
 
+			Map<String, DruidDataSource> maps = (Map<String,DruidDataSource>)easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
+
+			Map<String,Connection> connections = new HashMap<>();
+
+			for(String key : maps.keySet()) {
+				Connection connection = maps.get(key).getConnection();
+				connection.setAutoCommit(false);
+				connections.put(key, connection);
+			}
+
+			easySpace.setAttr(ThreadUtil.getThreadIdToTraction(), connections);
 		} catch (Exception e) {
 			logger.error("开启事务出错",e);
 		}
@@ -39,7 +56,13 @@ public class TractionAop implements BaseAop {
 	 */
 	public void endMethod(Object[] args) {
 		try {
+			Map<String,Connection> connections = (Map<String,Connection>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
+			for(String key : connections.keySet()) {
+				Connection session = connections.get(key);
+				session.commit();
+				session.close();
+			}
 		} catch (Exception e) {
 			logger.error("提交事务出错",e);
 		} finally {
@@ -54,7 +77,13 @@ public class TractionAop implements BaseAop {
 	 */
 	public void exp(Throwable e) {
 		try {
+			Map<String,Connection> connections = (Map<String,Connection>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
+			for(String key : connections.keySet()) {
+				Connection session = connections.get(key);
+				session.rollback();
+				session.close();
+			}
 
 			logger.error("",e);
 		} catch (Exception ex) {
