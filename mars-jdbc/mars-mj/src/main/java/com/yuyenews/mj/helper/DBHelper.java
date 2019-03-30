@@ -6,12 +6,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.yuyenews.core.constant.EasyConstant;
 import com.yuyenews.core.util.ConfigUtil;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * JDBC连接帮助类
@@ -68,7 +65,7 @@ public class DBHelper {
             }
             list.add(rows);
         }
-        return null;
+        return list;
     }
 
     /**
@@ -209,19 +206,16 @@ public class DBHelper {
 
         Class cls = Class.forName(EasyConstant.DRUID_DATA_SOURCE);
         Object druidDataSource = cls.getDeclaredConstructor().newInstance();
+        Properties properties = new Properties();
 
         for (String key : dataSource.keySet()) {
-
-            /* 获取对象属性，完成注入 */
-            Field[] fields = cls.getDeclaredFields();
-            for (Field f : fields) {
-                if (f.getName().equals(key)) {
-                    f.setAccessible(true);
-                    f.set(druidDataSource, dataSource.get(key));
-                }
-            }
-
+            properties.setProperty("druid."+key,dataSource.get(key).toString());
         }
+
+        Method configFromPropety = cls.getDeclaredMethod("configFromPropety",new Class[]{Properties.class});
+        configFromPropety.invoke(druidDataSource,new Object[]{properties});
+
         return (DruidDataSource) druidDataSource;
     }
+
 }

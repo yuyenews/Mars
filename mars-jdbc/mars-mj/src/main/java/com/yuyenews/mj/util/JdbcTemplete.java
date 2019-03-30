@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * jdbc模板
+ */
 public class JdbcTemplete {
 
     private static EasySpace easySpace = EasySpace.getEasySpace();

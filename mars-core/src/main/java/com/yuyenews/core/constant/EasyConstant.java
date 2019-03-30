@@ -59,7 +59,7 @@ public class EasyConstant {
     /**
      * 接受远程配置中心通知的controller
      */
-    public static final String REMOTE_CONFIG_CONTROLLER = "com.yuyenews.mvc.remote.config.RemoteConfigController";
+    public static final String REMOTE_CONFIG_CONTROLLER = "com.yuyenews.start.remote.RemoteConfigController";
 
     /**
      * 读取远程配置的路径
