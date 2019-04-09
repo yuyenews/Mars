@@ -17,7 +17,7 @@ public abstract class MarsLogger {
     public abstract void error(String info,Throwable e);
 
     /**
-     * 获取GogeLogger 对象
+     * 获取MarsLogger 对象
      * @param cls
      * @return
      */
