@@ -88,35 +88,10 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 
 		if(commType.equals("SELECT")) {
 			/* 如果是select，则判断方法的返回值是不是list */
-			Class<?> returnType = method.getReturnType();
-			if(returnType.getName().equals(List.class.getName())) {
-				/* 如果方法的返回值是list，则执行selectList方法 */
-				if(args != null && args.length > 0 && args[0] != null) {
-					result = session.selectList(statement, args[0]);
-				} else {
-					result = session.selectList(statement);
-				}
-			} else {
-				/* 如果不是list，则执行selectOne方法 */
-				if(args != null && args.length > 0 && args[0] != null) {
-					result = session.selectOne(statement, args[0]);
-				} else {
-					result = session.selectOne(statement);
-				}
-			}
-			
+			result = select(method,args,session,statement);
 		} else if(commType.equals("UPDATE") || commType.equals("INSERT") || commType.equals("DELETE")) {
 			/* 如果要执行的sql是update类型（增删改），则执行update方法 */
-			if(args != null && args.length > 0 && args[0] != null) {
-				result = session.update(statement, args[0]);
-			} else {
-				result = session.update(statement);
-			}
-			
-			if(flag) {
-				/* 如果sqlSession是手动获取的，那么执行完以后要立刻提交事务 */
-				session.commit();
-			}
+			result = update(session,args,statement,flag);
 		}
 		
 		if(flag) {
@@ -124,6 +99,58 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 			session.close();
 		}
 		
+		return result;
+	}
+
+	/**
+	 * 查询
+	 * @param method
+	 * @param args
+	 * @param session
+	 * @param statement
+	 * @return
+	 */
+	private Object select(Method method,Object[] args,SqlSession session,String statement){
+		Object result = null;
+		Class<?> returnType = method.getReturnType();
+		if(returnType.getName().equals(List.class.getName())) {
+			/* 如果方法的返回值是list，则执行selectList方法 */
+			if(args != null && args.length > 0 && args[0] != null) {
+				result = session.selectList(statement, args[0]);
+			} else {
+				result = session.selectList(statement);
+			}
+		} else {
+			/* 如果不是list，则执行selectOne方法 */
+			if(args != null && args.length > 0 && args[0] != null) {
+				result = session.selectOne(statement, args[0]);
+			} else {
+				result = session.selectOne(statement);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 增删改
+	 * @param session
+	 * @param args
+	 * @param statement
+	 * @param flag
+	 * @return
+	 */
+	private Object update(SqlSession session,Object[] args,String statement,boolean flag){
+		Object result = null;
+		if(args != null && args.length > 0 && args[0] != null) {
+			result = session.update(statement, args[0]);
+		} else {
+			result = session.update(statement);
+		}
+
+		if(flag) {
+			/* 如果sqlSession是手动获取的，那么执行完以后要立刻提交事务 */
+			session.commit();
+		}
 		return result;
 	}
 	

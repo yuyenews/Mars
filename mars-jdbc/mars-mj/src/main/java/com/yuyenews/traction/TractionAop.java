@@ -29,7 +29,6 @@ public class TractionAop implements BaseAop {
 	 * 
 	 * @param args canshu
 	 */
-	@SuppressWarnings("unchecked")
 	public void startMethod(Object[] args) {
 		try {
 
@@ -59,9 +58,9 @@ public class TractionAop implements BaseAop {
 			Map<String,Connection> connections = (Map<String,Connection>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : connections.keySet()) {
-				Connection session = connections.get(key);
-				session.commit();
-				session.close();
+				Connection connection = connections.get(key);
+				connection.commit();
+				connection.close();
 			}
 		} catch (Exception e) {
 			logger.error("提交事务出错",e);
@@ -80,9 +79,9 @@ public class TractionAop implements BaseAop {
 			Map<String,Connection> connections = (Map<String,Connection>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : connections.keySet()) {
-				Connection session = connections.get(key);
-				session.rollback();
-				session.close();
+				Connection connection = connections.get(key);
+				connection.rollback();
+				connection.close();
 			}
 
 			logger.error("",e);

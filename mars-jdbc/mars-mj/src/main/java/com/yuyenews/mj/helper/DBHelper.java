@@ -27,6 +27,14 @@ public class DBHelper {
      * sql语句处理接口
      */
     private static Statement statement;
+    /**
+     * 默认数据源名称
+     */
+    private static String defaultDataSourceName;
+
+    public static String getDefaultDataSourceName(){
+        return defaultDataSourceName;
+    }
 
     /**
      * 无条件查询
@@ -60,7 +68,7 @@ public class DBHelper {
             Map<String, Object> rows = new HashMap<>();
             for (int i = 1; i <= count; i++) {
                 String key = resultSetMetaData.getColumnLabel(i);
-                String value = resultSet.getString(key);
+                Object value = resultSet.getObject(i);
                 rows.put(key, value);
             }
             list.add(rows);
@@ -189,6 +197,9 @@ public class DBHelper {
                     JSONObject dataSource = dataSourceList.getJSONObject(i);
                     DruidDataSource druidDataSource = initDataSource(dataSource);
                     druidDataSources.put(dataSource.getString("name"), druidDataSource);
+                    if(i == 0){
+                        defaultDataSourceName = dataSource.getString("name");
+                    }
                 }
             }
         }
@@ -206,7 +217,11 @@ public class DBHelper {
 
         Class cls = Class.forName(EasyConstant.DRUID_DATA_SOURCE);
         Object druidDataSource = cls.getDeclaredConstructor().newInstance();
+
         Properties properties = new Properties();
+        properties.setProperty("druid.maxWait","60000");
+        properties.setProperty("druid.timeBetweenEvictionRunsMillis","2000");
+        properties.setProperty("druid.minEvictableIdleTimeMillis","5000");
 
         for (String key : dataSource.keySet()) {
             properties.setProperty("druid."+key,dataSource.get(key).toString());

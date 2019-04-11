@@ -40,12 +40,7 @@ public class InitJdbc implements BaseInitJdbc {
 		Map<String,DruidDataSource> druidDataSourceMap = DBHelper.getDruidDataSources();
 		easySpace.setAttr("druidDataSourceMap",druidDataSourceMap);
 
-		int i = 0;
-
-		for(String defaultDataSource : druidDataSourceMap.keySet()){
-			if(i == 0){
-				easySpace.setAttr("defaultDataSource", defaultDataSource);
-			}
-		}
+		/* 保存默认数据源名称 */
+		easySpace.setAttr("defaultDataSource", DBHelper.getDefaultDataSourceName());
 	}
 }
