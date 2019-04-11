@@ -1,11 +1,11 @@
-package com.yuyenews.mj.model;
+package com.yuyenews.mj.manager;
 
 import java.sql.Connection;
 
 /**
  * 连接model
  */
-public class ConnectionModel {
+public class ConnectionManager {
 
     /**
      * 是否有事务管理

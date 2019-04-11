@@ -2,7 +2,7 @@ package com.yuyenews.mj.helper;
 
 import com.yuyenews.core.constant.EasySpace;
 import com.yuyenews.core.util.ThreadUtil;
-import com.yuyenews.mj.model.ConnectionModel;
+import com.yuyenews.mj.manager.ConnectionManager;
 import com.yuyenews.mj.util.DataCheckUtil;
 
 import java.lang.reflect.Field;
@@ -45,14 +45,14 @@ public class JdbcTemplete {
     public List<Map<String, Object>> selectList(String sql, Object param) throws Exception {
         DataCheckUtil.isNull(param,"传参不可以为null");
 
-        ConnectionModel connectionModel = getConnection();
+        ConnectionManager connectionManager = getConnection();
         try {
-            List<Map<String, Object>> result = select(sql, param, connectionModel.getConnection());
+            List<Map<String, Object>> result = select(sql, param, connectionManager.getConnection());
             return result;
         } catch (Exception e) {
             throw e;
         } finally {
-            connectionModel.close();
+            connectionManager.close();
         }
     }
 
@@ -64,14 +64,14 @@ public class JdbcTemplete {
      * @throws Exception
      */
     public List<Map<String, Object>> selectList(String sql) throws Exception {
-        ConnectionModel connectionModel = getConnection();
+        ConnectionManager connectionManager = getConnection();
         try {
-            List<Map<String, Object>> result = select(sql, null, connectionModel.getConnection());
+            List<Map<String, Object>> result = select(sql, null, connectionManager.getConnection());
             return result;
         } catch (Exception e) {
             throw e;
         } finally {
-            connectionModel.close();
+            connectionManager.close();
         }
     }
 
@@ -86,9 +86,9 @@ public class JdbcTemplete {
     public Map<String, Object> selectOne(String sql, Object param) throws Exception {
         DataCheckUtil.isNull(param,"传参不可以为null");
 
-        ConnectionModel connectionModel = getConnection();
+        ConnectionManager connectionManager = getConnection();
         try {
-            List<Map<String, Object>> mapList = select(sql, param, connectionModel.getConnection());
+            List<Map<String, Object>> mapList = select(sql, param, connectionManager.getConnection());
             if (mapList != null && mapList.size() == 1) {
                 return mapList.get(0);
             } else if (mapList.size() > 1) {
@@ -97,7 +97,7 @@ public class JdbcTemplete {
         } catch (Exception e) {
             throw e;
         } finally {
-            connectionModel.close();
+            connectionManager.close();
         }
         return null;
     }
@@ -110,9 +110,9 @@ public class JdbcTemplete {
      * @throws Exception
      */
     public Map<String, Object> selectOne(String sql) throws Exception {
-        ConnectionModel connectionModel = getConnection();
+        ConnectionManager connectionManager = getConnection();
         try {
-            List<Map<String, Object>> mapList = select(sql, null, connectionModel.getConnection());
+            List<Map<String, Object>> mapList = select(sql, null, connectionManager.getConnection());
             if (mapList != null && mapList.size() == 1) {
                 return mapList.get(0);
             } else if (mapList.size() > 1) {
@@ -121,7 +121,7 @@ public class JdbcTemplete {
         } catch (Exception e) {
             throw e;
         } finally {
-            connectionModel.close();
+            connectionManager.close();
         }
         return null;
     }
@@ -137,18 +137,18 @@ public class JdbcTemplete {
     public int update(String sql, Object param) throws Exception {
         DataCheckUtil.isNull(param,"传参不可以为null");
 
-        ConnectionModel connectionModel = getConnection();
+        ConnectionManager connectionManager = getConnection();
         try {
             if (param instanceof Object[]) {
                 Object[] objs = (Object[]) param;
-                return DBHelper.update(sql, connectionModel.getConnection(), objs);
+                return DBHelper.update(sql, connectionManager.getConnection(), objs);
             } else {
-                return DBHelper.update(builderSql(sql, param), connectionModel.getConnection());
+                return DBHelper.update(builderSql(sql, param), connectionManager.getConnection());
             }
         } catch (Exception e) {
             throw e;
         } finally {
-            connectionModel.close();
+            connectionManager.close();
         }
     }
 
@@ -160,14 +160,14 @@ public class JdbcTemplete {
      * @throws Exception
      */
     public int update(String sql) throws Exception {
-        ConnectionModel connectionModel = getConnection();
+        ConnectionManager connectionManager = getConnection();
         try {
-            int result = DBHelper.update(sql, connectionModel.getConnection());
+            int result = DBHelper.update(sql, connectionManager.getConnection());
             return result;
         } catch (Exception e) {
             throw e;
         } finally {
-            connectionModel.close();
+            connectionManager.close();
         }
     }
 
@@ -177,8 +177,8 @@ public class JdbcTemplete {
      * @return
      * @throws Exception
      */
-    private ConnectionModel getConnection() throws Exception {
-        ConnectionModel connectionModel = new ConnectionModel();
+    private ConnectionManager getConnection() throws Exception {
+        ConnectionManager connectionManager = new ConnectionManager();
 
         /* 获取当前线程中的Connection */
         Object obj = easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
@@ -192,13 +192,13 @@ public class JdbcTemplete {
         if (obj != null) {
             Map<String, Connection> connections = (Map<String, Connection>) obj;
             connection = connections.get(dataSourceName2);
-            connectionModel.setHasTrantion(false);
+            connectionManager.setHasTrantion(false);
         } else {
             connection = DBHelper.getConnection(dataSourceName2);
-            connectionModel.setHasTrantion(true);
+            connectionManager.setHasTrantion(true);
         }
-        connectionModel.setConnection(connection);
-        return connectionModel;
+        connectionManager.setConnection(connection);
+        return connectionManager;
     }
 
     /**
