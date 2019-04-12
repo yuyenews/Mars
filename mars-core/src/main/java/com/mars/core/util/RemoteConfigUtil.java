@@ -2,6 +2,7 @@ package com.mars.core.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.EasyConstant;
+import io.codearte.props2yaml.Props2YAML;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class RemoteConfigUtil {
 
             Object result = HttpUtil.get(url,params);
 
-            JSONObject jsonObject = JSONObject.parseObject(result.toString());
+            JSONObject jsonObject = JSONObject.parseObject(props2YAML(result.toString()));
 
             if(jsonObject.get("result") != null
                     && jsonObject.getString("result").trim().equals("no")){
@@ -45,5 +46,15 @@ public class RemoteConfigUtil {
         } catch (Exception e){
             throw new Exception("读取远程配置中心失败",e);
         }
+    }
+
+    /**
+     * 将props格式转成yaml格式
+     * @param result
+     * @return
+     */
+    private static String props2YAML(String result){
+        Props2YAML props2YAML = Props2YAML.fromContent(result);
+        return props2YAML.convert();
     }
 }
