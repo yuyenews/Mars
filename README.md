@@ -23,7 +23,7 @@
     - 支持AOP,IOC,MVC,Mybatis,事务管理
     <br/>
     &nbsp;
-    - 通过 Mars-config 可以远程配置【开发中】
+    - 通过 Mars-config 可以远程配置【迭代中】
     <br/>
     &nbsp;
     - 通过 Mars-cloud 可以分布式部署【开发中】
