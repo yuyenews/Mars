@@ -1,7 +1,6 @@
 package com.mars.core.load;
 
 import com.mars.core.annotation.*;
-import com.yuyenews.core.annotation.*;
 import com.mars.core.util.ReadClass;
 
 import java.util.Set;
