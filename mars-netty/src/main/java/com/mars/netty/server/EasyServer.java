@@ -33,9 +33,8 @@ public class EasyServer {
 			/* 服务器绑定端口监听 */
 			ChannelFuture f = b.bind(portNumber).sync();
 			
-			log.info("启动结束");
-			
-			/* 监听服务器关闭监听 */
+			log.info("启动成功");
+
 			f.channel().closeFuture().sync();
 		} catch (Exception e) {
 			log.error("启动netty报错",e);
