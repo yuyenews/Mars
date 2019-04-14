@@ -1,5 +1,6 @@
 package com.mars.netty.server;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.util.ConfigUtil;
 import io.netty.channel.ChannelInitializer;
@@ -17,7 +18,8 @@ import io.netty.handler.timeout.IdleStateHandler;
  */
 public class EasyServerInitializer extends ChannelInitializer<SocketChannel> {
 
-	private int timeOut = 10;
+	private int readTimeOut = 10;
+	private int writeTimeOut = 2000000000;
 	private int maxContentLength = 10485760;
 
 	@Override
@@ -37,7 +39,7 @@ public class EasyServerInitializer extends ChannelInitializer<SocketChannel> {
 
 
 	private IdleStateHandler getIdleStateHandler(){
-		return new IdleStateHandler(timeOut,2000000000,0);
+		return new IdleStateHandler(readTimeOut,writeTimeOut,0);
 	}
 
 	private HttpObjectAggregator getHttpObjectAggregator(){
@@ -51,15 +53,24 @@ public class EasyServerInitializer extends ChannelInitializer<SocketChannel> {
 	private void getConfig() {
 
 		JSONObject jsonObject = ConfigUtil.getConfig();
-		Object timeOuto = jsonObject.get("timeOut");
-		Object maxContentLengtho = jsonObject.get("maxContentLength");
+		Object timeOut = jsonObject.get("timeOut");
+		Object maxContentLength2 = jsonObject.get("maxContentLength");
 
-		if(timeOuto!=null) {
-			timeOut = Integer.parseInt(timeOuto.toString());
+		if(timeOut != null){
+			JSONObject timeOut2 = JSONObject.parseObject(JSON.toJSONString(timeOut));
+			Object readTimeOut2 = timeOut2.get("readTimeOut");
+			Object writeTimeOut2 = timeOut2.get("writeTimeOut");
+
+			if(readTimeOut2!=null) {
+				readTimeOut = Integer.parseInt(readTimeOut2.toString());
+			}
+			if(writeTimeOut2!=null) {
+				writeTimeOut = Integer.parseInt(writeTimeOut2.toString());
+			}
 		}
 
-		if(maxContentLengtho != null){
-			maxContentLength = Integer.parseInt(maxContentLengtho.toString());
+		if(maxContentLength2 != null){
+			maxContentLength = Integer.parseInt(maxContentLength2.toString());
 		}
 	}
 }

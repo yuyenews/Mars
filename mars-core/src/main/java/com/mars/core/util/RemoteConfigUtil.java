@@ -2,12 +2,9 @@ package com.mars.core.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.EasyConstant;
-import io.codearte.props2yaml.PropertyTree;
-import io.codearte.props2yaml.Props2YAML;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 public class RemoteConfigUtil {
 

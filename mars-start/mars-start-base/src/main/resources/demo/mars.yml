@@ -4,8 +4,10 @@
 port: 8088
 #配置jwt有效期（默认1），单位:天
 jwtTime: 20
-#请求超时时间（默认10），单位:秒
-timeOut: 10
+#请求超时时间（默认10,2000000000），单位:秒
+timeOut:
+  readTimeOut: 10
+  writeTimeOut: 2000000000
 #请求数据的最大值（默认10485760）
 maxContentLength: 10
 #配置跨域请求

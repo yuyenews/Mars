@@ -1,14 +1,12 @@
 package com.mars.netty.server;
 
 import com.mars.core.logger.MarsLogger;
-import com.mars.core.util.MesUtil;
 import com.mars.netty.thread.RequestThread;
 import com.mars.netty.thread.ThreadPool;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.netty.util.ResponseUtil;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.timeout.IdleStateEvent;
 
 import java.net.InetAddress;
@@ -41,15 +39,16 @@ public class EasyServerHandler extends ChannelHandlerAdapter {
 				requestThread.setCtx(ctx);
 				ThreadPool.execute(requestThread);
 			} else {
-				sendBad(ctx,"处理请求发生错误");
+				ResponseUtil.sendServerError(ctx,"处理请求发生错误");
 			}
 
 		} catch (Exception e) {
 			log.error("处理请求失败!", e);
-			sendBad(ctx,"处理请求发生错误"+e);
+			ResponseUtil.sendServerError(ctx,"处理请求发生错误"+e);
 
 			/* 已经通过线程中的finally 释放请求了，所以这里，在出异常的时候，才释放 */
 			try {
+				ctx.close();
 				httpRequest.release();
 			} catch (Exception e2) {
 			}
@@ -80,33 +79,14 @@ public class EasyServerHandler extends ChannelHandlerAdapter {
 
 			switch (idleStateEvent.state()){
 				case READER_IDLE:
-					sendTimeout(ctx,"请求超时");
+					ResponseUtil.sendTimeout(ctx,"请求超时");
 					break;
 				case WRITER_IDLE:
-					sendTimeout(ctx,"请求超时");
+					ResponseUtil.sendTimeout(ctx,"请求超时");
 					break;
 				default:
 					super.userEventTriggered(ctx, evt);
 			}
 		}
-	}
-
-
-	/**
-	 * 响应
-	 * @param ctx
-	 */
-	private void sendBad(ChannelHandlerContext ctx,String ex){
-		HttpResponse response = new HttpResponse(ctx);
-		response.send(MesUtil.getMes(500,ex).toJSONString(), HttpResponseStatus.BAD_REQUEST);
-	}
-
-	/**
-	 * 响应请求超时
-	 * @param ctx
-	 */
-	private void sendTimeout(ChannelHandlerContext ctx,String ex){
-		HttpResponse response = new HttpResponse(ctx);
-		response.send(MesUtil.getMes(503,ex).toJSONString(), HttpResponseStatus.BAD_REQUEST);
 	}
 }

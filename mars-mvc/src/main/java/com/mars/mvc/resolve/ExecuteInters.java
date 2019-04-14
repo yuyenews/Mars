@@ -44,7 +44,6 @@ public class ExecuteInters {
 					return result;
 				}
 			}
-			
 			return BaseInterceptor.SUCCESS;
 		} catch (Exception e) {
 			logger.error("执行拦截器报错，拦截器类型["+clss.getName()+"]",e);
@@ -60,7 +59,7 @@ public class ExecuteInters {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public static Object executeIntersEnd(List<Object> list,HttpRequest request, HttpResponse response,Object objs) {
+	public static Object executeIntersEnd(List<Object> list,HttpRequest request, HttpResponse response,Object conResult) {
 		Class<?> clss = null;
 		try {
 			
@@ -68,7 +67,7 @@ public class ExecuteInters {
 				clss = obj.getClass();
 				
 				Method method2 = clss.getDeclaredMethod("endRequest", new Class[] { HttpRequest.class, HttpResponse.class, Object.class });
-				Object result = method2.invoke(obj, new Object[] { request, response, objs });
+				Object result = method2.invoke(obj, new Object[] { request, response, conResult });
 				if(!result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
@@ -115,7 +114,7 @@ public class ExecuteInters {
 			return new ArrayList<>();
 		}
 	}
-	
+
 	/**
 	 * 返回错误信息
 	 * @param cls

@@ -65,4 +65,9 @@ public class EasyConstant {
      * 读取远程配置的路径
      */
     public static final String READ_REMOTE_CONFIG = "http://${0}/getConfig";
+
+    /**
+     * 方法返回值为void的标记
+     */
+    public static final String VOID = "void405cb55d6781877e9e930aa8e046098b";
 }

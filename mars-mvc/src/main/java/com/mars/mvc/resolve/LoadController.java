@@ -33,7 +33,6 @@ public class LoadController {
 	/**
 	 * 创建controller对象，并将服务层对象注入进去
 	 */
-	@SuppressWarnings("unchecked")
 	public static void loadContrl() throws Exception{
 		
 		try {

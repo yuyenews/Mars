@@ -1,5 +1,6 @@
 package com.mars.mvc.resolve;
 
+import com.mars.core.constant.EasyConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.MesUtil;
@@ -76,7 +77,7 @@ public class ExecuteEasy {
 				Object result = null;
 				if(st.toLowerCase().trim().equals("void")){
 					method2.invoke(obj, new Object[] { request, response });
-					result = "void405cb55d6781877e9e930aa8e046098b";
+					result = EasyConstant.VOID;
 				} else {
 					result = method2.invoke(obj, new Object[] { request, response });
 				}

@@ -3,6 +3,8 @@ package com.mars.netty.thread;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.util.ConfigUtil;
+import com.mars.netty.util.ResponseUtil;
+import io.netty.channel.ChannelHandlerContext;
 
 import java.util.concurrent.*;
 
@@ -23,8 +25,6 @@ public class ThreadPool {
 
 	private static int keepAliveTime = 60;
 
-
-	
 	/**
 	 * 新增请求的线程
 	 * @param command
@@ -33,7 +33,7 @@ public class ThreadPool {
 		if(pool == null){
 			init();
 			workQueue = new ArrayBlockingQueue<>(maximumPoolSize - corePoolSize);
-			pool = new ThreadPoolExecutor(corePoolSize,maximumPoolSize, keepAliveTime,TimeUnit.SECONDS,workQueue);
+			pool = new ThreadPoolExecutor(corePoolSize,maximumPoolSize, keepAliveTime,TimeUnit.SECONDS,workQueue,new MarsRejectedExecutionHandler());
 		}
 		pool.execute(command);
 	}
