@@ -30,17 +30,21 @@ public class MarsJunitStart {
      */
     public static void start(BaseInitJdbc baseInitJdbc,String packName,Object obj) {
         try {
+            if(constants.getAttr(EasyConstant.HAS_TEST) == null){
+                log.info("程序启动中......");
 
-            log.info("程序启动中......");
+                /* 加载框架数据 */
+                load(baseInitJdbc,packName);
 
-            /* 加载框架数据 */
-            load(baseInitJdbc,packName);
+                /* 标识createbean方法已经调用完毕 */
+                constants.setAttr(EasyConstant.HAS_START,"yes");
 
-            /* 标识createbean方法已经调用完毕 */
-            constants.setAttr(EasyConstant.HAS_START,"yes");
+                /* 启动after方法 */
+                StartAfter.after();
 
-            /* 启动after方法 */
-            StartAfter.after();
+                /* 标记已经为单测创建过资源了 */
+                constants.setAttr(EasyConstant.HAS_TEST,"yes");
+            }
 
             /* 给单测注入属性 */
             autoWrite(obj);
