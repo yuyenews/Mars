@@ -102,7 +102,6 @@ public class BeanFactory {
 		
 		try {
 
-			
 			Object objs2 = constants.getAttr(EasyConstant.EASYBEAN_OBJECTS);
 			Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
 			if(objs2 != null) {
