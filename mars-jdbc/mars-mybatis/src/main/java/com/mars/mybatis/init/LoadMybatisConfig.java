@@ -25,6 +25,19 @@ public class LoadMybatisConfig {
 	private static EasySpace easySpace = EasySpace.getEasySpace();
 
 	/**
+	 * 默认配置文件的mapper文件占位符
+	 */
+	private static final String MAPPERS = "{mappers}";
+	/**
+	 * 默认配置文件的数据源占位符
+	 */
+	private static final String ENVIRONMENTS ="{environments}";
+	/**
+	 * 默认配置文件的默认数据源占位符
+	 */
+	private static final String DEF = "{def}";
+
+	/**
 	 * 获取配置文件并以字符串形式返回
 	 * @return str
 	 */
@@ -34,23 +47,24 @@ public class LoadMybatisConfig {
 			String str = FileUtil.readFileString("/"+FileUtil.local);
 			if(str == null) {
 				str = defaultConfig();
+				str = str.replace(ENVIRONMENTS,getDataSources());
+				str = str.replace(MAPPERS,getMappers());
+			} else {
+				/* 禁止在自定义mybatis配置文件里配置数据源 */
+				if(str.indexOf("environment") > -1 || str.indexOf("dataSource") > -1 || str.indexOf("environments") > -1) {
+					throw new Exception("不可以在mybatis配置文件里配置数据源");
+				}
+
+				/* 禁止在自定义mybatis配置文件里配置mappers */
+				if(str.indexOf("mappers") > -1 || str.indexOf("mapper") > -1) {
+					throw new Exception("不可以在mybatis配置文件里配置mappers");
+				}
+				str = str.replace("</configuration>","");
+				str = str + "<environments default=\""+DEF+"\">" + getDataSources() + "</environments>";
+				str = str + "<mappers>" + getMappers() + "</mappers>";
+				str = str+"</configuration>";
 			}
-			
-			/* 禁止在mybatis配置文件里配置数据源 */
-			if(str.indexOf("environment") > -1 || str.indexOf("dataSource") > -1 || str.indexOf("environments") > -1) {
-				throw new Exception("不可以在mybatis配置文件里配置数据源");
-			}
-			
-			/* 禁止在mybatis配置文件里配置mappers */
-			if(str.indexOf("mappers") > -1 || str.indexOf("mapper") > -1) {
-				throw new Exception("不可以在mybatis配置文件里配置mappers");
-			}
-			
-			str = str.replaceAll("</configuration>", "");
-			str += getDataSources();
-			str += getMappers();
-			str += "</configuration>";
-			
+			str = str.replace(DEF, easySpace.getAttr("defaultDataSource").toString());
 			return str;
 		} catch (Exception e) {
 			throw new Exception("加载mybatis配置出错",e);
@@ -67,11 +81,10 @@ public class LoadMybatisConfig {
 			
 			Set<String> xmls = ReadXml.loadXmlList(mappers);
 			
-			StringBuffer buffer = new StringBuffer("<mappers>");
+			StringBuffer buffer = new StringBuffer();
 			for(String str : xmls) {
 				buffer.append("<mapper resource=\""+str+"\"/>");
 			}
-			buffer.append("</mappers>");
 			return buffer.toString();
 		} catch (Exception e) {
 			throw new Exception("加载mybatis配置文件出错",e);
@@ -88,7 +101,7 @@ public class LoadMybatisConfig {
 			
 			JSONArray array = ConfigUtil.getJdbcConfig().getJSONArray("dataSource");
 
-			StringBuffer dataSource = new StringBuffer("<environments default=\"${def}\">")  ;
+			StringBuffer dataSource = new StringBuffer()  ;
 
 			List<String> daNames = new ArrayList<>();
 			
@@ -122,10 +135,8 @@ public class LoadMybatisConfig {
 			
 			easySpace.setAttr("dataSourceNames", daNames);
 			easySpace.setAttr("defaultDataSource", def);
-
-			dataSource.append("</environments>");
 			
-			return dataSource.toString().replace("${def}", def);
+			return dataSource.toString();
 		} catch (Exception e) {
 			throw new Exception("加载mybatis数据源出错",e);
 		}
@@ -177,6 +188,12 @@ public class LoadMybatisConfig {
 			stringBuffer.append("<property name=\"dialect\" value=\""+dialect+"\" />");
 			stringBuffer.append("</plugin>");
 			stringBuffer.append("</plugins>");
+			stringBuffer.append("<environments default=\""+DEF+"\">");
+			stringBuffer.append(ENVIRONMENTS);
+			stringBuffer.append("</environments>");
+			stringBuffer.append("<mappers>");
+			stringBuffer.append(MAPPERS);
+			stringBuffer.append("</mappers>");
 			stringBuffer.append("</configuration>");
 
 			return stringBuffer.toString();
