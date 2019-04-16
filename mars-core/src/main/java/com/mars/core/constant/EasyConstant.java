@@ -30,6 +30,10 @@ public class EasyConstant {
      */
     public static final String HAS_START="hasStart";
     /**
+     * 记录是否已经启动过单测了
+     */
+    public static final String HAS_TEST="hasTest";
+    /**
      * 所有的controller类信息
      */
     public static final String CONTROLLERS = "contorllers";

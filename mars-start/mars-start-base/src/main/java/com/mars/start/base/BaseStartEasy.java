@@ -54,7 +54,7 @@ public class BaseStartEasy {
 	}
 	
 	/**
-	 * 加载控制层所有的类和所需数据
+	 * 加载所需的资源
 	 */
 	private static void load(Class<?> clazz, BaseInitJdbc baseInitJdbc) throws Exception{
 		

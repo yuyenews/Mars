@@ -56,7 +56,7 @@ public class MarsJunitStart {
     }
 
     /**
-     * 加载控制层所有的类和所需数据
+     * 加载所需的资源
      */
     private static void load(BaseInitJdbc baseInitJdbc,String packName) throws Exception{
 
