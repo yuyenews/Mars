@@ -99,7 +99,6 @@ public class BeanFactory {
 	 * @return duix
 	 */
 	public static Object getBean(String name) throws Exception {
-		
 		try {
 
 			Object objs2 = constants.getAttr(EasyConstant.EASYBEAN_OBJECTS);
