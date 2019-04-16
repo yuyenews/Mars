@@ -34,7 +34,7 @@ public class BeanFactory {
 
 			Object hasStart = constants.getAttr(EasyConstant.HAS_START);
 			if(hasStart != null){
-				throw new Exception("只有Goge才可以调用此方法，不可以手动显式调用");
+				throw new Exception("只有Mars才可以调用此方法，不可以手动显式调用");
 			}
 			
 			Map<String,Class<?>> list = new HashMap<>();
