@@ -191,7 +191,13 @@ public class DBHelper {
 
             JSONObject jdbcConfig = ConfigUtil.getJdbcConfig();
 
-            JSONArray dataSourceList = jdbcConfig.getJSONArray(EasyConstant.DATA_SOURCE);
+            JSONArray dataSourceList = new JSONArray();
+            Object dataSources = jdbcConfig.get(EasyConstant.DATA_SOURCE);
+            if(dataSources instanceof JSONArray){
+                dataSourceList = (JSONArray)dataSources;
+            } else {
+                dataSourceList.add(dataSources);
+            }
             if (dataSourceList != null) {
                 for (int i = 0; i < dataSourceList.size(); i++) {
                     JSONObject dataSource = dataSourceList.getJSONObject(i);

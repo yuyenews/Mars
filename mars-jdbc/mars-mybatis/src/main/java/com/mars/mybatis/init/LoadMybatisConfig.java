@@ -99,7 +99,15 @@ public class LoadMybatisConfig {
 		try {
 			String def = "";
 			
-			JSONArray array = ConfigUtil.getJdbcConfig().getJSONArray("dataSource");
+			JSONArray array = new JSONArray();
+
+			Object dataSources = ConfigUtil.getJdbcConfig().get("dataSource");
+
+			if(dataSources instanceof JSONArray){
+				array = (JSONArray)dataSources;
+			} else {
+				array.add(dataSources);
+			}
 
 			StringBuffer dataSource = new StringBuffer()  ;
 
