@@ -9,8 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface EasyAopType {
-	
-	Class<?> className();
-	
+public @interface MarsBean {
+	String value() default "";
 }

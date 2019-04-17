@@ -1,7 +1,7 @@
 package com.mars.jdbc.load;
 
 
-import com.mars.core.annotation.EasyDao;
+import com.mars.core.annotation.MarsDao;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
 import com.mars.core.model.EasyBeanModel;
@@ -38,9 +38,9 @@ public class LoadDaos {
 
                 for(Map<String,Object> map : easyDaos) {
                     Class<?> cls = (Class) map.get("className");
-                    EasyDao easyDao = (EasyDao)map.get("annotation");
+                    MarsDao marsDao = (MarsDao)map.get("annotation");
 
-                    String beanName = easyDao.value();
+                    String beanName = marsDao.value();
                     if(beanName == null || beanName.equals("")){
                         beanName = StringUtil.getFirstLowerCase(cls.getSimpleName());
                     }

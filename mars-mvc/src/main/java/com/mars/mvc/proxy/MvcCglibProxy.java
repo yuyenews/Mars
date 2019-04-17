@@ -1,7 +1,7 @@
 package com.mars.mvc.proxy;
 
 import com.mars.mvc.logs.LogAop;
-import com.mars.core.annotation.EasyLog;
+import com.mars.core.annotation.MarsLog;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -43,8 +43,8 @@ public class MvcCglibProxy implements MethodInterceptor {
 	public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
 		LogAop c = null;
 
-		EasyLog easyLog = method.getAnnotation(EasyLog.class);
-		if(easyLog != null){
+		MarsLog marsLog = method.getAnnotation(MarsLog.class);
+		if(marsLog != null){
 			c = new LogAop(cls,method.getName());
 			c.startMethod(args);
 		}

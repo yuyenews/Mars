@@ -16,7 +16,7 @@ import com.mars.core.annotation.enums.RequestMetohd;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface EasyMapping {
+public @interface MarsMapping {
 		
 	    String value() default "";  
 	    RequestMetohd method() default RequestMetohd.GET;  

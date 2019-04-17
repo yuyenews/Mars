@@ -2,7 +2,7 @@ package com.mars.mvc.resolve;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.mvc.base.BaseInterceptor;
-import com.mars.core.annotation.EasyInterceptor;
+import com.mars.core.annotation.MarsInterceptor;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
 import com.mars.core.logger.MarsLogger;
@@ -97,8 +97,8 @@ public class ExecuteInters {
 
 				for(Map<String,Object> map : interceptors) {
 
-					EasyInterceptor easyInterceptor = (EasyInterceptor)map.get("annotation");
-					String pattern = easyInterceptor.pattern();
+					MarsInterceptor marsInterceptor = (MarsInterceptor)map.get("annotation");
+					String pattern = marsInterceptor.pattern();
 
 					if(MatchUtil.isMatch(pattern, uriEnd)){
 						Class cls = (Class)map.get("className");

@@ -1,6 +1,6 @@
 package com.mars.ioc.load;
 
-import com.mars.core.annotation.EasyBean;
+import com.mars.core.annotation.MarsBean;
 import com.mars.core.annotation.Resource;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
@@ -52,9 +52,9 @@ public class LoadEasyBean {
 			for(Map<String,Object> map : contorls) {
 				
 				Class<?> cls = (Class<?>)map.get("className");
-				EasyBean easyBean = (EasyBean)map.get("annotation");
+				MarsBean marsBean = (MarsBean)map.get("annotation");
 				
-				String beanName = easyBean.value();
+				String beanName = marsBean.value();
 				if(beanName == null || beanName.equals("")) {
 					beanName = StringUtil.getFirstLowerCase(cls.getSimpleName());
 				}

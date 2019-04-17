@@ -2,7 +2,7 @@ package com.mars.mvc.resolve;
 
 import com.mars.mvc.proxy.MvcCglibProxy;
 import com.mars.core.annotation.Controller;
-import com.mars.core.annotation.EasyMapping;
+import com.mars.core.annotation.MarsMapping;
 import com.mars.core.annotation.Resource;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
@@ -64,14 +64,14 @@ public class LoadController {
 					/* 获取controller的所有方法 */
 					Method[] methods = cls.getMethods();
 					for(Method method : methods) {
-						EasyMapping easyMapping = method.getAnnotation(EasyMapping.class);
-						if(easyMapping != null) {
+						MarsMapping marsMapping = method.getAnnotation(MarsMapping.class);
+						if(marsMapping != null) {
 							EasyMappingModel easyMappingModel = new EasyMappingModel();
 							easyMappingModel.setObject(obj);
-							easyMappingModel.setRequestMetohd(easyMapping.method());
+							easyMappingModel.setRequestMetohd(marsMapping.method());
 							easyMappingModel.setMethod(method.getName());
 							easyMappingModel.setCls(cls);
-							controlObjects.put(easyMapping.value(), easyMappingModel);
+							controlObjects.put(marsMapping.value(), easyMappingModel);
 						}
 					}
 				}

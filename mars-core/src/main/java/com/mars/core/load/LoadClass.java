@@ -39,24 +39,24 @@ public class LoadClass {
 			for (String str : classList) {
 				Class<?> cls = Class.forName(str);
 				Controller controller = cls.getAnnotation(Controller.class);
-				EasyBean easyBean = cls.getAnnotation(EasyBean.class);
-				EasyInterceptor easyInterceptor = cls.getAnnotation(EasyInterceptor.class);
-				EasyDao easyDao = cls.getAnnotation(EasyDao.class);
-				EasyAfter easyAfter = cls.getAnnotation(EasyAfter.class);
+				MarsBean marsBean = cls.getAnnotation(MarsBean.class);
+				MarsInterceptor marsInterceptor = cls.getAnnotation(MarsInterceptor.class);
+				MarsDao marsDao = cls.getAnnotation(MarsDao.class);
+				MarsAfter marsAfter = cls.getAnnotation(MarsAfter.class);
 
 				if(controller != null) {
 					LoadNactive.loadController(cls, controller);
 				}
-				if(easyBean != null) {
-					LoadNactive.loadEasyBean(cls, easyBean);
+				if(marsBean != null) {
+					LoadNactive.loadEasyBean(cls, marsBean);
 				}
-				if(easyInterceptor != null){
-					LoadNactive.loadInterceptor(cls,easyInterceptor);
+				if(marsInterceptor != null){
+					LoadNactive.loadInterceptor(cls, marsInterceptor);
 				}
-				if(easyDao != null){
-					LoadNactive.loadDao(cls,easyDao);
+				if(marsDao != null){
+					LoadNactive.loadDao(cls, marsDao);
 				}
-				if(easyAfter != null){
+				if(marsAfter != null){
 					LoadNactive.loadEasyAfter(cls);
 				}
 			}

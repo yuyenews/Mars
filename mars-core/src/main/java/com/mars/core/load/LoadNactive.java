@@ -1,9 +1,9 @@
 package com.mars.core.load;
 
 import com.mars.core.annotation.Controller;
-import com.mars.core.annotation.EasyBean;
-import com.mars.core.annotation.EasyDao;
-import com.mars.core.annotation.EasyInterceptor;
+import com.mars.core.annotation.MarsBean;
+import com.mars.core.annotation.MarsDao;
+import com.mars.core.annotation.MarsInterceptor;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
 
@@ -54,9 +54,9 @@ public class LoadNactive {
     /**
      * 将所有easybean存到全局存储空间
      * @param cls
-     * @param easyBean
+     * @param marsBean
      */
-    public static void loadEasyBean(Class<?> cls, EasyBean easyBean) {
+    public static void loadEasyBean(Class<?> cls, MarsBean marsBean) {
         Object objs = constants.getAttr(EasyConstant.EASYBEANS);
         List<Map<String,Object>> easyBeans = new ArrayList<>();
         if(objs != null) {
@@ -64,7 +64,7 @@ public class LoadNactive {
         }
         Map<String,Object> eb = new HashMap<>();
         eb.put("className", cls);
-        eb.put("annotation", easyBean);
+        eb.put("annotation", marsBean);
         easyBeans.add(eb);
         constants.setAttr(EasyConstant.EASYBEANS, easyBeans);
     }
@@ -74,7 +74,7 @@ public class LoadNactive {
      * @param cls
      * @param interceptor
      */
-    public static void loadInterceptor(Class<?> cls, EasyInterceptor interceptor){
+    public static void loadInterceptor(Class<?> cls, MarsInterceptor interceptor){
         Object objs = constants.getAttr(EasyConstant.INTERCEPTORS);
         List<Map<String,Object>> interceptors = new ArrayList<>();
         if(objs != null) {
@@ -90,9 +90,9 @@ public class LoadNactive {
     /**
      * 加载dao
      * @param cls
-     * @param easyDao
+     * @param marsDao
      */
-    public static void loadDao(Class<?> cls, EasyDao easyDao){
+    public static void loadDao(Class<?> cls, MarsDao marsDao){
         Object objs = constants.getAttr(EasyConstant.EASYDAOS);
         List<Map<String,Object>> easyDaos = new ArrayList<>();
         if(objs != null) {
@@ -100,7 +100,7 @@ public class LoadNactive {
         }
         Map<String,Object> eb = new HashMap<>();
         eb.put("className", cls);
-        eb.put("annotation", easyDao);
+        eb.put("annotation", marsDao);
         easyDaos.add(eb);
         constants.setAttr(EasyConstant.EASYDAOS, easyDaos);
     }

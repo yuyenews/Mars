@@ -1,8 +1,8 @@
 package com.mars.start.remote;
 
 import com.mars.core.annotation.Controller;
-import com.mars.core.annotation.EasyLog;
-import com.mars.core.annotation.EasyMapping;
+import com.mars.core.annotation.MarsLog;
+import com.mars.core.annotation.MarsMapping;
 import com.mars.core.annotation.enums.RequestMetohd;
 import com.mars.core.remote.config.RemoteConfigService;
 import com.mars.server.server.request.HttpRequest;
@@ -23,8 +23,8 @@ public class RemoteConfigController {
      * @param response
      * @return 结果
      */
-    @EasyMapping(value = "reloadConfig",method = RequestMetohd.POST)
-    @EasyLog
+    @MarsMapping(value = "reloadConfig",method = RequestMetohd.POST)
+    @MarsLog
     public Map<String,Object> reloadConfig(HttpRequest request, HttpResponse response) {
 
         /* TODO(功能开发中) */

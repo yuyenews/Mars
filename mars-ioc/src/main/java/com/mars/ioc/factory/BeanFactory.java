@@ -1,8 +1,8 @@
 package com.mars.ioc.factory;
 
 import com.mars.aop.proxy.CglibProxy;
-import com.mars.core.annotation.EasyAop;
-import com.mars.core.annotation.EasyAopType;
+import com.mars.core.annotation.MarsAop;
+import com.mars.core.annotation.MarsAopType;
 import com.mars.core.annotation.Traction;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
@@ -64,15 +64,15 @@ public class BeanFactory {
 	 */
 	private static void getAopClass(Class<?> className,Map<String,Class<?>> list) throws Exception {
 		
-		EasyAopType allEasyAop = className.getAnnotation(EasyAopType.class);
+		MarsAopType allEasyAop = className.getAnnotation(MarsAopType.class);
 		
 		Method[] methods = className.getMethods();
 		for(Method method : methods) {
-			EasyAop easyAop = method.getAnnotation(EasyAop.class);
+			MarsAop marsAop = method.getAnnotation(MarsAop.class);
 			Traction traction = method.getAnnotation(Traction.class);
 			
-			/* 校验同一个方法上不能同时存在aop和trac注解 */
-			if(easyAop != null && traction != null) {
+			/* 校验同一个方法上不能同时存在aop和traction注解 */
+			if(marsAop != null && traction != null) {
 				log.error(className.getName()+"类中的["+method.getName()+"]方法同时存在EasyAop和Traction注解");
 				throw new Exception(className.getName()+"类中的["+method.getName()+"]方法同时存在EasyAop和Traction注解");
 			}
@@ -83,8 +83,8 @@ public class BeanFactory {
 			}
 			
 			/* 如果方法上也有AOP注解，那么以方法上的为准 */
-			if(easyAop != null) {
-				list.put(method.getName(),easyAop.className());
+			if(marsAop != null) {
+				list.put(method.getName(), marsAop.className());
 			} else if(traction != null) {
 				Class<?> aopClass = Class.forName(traction.className());
 				list.put(method.getName(),aopClass);
