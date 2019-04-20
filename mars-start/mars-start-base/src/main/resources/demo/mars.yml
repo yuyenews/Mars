@@ -41,6 +41,10 @@ jdbc:
   #配置要扫描的mapper.xml 文件存放路径
   mappers: mappers
 
+  #mybatis配置文件路径，必须在classpath目录下
+  #这个属性不建议配置，除非你有自己需要对mybatis配置的东西，否则不要配这个属性
+  config-location: mybatis.xml
+
 #log4j2 配置文件的路径
 #相对路径必须以classPath- 开头，区分大小写，并且文件必须直接或者间接在classpath目录下
 #不可以有多余的空格

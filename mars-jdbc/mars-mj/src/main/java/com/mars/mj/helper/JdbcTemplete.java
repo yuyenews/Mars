@@ -242,7 +242,7 @@ public class JdbcTemplete {
         for (Field f : fields) {
             String pre = "{" + f.getName() + "}";
             if (sql.indexOf(pre) > -1) {
-                sql.replace(pre, f.get(object).toString());
+                sql = sql.replace(pre, f.get(object).toString());
             }
         }
 
