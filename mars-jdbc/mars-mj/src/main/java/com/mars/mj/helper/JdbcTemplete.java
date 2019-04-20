@@ -235,18 +235,23 @@ public class JdbcTemplete {
     private String builderSql(String sql, Object args) throws Exception {
 
         Class cls = args.getClass();
-        Object object = cls.getDeclaredConstructor().newInstance();
 
         /* 替换sql中的占位符 */
         Field[] fields = cls.getDeclaredFields();
         for (Field f : fields) {
+            f.setAccessible(true);
             String pre = "{" + f.getName() + "}";
             if (sql.indexOf(pre) > -1) {
-                sql = sql.replace(pre, f.get(object).toString());
+                String ftname = f.getType().getName();
+                if(ftname.equals(String.class.getName()) || ftname.equals(Character.class.getName())){
+                    sql = sql.replace(pre, "'"+f.get(args).toString()+"'");
+                } else {
+                    sql = sql.replace(pre, f.get(args).toString());
+                }
             }
         }
 
-        return "";
+        return sql;
     }
 
     /**
