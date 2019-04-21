@@ -2,65 +2,67 @@
     <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
 </h1>
 <h4 align="center">
-    一个来自火星的框架
+    a frame from Mars
 </h4>
 <br/>
 
-<h2>我是谁</h2>
+<h2>Who i am</h2>
 
-<p>Mars-java是一个不需要容器的javaWeb开发框架，以netty作http服务管理，支持AOP,IOC,MVC,并且集成了Mybatis作为持久层，除此之外还提供了Mars-config 来支撑远程配置,Mars-extends 来支持更多的功能以及工具类</p>
+<p>
+    Mars-java is a javaWeb development framework that does not require a container. It uses netty for http service management, supports AOP, IOC, MVC, and integrates Mybatis as a persistence layer. In addition, it provides Mars-config to support remote configuration. Mars-extends to support more features and tools
+</p>
 
-<h2>我能做什么</h2>
+<h2>What can I do</h2>
 
 <p>
     &nbsp;
-    - 使用netty做的http服务
+    - http service using netty
     <br/>
     &nbsp;
-    - 使用JWT做的会话管理
+    - Session management using JWT
     <br/>
     &nbsp;
-    - 支持AOP,IOC,MVC,Mybatis,事务管理
+    - Support AOP, IOC, MVC, Mybatis, transaction management
     <br/>
     &nbsp;
-    - 通过 Mars-config 可以远程配置【迭代中】
+    - Remote configuration via Mars-config [iteration]
     <br/>
     &nbsp;
-    - 通过 Mars-cloud 可以分布式部署【开发中】
+    - Distributed deployment via Mars-cloud [under development]
 </p>
 
-<h2>我不能做什么</h2>
+<h2>What can't I do</h2>
 
 <p>
     &nbsp;
-    - 只支持main方法启动，不可以打war包
+    - Only support the main method to start, can not play the war package
     <br/>
     &nbsp;
-    - 只能给前端返回json，二进制流，不支持转发和重定向
+    - Can only return json, binary stream to the front end, does not support forwarding and redirection
 </p>
 
-<h2>帮助文档</h2>
+<h2>Help document</h2>
 
 [Document](http://mars.yuyenews.com/doc.html)
 
-<h2>扩展包</h2>
+<h2>Expansion pack</h2>
 
-<p>支持redis连接</p>
+<p>Support redis connection</p>
 
-<p>封装了 Email, MD5, AES 和 其他工具类 并 集成了hutool</p>
+<p>Encapsulates Email, MD5, AES and other tool classes and integrates hutool</p>
 
 [Extension package](https://github.com/yuyenews/Mars-extends)
 
-<h2>简单对比</h2>
+<h2>Simple comparison</h2>
 
 <table>
     <tbody>
         <tr class="firstRow">
-            <td>名称</td>
+            <td>name</td>
             <td>AOP</td>
             <td>IOC</td>
             <td>MVC</td>
-            <td>持久层</td>
+            <td>ORM</td>
             <td>configuration file</td>
             <td>startup method</td>
         </tr>
@@ -69,25 +71,25 @@
             <td>OK</td>
             <td>OK</td>
             <td>OK</td>
-            <td>支持mybatis，并有自己的JDBC</td>
-            <td>只有一个，并只支持远程配置</td>
-            <td>Main方法</td>
+            <td>mybatis，JDBCTemplete</td>
+            <td>Only one and only supports remote configuration</td>
+            <td>Main Method</td>
         </tr>
         <tr>
             <td>Springboot</td>
             <td>OK</td>
             <td>OK</td>
             <td>OK</td>
-            <td>支持大部分主流框架</td>
-            <td>只有一个，并只支持远程配置</td>
-            <td>Main方法，War包+Tomcat</td>
+            <td>Support most mainstream frameworks</td>
+            <td>Only one and only supports remote configuration</td>
+            <td>Main Method，War+Tomcat</td>
         </tr>
     </tbody>
 </table>
 
-<h2>联系我</h2>
+<h2>contact</h2>
 
-<p>如果你对此框架感兴趣，可以加我的QQ群：773291321</p>
+<p>If you are interested in this framework, you can add my QQ group:773291321</p>
 
 <p><img src="https://images.gitee.com/uploads/images/2019/0314/230940_795215de_2331383.png"/></p>
 
