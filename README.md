@@ -71,7 +71,7 @@
             <td>OK</td>
             <td>OK</td>
             <td>OK</td>
-            <td>mybatis，JDBCTemplete</td>
+            <td>Mybatis，JDBCTemplete</td>
             <td>Only one and only supports remote configuration</td>
             <td>Main Method</td>
         </tr>
