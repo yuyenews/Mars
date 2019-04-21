@@ -43,7 +43,7 @@
 
 <h2>Help document</h2>
 
-[Document](http://mars.yuyenews.com/doc.html)
+[Document](http://mars-framework.com/doc.html)
 
 <h2>Expansion pack</h2>
 
