@@ -1,9 +1,6 @@
 <h1>
     <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
 </h1>
-<h4 align="center">
-    a frame from Mars
-</h4>
 <br/>
 
 <h2>Who i am</h2>
