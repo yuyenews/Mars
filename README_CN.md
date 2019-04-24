@@ -1,10 +1,6 @@
 <h1>
     <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
 </h1>
-<br/>
-
-<h2>我是谁</h2>
-
 <p>Mars-java是一个不需要容器的javaWeb开发框架，以netty作http服务管理，支持AOP,IOC,MVC,并且集成了Mybatis作为持久层，除此之外还提供了Mars-config 来支撑远程配置,Mars-extends 来支持更多的功能以及工具类</p>
 
 <h2>我能做什么</h2>
