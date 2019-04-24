@@ -44,7 +44,6 @@ public class RequestParser {
 	 *
 	 * @throws Exception 异常
 	 */
-	@SuppressWarnings("unchecked")
 	public Map<String, Object> parse() throws Exception {
 		HttpMethod method = fullReq.method();
 
@@ -66,22 +65,22 @@ public class RequestParser {
 
 			Map<String, FileUpLoad> files = new Hashtable<>();
 
-			for (InterfaceHttpData parm : parmList) {
+			for (InterfaceHttpData parmListItem : parmList) {
 
-				if (parm instanceof Attribute) {
-					Attribute data = (Attribute) parm;
-					List<Object> ps = null;
-					Object objs = parmMap.get(data.getName());
-					if (objs == null) {
-						ps = new ArrayList<>();
+				if (parmListItem instanceof Attribute) {
+					Attribute data = (Attribute) parmListItem;
+					List<Object> params = null;
+					Object paramItem = parmMap.get(data.getName());
+					if (paramItem == null) {
+						params = new ArrayList<>();
 					} else {
-						ps = (List<Object>) objs;
+						params = (List<Object>) paramItem;
 					}
-					ps.add(data.getValue());
-					parmMap.put(data.getName(), ps);
+					params.add(data.getValue());
+					parmMap.put(data.getName(), params);
 
-				} else if (parm instanceof MixedFileUpload) {
-					MixedFileUpload fileUpload = (MixedFileUpload) parm;
+				} else if (parmListItem instanceof MixedFileUpload) {
+					MixedFileUpload fileUpload = (MixedFileUpload) parmListItem;
 
 					byte[] bs = fileUpload.get();
 
