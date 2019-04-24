@@ -14,13 +14,13 @@ import com.mars.mvc.resolve.LoadController;
 import com.mars.mvc.servlcet.EasyCoreServlet;
 
 /**
- * 启动easy框架
+ * 启动Mars框架
  * @author yuye
  *
  */
-public class BaseStartEasy {
+public class BaseStartMars {
 	
-	private static MarsLogger log = MarsLogger.getLogger(BaseStartEasy.class);
+	private static MarsLogger log = MarsLogger.getLogger(BaseStartMars.class);
 	
 	/**
 	 * 获取全局存储空间 
@@ -28,7 +28,7 @@ public class BaseStartEasy {
 	private static EasySpace constants = EasySpace.getEasySpace();
 
 	/**
-	 * 启动easy框架
+	 * 启动Mars框架
 	 * @param clazz
 	 */
 	public static void start(Class<?> clazz, BaseInitJdbc baseInitJdbc) {

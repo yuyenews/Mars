@@ -1,23 +1,19 @@
 package com.mars.start;
 
 import com.mars.mybatis.init.InitJdbc;
-import com.mars.start.base.BaseStartEasy;
+import com.mars.start.base.BaseStartMars;
 
 /**
- * 启动easy框架
+ * 启动Mars框架
  * @author yuye
  *
  */
-public class StartEasy {
-	
-
-
+public class StartMars {
 	/**
-	 * 启动easy框架
+	 * 启动Mars框架
 	 * @param clazz
 	 */
 	public static void start(Class<?> clazz) {
-		BaseStartEasy.start(clazz,new InitJdbc());
+		BaseStartMars.start(clazz,new InitJdbc());
 	}
-	
 }
