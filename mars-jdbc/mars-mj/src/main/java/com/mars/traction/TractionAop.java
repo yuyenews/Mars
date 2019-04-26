@@ -1,10 +1,11 @@
 package com.mars.traction;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.mars.aop.base.BaseAop;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
+import com.mars.core.enums.TractionLevel;
 import com.mars.core.logger.MarsLogger;
+import com.mars.core.model.AopModel;
 import com.mars.core.util.ThreadUtil;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ import java.util.Map;
  * @author yuye
  *
  */
-public class TractionAop implements BaseAop {
+public class TractionAop {
 
 	private MarsLogger logger = MarsLogger.getLogger(TractionAop.class);
 
@@ -29,7 +30,7 @@ public class TractionAop implements BaseAop {
 	 * 
 	 * @param args canshu
 	 */
-	public void startMethod(Object[] args) {
+	public void startMethod(Object[] args, AopModel aopModel) {
 		try {
 
 			Map<String, DruidDataSource> maps = (Map<String,DruidDataSource>)easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
@@ -39,6 +40,7 @@ public class TractionAop implements BaseAop {
 			for(String key : maps.keySet()) {
 				Connection connection = maps.get(key).getConnection();
 				connection.setAutoCommit(false);
+				connection.setTransactionIsolation(aopModel.getTractionLevel().getLevel());
 				connections.put(key, connection);
 			}
 

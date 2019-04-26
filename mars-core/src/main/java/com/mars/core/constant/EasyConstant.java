@@ -74,4 +74,9 @@ public class EasyConstant {
      * 方法返回值为void的标记
      */
     public static final String VOID = "void405cb55d6781877e9e930aa8e046098b";
+
+    /**
+     * 事务管理类
+     */
+    public static final String TRACTION_CLASS = "com.mars.traction.TractionAop";
 }

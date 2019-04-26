@@ -1,12 +1,15 @@
 package com.mars.traction;
 
-import com.mars.aop.base.BaseAop;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
+import com.mars.core.enums.TractionLevel;
 import com.mars.core.logger.MarsLogger;
+import com.mars.core.model.AopModel;
 import com.mars.core.util.ThreadUtil;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.TransactionIsolationLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +19,7 @@ import java.util.Map;
  * @author yuye
  *
  */
-public class TractionAop implements BaseAop {
+public class TractionAop {
 
 	private MarsLogger logger = MarsLogger.getLogger(TractionAop.class);
 
@@ -29,15 +32,17 @@ public class TractionAop implements BaseAop {
 	 * 
 	 * @param args canshu
 	 */
-	@SuppressWarnings("unchecked")
-	public void startMethod(Object[] args) {
+	public void startMethod(Object[] args, AopModel aopModel) {
 		try {
 			Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>)easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
 			
 			Map<String,SqlSession> sqlSessions = new HashMap<>();
 			
 			for(String key : maps.keySet()) {
-				sqlSessions.put(key, maps.get(key).openSession(false));
+				ExecutorType executorType = ExecutorType.valueOf(aopModel.getExecutorType().getCode());
+				TransactionIsolationLevel transactionIsolationLevel = TransactionIsolationLevel.valueOf(aopModel.getTractionLevel().getCode());
+				SqlSession sqlSession = maps.get(key).openSession(executorType, transactionIsolationLevel);
+				sqlSessions.put(key, sqlSession);
 			}
 
 			easySpace.setAttr(ThreadUtil.getThreadIdToTraction(), sqlSessions);
@@ -89,5 +94,4 @@ public class TractionAop implements BaseAop {
 			easySpace.remove(ThreadUtil.getThreadIdToTraction());
 		}
 	}
-
 }

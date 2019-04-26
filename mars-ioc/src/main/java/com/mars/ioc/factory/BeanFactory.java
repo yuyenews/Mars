@@ -7,6 +7,7 @@ import com.mars.core.annotation.Traction;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
 import com.mars.core.logger.MarsLogger;
+import com.mars.core.model.AopModel;
 import com.mars.core.model.EasyBeanModel;
 
 import java.lang.reflect.Method;
@@ -37,7 +38,7 @@ public class BeanFactory {
 				throw new Exception("只有Mars才可以调用此方法，不可以手动显式调用");
 			}
 			
-			Map<String,Class<?>> list = new HashMap<>();
+			Map<String, AopModel> list = new HashMap<>();
 			
 			/* 判断当前类中有没有方法有 aop注解 */
 			getAopClass(className,list);
@@ -62,7 +63,7 @@ public class BeanFactory {
 	 * @param list jihe
 	 * @throws Exception cuowu
 	 */
-	private static void getAopClass(Class<?> className,Map<String,Class<?>> list) throws Exception {
+	private static void getAopClass(Class<?> className,Map<String,AopModel> list) throws Exception {
 		
 		MarsAopType allEasyAop = className.getAnnotation(MarsAopType.class);
 		
@@ -79,15 +80,23 @@ public class BeanFactory {
 			
 			/* 如果类的AOP注解不为空，那么将注解中的监听类 添加到集合中 */
 			if(allEasyAop != null) {
-				list.put(method.getName(),allEasyAop.className());
+				AopModel aopModel = new AopModel();
+				aopModel.setCls(allEasyAop.className());
+				list.put(method.getName(),aopModel);
 			}
 			
 			/* 如果方法上也有AOP注解，那么以方法上的为准 */
 			if(marsAop != null) {
-				list.put(method.getName(), marsAop.className());
+				AopModel aopModel = new AopModel();
+				aopModel.setCls(marsAop.className());
+				list.put(method.getName(), aopModel);
 			} else if(traction != null) {
 				Class<?> aopClass = Class.forName(traction.className());
-				list.put(method.getName(),aopClass);
+				AopModel aopModel = new AopModel();
+				aopModel.setCls(aopClass);
+				aopModel.setTractionLevel(traction.level());
+				aopModel.setExecutorType(traction.executorType());
+				list.put(method.getName(),aopModel);
 			}
 		}
 	}

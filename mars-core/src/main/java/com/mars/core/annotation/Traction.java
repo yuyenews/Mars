@@ -1,5 +1,9 @@
 package com.mars.core.annotation;
 
+import com.mars.core.constant.EasyConstant;
+import com.mars.core.enums.ExecutorType;
+import com.mars.core.enums.TractionLevel;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,5 +15,9 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Traction {
 
-    String className() default "com.mars.traction.TractionAop";
+    String className() default EasyConstant.TRACTION_CLASS;
+
+    TractionLevel level() default TractionLevel.READ_UNCOMMITTED;
+
+    ExecutorType executorType() default ExecutorType.SIMPLE;
 }

@@ -1,6 +1,5 @@
 package com.mars.mj.proxy;
 
-import com.mars.core.constant.EasySpace;
 import com.mars.jdbc.base.BaseJdbcProxy;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -14,9 +13,6 @@ import java.lang.reflect.Method;
  *
  */
 public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
-
-    private EasySpace easySpace = EasySpace.getEasySpace();
-
 
     /**
      * 获取代理对象
