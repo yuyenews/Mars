@@ -41,7 +41,7 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
      */
     @Override
     public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-        /* 2.1.2 版本升级 */
+        /* 后续升级 */
         return methodProxy.invokeSuper(o, args);
     }
 }

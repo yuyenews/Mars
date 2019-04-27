@@ -4,7 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.EasyConstant;
-import com.mars.core.util.ConfigUtil;
+import com.mars.jdbc.util.JdbcConfigUtil;
 
 import java.lang.reflect.Method;
 import java.sql.*;
@@ -189,15 +189,7 @@ public class DBHelper {
         if(druidDataSources == null){
             druidDataSources = new HashMap<>();
 
-            JSONObject jdbcConfig = ConfigUtil.getJdbcConfig();
-
-            JSONArray dataSourceList = new JSONArray();
-            Object dataSources = jdbcConfig.get(EasyConstant.DATA_SOURCE);
-            if(dataSources instanceof JSONArray){
-                dataSourceList = (JSONArray)dataSources;
-            } else {
-                dataSourceList.add(dataSources);
-            }
+            JSONArray dataSourceList = JdbcConfigUtil.getJdbcDataSourceList();
             if (dataSourceList != null) {
                 for (int i = 0; i < dataSourceList.size(); i++) {
                     JSONObject dataSource = dataSourceList.getJSONObject(i);

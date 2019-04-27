@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.EasySpace;
 import com.mars.core.logger.MarsLogger;
-import com.mars.core.util.ConfigUtil;
 import com.mars.core.util.FileUtil;
+import com.mars.jdbc.util.JdbcConfigUtil;
 import com.mars.mybatis.util.ReadXml;
 import com.mars.mybatis.util.extend.MyDataSourceFactory;
 
@@ -43,7 +43,7 @@ public class LoadMybatisConfig {
 	 */
 	public static String getConfigStr() throws Exception {
 		try {
-			FileUtil.local = String.valueOf(ConfigUtil.getJdbcConfig().get("config-location"));
+			FileUtil.local = String.valueOf(JdbcConfigUtil.getJdbcConfig("config-location"));
 			String str = FileUtil.readFileString("/"+FileUtil.local);
 			if(str == null) {
 				str = defaultConfig();
@@ -77,7 +77,7 @@ public class LoadMybatisConfig {
 	 */
 	private static String getMappers() throws Exception {
 		try {
-			String mappers = ConfigUtil.getJdbcConfig().getString("mappers");
+			String mappers = JdbcConfigUtil.getJdbcConfig("mappers").toString();
 			
 			Set<String> xmls = ReadXml.loadXmlList(mappers);
 			
@@ -99,15 +99,7 @@ public class LoadMybatisConfig {
 		try {
 			String def = "";
 			
-			JSONArray array = new JSONArray();
-
-			Object dataSources = ConfigUtil.getJdbcConfig().get("dataSource");
-
-			if(dataSources instanceof JSONArray){
-				array = (JSONArray)dataSources;
-			} else {
-				array.add(dataSources);
-			}
+			JSONArray array = JdbcConfigUtil.getJdbcDataSourceList();
 
 			StringBuffer dataSource = new StringBuffer()  ;
 
@@ -177,7 +169,7 @@ public class LoadMybatisConfig {
 	private static String defaultConfig() throws Exception {
 		try {
 
-			Object dialect = ConfigUtil.getJdbcConfig().get("dialect");
+			Object dialect = JdbcConfigUtil.getJdbcConfig("dialect");
 
 			if(dialect == null) {
 				/* 方言 默认mysql */

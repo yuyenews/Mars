@@ -1,6 +1,5 @@
 package com.mars.core.util;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.EasyConstant;
 import com.mars.core.constant.EasySpace;
@@ -56,26 +55,4 @@ public class ConfigUtil {
 		
 		return null;
 	}
-
-	/**
-	 * 获取JDBC配置信息
-	 *
-	 * @return 配置信息
-	 */
-	public static JSONObject getJdbcConfig() throws Exception {
-		try {
-			JSONObject jsonObject = getConfig();
-
-			if (jsonObject != null) {
-
-				JSONObject jdbc = JSONObject.parseObject(JSON.toJSONString(jsonObject.get("jdbc")));
-
-				return jdbc;
-			}
-		} catch (Exception e) {
-			throw new Exception("从配置文件中读取jdbc模块配置出错",e);
-		}
-		return new JSONObject();
-	}
-
 }
