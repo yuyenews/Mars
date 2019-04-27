@@ -63,7 +63,7 @@ public class EasyConstant {
     /**
      * 接受远程配置中心通知的controller
      */
-    public static final String REMOTE_CONFIG_CONTROLLER = "com.mars.start.remote.RemoteConfigController";
+    public static final String REMOTE_CONFIG_CONTROLLER = "com.mars.mvc.remote.controller.RemoteConfigController";
 
     /**
      * 读取远程配置的路径

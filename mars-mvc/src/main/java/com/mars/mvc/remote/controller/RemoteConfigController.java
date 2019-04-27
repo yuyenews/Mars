@@ -1,4 +1,4 @@
-package com.mars.start.remote;
+package com.mars.mvc.remote.controller;
 
 import com.mars.core.annotation.Controller;
 import com.mars.core.annotation.MarsLog;
