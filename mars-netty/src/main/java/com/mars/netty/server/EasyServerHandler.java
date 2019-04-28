@@ -6,6 +6,7 @@ import com.mars.netty.thread.ThreadPool;
 import com.mars.netty.util.ResponseUtil;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.timeout.IdleStateEvent;
 
@@ -16,7 +17,7 @@ import java.net.InetAddress;
  * @author yuye
  *
  */
-public class EasyServerHandler extends ChannelHandlerAdapter {
+public class EasyServerHandler extends ChannelInboundHandlerAdapter {
 
 	private MarsLogger log = MarsLogger.getLogger(EasyServerHandler.class);
 

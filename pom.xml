@@ -61,11 +61,10 @@
 				<version>${project.parent.version}</version>
 			</dependency>
 
-
 			<dependency>
 				<groupId>io.netty</groupId>
 				<artifactId>netty-all</artifactId>
-				<version>5.0.0.Alpha2</version>
+				<version>4.1.35.Final</version>
 			</dependency>
 
 			<dependency>
