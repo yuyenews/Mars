@@ -3,8 +3,8 @@ package com.mars.mvc.resolve;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.core.annotation.MarsInterceptor;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.MatchUtil;
 import com.mars.core.util.MesUtil;
@@ -90,7 +90,7 @@ public class ExecuteInters {
 		try {
 			List<Object> list = new ArrayList<>();
 
-			Object objs = EasySpace.getEasySpace().getAttr(EasyConstant.INTERCEPTORS);
+			Object objs = MarsSpace.getEasySpace().getAttr(MarsConstant.INTERCEPTORS);
 
 			if(objs != null) {
 				List<Map<String,Object>> interceptors = (List<Map<String,Object>>)objs;

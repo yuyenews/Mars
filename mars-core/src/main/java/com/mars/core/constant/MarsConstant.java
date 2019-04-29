@@ -3,7 +3,7 @@ package com.mars.core.constant;
 /**
  * 框架常量
  */
-public class EasyConstant {
+public class MarsConstant {
 
     /**
      * 所有数据源对象
@@ -79,4 +79,5 @@ public class EasyConstant {
      * 事务管理类
      */
     public static final String TRACTION_CLASS = "com.mars.traction.TractionAop";
+
 }

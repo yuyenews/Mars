@@ -4,8 +4,8 @@ import com.mars.core.annotation.Controller;
 import com.mars.core.annotation.MarsBean;
 import com.mars.core.annotation.MarsDao;
 import com.mars.core.annotation.MarsInterceptor;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class LoadNactive {
 
-    private static EasySpace constants = EasySpace.getEasySpace();
+    private static MarsSpace constants = MarsSpace.getEasySpace();
 
     /**
      * 加载本地bean
@@ -26,10 +26,9 @@ public class LoadNactive {
     public static void loadNactiveBeans() throws Exception {
 
         /* 加载 接受远程配置中心通知的controller */
-        Class<?> cls = Class.forName(EasyConstant.REMOTE_CONFIG_CONTROLLER);
+        Class<?> cls = Class.forName(MarsConstant.REMOTE_CONFIG_CONTROLLER);
         Controller controller = cls.getAnnotation(Controller.class);
         loadController(cls, controller);
-
     }
 
 
@@ -39,7 +38,7 @@ public class LoadNactive {
      * @param controller
      */
     public static void loadController(Class<?> cls,Controller controller) {
-        Object objs = constants.getAttr(EasyConstant.CONTROLLERS);
+        Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
         List<Map<String,Object>> contorls = new ArrayList<>();
         if(objs != null) {
             contorls = (List<Map<String,Object>>)objs;
@@ -48,7 +47,7 @@ public class LoadNactive {
         contorl.put("className", cls);
         contorl.put("annotation", controller);
         contorls.add(contorl);
-        constants.setAttr(EasyConstant.CONTROLLERS, contorls);
+        constants.setAttr(MarsConstant.CONTROLLERS, contorls);
     }
 
     /**
@@ -57,7 +56,7 @@ public class LoadNactive {
      * @param marsBean
      */
     public static void loadEasyBean(Class<?> cls, MarsBean marsBean) {
-        Object objs = constants.getAttr(EasyConstant.EASYBEANS);
+        Object objs = constants.getAttr(MarsConstant.EASYBEANS);
         List<Map<String,Object>> easyBeans = new ArrayList<>();
         if(objs != null) {
             easyBeans = (List<Map<String,Object>>)objs;
@@ -66,7 +65,7 @@ public class LoadNactive {
         eb.put("className", cls);
         eb.put("annotation", marsBean);
         easyBeans.add(eb);
-        constants.setAttr(EasyConstant.EASYBEANS, easyBeans);
+        constants.setAttr(MarsConstant.EASYBEANS, easyBeans);
     }
 
     /**
@@ -75,7 +74,7 @@ public class LoadNactive {
      * @param interceptor
      */
     public static void loadInterceptor(Class<?> cls, MarsInterceptor interceptor){
-        Object objs = constants.getAttr(EasyConstant.INTERCEPTORS);
+        Object objs = constants.getAttr(MarsConstant.INTERCEPTORS);
         List<Map<String,Object>> interceptors = new ArrayList<>();
         if(objs != null) {
             interceptors = (List<Map<String,Object>>)objs;
@@ -84,7 +83,7 @@ public class LoadNactive {
         eb.put("className", cls);
         eb.put("annotation", interceptor);
         interceptors.add(eb);
-        constants.setAttr(EasyConstant.INTERCEPTORS, interceptors);
+        constants.setAttr(MarsConstant.INTERCEPTORS, interceptors);
     }
 
     /**
@@ -93,7 +92,7 @@ public class LoadNactive {
      * @param marsDao
      */
     public static void loadDao(Class<?> cls, MarsDao marsDao){
-        Object objs = constants.getAttr(EasyConstant.EASYDAOS);
+        Object objs = constants.getAttr(MarsConstant.EASYDAOS);
         List<Map<String,Object>> easyDaos = new ArrayList<>();
         if(objs != null) {
             easyDaos = (List<Map<String,Object>>)objs;
@@ -102,7 +101,7 @@ public class LoadNactive {
         eb.put("className", cls);
         eb.put("annotation", marsDao);
         easyDaos.add(eb);
-        constants.setAttr(EasyConstant.EASYDAOS, easyDaos);
+        constants.setAttr(MarsConstant.EASYDAOS, easyDaos);
     }
 
     /**
@@ -110,12 +109,12 @@ public class LoadNactive {
      * @param cls
      */
     public static void loadEasyAfter(Class<?> cls){
-        Object objs = constants.getAttr(EasyConstant.EASYAFTERS);
+        Object objs = constants.getAttr(MarsConstant.EASYAFTERS);
         List<Class> easyLoads = new ArrayList<>();
         if(objs != null) {
             easyLoads = (List<Class>)objs;
         }
         easyLoads.add(cls);
-        constants.setAttr(EasyConstant.EASYAFTERS, easyLoads);
+        constants.setAttr(MarsConstant.EASYAFTERS, easyLoads);
     }
 }

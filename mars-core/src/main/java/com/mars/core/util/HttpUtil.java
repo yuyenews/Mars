@@ -1,9 +1,7 @@
 package com.mars.core.util;
 
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.mars.core.constant.MarsCloudConstant;
+import okhttp3.*;
 
 import java.util.Map;
 
@@ -11,6 +9,62 @@ import java.util.Map;
  * HTTP工具类
  */
 public class HttpUtil {
+
+    /**
+     * 发起请求，以序列化方式传递数据
+     * @param url
+     * @param params
+     * @return
+     * @throws Exception
+     */
+    public static String request(String url, Object params) throws Exception {
+
+        /* 将参数序列化成byte[] */
+        byte[] param = SerializableUtil.serialization(params);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        /* 发起post请求 将数据传递过去 */
+        MediaType formData = MediaType.parse("multipart/form-data");
+        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"),param);
+        MultipartBody body = new MultipartBody.Builder()
+                .setType(formData)
+                .addFormDataPart(MarsCloudConstant.PARAM,"params",fileBody)
+                .build();
+        Request request = new Request.Builder()
+                .post(body)
+                .url(url)
+                .build();
+
+        Call call = okHttpClient.newCall(request);
+        Response response = call.execute();
+        return response.body().string();
+    }
+
+    /**
+     * 发起post请求
+     *
+     * @param url  请求链接
+     * @param params 参数
+     * @return
+     * @throws Exception
+     */
+    public static String post(String url, Map<String,Object> params) throws Exception {
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+
+        for(String key : params.keySet()){
+            formBodyBuilder.add(key,params.get(key).toString());
+        }
+
+        FormBody formBody = formBodyBuilder.build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody).build();
+        Response response = okHttpClient.newCall(request).execute();
+        return response.body().string();
+    }
 
     /**
      * 发起get请求

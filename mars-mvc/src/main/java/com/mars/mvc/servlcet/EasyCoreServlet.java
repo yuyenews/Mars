@@ -17,7 +17,7 @@ public class EasyCoreServlet implements EasyServlet{
 	private static MarsLogger log = MarsLogger.getLogger(EasyCoreServlet.class);
 	
 	@Override
-	public Object doRequest(HttpRequest request, HttpResponse response) {
+	public Object doRequest(HttpRequest request, HttpResponse response) throws Exception {
 		try {
 
 			/* 将请求丢给解释器 去解释，并调用对应的控制层方法进行处理 */
@@ -29,8 +29,8 @@ public class EasyCoreServlet implements EasyServlet{
 
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
+			throw e;
 		}
-		return MesUtil.getMes(500,"解析请求报错");
 	}
 
 }

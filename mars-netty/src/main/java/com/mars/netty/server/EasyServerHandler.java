@@ -4,7 +4,6 @@ import com.mars.core.logger.MarsLogger;
 import com.mars.netty.thread.RequestThread;
 import com.mars.netty.thread.ThreadPool;
 import com.mars.netty.util.ResponseUtil;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;

@@ -1,8 +1,7 @@
 package com.mars.traction;
 
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
-import com.mars.core.enums.TractionLevel;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
 import com.mars.core.util.ThreadUtil;
@@ -23,7 +22,7 @@ public class TractionAop {
 
 	private MarsLogger logger = MarsLogger.getLogger(TractionAop.class);
 
-	private static EasySpace easySpace = EasySpace.getEasySpace();
+	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 	
 	/**
 	 * 获取数据库连接，并设置为不自动提交
@@ -34,7 +33,7 @@ public class TractionAop {
 	 */
 	public void startMethod(Object[] args, AopModel aopModel) {
 		try {
-			Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>)easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
+			Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>) marsSpace.getAttr(MarsConstant.DATA_SOURCE_MAP);
 			
 			Map<String,SqlSession> sqlSessions = new HashMap<>();
 			
@@ -45,7 +44,7 @@ public class TractionAop {
 				sqlSessions.put(key, sqlSession);
 			}
 
-			easySpace.setAttr(ThreadUtil.getThreadIdToTraction(), sqlSessions);
+			marsSpace.setAttr(ThreadUtil.getThreadIdToTraction(), sqlSessions);
 		} catch (Exception e) {
 			logger.error("开启事务出错",e);
 		}
@@ -58,7 +57,7 @@ public class TractionAop {
 	 */
 	public void endMethod(Object[] args) {
 		try {
-			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : sqlSessions.keySet()) {
 				SqlSession session = sqlSessions.get(key);
@@ -68,7 +67,7 @@ public class TractionAop {
 		} catch (Exception e) {
 			logger.error("提交事务出错",e);
 		} finally {
-			easySpace.remove(ThreadUtil.getThreadIdToTraction());
+			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
 		}
 		
 	}
@@ -79,7 +78,7 @@ public class TractionAop {
 	 */
 	public void exp(Throwable e) {
 		try {
-			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : sqlSessions.keySet()) {
 				SqlSession session = sqlSessions.get(key);
@@ -91,7 +90,7 @@ public class TractionAop {
 		} catch (Exception ex) {
 			logger.error("回滚事务出错",ex);
 		} finally {
-			easySpace.remove(ThreadUtil.getThreadIdToTraction());
+			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
 		}
 	}
 }

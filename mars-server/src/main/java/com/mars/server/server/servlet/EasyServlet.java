@@ -17,5 +17,5 @@ public interface EasyServlet {
 	 * @param response
 	 * @return obj
 	 */
-	Object doRequest(HttpRequest request, HttpResponse response);
+	Object doRequest(HttpRequest request, HttpResponse response) throws Exception;
 }

@@ -3,7 +3,7 @@ package com.mars.mj.helper;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.constant.EasyConstant;
+import com.mars.core.constant.MarsConstant;
 import com.mars.jdbc.util.JdbcConfigUtil;
 
 import java.lang.reflect.Method;
@@ -213,7 +213,7 @@ public class DBHelper {
      */
     private static DruidDataSource initDataSource(JSONObject dataSource) throws Exception {
 
-        Class cls = Class.forName(EasyConstant.DRUID_DATA_SOURCE);
+        Class cls = Class.forName(MarsConstant.DRUID_DATA_SOURCE);
         Object druidDataSource = cls.getDeclaredConstructor().newInstance();
 
         Properties properties = new Properties();

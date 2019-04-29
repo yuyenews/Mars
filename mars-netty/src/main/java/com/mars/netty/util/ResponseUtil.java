@@ -16,7 +16,7 @@ public class ResponseUtil {
      */
     public static void sendForBidden(ChannelHandlerContext ctx, String ex){
         HttpResponse response = new HttpResponse(ctx);
-        response.send(MesUtil.getMes(403,ex).toJSONString(), HttpResponseStatus.OK);
+        response.send(MesUtil.getMes(403,ex).toJSONString(), HttpResponseStatus.FORBIDDEN);
     }
 
     /**
@@ -25,7 +25,7 @@ public class ResponseUtil {
      */
     public static void sendServerError(ChannelHandlerContext ctx, String ex){
         HttpResponse response = new HttpResponse(ctx);
-        response.send(MesUtil.getMes(500,ex).toJSONString(), HttpResponseStatus.OK);
+        response.send(MesUtil.getMes(500,ex).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -34,7 +34,7 @@ public class ResponseUtil {
      */
     public static void sendTimeout(ChannelHandlerContext ctx,String ex){
         HttpResponse response = new HttpResponse(ctx);
-        response.send(MesUtil.getMes(503,ex).toJSONString(), HttpResponseStatus.OK);
+        response.send(MesUtil.getMes(504,ex).toJSONString(), HttpResponseStatus.GATEWAY_TIMEOUT);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.mars.mj.init;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsSpace;
 import com.mars.mj.helper.DBHelper;
 import com.mars.mj.proxy.MjProxy;
 import com.mars.jdbc.base.BaseInitJdbc;
@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class InitJdbc implements BaseInitJdbc {
 
-	private static EasySpace easySpace = EasySpace.getEasySpace();
+	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
 	/**
 	 * 加载配置
@@ -38,9 +38,9 @@ public class InitJdbc implements BaseInitJdbc {
 	 */
 	private void loadDataSource() throws Exception {
 		Map<String,DruidDataSource> druidDataSourceMap = DBHelper.getDruidDataSources();
-		easySpace.setAttr("druidDataSourceMap",druidDataSourceMap);
+		marsSpace.setAttr("druidDataSourceMap",druidDataSourceMap);
 
 		/* 保存默认数据源名称 */
-		easySpace.setAttr("defaultDataSource", DBHelper.getDefaultDataSourceName());
+		marsSpace.setAttr("defaultDataSource", DBHelper.getDefaultDataSourceName());
 	}
 }

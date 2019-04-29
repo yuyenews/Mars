@@ -1,7 +1,7 @@
 package com.mars.core.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.constant.EasyConstant;
+import com.mars.core.constant.MarsConstant;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class RemoteConfigUtil {
 
             /* 解析远程配置 并获取数据 */
             String furl = config.getString("url");
-            String url = EasyConstant.READ_REMOTE_CONFIG.replace("${0}",furl);
+            String url = MarsConstant.READ_REMOTE_CONFIG.replace("${0}",furl);
 
             params.put("name",config.getString("name"));
             params.put("myIp",config.getString("myIp"));

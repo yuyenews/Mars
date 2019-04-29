@@ -2,8 +2,8 @@ package com.mars.start.base;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.after.StartAfter;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.LoadClass;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.ConfigUtil;
@@ -25,7 +25,7 @@ public class BaseStartMars {
 	/**
 	 * 获取全局存储空间 
 	 */
-	private static EasySpace constants = EasySpace.getEasySpace();
+	private static MarsSpace constants = MarsSpace.getEasySpace();
 
 	/**
 	 * 启动Mars框架
@@ -40,7 +40,7 @@ public class BaseStartMars {
 			load(clazz,baseInitJdbc);
 
 			/* 标识createbean方法已经调用完毕 */
-			constants.setAttr(EasyConstant.HAS_START,"yes");
+			constants.setAttr(MarsConstant.HAS_START,"yes");
 
 			/* 启动after方法 */
 			StartAfter.after();

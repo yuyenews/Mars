@@ -1,8 +1,8 @@
 package com.mars.core.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLog4jUtil;
 
 /**
@@ -12,7 +12,7 @@ import com.mars.core.logger.MarsLog4jUtil;
  */
 public class ConfigUtil {
 
-	private static EasySpace constants = EasySpace.getEasySpace();
+	private static MarsSpace constants = MarsSpace.getEasySpace();
 
 
 	/**
@@ -21,7 +21,7 @@ public class ConfigUtil {
 	public static void loadConfig() throws Exception{
 		try {
 			/* 读取本地配置文件 */
-			String content = FileUtil.readYml(EasyConstant.CONFIG_PATH);
+			String content = FileUtil.readYml(MarsConstant.CONFIG_PATH);
 			JSONObject object = JSONObject.parseObject(content);
 
 			/* 从配置中心获取配置信息 */

@@ -1,7 +1,7 @@
 package com.mars.mybatis.proxy;
 
 import com.mars.core.annotation.DataSource;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ThreadUtil;
 import com.mars.mybatis.init.LoadSqlSessionFactory;
 import com.mars.jdbc.base.BaseJdbcProxy;
@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 	
-	private EasySpace easySpace = EasySpace.getEasySpace();
+	private MarsSpace marsSpace = MarsSpace.getEasySpace();
 
 	private LoadSqlSessionFactory loadSqlSessionFactory = LoadSqlSessionFactory.getLoadSqlSessionFactory();
 	
@@ -55,7 +55,7 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 	public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
 		
 		/* 获取当前线程中的sqlSession */
-		Object obj =  easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
+		Object obj =  marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
 		
 		/* 用来执行sql的sqlSession */
 		SqlSession session = null;
@@ -167,7 +167,7 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 			dataSourceName = dataSource.value();
 		} else {
 			/* 否则使用默认数据源名称 */
-			dataSourceName = easySpace.getAttr("defaultDataSource").toString();
+			dataSourceName = marsSpace.getAttr("defaultDataSource").toString();
 		}
 		return dataSourceName;
 	}

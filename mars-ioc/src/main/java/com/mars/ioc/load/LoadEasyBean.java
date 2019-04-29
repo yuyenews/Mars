@@ -2,8 +2,8 @@ package com.mars.ioc.load;
 
 import com.mars.core.annotation.MarsBean;
 import com.mars.core.annotation.Resource;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.EasyBeanModel;
 import com.mars.core.util.StringUtil;
@@ -26,7 +26,7 @@ public class LoadEasyBean {
 	/**
 	 * 获取全局存储空间 
 	 */
-	private static EasySpace constants = EasySpace.getEasySpace();
+	private static MarsSpace constants = MarsSpace.getEasySpace();
 
 	/**
 	 * 创建easyBean对象，并完成对象注入
@@ -35,21 +35,21 @@ public class LoadEasyBean {
 	public static void loadBean() throws Exception{
 		try {
 			/* 获取所有的bean数据 */
-			Object objs = constants.getAttr(EasyConstant.EASYBEANS);
-			List<Map<String,Object>> contorls = null;
+			Object objs = constants.getAttr(MarsConstant.EASYBEANS);
+			List<Map<String,Object>> easyBeans = null;
 			if(objs != null) {
-				contorls = (List<Map<String,Object>>)objs;
+				easyBeans = (List<Map<String,Object>>)objs;
 			} else {
 				return;
 			}
 			
 			/* 创建bean对象，并保存起来 */
-			Object objs2 = constants.getAttr(EasyConstant.EASYBEAN_OBJECTS);
+			Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
 			Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
 			if(objs2 != null) {
 				easyBeanObjs = (Map<String,EasyBeanModel>)objs2;
 			} 
-			for(Map<String,Object> map : contorls) {
+			for(Map<String,Object> map : easyBeans) {
 				
 				Class<?> cls = (Class<?>)map.get("className");
 				MarsBean marsBean = (MarsBean)map.get("annotation");
@@ -112,7 +112,7 @@ public class LoadEasyBean {
 				easyBeanObjs.put(key, easyBeanModel);
 			}
 			
-			constants.setAttr(EasyConstant.EASYBEAN_OBJECTS, easyBeanObjs);
+			constants.setAttr(MarsConstant.EASYBEAN_OBJECTS, easyBeanObjs);
 		} catch (Exception e) {
 			throw new Exception("加载并注入EasyBean的时候出现错误",e);
 		} 

@@ -1,9 +1,10 @@
 package com.mars.mvc.resolve;
 
-import com.mars.core.constant.EasyConstant;
+import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.MesUtil;
+import com.mars.mvc.util.BuildParams;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 import com.mars.server.util.RequestUtil;
@@ -43,15 +44,14 @@ public class ExecuteEasy {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public Object execute(EasyMappingModel easyMappingModel, HttpMethod method, HttpRequest request, HttpResponse response) {
-
+	public Object execute(EasyMappingModel easyMappingModel, HttpMethod method, HttpRequest request, HttpResponse response) throws Exception {
 		try {
 			
 			if(easyMappingModel == null) {
-				return MesUtil.getMes(404,"服务器上没有相应的接口");
+				throw new Exception("服务器上没有相应的接口");
 			}
 			
-			String strMethod = method.name().toString().toLowerCase();
+			String strMethod = method.name().toLowerCase();
 
 			String mathodReuest = easyMappingModel.getRequestMetohd().name().toLowerCase();
 			
@@ -68,18 +68,21 @@ public class ExecuteEasy {
 				/* 获取要执行的controller的信息 */
 				Object obj = easyMappingModel.getObject();
 				Class<?> cls = easyMappingModel.getCls();
-				Method method2 = cls.getDeclaredMethod(easyMappingModel.getMethod(), new Class[] { HttpRequest.class, HttpResponse.class });
+				Method method2 = getMethod(cls,easyMappingModel);
 
 				/* 获取controller返回值的类型 */
 				Class cl = method2.getReturnType();
 				String st = cl.getName();
 
 				Object result = null;
-				if(st.toLowerCase().trim().equals("void")){
-					method2.invoke(obj, new Object[] { request, response });
-					result = EasyConstant.VOID;
+				Object[] params = BuildParams.builder(method2,request,response);
+				if(params != null){
+					result = method2.invoke(obj, params);
 				} else {
-					result = method2.invoke(obj, new Object[] { request, response });
+					result = method2.invoke(obj);
+				}
+				if(st.toLowerCase().trim().equals("void")){
+					result = MarsConstant.VOID;
 				}
 
 				/* 执行拦截器 在控制层执行后的方法 */
@@ -91,12 +94,27 @@ public class ExecuteEasy {
 				return result;
 			} else {
 				/* 如果请求方式和controller的映射不一致，则提示客户端 */
-				return MesUtil.getMes(403,"此接口的请求方式为[" + mathodReuest + "]");
+				throw new Exception("此接口的请求方式为[" + mathodReuest + "]");
 			}
 		} catch (Exception e) {
 			log.error("执行控制层的时候报错",e);
-			return MesUtil.getMes(500,"执行控制层的时候报错");
+			throw e;
 		}
 	}
-	
+
+	/**
+	 * 根据方法名获取到要执行的方法
+	 * 这里的复杂度为O(n)，是为了给方法的参数注入
+	 * 如果直接通过name去get，必须事先指定参数类型
+	 * @return
+	 */
+	public Method getMethod(Class cls,EasyMappingModel easyMappingModel){
+		Method[] methods = cls.getDeclaredMethods();
+		for(Method methodItem : methods){
+			if(methodItem.getName().equals(easyMappingModel.getMethod())){
+				return methodItem;
+			}
+		}
+		return null;
+	}
 }

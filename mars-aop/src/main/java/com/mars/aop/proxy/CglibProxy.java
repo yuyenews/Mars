@@ -3,8 +3,7 @@ package com.mars.aop.proxy;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.enums.TractionLevel;
+import com.mars.core.constant.MarsConstant;
 import com.mars.core.model.AopModel;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -49,7 +48,7 @@ public class CglibProxy implements MethodInterceptor {
 		Class c = aopModel.getCls();
 		if(c != null){
 			obj = c.getDeclaredConstructor().newInstance();
-			if(c.getName().equals(EasyConstant.TRACTION_CLASS)){
+			if(c.getName().equals(MarsConstant.TRACTION_CLASS)){
 				Method m2 = c.getDeclaredMethod("startMethod",new Class[] {Object[].class, AopModel.class});
 				m2.invoke(obj,new Object[] {args, aopModel});
 			} else {

@@ -1,8 +1,10 @@
 package com.mars.mvc.resolve;
 
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.MesUtil;
+import com.mars.mvc.resolve.access.PathAccess;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 import com.mars.server.util.RequestUtil;
@@ -21,7 +23,7 @@ public class ResolveRequest {
 
 	private static ResolveRequest resolveRequest;
 	
-	private EasySpace constants = EasySpace.getEasySpace();
+	private MarsSpace constants = MarsSpace.getEasySpace();
 	
 	/**
 	 * 执行器对象
@@ -43,18 +45,20 @@ public class ResolveRequest {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public Object resolve(HttpRequest request,HttpResponse response) {
+	public Object resolve(HttpRequest request,HttpResponse response) throws Exception {
 		
 		try {
 			Map<String,EasyMappingModel> maps = getControllers();
 			
 			String uri = getRequestPath(request);
-			
+			if(PathAccess.hasAccess(uri)){
+				return "ok";
+			}
 			return executeEasy.execute(maps.get(uri),request.getMethod(),request,response);
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
+			throw e;
 		}
-		return MesUtil.getMes(500,"解析请求报错");
 	}
 	
 	/**
@@ -75,11 +79,10 @@ public class ResolveRequest {
 	 * 获取所有的controller对象
 	 * @return duix
 	 */
-	@SuppressWarnings("unchecked")
 	private Map<String,EasyMappingModel> getControllers() {
 		
 		Map<String,EasyMappingModel> controlObjects = null;
-		Object obj = constants.getAttr("controlObjects");
+		Object obj = constants.getAttr(MarsConstant.CONTROLLER_OBJECTS);
 		if(obj != null) {
 			controlObjects = (Map<String,EasyMappingModel>)obj;
 		}

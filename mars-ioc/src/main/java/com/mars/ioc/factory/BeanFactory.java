@@ -4,8 +4,8 @@ import com.mars.aop.proxy.CglibProxy;
 import com.mars.core.annotation.MarsAop;
 import com.mars.core.annotation.MarsAopType;
 import com.mars.core.annotation.Traction;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
 import com.mars.core.model.EasyBeanModel;
@@ -23,7 +23,7 @@ public class BeanFactory {
 	
 	private static MarsLogger log = MarsLogger.getLogger(BeanFactory.class);
 
-	private static EasySpace constants = EasySpace.getEasySpace();
+	private static MarsSpace constants = MarsSpace.getEasySpace();
 	
 	/**
 	 * 创建bean
@@ -33,7 +33,7 @@ public class BeanFactory {
 	public static Object createBean(Class<?> className) throws Exception {
 		try {
 
-			Object hasStart = constants.getAttr(EasyConstant.HAS_START);
+			Object hasStart = constants.getAttr(MarsConstant.HAS_START);
 			if(hasStart != null){
 				throw new Exception("只有Mars才可以调用此方法，不可以手动显式调用");
 			}
@@ -110,7 +110,7 @@ public class BeanFactory {
 	public static Object getBean(String name) throws Exception {
 		try {
 
-			Object objs2 = constants.getAttr(EasyConstant.EASYBEAN_OBJECTS);
+			Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
 			Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
 			if(objs2 != null) {
 				easyBeanObjs = (Map<String,EasyBeanModel>)objs2;

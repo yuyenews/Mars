@@ -2,8 +2,8 @@ package com.mars.junit;
 
 import com.mars.core.after.StartAfter;
 import com.mars.core.annotation.Resource;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.LoadClass;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.ConfigUtil;
@@ -23,27 +23,27 @@ public class MarsJunitStart {
     /**
      * 获取全局存储空间
      */
-    private static EasySpace constants = EasySpace.getEasySpace();
+    private static MarsSpace constants = MarsSpace.getEasySpace();
 
     /**
      * 启动easy框架
      */
     public static void start(BaseInitJdbc baseInitJdbc,String packName,Object obj) {
         try {
-            if(constants.getAttr(EasyConstant.HAS_TEST) == null){
+            if(constants.getAttr(MarsConstant.HAS_TEST) == null){
                 log.info("程序启动中......");
 
                 /* 加载框架数据 */
                 load(baseInitJdbc,packName);
 
                 /* 标识createbean方法已经调用完毕 */
-                constants.setAttr(EasyConstant.HAS_START,"yes");
+                constants.setAttr(MarsConstant.HAS_START,"yes");
 
                 /* 启动after方法 */
                 StartAfter.after();
 
                 /* 标记已经为单测创建过资源了 */
-                constants.setAttr(EasyConstant.HAS_TEST,"yes");
+                constants.setAttr(MarsConstant.HAS_TEST,"yes");
             }
 
             /* 给单测注入属性 */

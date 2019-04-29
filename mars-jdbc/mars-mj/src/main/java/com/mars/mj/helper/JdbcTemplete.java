@@ -1,6 +1,6 @@
 package com.mars.mj.helper;
 
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ThreadUtil;
 import com.mars.mj.manager.ConnectionManager;
 import com.mars.mj.util.DataCheckUtil;
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class JdbcTemplete {
 
-    private static EasySpace easySpace = EasySpace.getEasySpace();
+    private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
     private String dataSourceName;
 
@@ -181,7 +181,7 @@ public class JdbcTemplete {
         ConnectionManager connectionManager = new ConnectionManager();
 
         /* 获取当前线程中的Connection */
-        Object obj = easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
+        Object obj = marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
         /* 数据库连接 */
         Connection connection = null;
@@ -261,7 +261,7 @@ public class JdbcTemplete {
      */
     private String getDataSourceName(String dataSourceName) {
         if (dataSourceName == null) {
-            dataSourceName = easySpace.getAttr("defaultDataSource").toString();
+            dataSourceName = marsSpace.getAttr("defaultDataSource").toString();
         }
         return dataSourceName;
     }

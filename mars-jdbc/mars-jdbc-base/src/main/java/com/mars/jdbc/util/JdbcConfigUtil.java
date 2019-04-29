@@ -3,7 +3,7 @@ package com.mars.jdbc.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.constant.EasyConstant;
+import com.mars.core.constant.MarsConstant;
 import com.mars.core.util.ConfigUtil;
 
 /**
@@ -54,7 +54,7 @@ public class JdbcConfigUtil {
     public static JSONArray getJdbcDataSourceList() throws Exception{
         try {
             JSONArray dataSourceList = new JSONArray();
-            Object dataSources = getJdbcConfig(EasyConstant.DATA_SOURCE);
+            Object dataSources = getJdbcConfig(MarsConstant.DATA_SOURCE);
             if(dataSources instanceof JSONArray){
                 dataSourceList = (JSONArray)dataSources;
             } else {

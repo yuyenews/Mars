@@ -2,8 +2,8 @@ package com.mars.jdbc.load;
 
 
 import com.mars.core.annotation.MarsDao;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.EasyBeanModel;
 import com.mars.core.util.StringUtil;
 import com.mars.jdbc.base.BaseJdbcProxy;
@@ -17,7 +17,7 @@ public class LoadDaos {
     /**
      * 获取全局存储空间
      */
-    private static EasySpace constants = EasySpace.getEasySpace();
+    private static MarsSpace constants = MarsSpace.getEasySpace();
 
     /**
      * 创建dao对象
@@ -25,12 +25,12 @@ public class LoadDaos {
     public static void loadDao(BaseJdbcProxy baseProxy) throws Exception{
         try {
 
-            Object objs = constants.getAttr(EasyConstant.EASYDAOS);
+            Object objs = constants.getAttr(MarsConstant.EASYDAOS);
             if(objs != null) {
                 List<Map<String,Object>> easyDaos = (List<Map<String,Object>>)objs;
 
                 /* 创建bean对象，并保存起来 */
-                Object objs2 = constants.getAttr(EasyConstant.EASYBEAN_OBJECTS);
+                Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
                 Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
                 if(objs2 != null) {
                     easyBeanObjs = (Map<String,EasyBeanModel>)objs2;
@@ -55,7 +55,7 @@ public class LoadDaos {
                     }
                 }
 
-                constants.setAttr(EasyConstant.EASYBEAN_OBJECTS,easyBeanObjs);
+                constants.setAttr(MarsConstant.EASYBEAN_OBJECTS,easyBeanObjs);
             }
 
         } catch (Exception e) {

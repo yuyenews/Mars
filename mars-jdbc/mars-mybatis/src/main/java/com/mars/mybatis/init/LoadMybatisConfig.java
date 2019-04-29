@@ -2,7 +2,7 @@ package com.mars.mybatis.init;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.FileUtil;
 import com.mars.jdbc.util.JdbcConfigUtil;
@@ -22,7 +22,7 @@ public class LoadMybatisConfig {
 	
 	private static MarsLogger logger = MarsLogger.getLogger(LoadMybatisConfig.class);
 	
-	private static EasySpace easySpace = EasySpace.getEasySpace();
+	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
 	/**
 	 * 默认配置文件的mapper文件占位符
@@ -64,7 +64,7 @@ public class LoadMybatisConfig {
 				str = str + "<mappers>" + getMappers() + "</mappers>";
 				str = str+"</configuration>";
 			}
-			str = str.replace(DEF, easySpace.getAttr("defaultDataSource").toString());
+			str = str.replace(DEF, marsSpace.getAttr("defaultDataSource").toString());
 			return str;
 		} catch (Exception e) {
 			throw new Exception("加载mybatis配置出错",e);
@@ -133,8 +133,8 @@ public class LoadMybatisConfig {
 				daNames.add(jsonObject.getString("name"));
 			}
 			
-			easySpace.setAttr("dataSourceNames", daNames);
-			easySpace.setAttr("defaultDataSource", def);
+			marsSpace.setAttr("dataSourceNames", daNames);
+			marsSpace.setAttr("defaultDataSource", def);
 			
 			return dataSource.toString();
 		} catch (Exception e) {

@@ -90,7 +90,8 @@ public class RequestParser {
 					upLoad.setFileName(fileUpload.getFilename());
 					upLoad.setInputStream(inputStream);
 					upLoad.setName(fileUpload.getName());
-					
+					upLoad.setBytes(bs);
+
 					files.put(fileUpload.getName(), upLoad);
 				}
 

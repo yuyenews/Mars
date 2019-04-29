@@ -1,9 +1,8 @@
 package com.mars.traction;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
-import com.mars.core.enums.TractionLevel;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
 import com.mars.core.util.ThreadUtil;
@@ -21,7 +20,7 @@ public class TractionAop {
 
 	private MarsLogger logger = MarsLogger.getLogger(TractionAop.class);
 
-	private static EasySpace easySpace = EasySpace.getEasySpace();
+	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 	
 	/**
 	 * 获取数据库连接，并设置为不自动提交
@@ -33,7 +32,7 @@ public class TractionAop {
 	public void startMethod(Object[] args, AopModel aopModel) {
 		try {
 
-			Map<String, DruidDataSource> maps = (Map<String,DruidDataSource>)easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
+			Map<String, DruidDataSource> maps = (Map<String,DruidDataSource>) marsSpace.getAttr(MarsConstant.DATA_SOURCE_MAP);
 
 			Map<String,Connection> connections = new HashMap<>();
 
@@ -44,7 +43,7 @@ public class TractionAop {
 				connections.put(key, connection);
 			}
 
-			easySpace.setAttr(ThreadUtil.getThreadIdToTraction(), connections);
+			marsSpace.setAttr(ThreadUtil.getThreadIdToTraction(), connections);
 		} catch (Exception e) {
 			logger.error("开启事务出错",e);
 		}
@@ -57,7 +56,7 @@ public class TractionAop {
 	 */
 	public void endMethod(Object[] args) {
 		try {
-			Map<String,Connection> connections = (Map<String,Connection>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,Connection> connections = (Map<String,Connection>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : connections.keySet()) {
 				Connection connection = connections.get(key);
@@ -67,7 +66,7 @@ public class TractionAop {
 		} catch (Exception e) {
 			logger.error("提交事务出错",e);
 		} finally {
-			easySpace.remove(ThreadUtil.getThreadIdToTraction());
+			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
 		}
 		
 	}
@@ -78,7 +77,7 @@ public class TractionAop {
 	 */
 	public void exp(Throwable e) {
 		try {
-			Map<String,Connection> connections = (Map<String,Connection>)easySpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,Connection> connections = (Map<String,Connection>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
 
 			for(String key : connections.keySet()) {
 				Connection connection = connections.get(key);
@@ -90,7 +89,7 @@ public class TractionAop {
 		} catch (Exception ex) {
 			logger.error("回滚事务出错",ex);
 		} finally {
-			easySpace.remove(ThreadUtil.getThreadIdToTraction());
+			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
 		}
 	}
 

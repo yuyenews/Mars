@@ -4,8 +4,8 @@ import com.mars.mvc.proxy.MvcCglibProxy;
 import com.mars.core.annotation.Controller;
 import com.mars.core.annotation.MarsMapping;
 import com.mars.core.annotation.Resource;
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.EasyBeanModel;
 import com.mars.mvc.resolve.model.EasyMappingModel;
@@ -28,7 +28,7 @@ public class LoadController {
 	/**
 	 * 获取全局存储空间 
 	 */
-	private static EasySpace constants = EasySpace.getEasySpace();
+	private static MarsSpace constants = MarsSpace.getEasySpace();
 
 	/**
 	 * 创建controller对象，并将服务层对象注入进去
@@ -39,7 +39,7 @@ public class LoadController {
 			Map<String,EasyMappingModel> controlObjects = new HashMap<>();
 			
 			/* 获取所有的controller数据 */
-			Object objs = constants.getAttr(EasyConstant.CONTROLLERS);
+			Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
 			List<Map<String,Object>> contorls = null;
 			if(objs != null) {
 				contorls = (List<Map<String,Object>>)objs;
@@ -55,7 +55,7 @@ public class LoadController {
 				Controller control = (Controller)map.get("annotation");
 				
 				/*
-				 * 由于controller里只允许注入easybean，所以不需要等controller都创建好了再注入
+				 * 由于controller里只允许注入MarsBean，所以不需要等controller都创建好了再注入
 				 * 直接 迭代一次 就给一个controller注入一次
 				 */
 				Object obj = iocControl(cls,control,easyBeanObjs);
@@ -77,7 +77,7 @@ public class LoadController {
 				}
 			}
 			
-			constants.setAttr(EasyConstant.CONTROLLER_OBJECTS, controlObjects);
+			constants.setAttr(MarsConstant.CONTROLLER_OBJECTS, controlObjects);
 		} catch (Exception e) {
 			throw new Exception("加载controller并注入的时候报错",e);
 		}
@@ -131,7 +131,7 @@ public class LoadController {
 	 */
 	@SuppressWarnings("unchecked")
 	private static Map<String,EasyBeanModel> getEasyBeans() {
-		Object objs2 = constants.getAttr(EasyConstant.EASYBEAN_OBJECTS);
+		Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
 		Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
 		if(objs2 != null) {
 			easyBeanObjs = (Map<String,EasyBeanModel>)objs2;

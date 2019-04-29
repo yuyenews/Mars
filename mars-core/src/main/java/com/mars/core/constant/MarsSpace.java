@@ -8,18 +8,18 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author yuye
  *
  */
-public class EasySpace {
+public class MarsSpace {
 
-	private static EasySpace constants;
+	private static MarsSpace constants;
 	
 	private Map<String, Object> map = new ConcurrentHashMap<>();
 
-	private EasySpace() {
+	private MarsSpace() {
 	}
 
-	public static EasySpace getEasySpace() {
+	public static MarsSpace getEasySpace() {
 		if (constants == null) {
-			constants = new EasySpace();
+			constants = new MarsSpace();
 		}
 
 		return constants;

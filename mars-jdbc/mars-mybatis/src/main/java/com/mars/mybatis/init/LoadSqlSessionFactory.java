@@ -1,7 +1,7 @@
 package com.mars.mybatis.init;
 
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -27,7 +27,7 @@ public class LoadSqlSessionFactory {
 	
 	private String resource;
 	
-	private static EasySpace easySpace = EasySpace.getEasySpace();
+	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
 	/**
 	 * 单例，防止重复加载配置文件
@@ -64,14 +64,14 @@ public class LoadSqlSessionFactory {
 	 * 加载sqlSessionFactory
 	 */
 	private void loadSqlSessionFactorys() {
-		List<String> daNames = (List<String>) easySpace.getAttr("dataSourceNames");
+		List<String> daNames = (List<String>) marsSpace.getAttr("dataSourceNames");
 		
 		Map<String,SqlSessionFactory> maps = new HashMap<>();
 		for(String str : daNames) {
 			InputStream inputStream = new ByteArrayInputStream(resource.getBytes());
 			maps.put(str, new SqlSessionFactoryBuilder().build(inputStream,str));
 		}
-		easySpace.setAttr(EasyConstant.DATA_SOURCE_MAP, maps);
+		marsSpace.setAttr(MarsConstant.DATA_SOURCE_MAP, maps);
 	}
 	
 	/**
@@ -87,9 +87,9 @@ public class LoadSqlSessionFactory {
 	 * @return session
 	 */
 	public SqlSession getSqlSession(String dataSourceName,Boolean autoCommit) {
-		Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>) easySpace.getAttr(EasyConstant.DATA_SOURCE_MAP);
+		Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>) marsSpace.getAttr(MarsConstant.DATA_SOURCE_MAP);
 		if(dataSourceName == null) {
-			Object defDa = easySpace.getAttr("defaultDataSource");
+			Object defDa = marsSpace.getAttr("defaultDataSource");
 			return maps.get(defDa.toString()).openSession(autoCommit);
 		}
 		return maps.get(dataSourceName).openSession(autoCommit);

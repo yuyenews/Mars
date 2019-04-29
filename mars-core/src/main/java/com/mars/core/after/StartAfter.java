@@ -1,7 +1,7 @@
 package com.mars.core.after;
 
-import com.mars.core.constant.EasyConstant;
-import com.mars.core.constant.EasySpace;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -11,14 +11,14 @@ import java.util.List;
  */
 public class StartAfter {
 
-    private static EasySpace constants = EasySpace.getEasySpace();
+    private static MarsSpace constants = MarsSpace.getEasySpace();
 
     /**
      * 框架启动后立刻执行
      */
     public static void after() throws Exception {
         try {
-            Object objs = constants.getAttr(EasyConstant.EASYAFTERS);
+            Object objs = constants.getAttr(MarsConstant.EASYAFTERS);
             if(objs != null) {
                 List<Class> easyLoads = (List<Class>)objs;
 

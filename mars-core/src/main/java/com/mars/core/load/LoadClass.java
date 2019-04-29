@@ -63,9 +63,5 @@ public class LoadClass {
 		} catch (Exception e) {
 			throw new Exception("扫描["+packageName+"]包下的类发生错误",e);
 		}
-
 	}
-	
-
-
 }
