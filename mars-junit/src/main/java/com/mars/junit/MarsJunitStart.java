@@ -12,6 +12,7 @@ import com.mars.ioc.load.LoadEasyBean;
 import com.mars.jdbc.base.BaseInitJdbc;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * 单测启动器
@@ -28,7 +29,7 @@ public class MarsJunitStart {
     /**
      * 启动easy框架
      */
-    public static void start(BaseInitJdbc baseInitJdbc,String packName,Object obj) {
+    public static void start(BaseInitJdbc baseInitJdbc, String packName, Object obj, List<Object> list) {
         try {
             if(constants.getAttr(MarsConstant.HAS_TEST) == null){
                 log.info("程序启动中......");
@@ -38,6 +39,14 @@ public class MarsJunitStart {
 
                 /* 标识createbean方法已经调用完毕 */
                 constants.setAttr(MarsConstant.HAS_START,"yes");
+
+                /* 加载单测所需数据 */
+                if(list != null){
+                    for(Object item : list){
+                        StartList startList = (StartList)item;
+                        startList.load();
+                    }
+                }
 
                 /* 启动after方法 */
                 StartAfter.after();

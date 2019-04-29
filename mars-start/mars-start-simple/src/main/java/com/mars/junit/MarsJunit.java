@@ -10,7 +10,7 @@ public abstract class MarsJunit {
      * @param packName
      */
     public void init(String packName){
-        MarsJunitStart.start(null,packName,this);
+        MarsJunitStart.start(null,packName,this,null);
     }
 
     /**
