@@ -29,7 +29,7 @@ public class MarsJunitStart {
     /**
      * 启动easy框架
      */
-    public static void start(BaseInitJdbc baseInitJdbc, String packName, Object obj, List<Object> list) {
+    public static void start(BaseInitJdbc baseInitJdbc, String packName, Object obj, List<StartList> list) {
         try {
             if(constants.getAttr(MarsConstant.HAS_TEST) == null){
                 log.info("程序启动中......");
@@ -42,9 +42,8 @@ public class MarsJunitStart {
 
                 /* 加载单测所需数据 */
                 if(list != null){
-                    for(Object item : list){
-                        StartList startList = (StartList)item;
-                        startList.load();
+                    for(StartList item : list){
+                        item.load();
                     }
                 }
 
