@@ -29,7 +29,7 @@ public class RemoteConfigUtil {
             String url = MarsConstant.READ_REMOTE_CONFIG.replace("${0}",furl);
 
             params.put("name",config.getString("name"));
-            params.put("myIp",config.getString("myIp"));
+            params.put("myIp",MarsUtil.getLocalIp());
             params.put("port",object.getString("port"));
 
             Object result = HttpUtil.get(url,params);

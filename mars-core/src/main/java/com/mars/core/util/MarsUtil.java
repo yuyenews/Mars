@@ -10,6 +10,20 @@ import java.util.Enumeration;
  */
 public class MarsUtil {
 
+    private static String ip;
+
+    /**
+     * 获取本机在局域网的IP
+     * @return
+     * @throws Exception
+     */
+    public static String getLocalIp() throws Exception {
+        if(ip == null){
+            ip = MarsUtil.getLocalHostLANAddress().getHostAddress();
+        }
+        return ip;
+    }
+
     /**
      * 获取本服务的IP
      * @return
