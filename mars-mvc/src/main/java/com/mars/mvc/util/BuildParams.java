@@ -73,7 +73,11 @@ public class BuildParams {
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){
             Object val = request.getParemeter(f.getName());
-            if(val != null){
+            FileUpLoad fileUpLoad = request.getFile(f.getName());
+            if(fileUpLoad != null){
+                f.setAccessible(true);
+                f.set(obj,fileUpLoad);
+            } else if(val != null){
                 f.setAccessible(true);
                 String fieldTypeName = f.getType().getSimpleName().toUpperCase();
                 String valStr = val.toString();
