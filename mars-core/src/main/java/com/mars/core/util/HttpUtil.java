@@ -4,6 +4,7 @@ import com.mars.core.constant.MarsCloudConstant;
 import okhttp3.*;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * HTTP工具类
@@ -22,7 +23,7 @@ public class HttpUtil {
         /* 将参数序列化成byte[] */
         byte[] param = SerializableUtil.serialization(params);
 
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient okHttpClient = getOkHttpClient();
 
         /* 发起post请求 将数据传递过去 */
         MediaType formData = MediaType.parse("multipart/form-data");
@@ -50,7 +51,7 @@ public class HttpUtil {
      * @throws Exception
      */
     public static String post(String url, Map<String,Object> params) throws Exception {
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient okHttpClient = getOkHttpClient();
 
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
 
@@ -74,7 +75,7 @@ public class HttpUtil {
      */
     public static Object get(String strUrl, Map<String,String> params) throws Exception {
         String url = strUrl+"?"+getParams(params);
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient okHttpClient = getOkHttpClient();
         final Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -102,4 +103,16 @@ public class HttpUtil {
         return stringBuffer.substring(0,stringBuffer.length()-1);
     }
 
+    /**
+     * 获取Okhttp客户端
+     * @return
+     * @throws Exception
+     */
+    private static OkHttpClient getOkHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(30000, TimeUnit.SECONDS)//设置连接超时时间
+                .readTimeout(30000, TimeUnit.SECONDS)//设置读取超时时间
+                .build();
+        return okHttpClient;
+    }
 }
