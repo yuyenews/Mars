@@ -21,7 +21,7 @@ public class SerializableUtil {
                 objectOutputStream.writeObject(obj);
                 return os.toByteArray();
             } else {
-                throw new Exception("参数必须实现Serializable接口");
+                throw new Exception("参数对象必须实现Serializable接口");
             }
         } catch (Exception e){
             throw new Exception("将参数序列化成二进制流，出现异常",e);
