@@ -129,7 +129,6 @@ public class LoadController {
 	 * 获取所有的easybean
 	 * @return duix
 	 */
-	@SuppressWarnings("unchecked")
 	private static Map<String,EasyBeanModel> getEasyBeans() {
 		Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
 		Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();

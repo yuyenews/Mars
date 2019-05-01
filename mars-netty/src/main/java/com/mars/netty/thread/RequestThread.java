@@ -11,6 +11,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -67,9 +68,12 @@ public class RequestThread implements Runnable {
 			/* 将控制层返回的数据，转成json字符串返回 */
 			response.send(JSON.toJSONString(result));
 			
+		} catch (InvocationTargetException e){
+			log.error("处理请求的时候出错",e);
+			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e.getTargetException().getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			log.error("处理请求的时候出错",e);
-			response.send(MesUtil.getMes(500,"处理请求发生错误"+e).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
+			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e.getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
 		} finally {
 			try{
 				// 释放请求

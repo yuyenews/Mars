@@ -32,7 +32,7 @@ public class ExecuteInters {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public static Object executeIntersStart(List<Object> list,HttpRequest request, HttpResponse response) {
+	public static Object executeIntersStart(List<Object> list,HttpRequest request, HttpResponse response) throws Exception {
 		Class<?> clss = null;
 		try {
 			for(Object obj : list) {
@@ -47,9 +47,8 @@ public class ExecuteInters {
 			return BaseInterceptor.SUCCESS;
 		} catch (Exception e) {
 			logger.error("执行拦截器报错，拦截器类型["+clss.getName()+"]",e);
-			return errorResult(clss);
-		} 
-		
+			throw new Exception(errorResult(clss,e),e) ;
+		}
 	}
 	
 	/**
@@ -59,7 +58,7 @@ public class ExecuteInters {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public static Object executeIntersEnd(List<Object> list,HttpRequest request, HttpResponse response,Object conResult) {
+	public static Object executeIntersEnd(List<Object> list,HttpRequest request, HttpResponse response,Object conResult) throws Exception {
 		Class<?> clss = null;
 		try {
 			
@@ -76,7 +75,7 @@ public class ExecuteInters {
 			return BaseInterceptor.SUCCESS;
 		} catch (Exception e) {
 			logger.error("执行拦截器报错，拦截器类型["+clss.getName()+"]",e);
-			return errorResult(clss);
+			throw new Exception(errorResult(clss,e),e) ;
 		} 
 	}
 	
@@ -107,7 +106,6 @@ public class ExecuteInters {
 				}
 			}
 
-
 			return list;
 		} catch (Exception e) {
 			logger.error("读取拦截器报错",e);
@@ -120,7 +118,8 @@ public class ExecuteInters {
 	 * @param cls
 	 * @return
 	 */
-	private static JSONObject errorResult(Class<?> cls) {
-		return MesUtil.getMes(500,"执行拦截器报错，拦截器类型["+cls.getName()+"]");
+	private static String errorResult(Class<?> cls,Exception e) {
+		JSONObject jsonObject = MesUtil.getMes(500,"执行拦截器报错，拦截器类型["+cls.getName()+"],"+e.getMessage());
+		return jsonObject.toJSONString();
 	}
 }

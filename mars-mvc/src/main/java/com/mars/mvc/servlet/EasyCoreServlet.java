@@ -1,8 +1,7 @@
-package com.mars.mvc.servlcet;
+package com.mars.mvc.servlet;
 
 import com.mars.mvc.resolve.ResolveRequest;
 import com.mars.core.logger.MarsLogger;
-import com.mars.core.util.MesUtil;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 import com.mars.server.server.servlet.EasyServlet;
@@ -32,5 +31,4 @@ public class EasyCoreServlet implements EasyServlet{
 			throw e;
 		}
 	}
-
 }

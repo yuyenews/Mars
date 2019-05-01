@@ -11,7 +11,7 @@ import com.mars.netty.server.EasyServer;
 import com.mars.ioc.load.LoadEasyBean;
 import com.mars.jdbc.base.BaseInitJdbc;
 import com.mars.mvc.resolve.LoadController;
-import com.mars.mvc.servlcet.EasyCoreServlet;
+import com.mars.mvc.servlet.EasyCoreServlet;
 
 /**
  * 启动Mars框架

@@ -44,7 +44,7 @@ public class EasyServerHandler extends ChannelInboundHandlerAdapter {
 
 		} catch (Exception e) {
 			log.error("处理请求失败!", e);
-			ResponseUtil.sendServerError(ctx,"处理请求发生错误"+e);
+			ResponseUtil.sendServerError(ctx,"处理请求发生错误"+e.getMessage());
 
 			/* 已经通过线程中的finally 释放请求了，所以这里，在出异常的时候，才释放 */
 			try {
