@@ -15,15 +15,16 @@ public class HttpUtil {
      * 发起请求，以序列化方式传递数据
      * @param url
      * @param params
+     * @param timeOut
      * @return
      * @throws Exception
      */
-    public static String request(String url, Object params) throws Exception {
+    public static String request(String url, Object params,long timeOut) throws Exception {
 
         /* 将参数序列化成byte[] */
         byte[] param = SerializableUtil.serialization(params);
 
-        OkHttpClient okHttpClient = getOkHttpClient();
+        OkHttpClient okHttpClient = getOkHttpClient(timeOut);
 
         /* 发起post请求 将数据传递过去 */
         MediaType formData = MediaType.parse("multipart/form-data");
@@ -37,9 +38,7 @@ public class HttpUtil {
                 .url(url)
                 .build();
 
-        Call call = okHttpClient.newCall(request);
-        Response response = call.execute();
-        return response.body().string();
+        return okCall(okHttpClient,request);
     }
 
     /**
@@ -47,11 +46,12 @@ public class HttpUtil {
      *
      * @param url  请求链接
      * @param params 参数
+     * @param timeOut
      * @return
      * @throws Exception
      */
-    public static String post(String url, Map<String,Object> params) throws Exception {
-        OkHttpClient okHttpClient = getOkHttpClient();
+    public static String post(String url, Map<String,Object> params,long timeOut) throws Exception {
+        OkHttpClient okHttpClient = getOkHttpClient(timeOut);
 
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
 
@@ -63,27 +63,46 @@ public class HttpUtil {
         Request request = new Request.Builder()
                 .url(url)
                 .post(formBody).build();
-        Response response = okHttpClient.newCall(request).execute();
-        return response.body().string();
+
+        return okCall(okHttpClient,request);
     }
 
     /**
      * 发起get请求
      * @param strUrl 链接
      * @param params 参数
+     * @param timeOut
      * @return 响应结果
      */
-    public static Object get(String strUrl, Map<String,String> params) throws Exception {
+    public static Object get(String strUrl, Map<String,String> params,long timeOut) throws Exception {
         String url = strUrl+"?"+getParams(params);
-        OkHttpClient okHttpClient = getOkHttpClient();
-        final Request request = new Request.Builder()
+        OkHttpClient okHttpClient = getOkHttpClient(timeOut);
+        Request request = new Request.Builder()
                 .url(url)
                 .build();
-        final Call call = okHttpClient.newCall(request);
-        Response response = call.execute();
-        return response.body().string();
+
+        return okCall(okHttpClient,request);
     }
 
+
+    /**
+     * 开始请求
+     * @param okHttpClient
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    private static String okCall(OkHttpClient okHttpClient,Request request) throws Exception {
+        Call call = okHttpClient.newCall(request);
+        Response response = call.execute();
+
+        int code = response.code();
+        ResponseBody responseBody = response.body();
+        if(code != 200){
+            throw new Exception("请求接口出现异常:"+responseBody.string());
+        }
+        return responseBody.string();
+    }
 
     /**
      * 组装参数
@@ -105,13 +124,14 @@ public class HttpUtil {
 
     /**
      * 获取Okhttp客户端
+     * @param timeOut
      * @return
      * @throws Exception
      */
-    private static OkHttpClient getOkHttpClient() {
+    private static OkHttpClient getOkHttpClient(long timeOut) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(30000, TimeUnit.SECONDS)//设置连接超时时间
-                .readTimeout(30000, TimeUnit.SECONDS)//设置读取超时时间
+                .connectTimeout(timeOut, TimeUnit.SECONDS)//设置连接超时时间
+                .readTimeout(timeOut, TimeUnit.SECONDS)//设置读取超时时间
                 .build();
         return okHttpClient;
     }

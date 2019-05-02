@@ -16,7 +16,7 @@ public class RemoteConfigUtil {
      */
     public static JSONObject remoteConfig(JSONObject object) throws  Exception {
         try{
-            Map<String,String> params = new HashMap<>();
+            Map<String,Object> params = new HashMap<>();
 
             /* 读取并判断用户有无使用远程配置中心，如果没有 则直接返回本地配置文件信息 */
             JSONObject config =  object.getJSONObject("config");
@@ -32,7 +32,7 @@ public class RemoteConfigUtil {
             params.put("myIp",MarsUtil.getLocalIp());
             params.put("port",object.getString("port"));
 
-            Object result = HttpUtil.get(url,params);
+            Object result = HttpUtil.post(url,params,30000);
 
             JSONObject jsonObject = JSONObject.parseObject(result.toString());
 
