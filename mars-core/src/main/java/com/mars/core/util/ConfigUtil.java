@@ -3,7 +3,6 @@ package com.mars.core.util;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLog4jUtil;
 
 /**
  * 配置文件工具类

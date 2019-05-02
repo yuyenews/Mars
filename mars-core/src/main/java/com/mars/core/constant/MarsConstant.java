@@ -46,6 +46,10 @@ public class MarsConstant {
      */
     public static final String INTERCEPTORS = "interceptors";
     /**
+     * 所有的interceptors对象
+     */
+    public static final String INTERCEPTOR_OBJECTS = "interceptorsObjects";
+    /**
      * 所有的easyDaos类信息
      */
     public static final String EASYDAOS = "easyDaos";

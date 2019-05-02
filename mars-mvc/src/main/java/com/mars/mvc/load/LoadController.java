@@ -1,4 +1,4 @@
-package com.mars.mvc.resolve;
+package com.mars.mvc.load;
 
 import com.mars.mvc.proxy.MvcCglibProxy;
 import com.mars.core.annotation.Controller;
@@ -7,8 +7,8 @@ import com.mars.core.annotation.Resource;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
-import com.mars.core.model.EasyBeanModel;
-import com.mars.mvc.resolve.model.EasyMappingModel;
+import com.mars.core.model.MarsBeanModel;
+import com.mars.mvc.model.MarsMappingModel;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -36,7 +36,7 @@ public class LoadController {
 	public static void loadContrl() throws Exception{
 		
 		try {
-			Map<String,EasyMappingModel> controlObjects = new HashMap<>();
+			Map<String, MarsMappingModel> controlObjects = new HashMap<>();
 			
 			/* 获取所有的controller数据 */
 			Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
@@ -47,7 +47,7 @@ public class LoadController {
 				return;
 			}
 			
-			Map<String,EasyBeanModel> easyBeanObjs = getEasyBeans();
+			Map<String, MarsBeanModel> easyBeanObjs = getEasyBeans();
 			
 			for(Map<String,Object> map : contorls) {
 				
@@ -66,12 +66,12 @@ public class LoadController {
 					for(Method method : methods) {
 						MarsMapping marsMapping = method.getAnnotation(MarsMapping.class);
 						if(marsMapping != null) {
-							EasyMappingModel easyMappingModel = new EasyMappingModel();
-							easyMappingModel.setObject(obj);
-							easyMappingModel.setRequestMetohd(marsMapping.method());
-							easyMappingModel.setMethod(method.getName());
-							easyMappingModel.setCls(cls);
-							controlObjects.put(marsMapping.value(), easyMappingModel);
+							MarsMappingModel marsMappingModel = new MarsMappingModel();
+							marsMappingModel.setObject(obj);
+							marsMappingModel.setRequestMetohd(marsMapping.method());
+							marsMappingModel.setMethod(method.getName());
+							marsMappingModel.setCls(cls);
+							controlObjects.put(marsMapping.value(), marsMappingModel);
 						}
 					}
 				}
@@ -90,7 +90,7 @@ public class LoadController {
 	 * @param easyBeanObjs duix
 	 * @return duix
 	 */
-	private static Object iocControl(Class<?> cls,Controller control,Map<String,EasyBeanModel> easyBeanObjs) throws Exception{
+	private static Object iocControl(Class<?> cls,Controller control,Map<String, MarsBeanModel> easyBeanObjs) throws Exception{
 		
 		try {
 
@@ -109,7 +109,7 @@ public class LoadController {
 						filedName = f.getName();
 					}
 					
-					EasyBeanModel beanModel = easyBeanObjs.get(filedName);
+					MarsBeanModel beanModel = easyBeanObjs.get(filedName);
 					if(beanModel!=null){
 						f.set(obj, beanModel.getObj());
 						log.info(cls.getName()+"的属性"+f.getName()+"注入成功");
@@ -129,11 +129,11 @@ public class LoadController {
 	 * 获取所有的easybean
 	 * @return duix
 	 */
-	private static Map<String,EasyBeanModel> getEasyBeans() {
+	private static Map<String, MarsBeanModel> getEasyBeans() {
 		Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
-		Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
+		Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
 		if(objs2 != null) {
-			easyBeanObjs = (Map<String,EasyBeanModel>)objs2;
+			easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
 		}
 		
 		return easyBeanObjs;

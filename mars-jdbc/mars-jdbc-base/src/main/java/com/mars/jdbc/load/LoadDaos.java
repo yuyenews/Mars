@@ -4,7 +4,7 @@ package com.mars.jdbc.load;
 import com.mars.core.annotation.MarsDao;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.model.EasyBeanModel;
+import com.mars.core.model.MarsBeanModel;
 import com.mars.core.util.StringUtil;
 import com.mars.jdbc.base.BaseJdbcProxy;
 
@@ -31,9 +31,9 @@ public class LoadDaos {
 
                 /* 创建bean对象，并保存起来 */
                 Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
-                Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
+                Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
                 if(objs2 != null) {
-                    easyBeanObjs = (Map<String,EasyBeanModel>)objs2;
+                    easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
                 }
 
                 for(Map<String,Object> map : easyDaos) {
@@ -45,7 +45,7 @@ public class LoadDaos {
                         beanName = StringUtil.getFirstLowerCase(cls.getSimpleName());
                     }
                     if(easyBeanObjs.get(beanName) == null) {
-                        EasyBeanModel beanModel = new EasyBeanModel();
+                        MarsBeanModel beanModel = new MarsBeanModel();
                         beanModel.setName(beanName);
                         beanModel.setCls(cls);
                         beanModel.setObj(baseProxy.getProxy(cls));

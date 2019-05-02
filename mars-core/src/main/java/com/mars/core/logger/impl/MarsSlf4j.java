@@ -1,15 +1,16 @@
-package com.mars.core.logger;
+package com.mars.core.logger.impl;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.mars.core.logger.MarsLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class LoggerLog4j extends MarsLogger {
+public class MarsSlf4j extends MarsLogger {
 
     private Logger logger;
 
-    public LoggerLog4j(Class cls){
-        logger = LogManager.getLogger(cls);
+    public MarsSlf4j(Class cls){
+        logger = LoggerFactory.getLogger(cls);
     }
 
     @Override
@@ -33,8 +34,7 @@ public class LoggerLog4j extends MarsLogger {
     }
 
     @Override
-    public void warn(String info, Throwable e) {
+    public void warn(String info,Throwable e) {
         logger.warn(info,e);
     }
-
 }

@@ -1,10 +1,9 @@
-package com.mars.core.logger;
+package com.mars.core.util;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.Configurator;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -36,14 +35,11 @@ public class MarsLog4jUtil {
      */
     private static void initLog4jPath(InputStream inputStream) throws Exception {
         try {
-            BufferedInputStream in = new BufferedInputStream(inputStream);
-            ConfigurationSource source = new ConfigurationSource(in);
+            ConfigurationSource source = new ConfigurationSource(inputStream);
             Configurator.initialize(null, source);
-
             inputStream.close();
-            in.close();
         } catch (Exception e){
-            throw new Exception("logFile指向的路径下找不到相应的文件",e);
+            throw new Exception("无法加载logFile指向的路径下的文件",e);
         }
     }
 }

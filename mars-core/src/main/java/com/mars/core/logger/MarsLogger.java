@@ -1,8 +1,13 @@
 package com.mars.core.logger;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mars.core.logger.impl.MarsLog4j;
+import com.mars.core.logger.impl.MarsSlf4j;
 import com.mars.core.util.ConfigUtil;
 
+/**
+ * 自定义log打印类
+ */
 public abstract class MarsLogger {
 
 
@@ -24,9 +29,9 @@ public abstract class MarsLogger {
     public static MarsLogger getLogger(Class cls){
         boolean str = hasLog4j();
         if(str){
-            return new LoggerSlf4j(cls);
+            return new MarsSlf4j(cls);
         }
-        return new LoggerLog4j(cls);
+        return new MarsLog4j(cls);
     }
 
     /**

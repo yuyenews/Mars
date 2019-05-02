@@ -1,4 +1,4 @@
-package com.mars.mvc.resolve.model;
+package com.mars.mvc.model;
 
 import com.mars.core.annotation.enums.RequestMetohd;
 
@@ -8,7 +8,7 @@ import com.mars.core.annotation.enums.RequestMetohd;
  * @author yuye
  *
  */
-public class EasyMappingModel {
+public class MarsMappingModel {
 
 	/**
 	 * 对象

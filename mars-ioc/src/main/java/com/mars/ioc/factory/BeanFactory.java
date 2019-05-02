@@ -8,7 +8,7 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
-import com.mars.core.model.EasyBeanModel;
+import com.mars.core.model.MarsBeanModel;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -111,9 +111,9 @@ public class BeanFactory {
 		try {
 
 			Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
-			Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
+			Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
 			if(objs2 != null) {
-				easyBeanObjs = (Map<String,EasyBeanModel>)objs2;
+				easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
 			} 
 			
 			return easyBeanObjs.get(name).getObj();

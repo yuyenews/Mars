@@ -3,12 +3,11 @@ package com.mars.mvc.resolve;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
-import com.mars.core.util.MesUtil;
 import com.mars.mvc.resolve.access.PathAccess;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 import com.mars.server.util.RequestUtil;
-import com.mars.mvc.resolve.model.EasyMappingModel;
+import com.mars.mvc.model.MarsMappingModel;
 
 import java.util.Map;
 
@@ -48,7 +47,7 @@ public class ResolveRequest {
 	public Object resolve(HttpRequest request,HttpResponse response) throws Exception {
 		
 		try {
-			Map<String,EasyMappingModel> maps = getControllers();
+			Map<String, MarsMappingModel> maps = getControllers();
 			
 			String uri = getRequestPath(request);
 			if(PathAccess.hasAccess(uri)){
@@ -79,12 +78,12 @@ public class ResolveRequest {
 	 * 获取所有的controller对象
 	 * @return duix
 	 */
-	private Map<String,EasyMappingModel> getControllers() {
+	private Map<String, MarsMappingModel> getControllers() {
 		
-		Map<String,EasyMappingModel> controlObjects = null;
+		Map<String, MarsMappingModel> controlObjects = null;
 		Object obj = constants.getAttr(MarsConstant.CONTROLLER_OBJECTS);
 		if(obj != null) {
-			controlObjects = (Map<String,EasyMappingModel>)obj;
+			controlObjects = (Map<String, MarsMappingModel>)obj;
 		}
 		
 		return controlObjects;

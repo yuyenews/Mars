@@ -2,19 +2,18 @@ package com.mars.mvc.resolve;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.mvc.base.BaseInterceptor;
-import com.mars.core.annotation.MarsInterceptor;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.MatchUtil;
 import com.mars.core.util.MesUtil;
+import com.mars.mvc.model.MarsInterModel;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 执行拦截器
@@ -32,14 +31,14 @@ public class ExecuteInters {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public static Object executeIntersStart(List<Object> list,HttpRequest request, HttpResponse response) throws Exception {
+	public static Object executeIntersStart(List<MarsInterModel> list,HttpRequest request, HttpResponse response) throws Exception {
 		Class<?> clss = null;
 		try {
-			for(Object obj : list) {
-				clss = obj.getClass();
+			for(MarsInterModel marsInterModel : list) {
+				clss = marsInterModel.getCls();
 				
 				Method method2 = clss.getDeclaredMethod("startRequest", new Class[] { HttpRequest.class, HttpResponse.class });
-				Object result = method2.invoke(obj, new Object[] { request, response });
+				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response });
 				if(!result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
@@ -58,15 +57,15 @@ public class ExecuteInters {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public static Object executeIntersEnd(List<Object> list,HttpRequest request, HttpResponse response,Object conResult) throws Exception {
+	public static Object executeIntersEnd(List<MarsInterModel> list,HttpRequest request, HttpResponse response,Object conResult) throws Exception {
 		Class<?> clss = null;
 		try {
 			
-			for(Object obj : list) {
-				clss = obj.getClass();
+			for(MarsInterModel marsInterModel : list) {
+				clss = marsInterModel.getCls();
 				
 				Method method2 = clss.getDeclaredMethod("endRequest", new Class[] { HttpRequest.class, HttpResponse.class, Object.class });
-				Object result = method2.invoke(obj, new Object[] { request, response, conResult });
+				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response, conResult });
 				if(!result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
@@ -84,28 +83,20 @@ public class ExecuteInters {
 	 * @param uriEnd uel
 	 * @return duix
 	 */
-	public static List<Object> getInters(String uriEnd){
-		
+	public static List<MarsInterModel> getInters(String uriEnd){
 		try {
-			List<Object> list = new ArrayList<>();
+			List<MarsInterModel> list = new ArrayList<>();
 
-			Object objs = MarsSpace.getEasySpace().getAttr(MarsConstant.INTERCEPTORS);
+			Object interceptorsObj = MarsSpace.getEasySpace().getAttr(MarsConstant.INTERCEPTOR_OBJECTS);
 
-			if(objs != null) {
-				List<Map<String,Object>> interceptors = (List<Map<String,Object>>)objs;
-
-				for(Map<String,Object> map : interceptors) {
-
-					MarsInterceptor marsInterceptor = (MarsInterceptor)map.get("annotation");
-					String pattern = marsInterceptor.pattern();
-
-					if(MatchUtil.isMatch(pattern, uriEnd)){
-						Class cls = (Class)map.get("className");
-						list.add(cls.getDeclaredConstructor().newInstance());
+			if(interceptorsObj != null) {
+				List<MarsInterModel> interceptors = (List<MarsInterModel>)interceptorsObj;
+				for(MarsInterModel marsInterModel : interceptors) {
+					if(MatchUtil.isMatch(marsInterModel.getPattern(), uriEnd)){
+						list.add(marsInterModel);
 					}
 				}
 			}
-
 			return list;
 		} catch (Exception e) {
 			logger.error("读取拦截器报错",e);

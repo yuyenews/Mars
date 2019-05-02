@@ -5,7 +5,7 @@ import com.mars.core.annotation.Resource;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
-import com.mars.core.model.EasyBeanModel;
+import com.mars.core.model.MarsBeanModel;
 import com.mars.core.util.StringUtil;
 import com.mars.ioc.factory.BeanFactory;
 
@@ -45,9 +45,9 @@ public class LoadEasyBean {
 			
 			/* 创建bean对象，并保存起来 */
 			Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
-			Map<String,EasyBeanModel> easyBeanObjs = new HashMap<>();
+			Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
 			if(objs2 != null) {
-				easyBeanObjs = (Map<String,EasyBeanModel>)objs2;
+				easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
 			} 
 			for(Map<String,Object> map : easyBeans) {
 				
@@ -59,7 +59,7 @@ public class LoadEasyBean {
 					beanName = StringUtil.getFirstLowerCase(cls.getSimpleName());
 				}
 				if(easyBeanObjs.get(beanName) == null) {
-					EasyBeanModel beanModel = new EasyBeanModel();
+					MarsBeanModel beanModel = new MarsBeanModel();
 					beanModel.setName(beanName);
 					beanModel.setCls(cls);
 					beanModel.setObj(BeanFactory.createBean(cls));
@@ -79,13 +79,13 @@ public class LoadEasyBean {
 	 * easyBean注入
 	 * @param easyBeanObjs 对象
 	 */
-	private static void iocBean(Map<String,EasyBeanModel> easyBeanObjs) throws Exception{
+	private static void iocBean(Map<String, MarsBeanModel> easyBeanObjs) throws Exception{
 		
 		try {
 			for(String key : easyBeanObjs.keySet()) {
-				EasyBeanModel easyBeanModel = easyBeanObjs.get(key);
-				Object obj = easyBeanModel.getObj();
-				Class<?> cls = easyBeanModel.getCls();
+				MarsBeanModel marsBeanModel = easyBeanObjs.get(key);
+				Object obj = marsBeanModel.getObj();
+				Class<?> cls = marsBeanModel.getCls();
 				/* 获取对象属性，完成注入 */
 				Field[] fields = cls.getDeclaredFields();
 				for(Field f : fields){
@@ -98,7 +98,7 @@ public class LoadEasyBean {
 							filedName = f.getName();
 						}
 						
-						EasyBeanModel beanModel = easyBeanObjs.get(filedName);
+						MarsBeanModel beanModel = easyBeanObjs.get(filedName);
 						if(beanModel!=null){
 							f.set(obj, beanModel.getObj());
 							log.info(cls.getName()+"的属性"+f.getName()+"注入成功");
@@ -108,8 +108,8 @@ public class LoadEasyBean {
 					}
 				}
 				/* 保险起见，重新插入数据 */
-				easyBeanModel.setCls(cls);
-				easyBeanObjs.put(key, easyBeanModel);
+				marsBeanModel.setCls(cls);
+				easyBeanObjs.put(key, marsBeanModel);
 			}
 			
 			constants.setAttr(MarsConstant.EASYBEAN_OBJECTS, easyBeanObjs);

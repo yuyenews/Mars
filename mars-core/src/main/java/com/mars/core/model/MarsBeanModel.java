@@ -6,7 +6,7 @@ package com.mars.core.model;
  * @author yuye
  *
  */
-public class EasyBeanModel {
+public class MarsBeanModel {
 
 	/**
 	 * bean名称

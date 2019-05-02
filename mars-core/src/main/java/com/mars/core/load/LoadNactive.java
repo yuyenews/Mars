@@ -31,7 +31,6 @@ public class LoadNactive {
         loadController(cls, controller);
     }
 
-
     /**
      * 将所有controller存到全局存储空间
      * @param cls
