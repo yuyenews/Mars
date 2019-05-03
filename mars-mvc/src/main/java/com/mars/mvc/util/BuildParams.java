@@ -127,7 +127,7 @@ public class BuildParams {
      */
     private static Object builderCloudObject(Class cls,HttpRequest request) throws Exception {
         Object requestType = request.getParemeter(MarsCloudConstant.REQUEST_TYPE);
-        if(requestType != null && requestType.toString().equals("cloud")){
+        if(requestType != null && requestType.toString().equals(MarsCloudConstant.REQUEST_TYPE)){
             FileUpLoad fileUpLoad = request.getFile(MarsCloudConstant.PARAM);
             byte[] bytes = fileUpLoad.getBytes();
             return SerializableUtil.deSerialization(bytes, cls);
