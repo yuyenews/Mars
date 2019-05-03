@@ -124,10 +124,9 @@ public class HttpRequest {
 	 * @return 请求参数
 	 */
 	@SuppressWarnings("unchecked")
-	public Object getParemeter(String key) {
-		Object objs = paremeters.get(key);
-		if(objs != null) {
-			List<Object> lis = (List<Object>)objs;
+	public Object getParameter(String key) {
+		List<Object> lis = getParameterValues(key);
+		if (lis != null) {
 			return lis.get(0);
 		}
 		return null;
@@ -138,7 +137,7 @@ public class HttpRequest {
 	 * @param key 键
 	 * @return 请求参数
 	 */
-	public List<Object> getParemeterValues(String key) {
+	public List<Object> getParameterValues(String key) {
 		Object objs = paremeters.get(key);
 		if(objs != null) {
 			List<Object> lis = (List<Object>)objs;

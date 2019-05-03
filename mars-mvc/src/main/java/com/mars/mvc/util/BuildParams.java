@@ -9,6 +9,7 @@ import com.mars.server.server.request.model.FileUpLoad;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,15 +73,15 @@ public class BuildParams {
         Object obj = cls.getDeclaredConstructor().newInstance();
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){
-            Object val = request.getParemeter(f.getName());
+            List<Object> valList = request.getParameterValues(f.getName());
             FileUpLoad fileUpLoad = request.getFile(f.getName());
             if(fileUpLoad != null){
                 f.setAccessible(true);
                 f.set(obj,fileUpLoad);
-            } else if(val != null){
+            } else if(valList != null && !valList.isEmpty()){
                 f.setAccessible(true);
                 String fieldTypeName = f.getType().getSimpleName().toUpperCase();
-                String valStr = val.toString();
+                String valStr = valList.get(0).toString();
                 switch (fieldTypeName){
                     case DataType.INT:
                     case DataType.INTEGER:
@@ -109,8 +110,8 @@ public class BuildParams {
                     case DataType.BOOLEAN:
                         f.set(obj,Boolean.parseBoolean(valStr));
                         break;
-                    default:
-                        f.set(obj,val);
+                    case DataType.LIST:
+                        f.set(obj,valList);
                         break;
                 }
             }
@@ -126,7 +127,7 @@ public class BuildParams {
      * @throws Exception
      */
     private static Object builderCloudObject(Class cls,HttpRequest request) throws Exception {
-        Object requestType = request.getParemeter(MarsCloudConstant.REQUEST_TYPE);
+        Object requestType = request.getParameter(MarsCloudConstant.REQUEST_TYPE);
         if(requestType != null && requestType.toString().equals(MarsCloudConstant.REQUEST_TYPE)){
             FileUpLoad fileUpLoad = request.getFile(MarsCloudConstant.PARAM);
             byte[] bytes = fileUpLoad.getBytes();

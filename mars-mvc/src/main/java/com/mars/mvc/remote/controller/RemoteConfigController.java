@@ -29,7 +29,7 @@ public class RemoteConfigController {
 
         /* TODO(功能开发中) */
 
-        Object config = request.getParemeter("config");
+        Object config = request.getParameter("config");
         String result = RemoteConfigService.reloadConfig(config);
 
         Map<String,Object> returns = new HashMap<>();
