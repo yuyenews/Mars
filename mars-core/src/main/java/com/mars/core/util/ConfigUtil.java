@@ -51,7 +51,6 @@ public class ConfigUtil {
 			
 			return jsonObject;
 		}
-		
 		return null;
 	}
 }

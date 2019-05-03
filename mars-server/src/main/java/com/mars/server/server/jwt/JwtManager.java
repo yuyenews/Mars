@@ -22,12 +22,12 @@ public class JwtManager {
     /**
      * token秘钥
      */
-    private final String SECRET = "gogeframworkwinno1123456";
+    private final String SECRET = "Mars-java-cloud-config-no1";
     /**
-     * token 过期时间: 10天
+     * token 过期时间: 1天
      */
-    private final int calendarField = Calendar.DATE;
-    private int calendarInterval = 10;
+    private final int calendarField = Calendar.SECOND;
+    private int calendarInterval = 86400;
 
     private static JwtManager jwtManager;
     private JwtManager(){}

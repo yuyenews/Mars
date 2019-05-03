@@ -1,6 +1,6 @@
 package com.mars.core.util;
 
-import com.mars.core.constant.MarsCloudConstant;
+
 import okhttp3.*;
 
 import java.util.Map;
@@ -14,24 +14,22 @@ public class HttpUtil {
     /**
      * 发起请求，以序列化方式传递数据
      * @param url
-     * @param params
+     * @param value
+     * @param name
      * @param timeOut
      * @return
      * @throws Exception
      */
-    public static String request(String url, Object params,long timeOut) throws Exception {
-
-        /* 将参数序列化成byte[] */
-        byte[] param = SerializableUtil.serialization(params);
+    public static String request(String url, String name, byte[] value, long timeOut) throws Exception {
 
         OkHttpClient okHttpClient = getOkHttpClient(timeOut);
 
         /* 发起post请求 将数据传递过去 */
         MediaType formData = MediaType.parse("multipart/form-data");
-        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"),param);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"),value);
         MultipartBody body = new MultipartBody.Builder()
                 .setType(formData)
-                .addFormDataPart(MarsCloudConstant.PARAM,"params",fileBody)
+                .addFormDataPart(name,"params",fileBody)
                 .build();
         Request request = new Request.Builder()
                 .post(body)

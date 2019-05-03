@@ -8,9 +8,17 @@ import java.util.Enumeration;
 /**
  * 工具类
  */
-public class MarsUtil {
+public class MarsAddressUtil {
 
+    /**
+     * 本机局域网IP
+     */
     private static String ip;
+
+    /**
+     * 本服务的端口号
+     */
+    private static String port;
 
     /**
      * 获取本机在局域网的IP
@@ -19,9 +27,21 @@ public class MarsUtil {
      */
     public static String getLocalIp() throws Exception {
         if(ip == null){
-            ip = MarsUtil.getLocalHostLANAddress().getHostAddress();
+            ip = MarsAddressUtil.getLocalHostLANAddress().getHostAddress();
         }
         return ip;
+    }
+
+    /**
+     * 获取端口号
+     * @return
+     * @throws Exception
+     */
+    public static String getPort() {
+        if(port == null){
+            port = ConfigUtil.getConfig().getString("port");
+        }
+        return port;
     }
 
     /**
