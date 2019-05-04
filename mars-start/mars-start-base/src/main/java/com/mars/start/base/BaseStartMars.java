@@ -51,6 +51,7 @@ public class BaseStartMars {
 
 		} catch (Exception e) {
 			log.error("",e);
+			System.exit(0);
 		}
 	}
 	

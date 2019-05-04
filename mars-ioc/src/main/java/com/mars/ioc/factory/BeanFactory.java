@@ -110,7 +110,7 @@ public class BeanFactory {
 	public static Object getBean(String name) throws Exception {
 		try {
 
-			Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
+			Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
 			Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
 			if(objs2 != null) {
 				easyBeanObjs = (Map<String, MarsBeanModel>)objs2;

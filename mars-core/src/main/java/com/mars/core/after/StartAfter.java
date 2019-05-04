@@ -18,7 +18,7 @@ public class StartAfter {
      */
     public static void after() throws Exception {
         try {
-            Object objs = constants.getAttr(MarsConstant.EASYAFTERS);
+            Object objs = constants.getAttr(MarsConstant.MARS_AFTERS);
             if(objs != null) {
                 List<Class> easyLoads = (List<Class>)objs;
 

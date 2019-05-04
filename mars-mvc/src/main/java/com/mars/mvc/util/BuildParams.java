@@ -27,9 +27,9 @@ public class BuildParams {
      */
     public static Object[] builder(Method method, HttpRequest request, HttpResponse response) throws Exception {
         try {
-            String requestName = HttpRequest.class.getSimpleName().toLowerCase();
-            String responseName = HttpResponse.class.getSimpleName().toLowerCase();
-            String mapName = Map.class.getSimpleName().toLowerCase();
+            String requestName = HttpRequest.class.getSimpleName().toUpperCase();
+            String responseName = HttpResponse.class.getSimpleName().toUpperCase();
+            String mapName = Map.class.getSimpleName().toUpperCase();
             Class[] paramTypes = method.getParameterTypes();
             if(paramTypes == null || paramTypes.length < 1){
                 return null;
@@ -37,7 +37,7 @@ public class BuildParams {
             Object[] params = new Object[paramTypes.length];
             for(int i = 0;i<paramTypes.length;i++){
                 Class cls = paramTypes[i];
-                String paramName = cls.getSimpleName().toLowerCase();
+                String paramName = cls.getSimpleName().toUpperCase();
                 if(requestName.equals(paramName)){
                     params[i] = request;
                 } else if(responseName.equals(paramName)){

@@ -25,12 +25,12 @@ public class LoadDaos {
     public static void loadDao(BaseJdbcProxy baseProxy) throws Exception{
         try {
 
-            Object objs = constants.getAttr(MarsConstant.EASYDAOS);
+            Object objs = constants.getAttr(MarsConstant.MARS_DAOS);
             if(objs != null) {
                 List<Map<String,Object>> easyDaos = (List<Map<String,Object>>)objs;
 
                 /* 创建bean对象，并保存起来 */
-                Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
+                Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
                 Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
                 if(objs2 != null) {
                     easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
@@ -55,7 +55,7 @@ public class LoadDaos {
                     }
                 }
 
-                constants.setAttr(MarsConstant.EASYBEAN_OBJECTS,easyBeanObjs);
+                constants.setAttr(MarsConstant.MARS_BEAN_OBJECTS,easyBeanObjs);
             }
 
         } catch (Exception e) {

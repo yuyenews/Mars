@@ -8,11 +8,6 @@ import java.lang.annotation.Target;
 
 import com.mars.core.annotation.enums.RequestMetohd;
 
-/**
- * 映射控制层方法的注解 
- * @author yuye
- *
- */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

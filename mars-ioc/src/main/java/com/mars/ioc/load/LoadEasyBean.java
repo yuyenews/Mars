@@ -35,7 +35,7 @@ public class LoadEasyBean {
 	public static void loadBean() throws Exception{
 		try {
 			/* 获取所有的bean数据 */
-			Object objs = constants.getAttr(MarsConstant.EASYBEANS);
+			Object objs = constants.getAttr(MarsConstant.MARS_BEANS);
 			List<Map<String,Object>> easyBeans = null;
 			if(objs != null) {
 				easyBeans = (List<Map<String,Object>>)objs;
@@ -44,7 +44,7 @@ public class LoadEasyBean {
 			}
 			
 			/* 创建bean对象，并保存起来 */
-			Object objs2 = constants.getAttr(MarsConstant.EASYBEAN_OBJECTS);
+			Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
 			Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
 			if(objs2 != null) {
 				easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
@@ -112,7 +112,7 @@ public class LoadEasyBean {
 				easyBeanObjs.put(key, marsBeanModel);
 			}
 			
-			constants.setAttr(MarsConstant.EASYBEAN_OBJECTS, easyBeanObjs);
+			constants.setAttr(MarsConstant.MARS_BEAN_OBJECTS, easyBeanObjs);
 		} catch (Exception e) {
 			throw new Exception("加载并注入EasyBean的时候出现错误",e);
 		} 

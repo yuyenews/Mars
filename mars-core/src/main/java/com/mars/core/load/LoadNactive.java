@@ -55,7 +55,7 @@ public class LoadNactive {
      * @param marsBean
      */
     public static void loadEasyBean(Class<?> cls, MarsBean marsBean) {
-        Object objs = constants.getAttr(MarsConstant.EASYBEANS);
+        Object objs = constants.getAttr(MarsConstant.MARS_BEANS);
         List<Map<String,Object>> easyBeans = new ArrayList<>();
         if(objs != null) {
             easyBeans = (List<Map<String,Object>>)objs;
@@ -64,7 +64,7 @@ public class LoadNactive {
         eb.put("className", cls);
         eb.put("annotation", marsBean);
         easyBeans.add(eb);
-        constants.setAttr(MarsConstant.EASYBEANS, easyBeans);
+        constants.setAttr(MarsConstant.MARS_BEANS, easyBeans);
     }
 
     /**
@@ -91,7 +91,7 @@ public class LoadNactive {
      * @param marsDao
      */
     public static void loadDao(Class<?> cls, MarsDao marsDao){
-        Object objs = constants.getAttr(MarsConstant.EASYDAOS);
+        Object objs = constants.getAttr(MarsConstant.MARS_DAOS);
         List<Map<String,Object>> easyDaos = new ArrayList<>();
         if(objs != null) {
             easyDaos = (List<Map<String,Object>>)objs;
@@ -100,7 +100,7 @@ public class LoadNactive {
         eb.put("className", cls);
         eb.put("annotation", marsDao);
         easyDaos.add(eb);
-        constants.setAttr(MarsConstant.EASYDAOS, easyDaos);
+        constants.setAttr(MarsConstant.MARS_DAOS, easyDaos);
     }
 
     /**
@@ -108,12 +108,12 @@ public class LoadNactive {
      * @param cls
      */
     public static void loadEasyAfter(Class<?> cls){
-        Object objs = constants.getAttr(MarsConstant.EASYAFTERS);
+        Object objs = constants.getAttr(MarsConstant.MARS_AFTERS);
         List<Class> easyLoads = new ArrayList<>();
         if(objs != null) {
             easyLoads = (List<Class>)objs;
         }
         easyLoads.add(cls);
-        constants.setAttr(MarsConstant.EASYAFTERS, easyLoads);
+        constants.setAttr(MarsConstant.MARS_AFTERS, easyLoads);
     }
 }

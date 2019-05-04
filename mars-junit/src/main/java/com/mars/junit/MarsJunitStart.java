@@ -60,6 +60,7 @@ public class MarsJunitStart {
             log.info("开始执行单测......");
         } catch (Exception e) {
             log.error("",e);
+            System.exit(0);
         }
     }
 
