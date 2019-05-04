@@ -15,6 +15,8 @@ public class StartAfter {
 
     /**
      * 框架启动后立刻执行
+     *
+     * @throws Exception 异常
      */
     public static void after() throws Exception {
         try {

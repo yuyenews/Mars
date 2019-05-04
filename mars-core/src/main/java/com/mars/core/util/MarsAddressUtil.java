@@ -22,8 +22,8 @@ public class MarsAddressUtil {
 
     /**
      * 获取本机在局域网的IP
-     * @return
-     * @throws Exception
+     * @return ip
+     * @throws Exception 异常
      */
     public static String getLocalIp() throws Exception {
         if(ip == null){
@@ -34,8 +34,7 @@ public class MarsAddressUtil {
 
     /**
      * 获取端口号
-     * @return
-     * @throws Exception
+     * @return 端口
      */
     public static String getPort() {
         if(port == null){
@@ -46,8 +45,8 @@ public class MarsAddressUtil {
 
     /**
      * 获取本服务的IP
-     * @return
-     * @throws UnknownHostException
+     * @return ip
+     * @throws UnknownHostException 异常
      */
     public static InetAddress getLocalHostLANAddress() throws UnknownHostException {
         try {

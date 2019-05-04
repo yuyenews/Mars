@@ -15,7 +15,9 @@ public class LoadClass {
 	
 	/**
 	 * 加载所有bean，包括controller 的class对象
-	 * @param packageName
+	 * @param packageName 包名
+	 *
+	 * @throws Exception 异常
 	 */
 	public static void loadBeans(String packageName) throws Exception{
 		try {
@@ -32,6 +34,8 @@ public class LoadClass {
 	/**
 	 * 加载所有的bean，包括controller 的class对象
 	 * @param packageName bean所在的包名
+	 *
+	 * @throws Exception 异常
 	 */
 	private static void loadAllBeans(String packageName) throws Exception {
 		try {

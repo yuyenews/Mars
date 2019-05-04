@@ -13,11 +13,11 @@ public class HttpUtil {
 
     /**
      * 发起请求，以序列化方式传递数据
-     * @param url
-     * @param value
-     * @param name
-     * @param timeOut
-     * @return
+     * @param url 路径
+     * @param value 请求参数
+     * @param name 参数name
+     * @param timeOut 超时时间
+     * @return 相应数据
      * @throws Exception
      */
     public static String request(String url, String name, byte[] value, long timeOut) throws Exception {
@@ -44,8 +44,8 @@ public class HttpUtil {
      *
      * @param url  请求链接
      * @param params 参数
-     * @param timeOut
-     * @return
+     * @param timeOut 超时时间
+     * @return 相应数据
      * @throws Exception
      */
     public static String post(String url, Map<String,Object> params,long timeOut) throws Exception {
@@ -71,6 +71,8 @@ public class HttpUtil {
      * @param params 参数
      * @param timeOut
      * @return 响应结果
+     *
+     * @throws Exception
      */
     public static Object get(String strUrl, Map<String,String> params,long timeOut) throws Exception {
         String url = strUrl+"?"+getParams(params);
@@ -87,7 +89,7 @@ public class HttpUtil {
      * 开始请求
      * @param okHttpClient
      * @param request
-     * @return
+     * @return 相应数据
      * @throws Exception
      */
     private static String okCall(OkHttpClient okHttpClient,Request request) throws Exception {
@@ -104,8 +106,8 @@ public class HttpUtil {
 
     /**
      * 组装参数
-     * @param params
-     * @return
+     * @param params 参数
+     * @return 相应数据
      */
     private static String getParams(Map<String,String> params){
         StringBuffer stringBuffer = new StringBuffer();
@@ -121,9 +123,9 @@ public class HttpUtil {
     }
 
     /**
-     * 获取Okhttp客户端
+     * 获取okhttp客户端
      * @param timeOut
-     * @return
+     * @return 客户端
      * @throws Exception
      */
     private static OkHttpClient getOkHttpClient(long timeOut) {

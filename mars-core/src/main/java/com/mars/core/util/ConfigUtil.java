@@ -16,6 +16,8 @@ public class ConfigUtil {
 
 	/**
 	 * 加载配置文件
+	 *
+	 * @throws Exception 异常
 	 */
 	public static void loadConfig() throws Exception{
 		try {

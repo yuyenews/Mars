@@ -10,8 +10,8 @@ public class SerializableUtil {
 
     /**
      * 将对象序列化成二进制流
-     * @param obj
-     * @return
+     * @param obj 对象
+     * @return 对象
      */
     public static byte[] serialization(Object obj) throws Exception {
         try {
@@ -30,11 +30,11 @@ public class SerializableUtil {
 
     /**
      * 将二进制流反序列化成对象
-     * @param by
-     * @param cls
-     * @param <T>
-     * @return
-     * @throws Exception
+     * @param by 对象
+     * @param cls 类型
+     * @param <T> 对象
+     * @return 对象
+     * @throws Exception 异常
      */
     public static <T> T deSerialization(byte[] by,Class<T> cls) throws Exception {
         try {

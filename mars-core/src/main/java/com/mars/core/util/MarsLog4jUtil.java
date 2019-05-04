@@ -12,7 +12,9 @@ public class MarsLog4jUtil {
 
     /**
      * 加载log4j配置文件
-     * @throws Exception
+     *
+     * @param config 配置文件
+     * @throws Exception 异常
      */
     public static void initLog4jConfig(JSONObject config) throws Exception {
         String path = config.getString("logFile");
@@ -31,7 +33,7 @@ public class MarsLog4jUtil {
     /**
      * 加载log4j配置文件
      * @param inputStream 文件流
-     * @throws Exception
+     * @throws Exception 异常
      */
     private static void initLog4jPath(InputStream inputStream) throws Exception {
         try {

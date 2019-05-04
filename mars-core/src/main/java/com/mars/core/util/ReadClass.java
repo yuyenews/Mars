@@ -32,7 +32,7 @@ public class ReadClass {
 	 * @param packageName
 	 *            包名
 	 * @return 类的完整名称
-	 * @throws UnsupportedEncodingException
+	 * @throws UnsupportedEncodingException 异常
 	 */
 	public static Set<String> loadClassList(String packageName) throws IOException {
 		if(packageName == null) {
@@ -44,8 +44,8 @@ public class ReadClass {
 	/**
 	 * 从包package中获取所有的Class
 	 * 
-	 * @param pack
-	 * @return
+	 * @param pack 包
+	 * @return 集合
 	 */
 	private static Set<String> getClasses(String pack) {
 
@@ -127,10 +127,10 @@ public class ReadClass {
 	/**
 	 * 以文件的形式来获取包下的所有Class
 	 * 
-	 * @param packageName
-	 * @param packagePath
-	 * @param recursive
-	 * @param classes
+	 * @param packageName 包
+	 * @param packagePath 路径
+	 * @param recursive 不知道
+	 * @param classes 不知道
 	 */
 	public static void findAndAddClassesInPackageByFile(String packageName, String packagePath, final boolean recursive,
 			Set<String> classes) {

@@ -58,6 +58,7 @@ public class FileUtil {
      *
      * @param path 路径
      * @return str
+     * @throws Exception 异常
      */
     public static String readYml(String path) throws Exception {
         InputStream inputStream = null;

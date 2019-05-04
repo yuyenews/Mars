@@ -21,7 +21,7 @@ public class LoadNactive {
 
     /**
      * 加载本地bean
-     * @throws Exception
+     * @throws Exception 异常
      */
     public static void loadNactiveBeans() throws Exception {
 
@@ -33,8 +33,8 @@ public class LoadNactive {
 
     /**
      * 将所有controller存到全局存储空间
-     * @param cls
-     * @param controller
+     * @param cls 类型
+     * @param controller 注解
      */
     public static void loadController(Class<?> cls,Controller controller) {
         Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
@@ -51,8 +51,8 @@ public class LoadNactive {
 
     /**
      * 将所有easybean存到全局存储空间
-     * @param cls
-     * @param marsBean
+     * @param cls 类型
+     * @param marsBean 注解
      */
     public static void loadEasyBean(Class<?> cls, MarsBean marsBean) {
         Object objs = constants.getAttr(MarsConstant.MARS_BEANS);
@@ -69,8 +69,8 @@ public class LoadNactive {
 
     /**
      * 将所有拦截器存到全局存储空间
-     * @param cls
-     * @param interceptor
+     * @param cls 类型
+     * @param interceptor 注解
      */
     public static void loadInterceptor(Class<?> cls, MarsInterceptor interceptor){
         Object objs = constants.getAttr(MarsConstant.INTERCEPTORS);
@@ -87,8 +87,8 @@ public class LoadNactive {
 
     /**
      * 加载dao
-     * @param cls
-     * @param marsDao
+     * @param cls 类型
+     * @param marsDao 注解
      */
     public static void loadDao(Class<?> cls, MarsDao marsDao){
         Object objs = constants.getAttr(MarsConstant.MARS_DAOS);
@@ -105,7 +105,7 @@ public class LoadNactive {
 
     /**
      * 加载easyAfter
-     * @param cls
+     * @param cls 类型
      */
     public static void loadEasyAfter(Class<?> cls){
         Object objs = constants.getAttr(MarsConstant.MARS_AFTERS);

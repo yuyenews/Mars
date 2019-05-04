@@ -17,7 +17,7 @@ public class ThreadUtil {
 
 	/**
 	 * 获取当前线程的ID
-	 * @param tag
+	 * @param tag 标记
 	 * @return id
 	 */
 	public static String getThreadId(String tag) {

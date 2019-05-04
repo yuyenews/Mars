@@ -12,7 +12,7 @@ public class RemoteConfigService {
 
     /**
      * 重新加载配置
-     * @param config
+     * @param config 配置文件
      *
      * @return 加载结果
      */

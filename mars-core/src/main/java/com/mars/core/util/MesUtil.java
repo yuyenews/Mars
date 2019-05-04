@@ -9,7 +9,9 @@ public class MesUtil {
 
     /**
      * 获取错误提示信息
-     * @return
+     * @param errorCode code
+     * @param errorMsg 信息
+     * @return 异常
      */
     public static JSONObject getMes(Integer errorCode,String errorMsg){
         JSONObject jsonObject = new JSONObject();

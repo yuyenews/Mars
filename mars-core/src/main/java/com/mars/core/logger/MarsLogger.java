@@ -23,8 +23,8 @@ public abstract class MarsLogger {
 
     /**
      * 获取MarsLogger 对象
-     * @param cls
-     * @return
+     * @param cls 类
+     * @return 打印日志对象
      */
     public static MarsLogger getLogger(Class cls){
         boolean str = hasLog4j();
