@@ -18,10 +18,10 @@
     - Support AOP, IOC, MVC, Mybatis, transaction management
     <br/>
     &nbsp;
-    - Remote configuration via Mars-config [iteration]
+    - Distributed deployment via Mars-cloud
     <br/>
     &nbsp;
-    - Distributed deployment via Mars-cloud [under development]
+    - Remote configuration via Mars-config [iteration]
 </p>
 
 <h2>What can't I do</h2>
