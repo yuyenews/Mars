@@ -31,25 +31,24 @@ public class LoadEasyBean {
 	/**
 	 * 创建easyBean对象，并完成对象注入
 	 */
-	@SuppressWarnings({ "unchecked" })
 	public static void loadBean() throws Exception{
 		try {
 			/* 获取所有的bean数据 */
-			Object objs = constants.getAttr(MarsConstant.MARS_BEANS);
-			List<Map<String,Object>> easyBeans = null;
-			if(objs != null) {
-				easyBeans = (List<Map<String,Object>>)objs;
+			Object marsBeans = constants.getAttr(MarsConstant.MARS_BEANS);
+			List<Map<String,Object>> marsBeansList = null;
+			if(marsBeans != null) {
+				marsBeansList = (List<Map<String,Object>>)marsBeans;
 			} else {
 				return;
 			}
 			
 			/* 创建bean对象，并保存起来 */
 			Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
-			Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
+			Map<String, MarsBeanModel> marsBeanObjects = new HashMap<>();
 			if(objs2 != null) {
-				easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
+				marsBeanObjects = (Map<String, MarsBeanModel>)objs2;
 			} 
-			for(Map<String,Object> map : easyBeans) {
+			for(Map<String,Object> map : marsBeansList) {
 				
 				Class<?> cls = (Class<?>)map.get("className");
 				MarsBean marsBean = (MarsBean)map.get("annotation");
@@ -58,18 +57,18 @@ public class LoadEasyBean {
 				if(beanName == null || beanName.equals("")) {
 					beanName = StringUtil.getFirstLowerCase(cls.getSimpleName());
 				}
-				if(easyBeanObjs.get(beanName) == null) {
+				if(marsBeanObjects.get(beanName) == null) {
 					MarsBeanModel beanModel = new MarsBeanModel();
 					beanModel.setName(beanName);
 					beanModel.setCls(cls);
 					beanModel.setObj(BeanFactory.createBean(cls));
-					easyBeanObjs.put(beanName, beanModel);
+					marsBeanObjects.put(beanName, beanModel);
 				} else {
 					throw new Exception("已经存在name为["+beanName+"]的bean了");
 				}
 			}
 			/* 注入对象 */
-			iocBean(easyBeanObjs);
+			iocBean(marsBeanObjects);
 		} catch (Exception e) {
 			throw new Exception("加载并注入EasyBean的时候出现错误",e);
 		} 
@@ -77,13 +76,13 @@ public class LoadEasyBean {
 	
 	/**
 	 * easyBean注入
-	 * @param easyBeanObjs 对象
+	 * @param marsBeanObjects 对象
 	 */
-	private static void iocBean(Map<String, MarsBeanModel> easyBeanObjs) throws Exception{
+	private static void iocBean(Map<String, MarsBeanModel> marsBeanObjects) throws Exception{
 		
 		try {
-			for(String key : easyBeanObjs.keySet()) {
-				MarsBeanModel marsBeanModel = easyBeanObjs.get(key);
+			for(String key : marsBeanObjects.keySet()) {
+				MarsBeanModel marsBeanModel = marsBeanObjects.get(key);
 				Object obj = marsBeanModel.getObj();
 				Class<?> cls = marsBeanModel.getCls();
 				/* 获取对象属性，完成注入 */
@@ -98,7 +97,7 @@ public class LoadEasyBean {
 							filedName = f.getName();
 						}
 						
-						MarsBeanModel beanModel = easyBeanObjs.get(filedName);
+						MarsBeanModel beanModel = marsBeanObjects.get(filedName);
 						if(beanModel!=null){
 							f.set(obj, beanModel.getObj());
 							log.info(cls.getName()+"的属性"+f.getName()+"注入成功");
@@ -109,12 +108,12 @@ public class LoadEasyBean {
 				}
 				/* 保险起见，重新插入数据 */
 				marsBeanModel.setCls(cls);
-				easyBeanObjs.put(key, marsBeanModel);
+				marsBeanObjects.put(key, marsBeanModel);
 			}
 			
-			constants.setAttr(MarsConstant.MARS_BEAN_OBJECTS, easyBeanObjs);
+			constants.setAttr(MarsConstant.MARS_BEAN_OBJECTS, marsBeanObjects);
 		} catch (Exception e) {
-			throw new Exception("加载并注入EasyBean的时候出现错误",e);
+			throw new Exception("加载并注入MarsBean的时候出现错误",e);
 		} 
 	}
 }

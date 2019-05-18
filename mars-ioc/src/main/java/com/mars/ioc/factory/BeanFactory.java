@@ -110,13 +110,13 @@ public class BeanFactory {
 	public static Object getBean(String name) throws Exception {
 		try {
 
-			Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
-			Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
-			if(objs2 != null) {
-				easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
+			Object marsBeans = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
+			Map<String, MarsBeanModel> marsBeanObjects = new HashMap<>();
+			if(marsBeans != null) {
+				marsBeanObjects = (Map<String, MarsBeanModel>)marsBeans;
 			} 
 			
-			return easyBeanObjs.get(name).getObj();
+			return marsBeanObjects.get(name).getObj();
 		} catch (Exception e) {
 			throw new Exception("找不到name为["+name+"]的bean",e);
 		}

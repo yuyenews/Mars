@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * 加载本地资源
  */
-public class LoadNactive {
+public class LoadBeans {
 
     private static MarsSpace constants = MarsSpace.getEasySpace();
 
@@ -23,7 +23,7 @@ public class LoadNactive {
      * 加载本地bean
      * @throws Exception 异常
      */
-    public static void loadNactiveBeans() throws Exception {
+    public static void loadNativeBeans() throws Exception {
 
         /* 加载 接受远程配置中心通知的controller */
         Class<?> cls = Class.forName(MarsConstant.REMOTE_CONFIG_CONTROLLER);

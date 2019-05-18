@@ -10,7 +10,7 @@ public class MarsCloudConstant {
 
 
     /**
-     * 请求类型为cloud
+     * 请求类型
      */
     public static final String REQUEST_TYPE = "marsCloudWeiYiRequestKey";
 }

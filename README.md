@@ -34,7 +34,7 @@
     - Can only return json, binary stream to the front end, does not support forwarding and redirection
 </p>
 
-<h2>Help document</h2>
+<h2>Document</h2>
 
 [Document](http://mars-framework.com/doc.html)
 

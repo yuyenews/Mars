@@ -20,9 +20,9 @@ public class StartAfter {
      */
     public static void after() throws Exception {
         try {
-            Object objs = constants.getAttr(MarsConstant.MARS_AFTERS);
-            if(objs != null) {
-                List<Class> easyLoads = (List<Class>)objs;
+            Object afterObjects = constants.getAttr(MarsConstant.MARS_AFTERS);
+            if(afterObjects != null) {
+                List<Class> easyLoads = (List<Class>)afterObjects;
 
                 for(Class cls : easyLoads){
                     Object obj = cls.getDeclaredConstructor().newInstance();
@@ -33,6 +33,5 @@ public class StartAfter {
         } catch (Exception e) {
             throw e;
         }
-
     }
 }

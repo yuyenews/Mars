@@ -22,7 +22,7 @@ public class LoadClass {
 	public static void loadBeans(String packageName) throws Exception{
 		try {
 			/* 加载本地bean */
-			LoadNactive.loadNactiveBeans();
+			LoadBeans.loadNativeBeans();
 
 			/* 加载框架用户的所有bean */
 			loadAllBeans(packageName);
@@ -49,19 +49,19 @@ public class LoadClass {
 				MarsAfter marsAfter = cls.getAnnotation(MarsAfter.class);
 
 				if(controller != null) {
-					LoadNactive.loadController(cls, controller);
+					LoadBeans.loadController(cls, controller);
 				}
 				if(marsBean != null) {
-					LoadNactive.loadEasyBean(cls, marsBean);
+					LoadBeans.loadEasyBean(cls, marsBean);
 				}
 				if(marsInterceptor != null){
-					LoadNactive.loadInterceptor(cls, marsInterceptor);
+					LoadBeans.loadInterceptor(cls, marsInterceptor);
 				}
 				if(marsDao != null){
-					LoadNactive.loadDao(cls, marsDao);
+					LoadBeans.loadDao(cls, marsDao);
 				}
 				if(marsAfter != null){
-					LoadNactive.loadEasyAfter(cls);
+					LoadBeans.loadEasyAfter(cls);
 				}
 			}
 		} catch (Exception e) {
