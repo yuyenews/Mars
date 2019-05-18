@@ -1,7 +1,6 @@
 package com.mars.core.util;
 
 import java.io.*;
-import java.util.Map;
 
 /**
  * 序列化与反序列化工具类
