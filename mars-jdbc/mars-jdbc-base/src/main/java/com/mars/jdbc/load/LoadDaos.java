@@ -51,7 +51,7 @@ public class LoadDaos {
                         beanModel.setObj(baseProxy.getProxy(cls));
                         easyBeanObjs.put(beanName, beanModel);
                     } else {
-                        throw new Exception("已经存在name为["+beanName+"]的EasyDao了");
+                        throw new Exception("已经存在name为["+beanName+"]的MarsDao了");
                     }
                 }
 
@@ -59,7 +59,7 @@ public class LoadDaos {
             }
 
         } catch (Exception e) {
-            throw new Exception("加载EasyDao的时候出现错误",e);
+            throw new Exception("加载MarsDao的时候出现错误",e);
         }
     }
 

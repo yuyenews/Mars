@@ -27,7 +27,7 @@ public class MarsJunitStart {
     private static MarsSpace constants = MarsSpace.getEasySpace();
 
     /**
-     * 启动easy框架
+     * 启动Mars框架
      */
     public static void start(BaseInitJdbc baseInitJdbc, String packName, Object obj, List<StartList> list) {
         try {
@@ -37,7 +37,7 @@ public class MarsJunitStart {
                 /* 加载框架数据 */
                 load(baseInitJdbc,packName);
 
-                /* 标识createbean方法已经调用完毕 */
+                /* 标识createBean方法已经调用完毕 */
                 constants.setAttr(MarsConstant.HAS_START,"yes");
 
                 /* 加载单测所需数据 */
