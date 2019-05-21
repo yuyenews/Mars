@@ -66,8 +66,7 @@ public class RequestThread implements Runnable {
 				return;
 			}
 			/* 将控制层返回的数据，转成json字符串返回 */
-			response.send(JSON.toJSONString(result));
-			
+			response.send(result.toString());
 		} catch (InvocationTargetException e){
 			log.error("处理请求的时候出错",e);
 			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e.getTargetException().getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);

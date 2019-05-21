@@ -96,7 +96,7 @@ public class MarsJunitStart {
                 Resource resource = f.getAnnotation(Resource.class);
                 if(resource!=null){
                     f.setAccessible(true);
-                    f.set(obj, BeanFactory.getBean(resource.value()));
+                    f.set(obj, BeanFactory.getBean(resource.value(),f.getType()));
                 }
             }
         } catch (Exception e){

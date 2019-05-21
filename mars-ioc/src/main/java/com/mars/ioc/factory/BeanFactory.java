@@ -107,7 +107,7 @@ public class BeanFactory {
 	 * @param name mingc
 	 * @return duix
 	 */
-	public static Object getBean(String name) throws Exception {
+	public static <T> T getBean(String name,Class<T> cls) throws Exception {
 		try {
 
 			Object marsBeans = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
@@ -116,7 +116,7 @@ public class BeanFactory {
 				marsBeanObjects = (Map<String, MarsBeanModel>)marsBeans;
 			} 
 			
-			return marsBeanObjects.get(name).getObj();
+			return (T)marsBeanObjects.get(name).getObj();
 		} catch (Exception e) {
 			throw new Exception("找不到name为["+name+"]的bean",e);
 		}
