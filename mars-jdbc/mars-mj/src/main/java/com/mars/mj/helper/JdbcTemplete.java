@@ -25,12 +25,23 @@ public class JdbcTemplete {
     /**
      * 获取JdbcTemplete对象
      *
+     * @return
+     */
+    public static JdbcTemplete get() {
+        JdbcTemplete jdbcTemplete = new JdbcTemplete();
+        jdbcTemplete.dataSourceName = jdbcTemplete.getDataSourceName(null);
+        return jdbcTemplete;
+    }
+
+    /**
+     * 获取JdbcTemplete对象
+     *
      * @param dataSourceName
      * @return
      */
     public static JdbcTemplete get(String dataSourceName) {
         JdbcTemplete jdbcTemplete = new JdbcTemplete();
-        jdbcTemplete.dataSourceName = dataSourceName;
+        jdbcTemplete.dataSourceName = jdbcTemplete.getDataSourceName(dataSourceName);
         return jdbcTemplete;
     }
 
