@@ -8,7 +8,7 @@ import com.mars.server.server.request.HttpResponse;
  * @author yuye
  *
  */
-public interface EasyServlet {
+public interface MarsServlet {
 
 
 	/**

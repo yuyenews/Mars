@@ -12,7 +12,7 @@ import com.mars.netty.server.EasyServer;
 import com.mars.ioc.load.LoadEasyBean;
 import com.mars.jdbc.base.BaseInitJdbc;
 import com.mars.mvc.load.LoadController;
-import com.mars.mvc.servlet.EasyCoreServlet;
+import com.mars.mvc.servlet.MarsCoreServlet;
 
 /**
  * 启动Mars框架
@@ -61,7 +61,7 @@ public class BaseStartMars {
 	private static void load(Class<?> clazz, BaseInitJdbc baseInitJdbc) throws Exception{
 		
 		/* 配置核心servlet */
-		constants.setAttr("core", EasyCoreServlet.class.getName());
+		constants.setAttr("core", MarsCoreServlet.class.getName());
 		
 		/* 加载配置文件 */
 		ConfigUtil.loadConfig();
@@ -102,8 +102,7 @@ public class BaseStartMars {
 		if(por!=null) {
 			return Integer.parseInt(por.toString());
 		}
-		
+
 		return 8080;
 	}
-
 }

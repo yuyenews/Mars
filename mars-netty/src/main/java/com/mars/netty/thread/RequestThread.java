@@ -44,10 +44,10 @@ public class RequestThread implements Runnable {
 
 	public void run() {
 
-		/* 组装httprequest对象 */
+		/* 组装httpRequest对象 */
 		HttpRequest request = new HttpRequest(httpRequest,ctx);
 
-		/* 组装httpresponse对象 */
+		/* 组装httpResponse对象 */
 		HttpResponse response = new HttpResponse(ctx);
 
 		try {
@@ -65,7 +65,7 @@ public class RequestThread implements Runnable {
 			if(result != null && result.toString().equals(MarsConstant.VOID)) {
 				return;
 			}
-			/* 将控制层返回的数据，转成json字符串返回 */
+			/* 将控制层返回的数据响应给客户端 */
 			response.send(result.toString());
 		} catch (InvocationTargetException e){
 			log.error("处理请求的时候出错",e);

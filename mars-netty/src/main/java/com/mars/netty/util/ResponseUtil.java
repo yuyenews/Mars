@@ -36,5 +36,4 @@ public class ResponseUtil {
         HttpResponse response = new HttpResponse(ctx);
         response.send(MesUtil.getMes(504,ex).toJSONString(), HttpResponseStatus.GATEWAY_TIMEOUT);
     }
-
 }

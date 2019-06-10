@@ -6,16 +6,16 @@ import com.mars.mvc.resolve.ResolveRequest;
 import com.mars.core.logger.MarsLogger;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
-import com.mars.server.server.servlet.EasyServlet;
+import com.mars.server.server.servlet.MarsServlet;
 
 /**
  * 核心servlet，用于接收所有请求，并调用相应的方法进行处理
  * @author yuye
  *
  */
-public class EasyCoreServlet implements EasyServlet{
+public class MarsCoreServlet implements MarsServlet {
 	
-	private static MarsLogger log = MarsLogger.getLogger(EasyCoreServlet.class);
+	private static MarsLogger log = MarsLogger.getLogger(MarsCoreServlet.class);
 	
 	@Override
 	public Object doRequest(HttpRequest request, HttpResponse response) throws Exception {

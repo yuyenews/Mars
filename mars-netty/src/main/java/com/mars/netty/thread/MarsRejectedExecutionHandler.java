@@ -24,7 +24,7 @@ public class MarsRejectedExecutionHandler implements RejectedExecutionHandler {
         if(r instanceof RequestThread){
             RequestThread requestThread = (RequestThread)r;
             ResponseUtil.sendForBidden(requestThread.getCtx(),"当前请求太多，请稍后访问");
-            marsLogger.info("拒绝策略开始结束");
+            marsLogger.info("拒绝策略执行结束");
             return;
         }
         marsLogger.info("拒绝策略没有成功执行");
