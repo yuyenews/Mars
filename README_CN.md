@@ -82,5 +82,8 @@
 
 <p>如果你对此框架感兴趣，可以加我的QQ群：773291321</p>
 
-<p><img src="https://images.gitee.com/uploads/images/2019/0314/230940_795215de_2331383.png"/></p>
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/erweim.png?raw=true" width="238px"/></p>
 
+<p>我的微博</p>
+
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/weibo.png?raw=true" width="238px"/></p>

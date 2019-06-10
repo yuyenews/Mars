@@ -84,5 +84,8 @@
 
 <p>If you are interested in this framework, you can add my QQ group:773291321</p>
 
-<p><img src="https://images.gitee.com/uploads/images/2019/0314/230940_795215de_2331383.png"/></p>
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/erweim.png?raw=true" width="238px"/></p>
 
+<p>my weibo</p>
+
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/weibo.png?raw=true" width="238px"/></p>
