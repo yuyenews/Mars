@@ -84,6 +84,6 @@
 
 <p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/erweim.png?raw=true" width="238px"/></p>
 
-<p>我的微博</p>
+<h2>我的微博</h2>
 
 <p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/weibo.png?raw=true" width="238px"/></p>
