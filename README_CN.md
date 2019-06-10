@@ -1,5 +1,5 @@
 <h1>
-    <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
+    <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
 </h1>
 <p>Mars-java是一个不需要容器的javaWeb开发框架，以netty作http服务管理，支持AOP,IOC,MVC,并且集成了Mybatis作为持久层，除此之外还提供了Mars-config 来支撑远程配置,Mars-extends 来支持更多的功能以及工具类</p>
 
@@ -82,8 +82,8 @@
 
 <p>如果你对此框架感兴趣，可以加我的QQ群：773291321</p>
 
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/erweim.png?raw=true" width="238px"/></p>
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/erweim.png?raw=true" width="238px"/></p>
 
 <h2>我的微博</h2>
 
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/weibo.png?raw=true" width="238px"/></p>
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/weibo.png?raw=true" width="238px"/></p>

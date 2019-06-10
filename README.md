@@ -1,5 +1,5 @@
 <h1>
-    <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/logo-long.png?raw=true" /></p>
+    <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
 </h1>
 <p>
     Mars-java is a javaWeb development framework that does not require a container. It uses netty for http service management, supports AOP, IOC, MVC, and integrates Mybatis as a persistence layer. In addition, it provides Mars-config to support remote configuration. Mars-extends to support more features and tools
@@ -84,8 +84,8 @@
 
 <p>If you are interested in this framework, you can add my QQ group:773291321</p>
 
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/erweim.png?raw=true" width="238px"/></p>
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/erweim.png?raw=true" width="238px"/></p>
 
 <h2>My weibo</h2>
 
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-logos/weibo.png?raw=true" width="238px"/></p>
+<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/weibo.png?raw=true" width="238px"/></p>
