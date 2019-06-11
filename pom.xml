@@ -163,8 +163,8 @@
 	</parent>
 	<licenses>
 		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<name>The GPL Software License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
