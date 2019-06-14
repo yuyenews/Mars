@@ -151,10 +151,10 @@ public class JdbcTemplete {
         ConnectionManager connectionManager = getConnection();
         try {
             if (param instanceof Object[]) {
-                Object[] objs = (Object[]) param;
-                return DBHelper.update(sql, connectionManager.getConnection(), objs);
+                Object[] params = (Object[]) param;
+                return DBHelper.update(sql, connectionManager.getConnection(), params);
             } else {
-                return DBHelper.update(builderSql(sql, param), connectionManager.getConnection());
+                return DBHelper.update(builderSql(sql, param), connectionManager.getConnection(), null);
             }
         } catch (Exception e) {
             throw e;
@@ -224,10 +224,10 @@ public class JdbcTemplete {
         List<Map<String, Object>> result = null;
         if (args != null) {
             if (args instanceof Object[]) {
-                Object[] objs = (Object[]) args;
-                result = DBHelper.selectList(sql, connection, objs);
+                Object[] params = (Object[]) args;
+                result = DBHelper.selectList(sql, connection, params);
             } else {
-                result = DBHelper.selectList(builderSql(sql, args), connection);
+                result = DBHelper.selectList(builderSql(sql, args), connection, null);
             }
         } else {
             result = DBHelper.selectList(sql, connection);

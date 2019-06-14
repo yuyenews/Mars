@@ -98,7 +98,7 @@ public class DBHelper {
      * @throws Exception
      */
     public static ResultSet select(String sql, Connection connection, Object[] params) throws Exception {
-        if (params != null && params.length > 0) {
+        if (params != null) {
             preparedStatement = connection.prepareStatement(sql);
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
@@ -133,7 +133,7 @@ public class DBHelper {
      * @throws Exception
      */
     public static int update(String sql, Connection connection, Object[] params) throws Exception {
-        if(params != null && params.length > 0){
+        if(params != null){
             preparedStatement = connection.prepareStatement(sql);
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
