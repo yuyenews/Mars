@@ -1,6 +1,5 @@
 package com.mars.netty.thread;
 
-import com.alibaba.fastjson.JSON;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
