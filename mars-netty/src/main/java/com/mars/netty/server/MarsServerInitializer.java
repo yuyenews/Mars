@@ -16,7 +16,7 @@ import io.netty.handler.timeout.IdleStateHandler;
  * @author yuye
  *
  */
-public class EasyServerInitializer extends ChannelInitializer<SocketChannel> {
+public class MarsServerInitializer extends ChannelInitializer<SocketChannel> {
 
 	private int readTimeOut = 10;
 	private int writeTimeOut = 2000000000;
@@ -34,7 +34,7 @@ public class EasyServerInitializer extends ChannelInitializer<SocketChannel> {
 		ph.addLast("encoder", new HttpResponseEncoder());
 		ph.addLast("decoder", new HttpRequestDecoder());
 		ph.addLast("aggregator", getHttpObjectAggregator());
-		ph.addLast("handler", new EasyServerHandler());// 服务端业务逻辑
+		ph.addLast("handler", new MarsServerHandler());// 服务端业务逻辑
 	}
 
 

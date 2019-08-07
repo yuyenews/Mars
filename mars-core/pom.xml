@@ -31,9 +31,10 @@
 			<artifactId>log4j-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jyaml</groupId>
-			<artifactId>jyaml</artifactId>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>

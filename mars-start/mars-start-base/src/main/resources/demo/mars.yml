@@ -18,13 +18,6 @@ cross_domain:
   headers: "x-requested-with,Cache-Control,Pragma,Content-Type,Token"
   credentials: "true"
 
-
-#配置处理请求的线程池参数（这些都是默认值）
-threadPool:
-  corePoolSize: 100
-  maximumPoolSize: 1000
-  keepAliveTime: 60
-
 #配置持久层
 jdbc:
   #配置数据源，必须是数组，必须是阿里巴巴的 druid数据源

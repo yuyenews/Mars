@@ -1,4 +1,4 @@
-package com.mars.netty.thread;
+package com.mars.netty.execute;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
@@ -18,9 +18,9 @@ import java.lang.reflect.Method;
  * @author yuye
  *
  */
-public class RequestThread implements Runnable {
+public class RequestExecute {
 	
-	private MarsLogger log = MarsLogger.getLogger(RequestThread.class);
+	private MarsLogger log = MarsLogger.getLogger(RequestExecute.class);
 
 	/**
 	 * netty的request对象
@@ -41,7 +41,7 @@ public class RequestThread implements Runnable {
 		return ctx;
 	}
 
-	public void run() {
+	public void execute() {
 
 		/* 组装httpRequest对象 */
 		HttpRequest request = new HttpRequest(httpRequest,ctx);

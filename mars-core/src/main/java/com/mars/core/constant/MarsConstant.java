@@ -20,7 +20,11 @@ public class MarsConstant {
     /**
      * 本地配置文件
      */
-    public static final String CONFIG_PATH = "/mars.yml";
+    public static final String CONFIG_PATH = "/mars-{suffix}.yml";
+    /**
+     * 本地配置文件
+     */
+    public static final String CONFIG_PATH_DEFAULT = "/mars.yml";
     /**
      * 所有的easyAfter类信息
      */

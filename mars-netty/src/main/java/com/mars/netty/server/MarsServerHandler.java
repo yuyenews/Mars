@@ -1,8 +1,7 @@
 package com.mars.netty.server;
 
 import com.mars.core.logger.MarsLogger;
-import com.mars.netty.thread.RequestThread;
-import com.mars.netty.thread.ThreadPool;
+import com.mars.netty.execute.RequestExecute;
 import com.mars.netty.util.ResponseUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -16,9 +15,9 @@ import java.net.InetAddress;
  * @author yuye
  *
  */
-public class EasyServerHandler extends ChannelInboundHandlerAdapter {
+public class MarsServerHandler extends ChannelInboundHandlerAdapter {
 
-	private MarsLogger log = MarsLogger.getLogger(EasyServerHandler.class);
+	private MarsLogger log = MarsLogger.getLogger(MarsServerHandler.class);
 
 	/**
 	 * 接收并处理 客户端请求
@@ -33,11 +32,10 @@ public class EasyServerHandler extends ChannelInboundHandlerAdapter {
 				
 				httpRequest = (FullHttpRequest) msg;
 
-				/* 用新线程处理请求 */
-				RequestThread requestThread = new RequestThread();
-				requestThread.setHttpRequest(httpRequest);
-				requestThread.setCtx(ctx);
-				ThreadPool.execute(requestThread);
+				RequestExecute requestExecute = new RequestExecute();
+				requestExecute.setHttpRequest(httpRequest);
+				requestExecute.setCtx(ctx);
+				requestExecute.execute();
 			} else {
 				ResponseUtil.sendServerError(ctx,"处理请求发生错误");
 			}
@@ -46,7 +44,7 @@ public class EasyServerHandler extends ChannelInboundHandlerAdapter {
 			log.error("处理请求失败!", e);
 			ResponseUtil.sendServerError(ctx,"处理请求发生错误"+e.getMessage());
 
-			/* 已经通过线程中的finally 释放请求了，所以这里，在出异常的时候，才释放 */
+			/* 已经通过RequestExecute中的finally 释放请求了，所以这里，在出异常的时候，才释放 */
 			try {
 				ctx.close();
 				httpRequest.release();

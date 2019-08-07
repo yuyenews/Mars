@@ -29,13 +29,13 @@ public class MarsJunitStart {
     /**
      * 启动Mars框架
      */
-    public static void start(BaseInitJdbc baseInitJdbc, String packName, Object obj, List<StartList> list) {
+    public static void start(BaseInitJdbc baseInitJdbc, String packName, Object obj, List<StartList> list,String suffix) {
         try {
             if(constants.getAttr(MarsConstant.HAS_TEST) == null){
                 log.info("程序启动中......");
 
                 /* 加载框架数据 */
-                load(baseInitJdbc,packName);
+                load(baseInitJdbc,packName,suffix);
 
                 /* 标识createBean方法已经调用完毕 */
                 constants.setAttr(MarsConstant.HAS_START,"yes");
@@ -67,10 +67,10 @@ public class MarsJunitStart {
     /**
      * 加载所需的资源
      */
-    private static void load(BaseInitJdbc baseInitJdbc,String packName) throws Exception{
+    private static void load(BaseInitJdbc baseInitJdbc,String packName,String suffix) throws Exception{
 
         /* 加载配置文件 */
-        ConfigUtil.loadConfig();
+        ConfigUtil.loadConfig(suffix);
 
         /* 获取此包下面的所有类（包括jar中的） */
         LoadClass.loadBeans(packName);

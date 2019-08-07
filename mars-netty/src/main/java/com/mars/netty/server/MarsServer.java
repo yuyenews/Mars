@@ -12,9 +12,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  * @author yuye
  *
  */
-public class EasyServer {
+public class MarsServer {
 
-	private static MarsLogger log = MarsLogger.getLogger(EasyServer.class);
+	private static MarsLogger log = MarsLogger.getLogger(MarsServer.class);
 	
 	/**
 	 * 启动netty服务
@@ -28,7 +28,7 @@ public class EasyServer {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup);
 			b.channel(NioServerSocketChannel.class);
-			b.childHandler(new EasyServerInitializer());
+			b.childHandler(new MarsServerInitializer());
 
 			/* 服务器绑定端口监听 */
 			ChannelFuture f = b.bind(portNumber).sync();

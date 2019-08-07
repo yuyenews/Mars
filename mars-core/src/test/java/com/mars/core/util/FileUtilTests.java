@@ -1,8 +1,5 @@
 package com.mars.core.util;
 
-import com.diffblue.deeptestutils.mock.DTUMemberMatcher;
-import com.alibaba.fastjson.JSON;
-import org.ho.yaml.Yaml;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Rule;
@@ -12,6 +9,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -19,7 +17,6 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.File;
 import java.io.ByteArrayInputStream;
-import java.lang.reflect.Method;
 import javax.imageio.ImageIO;
 
 import static org.mockito.AdditionalMatchers.or;
@@ -51,21 +48,6 @@ public class FileUtilTests {
     @Test
     public void testReadFileString2() {
         FileUtil.readFileString(null);
-    }
-
-    @PrepareForTest({JSON.class, Yaml.class, FileUtil.class})
-    @Test
-    public void testReadYml() throws Exception {
-        PowerMockito.mockStatic(Yaml.class);
-        PowerMockito.mockStatic(JSON.class);
-
-        Method toJSONStringMethod = DTUMemberMatcher.method(
-                JSON.class, "toJSONString", Object.class);
-        PowerMockito.doReturn("foo")
-                .when(JSON.class, toJSONStringMethod)
-                .withArguments(or(isA(Object.class), isNull(Object.class)));
-
-        Assert.assertEquals("foo", FileUtil.readYml("a/b/c"));
     }
 
     @Test

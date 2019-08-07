@@ -2,6 +2,7 @@ package com.mars.core.util;
 
 import com.alibaba.fastjson.JSON;
 import com.mars.core.logger.MarsLogger;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -64,7 +65,7 @@ public class FileUtil {
         InputStream inputStream = null;
         try {
             inputStream = FileUtil.class.getResourceAsStream(path);
-            HashMap testEntity = org.ho.yaml.Yaml.loadType(inputStream, HashMap.class);//如果是读入Map,这里不可以写Map接口，必须写实现
+            HashMap testEntity = new Yaml().loadAs(inputStream,HashMap.class);
             return JSON.toJSONString(testEntity);
         } catch (Exception e) {
             logger.error("", e);

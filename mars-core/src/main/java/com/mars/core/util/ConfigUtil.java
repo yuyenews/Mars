@@ -19,10 +19,15 @@ public class ConfigUtil {
 	 *
 	 * @throws Exception 异常
 	 */
-	public static void loadConfig() throws Exception{
+	public static void loadConfig(String suffix) throws Exception{
 		try {
 			/* 读取本地配置文件 */
-			String content = FileUtil.readYml(MarsConstant.CONFIG_PATH);
+			String content = null;
+			if(suffix == null){
+				content = FileUtil.readYml(MarsConstant.CONFIG_PATH_DEFAULT);
+			} else {
+				content = FileUtil.readYml(MarsConstant.CONFIG_PATH.replace("{suffix}",suffix));
+			}
 			JSONObject object = JSONObject.parseObject(content);
 
 			/* 从配置中心获取配置信息 */

@@ -62,5 +62,4 @@ public class LoadDaos {
             throw new Exception("加载MarsDao的时候出现错误",e);
         }
     }
-
 }
