@@ -1,16 +1,13 @@
 package com.mars.mvc.load;
 
+import com.mars.core.load.WriteFields;
 import com.mars.mvc.proxy.MvcCglibProxy;
-import com.mars.core.annotation.Controller;
 import com.mars.core.annotation.MarsMapping;
-import com.mars.core.annotation.Resource;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.mvc.model.MarsMappingModel;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +19,6 @@ import java.util.Map;
  *
  */
 public class LoadController {
-	
-	private static MarsLogger log = MarsLogger.getLogger(LoadController.class);
 	
 	/**
 	 * 获取全局存储空间 
@@ -47,18 +42,17 @@ public class LoadController {
 				return;
 			}
 			
-			Map<String, MarsBeanModel> easyBeanObjs = getEasyBeans();
+			Map<String, MarsBeanModel> marsBeanObjs = getMarsBeans();
 			
 			for(Map<String,Object> map : contorls) {
 				
 				Class<?> cls = (Class<?>)map.get("className");
-				Controller control = (Controller)map.get("annotation");
 				
 				/*
 				 * 由于controller里只允许注入MarsBean，所以不需要等controller都创建好了再注入
 				 * 直接 迭代一次 就给一个controller注入一次
 				 */
-				Object obj = iocControl(cls,control,easyBeanObjs);
+				Object obj = iocControl(cls,marsBeanObjs);
 				
 				if(obj != null) {
 					/* 获取controller的所有方法 */
@@ -86,11 +80,10 @@ public class LoadController {
 	/**
 	 * 往controller对象中注入easybean
 	 * @param cls lei
-	 * @param control kongzhi
-	 * @param easyBeanObjs duix
+	 * @param marsBeanObjs duix
 	 * @return duix
 	 */
-	private static Object iocControl(Class<?> cls,Controller control,Map<String, MarsBeanModel> easyBeanObjs) throws Exception{
+	private static Object iocControl(Class<?> cls,Map<String, MarsBeanModel> marsBeanObjs) throws Exception{
 		
 		try {
 
@@ -98,27 +91,8 @@ public class LoadController {
 			Object obj = mvcCglibProxy.getProxy(cls);
 
 			/* 获取对象属性，完成注入 */
-			Field[] fields = cls.getDeclaredFields();
-			for(Field f : fields){
-				Resource resource = f.getAnnotation(Resource.class);
-				if(resource!=null){
-					f.setAccessible(true);
-					
-					String filedName = resource.value();
-					if(filedName == null || filedName.equals("")) {
-						filedName = f.getName();
-					}
-					
-					MarsBeanModel beanModel = easyBeanObjs.get(filedName);
-					if(beanModel!=null){
-						f.set(obj, beanModel.getObj());
-						log.info(cls.getName()+"的属性"+f.getName()+"注入成功");
-					}else{
-						throw new Exception("不存在name为"+filedName+"的easyBean");
-					}
-				}
-			}
-			
+			WriteFields.writeFields(cls,obj,marsBeanObjs);
+
 			return obj;
 		} catch (Exception e) {
 			throw new Exception("创建controller并注入的时候报错",e);
@@ -126,16 +100,15 @@ public class LoadController {
 	}
 	
 	/**
-	 * 获取所有的easybean
+	 * 获取所有的marsBean
 	 * @return duix
 	 */
-	private static Map<String, MarsBeanModel> getEasyBeans() {
-		Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
+	private static Map<String, MarsBeanModel> getMarsBeans() {
+		Object objs = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
 		Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
-		if(objs2 != null) {
-			easyBeanObjs = (Map<String, MarsBeanModel>)objs2;
+		if(objs != null) {
+			easyBeanObjs = (Map<String, MarsBeanModel>)objs;
 		}
-		
 		return easyBeanObjs;
 	}
 }

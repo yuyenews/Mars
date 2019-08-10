@@ -20,7 +20,7 @@ public abstract class MarsJunit {
      * @param packName
      */
     public void init(String packName){
-        MarsJunitStart.start(new InitJdbc(),packName,this,null,null);
+        init(packName,null);
     }
 
     /**

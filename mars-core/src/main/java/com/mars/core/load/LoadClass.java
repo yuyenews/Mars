@@ -48,20 +48,31 @@ public class LoadClass {
 				MarsDao marsDao = cls.getAnnotation(MarsDao.class);
 				MarsAfter marsAfter = cls.getAnnotation(MarsAfter.class);
 
+				int count = 0;
+
 				if(controller != null) {
 					LoadBeans.loadController(cls, controller);
+					count++;
 				}
 				if(marsBean != null) {
 					LoadBeans.loadEasyBean(cls, marsBean);
+					count++;
 				}
 				if(marsInterceptor != null){
 					LoadBeans.loadInterceptor(cls, marsInterceptor);
+					count++;
 				}
 				if(marsDao != null){
 					LoadBeans.loadDao(cls, marsDao);
+					count++;
 				}
 				if(marsAfter != null){
 					LoadBeans.loadEasyAfter(cls);
+					count++;
+				}
+
+				if(count > 1){
+					throw new Exception("类:["+cls.getName()+"]上不允许有多个Mars注解");
 				}
 			}
 		} catch (Exception e) {

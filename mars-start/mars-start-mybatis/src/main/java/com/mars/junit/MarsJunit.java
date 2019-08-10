@@ -1,6 +1,7 @@
 package com.mars.junit;
 
 import com.mars.mybatis.init.InitJdbc;
+import org.junit.Before;
 
 /**
  * junit
@@ -20,11 +21,12 @@ public abstract class MarsJunit {
      * @param packName
      */
     public void init(String packName){
-        MarsJunitStart.start(new InitJdbc(),packName,this,null,null);
+        init(packName,null);
     }
 
     /**
      * 单测开始前
      */
+    @Before
     public abstract void before();
 }

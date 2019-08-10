@@ -28,7 +28,7 @@ public class MarsConstant {
     /**
      * 所有的easyAfter类信息
      */
-    public static final String MARS_AFTERS = "easyAfters";
+    public static final String MARS_AFTERS = "marsAfters";
     /**
      * 记录是否已经调用完createBean方法了
      */
@@ -44,7 +44,7 @@ public class MarsConstant {
     /**
      * 所有的easyBeans类信息
      */
-    public static final String MARS_BEANS = "easyBeans";
+    public static final String MARS_BEANS = "marsBeans";
     /**
      * 所有的interceptors类信息
      */
@@ -56,7 +56,7 @@ public class MarsConstant {
     /**
      * 所有的easyDao类信息
      */
-    public static final String MARS_DAOS = "easyDaos";
+    public static final String MARS_DAOS = "marsDaos";
 
     /**
      * 所有的controller对象
@@ -66,7 +66,7 @@ public class MarsConstant {
     /**
      * 所有的bean对象，包括 easyBean和easyDao
      */
-    public static final String MARS_BEAN_OBJECTS = "easyBeanObjects";
+    public static final String MARS_BEAN_OBJECTS = "marsBeanObjects";
 
     /**
      * 接受远程配置中心通知的controller

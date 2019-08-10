@@ -5,7 +5,7 @@ port: 8088
 
 #Mars-config 远程配置中心
 config:
-  # 本服务的名称，在整个分布式集群中必须唯一
+  # 需要读取的配置文件名称，在整个分布式集群中必须唯一
   name: user1
   # Mars-config 服务的URL
   # 必须是 本示例中的各式

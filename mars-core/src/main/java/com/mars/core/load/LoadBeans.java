@@ -50,7 +50,7 @@ public class LoadBeans {
     }
 
     /**
-     * 将所有easybean存到全局存储空间
+     * 将所有marsBean存到全局存储空间
      * @param cls 类型
      * @param marsBean 注解
      */
@@ -104,16 +104,16 @@ public class LoadBeans {
     }
 
     /**
-     * 加载easyAfter
+     * 加载marsAfter
      * @param cls 类型
      */
     public static void loadEasyAfter(Class<?> cls){
         Object objs = constants.getAttr(MarsConstant.MARS_AFTERS);
-        List<Class> easyLoads = new ArrayList<>();
+        List<Class> marsAfters = new ArrayList<>();
         if(objs != null) {
-            easyLoads = (List<Class>)objs;
+            marsAfters = (List<Class>)objs;
         }
-        easyLoads.add(cls);
-        constants.setAttr(MarsConstant.MARS_AFTERS, easyLoads);
+        marsAfters.add(cls);
+        constants.setAttr(MarsConstant.MARS_AFTERS, marsAfters);
     }
 }
