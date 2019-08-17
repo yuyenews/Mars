@@ -33,7 +33,7 @@ public class ExecuteMarsTimer {
             for(MarsTimerModel marsTimerModel : marsTimerModelList){
                 int loop = marsTimerModel.getMarsTimer().loop();
                 /* 开启定时任务 */
-                new Timer(marsTimerModel.getMethodName()).scheduleAtFixedRate(new TimerTask() {
+                new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
                         try {
