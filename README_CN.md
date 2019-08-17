@@ -63,7 +63,7 @@
             <td>OK</td>
             <td>OK</td>
             <td>支持mybatis，并有自己的JDBC</td>
-            <td>只有一个，并只支持远程配置</td>
+            <td>只有一个，并支持远程配置</td>
             <td>Main方法</td>
         </tr>
         <tr>
@@ -72,7 +72,7 @@
             <td>OK</td>
             <td>OK</td>
             <td>支持大部分主流框架</td>
-            <td>只有一个，并只支持远程配置</td>
+            <td>只有一个，并支持远程配置</td>
             <td>Main方法，War包+Tomcat</td>
         </tr>
     </tbody>

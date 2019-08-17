@@ -65,7 +65,7 @@
             <td>OK</td>
             <td>OK</td>
             <td>Mybatis，JDBCTemplete</td>
-            <td>Only one and only supports remote configuration</td>
+            <td>Only one and supports remote configuration</td>
             <td>Main Method</td>
         </tr>
         <tr>
@@ -74,7 +74,7 @@
             <td>OK</td>
             <td>OK</td>
             <td>Support most mainstream frameworks</td>
-            <td>Only one and only supports remote configuration</td>
+            <td>Only one and supports remote configuration</td>
             <td>Main Method，War+Tomcat</td>
         </tr>
     </tbody>
