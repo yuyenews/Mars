@@ -30,11 +30,10 @@ public class ExecuteMarsTimer {
     public static void execute() {
         try {
             List<MarsTimerModel> marsTimerModelList = LoadHelper.getMarsTimersList();
-            Date nowDate = new Date();
             for(MarsTimerModel marsTimerModel : marsTimerModelList){
                 int loop = marsTimerModel.getMarsTimer().loop();
                 /* 开启定时任务 */
-                new Timer(marsTimerModel.getMethodName()).scheduleAtFixedRate(new TimerTask() {
+                new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
                         try {
@@ -48,7 +47,7 @@ public class ExecuteMarsTimer {
                             marsLogger.error("执行定时任务出错,方法名:"+marsTimerModel.getCls().getName()+"."+marsTimerModel.getMethod().getName(),e);
                         }
                     }
-                }, nowDate,loop);
+                }, new Date(),loop);
             }
         } catch (Exception e){
             marsLogger.error("加载定时任务出错",e);
