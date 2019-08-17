@@ -44,8 +44,12 @@ public class CglibProxy implements MethodInterceptor {
 	@Override
 	public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
 		Object obj = null;
+		Class c = null;
+
 		AopModel aopModel = list.get(method.getName());
-		Class c = aopModel.getCls();
+		if(aopModel != null){
+			c = aopModel.getCls();
+		}
 		if(c != null){
 			obj = c.getDeclaredConstructor().newInstance();
 			if(c.getName().equals(MarsConstant.TRACTION_CLASS)){

@@ -34,6 +34,10 @@ public class MarsConstant {
      */
     public static final String HAS_START="hasStart";
     /**
+     * 记录netty是否已经启动了
+     */
+    public static final String HAS_NETTY_START="hasNettyStart";
+    /**
      * 记录是否已经启动过单测了
      */
     public static final String HAS_TEST="hasTest";
@@ -67,6 +71,11 @@ public class MarsConstant {
      * 所有的bean对象，包括 easyBean和easyDao
      */
     public static final String MARS_BEAN_OBJECTS = "marsBeanObjects";
+
+    /**
+     * 所有加了MarsTimer注解的方法
+     */
+    public static final String MARS_TIMER_OBJECTS = "marsTimerObjects";
 
     /**
      * 接受远程配置中心通知的controller

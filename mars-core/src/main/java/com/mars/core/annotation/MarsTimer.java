@@ -11,5 +11,5 @@ public @interface MarsTimer {
      * 循环间隔
      * @return
      */
-    long loop();
+    int loop() default 60000;
 }

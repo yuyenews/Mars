@@ -7,12 +7,17 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.LoadClass;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.ConfigUtil;
+import com.mars.junit.StartList;
 import com.mars.mvc.load.LoadInters;
 import com.mars.netty.server.MarsServer;
 import com.mars.ioc.load.LoadEasyBean;
 import com.mars.jdbc.base.BaseInitJdbc;
 import com.mars.mvc.load.LoadController;
 import com.mars.mvc.servlet.MarsCoreServlet;
+import com.mars.timer.execute.ExecuteMarsTimer;
+import com.mars.timer.load.LoadMarsTimer;
+
+import java.util.List;
 
 /**
  * 启动Mars框架
@@ -32,7 +37,7 @@ public class BaseStartMars {
 	 * 启动Mars框架
 	 * @param clazz
 	 */
-	public static void start(Class<?> clazz, BaseInitJdbc baseInitJdbc,String suffix) {
+	public static void start(Class<?> clazz, BaseInitJdbc baseInitJdbc, String suffix, List<StartList> startList) {
 		try {
 			
 			log.info("程序启动中......");
@@ -40,11 +45,18 @@ public class BaseStartMars {
 			/* 加载框架数据 */
 			load(clazz,baseInitJdbc,suffix);
 
-			/* 标识createBean方法已经调用完毕 */
-			constants.setAttr(MarsConstant.HAS_START,"yes");
+			/* 扩展要加载的东西 */
+			if(startList != null){
+				for(StartList item : startList){
+					item.load();
+				}
+			}
 
 			/* 启动after方法 */
 			StartAfter.after();
+
+			/* 执行定时任务 */
+			ExecuteMarsTimer.execute();
 
 			/* 启动netty */
 			MarsServer.start(getPort());
@@ -89,6 +101,12 @@ public class BaseStartMars {
 
 		/* 创建interceptor对象 */
 		LoadInters.loadIntersList();
+
+		/* 标识createBean方法已经调用完毕 */
+		constants.setAttr(MarsConstant.HAS_START,"yes");
+
+		/* 加载timer对象 */
+		LoadMarsTimer.loadMarsTimers();
 	}
 	
 	/**

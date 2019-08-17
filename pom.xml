@@ -16,7 +16,8 @@
 		<module>mars-start</module>
         <module>mars-jdbc</module>
         <module>mars-junit</module>
-    </modules>
+		<module>mars-timer</module>
+	</modules>
 
 	<properties>
 		<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
@@ -58,6 +59,11 @@
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-junit</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.yuyenews</groupId>
+				<artifactId>mars-timer</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 
@@ -123,11 +129,11 @@
 			    <artifactId>druid</artifactId>
 			    <version>1.1.10</version>
 			</dependency>
-			
+
 			<dependency>
-			    <groupId>com.github.pagehelper</groupId>
-			    <artifactId>pagehelper</artifactId>
-			    <version>4.1.3</version>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper</artifactId>
+				<version>4.1.3</version>
 			</dependency>
 
 			<dependency>

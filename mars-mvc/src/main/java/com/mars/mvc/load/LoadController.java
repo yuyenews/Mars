@@ -1,6 +1,7 @@
 package com.mars.mvc.load;
 
 import com.mars.core.load.WriteFields;
+import com.mars.core.load.LoadHelper;
 import com.mars.mvc.proxy.MvcCglibProxy;
 import com.mars.core.annotation.MarsMapping;
 import com.mars.core.constant.MarsConstant;
@@ -34,17 +35,11 @@ public class LoadController {
 			Map<String, MarsMappingModel> controlObjects = new HashMap<>();
 			
 			/* 获取所有的controller数据 */
-			Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
-			List<Map<String,Object>> contorls = null;
-			if(objs != null) {
-				contorls = (List<Map<String,Object>>)objs;
-			} else {
-				return;
-			}
+			List<Map<String,Object>> controlList = LoadHelper.getControllerList();
 			
 			Map<String, MarsBeanModel> marsBeanObjs = getMarsBeans();
 			
-			for(Map<String,Object> map : contorls) {
+			for(Map<String,Object> map : controlList) {
 				
 				Class<?> cls = (Class<?>)map.get("className");
 				
@@ -104,11 +99,6 @@ public class LoadController {
 	 * @return duix
 	 */
 	private static Map<String, MarsBeanModel> getMarsBeans() {
-		Object objs = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
-		Map<String, MarsBeanModel> easyBeanObjs = new HashMap<>();
-		if(objs != null) {
-			easyBeanObjs = (Map<String, MarsBeanModel>)objs;
-		}
-		return easyBeanObjs;
+		return LoadHelper.getBeanObjectMap();
 	}
 }

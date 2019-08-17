@@ -14,7 +14,7 @@ public class StartMars {
 	 */
 	public static void start(Class<?> clazz,String[] args) {
 		if(args != null && args[0] != null){
-			BaseStartMars.start(clazz,null,args[0]);
+			BaseStartMars.start(clazz,null,args[0],null);
 		} else {
 			start(clazz);
 		}
@@ -25,6 +25,6 @@ public class StartMars {
 	 * @param clazz
 	 */
 	public static void start(Class<?> clazz) {
-		BaseStartMars.start(clazz,null,null);
+		BaseStartMars.start(clazz,null,null,null);
 	}
 }

@@ -9,6 +9,7 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
 import com.mars.core.model.MarsBeanModel;
+import com.mars.core.load.LoadHelper;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -109,13 +110,7 @@ public class BeanFactory {
 	 */
 	public static <T> T getBean(String name,Class<T> cls) throws Exception {
 		try {
-
-			Object marsBeans = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
-			Map<String, MarsBeanModel> marsBeanObjects = new HashMap<>();
-			if(marsBeans != null) {
-				marsBeanObjects = (Map<String, MarsBeanModel>)marsBeans;
-			} 
-			
+			Map<String, MarsBeanModel> marsBeanObjects = LoadHelper.getBeanObjectMap();
 			return (T)marsBeanObjects.get(name).getObj();
 		} catch (Exception e) {
 			throw new Exception("找不到name为["+name+"]的bean",e);

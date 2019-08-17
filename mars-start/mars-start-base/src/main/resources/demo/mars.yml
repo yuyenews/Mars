@@ -12,7 +12,7 @@ timeOut:
 maxContentLength: 10
 #配置跨域请求
 cross_domain:
-  origin: *
+  origin: "*"
   methods: "GET,POST"
   maxAge: 9
   headers: "x-requested-with,Cache-Control,Pragma,Content-Type,Token"

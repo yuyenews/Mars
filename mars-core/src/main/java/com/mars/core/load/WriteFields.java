@@ -28,10 +28,7 @@ public class WriteFields {
             if(resource!=null){
                 f.setAccessible(true);
 
-                String filedName = resource.value();
-                if(filedName == null || filedName.equals("")) {
-                    filedName = f.getName();
-                }
+                String filedName = LoadHelper.getResourceName(resource,f);
 
                 MarsBeanModel beanModel = marsBeanObjects.get(filedName);
                 if(beanModel!=null){
