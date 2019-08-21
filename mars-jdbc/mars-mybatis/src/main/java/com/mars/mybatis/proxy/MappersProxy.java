@@ -110,7 +110,7 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 	 * @param statement
 	 * @return
 	 */
-	private Object select(Method method,Object[] args,SqlSession session,String statement){
+	private Object select(Method method,Object[] args,SqlSession session,String statement) throws Exception {
 		Object result = null;
 		Class<?> returnType = method.getReturnType();
 		if(returnType.getName().equals(List.class.getName())) {

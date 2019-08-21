@@ -67,7 +67,6 @@ public class LoadHelper {
      * @return
      */
     public static List<Map<String,Object>> getBeanList(){
-        /* 获取所有的bean数据 */
         Object marsBeans = constants.getAttr(MarsConstant.MARS_BEANS);
         List<Map<String,Object>> marsBeansList = new ArrayList<>();
         if(marsBeans != null) {
@@ -80,13 +79,25 @@ public class LoadHelper {
      * 获取所有的bean对象
      */
     public static Map<String, MarsBeanModel> getBeanObjectMap(){
-        /* 创建bean对象，并保存起来 */
         Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);
         Map<String, MarsBeanModel> marsBeanObjects = new HashMap<>();
         if(objs2 != null) {
             marsBeanObjects = (Map<String, MarsBeanModel>)objs2;
         }
         return marsBeanObjects;
+    }
+
+    /**
+     * 获取所有的加了MarsDao注解的基础数据
+     * @return
+     */
+    public static List<Map<String, Object>>  getDaoList(){
+        Object objs = constants.getAttr(MarsConstant.MARS_DAOS);
+        List<Map<String, Object>> easyDaos = new ArrayList<>();
+        if(objs != null) {
+            easyDaos = (List<Map<String, Object>>) objs;
+        }
+        return easyDaos;
     }
 
     /**
@@ -107,7 +118,6 @@ public class LoadHelper {
      * @return
      */
     public static List<Map<String,Object>> getControllerList(){
-        /* 获取所有的controller数据 */
         Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
         List<Map<String,Object>> contorls = new ArrayList<>();
         if(objs != null) {
