@@ -67,7 +67,7 @@ public class LoadClass {
 					count++;
 				}
 				if(marsAfter != null){
-					LoadBeans.loadEasyAfter(cls);
+					LoadBeans.loadMarsAfter(cls);
 					count++;
 				}
 

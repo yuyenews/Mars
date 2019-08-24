@@ -107,7 +107,7 @@ public class LoadBeans {
      * 加载marsAfter
      * @param cls 类型
      */
-    public static void loadEasyAfter(Class<?> cls){
+    public static void loadMarsAfter(Class<?> cls){
         Object objs = constants.getAttr(MarsConstant.MARS_AFTERS);
         List<Class> marsAfters = new ArrayList<>();
         if(objs != null) {

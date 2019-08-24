@@ -79,8 +79,7 @@ public class BaseStartMars {
 		ConfigUtil.loadConfig(suffix);
 		
 		/*获取要扫描的包*/
-		String className = clazz.getName();
-		className = className.substring(0,className.lastIndexOf("."));
+		String className = getClassName(clazz);
 		
 		/* 将要扫描的包名存到全局存储空间，给别的需要的地方使用 */
 		constants.setAttr("rootPath", className);
@@ -107,6 +106,20 @@ public class BaseStartMars {
 
 		/* 加载timer对象 */
 		LoadMarsTimer.loadMarsTimers();
+	}
+
+	/**
+	 * 截取main方法所在包名
+	 * @param clazz
+	 * @return
+	 * @throws Exception
+	 */
+	private static String getClassName(Class clazz) throws Exception {
+		String className = clazz.getName();
+		if(className.indexOf(".") < 0){
+			throw new Exception("启动服务的main方法所在的类,必须放在两层包名中,比如[com.mars,com.test]等,不允许放在[com,cn]等包中,更不允许放在包外面");
+		}
+		return className.substring(0,className.lastIndexOf("."));
 	}
 	
 	/**
