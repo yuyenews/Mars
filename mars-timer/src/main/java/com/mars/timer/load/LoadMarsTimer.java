@@ -32,7 +32,6 @@ public class LoadMarsTimer {
         List<MarsTimerModel> marsTimerObjects = LoadHelper.getMarsTimersList();
 
         for(Map<String,Object> map : marsBeansList) {
-
             Class<?> cls = (Class<?>)map.get("className");
             String beanName = LoadHelper.getBeanName(map,cls);
             loadMethods(cls,marsTimerObjects,beanName);
