@@ -3,6 +3,8 @@ package com.mars.mvc.load;
 import com.mars.core.annotation.MarsInterceptor;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
+import com.mars.core.load.LoadHelper;
+import com.mars.core.load.WriteFields;
 import com.mars.core.logger.MarsLogger;
 import com.mars.mvc.model.MarsInterModel;
 
@@ -44,6 +46,10 @@ public class LoadInters {
                     marsInterModel.setCls(cls);
                     marsInterModel.setObj(cls.getDeclaredConstructor().newInstance());
                     marsInterModel.setPattern(pattern);
+
+                    /* 给拦截器注入属性 */
+                    WriteFields.writeFields(cls,marsInterModel.getObj(), LoadHelper.getBeanObjectMap());
+
                     list.add(marsInterModel);
                 }
                 constants.setAttr(MarsConstant.INTERCEPTOR_OBJECTS,list);
