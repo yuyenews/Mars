@@ -1,17 +1,18 @@
 package com.mars.junit;
 
 import com.mars.core.after.StartAfter;
-import com.mars.core.annotation.Resource;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.LoadClass;
+import com.mars.core.load.LoadHelper;
+import com.mars.core.load.WriteFields;
 import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.ConfigUtil;
-import com.mars.ioc.factory.BeanFactory;
 import com.mars.ioc.load.LoadEasyBean;
 import com.mars.jdbc.base.BaseInitJdbc;
+import com.mars.timer.execute.ExecuteMarsTimer;
+import com.mars.timer.load.LoadMarsTimer;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -50,12 +51,18 @@ public class MarsJunitStart {
                 /* 启动after方法 */
                 StartAfter.after();
 
+                /* 执行定时任务 */
+                ExecuteMarsTimer.execute();
+
                 /* 标记已经为单测创建过资源了 */
                 constants.setAttr(MarsConstant.HAS_TEST,"yes");
             }
 
             /* 给单测注入属性 */
             autoWrite(obj);
+
+            /* 标识是否已经启动 */
+            constants.setAttr(MarsConstant.HAS_NETTY_START,"yes");
 
             log.info("开始执行单测......");
         } catch (Exception e) {
@@ -82,6 +89,9 @@ public class MarsJunitStart {
 
         /* 创建bean对象 */
         LoadEasyBean.loadBean();
+
+        /* 加载timer对象 */
+        LoadMarsTimer.loadMarsTimers();
     }
 
     /**
@@ -90,15 +100,7 @@ public class MarsJunitStart {
     public static void autoWrite(Object obj) {
         try {
             Class cls = obj.getClass();
-            /* 获取对象属性，完成注入 */
-            Field[] fields = cls.getDeclaredFields();
-            for(Field f : fields){
-                Resource resource = f.getAnnotation(Resource.class);
-                if(resource!=null){
-                    f.setAccessible(true);
-                    f.set(obj, BeanFactory.getBean(resource.value(),f.getType()));
-                }
-            }
+            WriteFields.writeFields(cls,obj,LoadHelper.getBeanObjectMap());
         } catch (Exception e){
             log.error("初始化单测出现异常",e);
         }

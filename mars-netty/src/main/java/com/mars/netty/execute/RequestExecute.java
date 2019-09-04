@@ -37,10 +37,6 @@ public class RequestExecute {
 		this.ctx = ctx;
 	}
 
-	public ChannelHandlerContext getCtx() {
-		return ctx;
-	}
-
 	public void execute() {
 
 		/* 组装httpRequest对象 */
