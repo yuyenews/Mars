@@ -20,6 +20,8 @@
 	</modules>
 
 	<properties>
+		<maven.test.skip>true</maven.test.skip>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 	</properties>
 

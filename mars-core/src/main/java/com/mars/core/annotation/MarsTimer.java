@@ -9,7 +9,7 @@ public @interface MarsTimer {
 
     /**
      * 循环间隔
-     * @return
+     * @return 间隔
      */
     int loop() default 60000;
 }

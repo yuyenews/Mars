@@ -28,7 +28,7 @@ public class LoadHelper {
      * 获取Bean的名称
      * @param map
      * @param cls
-     * @return
+     * @return 名称
      */
     public static String getBeanName(Map<String,Object> map,Class<?> cls){
         MarsBean marsBean = (MarsBean)map.get("annotation");
@@ -39,7 +39,7 @@ public class LoadHelper {
     /**
      * 获取Bean的名称
      * @param cls
-     * @return
+     * @return 名称
      */
     public static String getBeanName(String beanName,Class<?> cls){
         if(beanName == null || beanName.equals("")) {
@@ -52,7 +52,7 @@ public class LoadHelper {
      * 获取字段名
      * @param resource
      * @param f
-     * @return
+     * @return 名称
      */
     public static String getResourceName(Resource resource, Field f){
         String filedName = resource.value();
@@ -64,7 +64,7 @@ public class LoadHelper {
 
     /**
      * 获取所有的加了MarsBean注解的基础数据
-     * @return
+     * @return 数据
      */
     public static List<Map<String,Object>> getBeanList(){
         Object marsBeans = constants.getAttr(MarsConstant.MARS_BEANS);
@@ -89,7 +89,7 @@ public class LoadHelper {
 
     /**
      * 获取所有的加了MarsDao注解的基础数据
-     * @return
+     * @return 数据
      */
     public static List<Map<String, Object>>  getDaoList(){
         Object objs = constants.getAttr(MarsConstant.MARS_DAOS);
@@ -102,7 +102,7 @@ public class LoadHelper {
 
     /**
      * 获取所有配了定时任务的基础数据
-     * @return
+     * @return 数据
      */
     public static List<MarsTimerModel> getMarsTimersList(){
         Object objs = constants.getAttr(MarsConstant.MARS_TIMER_OBJECTS);
@@ -115,7 +115,7 @@ public class LoadHelper {
 
     /**
      * 获取所有的加了Controller注解的基础数据
-     * @return
+     * @return 数据
      */
     public static List<Map<String,Object>> getControllerList(){
         Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
