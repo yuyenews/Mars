@@ -26,7 +26,7 @@ public class WriteFields {
      * @param cls             需要注入属性的类
      * @param obj             需要注入属性的对象
      * @param marsBeanObjects 要被注入的对象集合
-     * @throws Exception
+     * @throws Exception 异常
      */
     public static void writeFields(Class cls, Object obj, Map<String, MarsBeanModel> marsBeanObjects) throws Exception {
         Field[] fields = cls.getDeclaredFields();
@@ -68,9 +68,9 @@ public class WriteFields {
     /**
      * 从配置中获取要注入的值
      *
-     * @param value
-     * @return
-     * @throws Exception
+     * @param value 名称
+     * @return 值
+     * @throws Exception 异常
      */
     private static Object getValue(String value) throws Exception {
         if (value.indexOf(".") > 0) {

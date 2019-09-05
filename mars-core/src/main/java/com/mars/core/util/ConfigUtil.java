@@ -16,7 +16,7 @@ public class ConfigUtil {
 
 	/**
 	 * 加载配置文件
-	 *
+	 * @param suffix 后缀
 	 * @throws Exception 异常
 	 */
 	public static void loadConfig(String suffix) throws Exception{

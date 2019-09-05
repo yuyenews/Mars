@@ -11,6 +11,7 @@ public class SerializableUtil {
      * 将对象序列化成二进制流
      * @param obj 对象
      * @return 对象
+     * @throws Exception 异常
      */
     public static byte[] serialization(Object obj) throws Exception {
         try {
