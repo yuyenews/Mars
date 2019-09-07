@@ -79,13 +79,3 @@
         </tr>
     </tbody>
 </table>
-
-<h2>Contact</h2>
-
-<p>If you are interested in this framework, you can add my QQ group:773291321</p>
-
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/erweim.png?raw=true" width="238px"/></p>
-
-<h2>My weibo</h2>
-
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/weibo.png?raw=true" width="238px"/></p>

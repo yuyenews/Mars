@@ -77,13 +77,3 @@
         </tr>
     </tbody>
 </table>
-
-<h2>联系我</h2>
-
-<p>如果你对此框架感兴趣，可以加我的QQ群：773291321</p>
-
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/erweim.png?raw=true" width="238px"/></p>
-
-<h2>我的微博</h2>
-
-<p><img src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/weibo.png?raw=true" width="238px"/></p>
