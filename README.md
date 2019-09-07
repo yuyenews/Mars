@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
 <p>
-    Mars-java is a javaWeb development framework that does not require a container. It uses netty for http service management, supports AOP, IOC, MVC, and integrates Mybatis as a persistence layer. In addition, it provides Mars-config to support remote configuration. Mars-extends to support more features and tools
+    The Js framework has React, Vue, AngularJS, but the java framework has only one Spring. Many people say that I am making wheels, but I don’t think so, so... It’s time to overthrow the Spring, I hope everyone can get involved, contributing code, together let java developers have another choice
 </p>
 
 <h2>What can I do</h2>
