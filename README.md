@@ -10,33 +10,23 @@
 <h2>What can I do</h2>
 
 <p>
-    &nbsp;
-    Simple to build, out of the box
-    <br/>
-    &nbsp;
-    http service using netty
-    <br/>
-    &nbsp;
-    Session management using JWT
-    <br/>
-    &nbsp;
-    Support AOP, IOC, MVC, Mybatis, transaction management
-    <br/>
-    &nbsp;
-    Distributed deployment via Mars-cloud
-    <br/>
-    &nbsp;
-    Remote configuration via Mars-config [iteration]
+    <ul>
+        <li>Simple to build, out of the box</li>
+        <li>http service using netty</li>
+        <li>Session management using JWT</li>
+        <li>Support AOP, IOC, MVC, Mybatis, transaction management</li>
+        <li>Distributed deployment via Mars-cloud</li>
+        <li>Remote configuration via Mars-config [iteration]</li>
+    </ul>
 </p>
 
 <h2>What can't I do</h2>
 
 <p>
-    &nbsp;
-    - Only support the main method to start, can not play the war package
-    <br/>
-    &nbsp;
-    - Can only return json, binary stream to the front end, does not support forwarding and redirection
+    <ul>
+        <li>Only support the main method to start, can not play the war package</li>
+        <li>Can only return json, binary stream to the front end, does not support forwarding and redirection</li>
+    </ul>
 </p>
 
 <h2>Document</h2>
