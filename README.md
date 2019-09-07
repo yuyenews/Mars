@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
 <p>
-    The Js framework has React, Vue, AngularJS, but the java framework has only one Spring. Many people say that I am making wheels, but I don’t think so, so... It’s time to overthrow the Spring, I hope everyone can get involved, contributing code, together let java developers have another choice
+    The Js framework has React, Vue, AngularJS, but the Java framework has only one Spring. Many people say that I am making wheels, but I don't think so, so... it's time to challenge Spring, I hope everyone can get involved, contribute code, and give Java developers another option.
 </p>
 
 <h2>What can I do</h2>
