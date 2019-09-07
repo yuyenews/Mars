@@ -1,5 +1,5 @@
 <h1>
-    <p><img width="300px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
+    <p align="center"><img width="200px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
 </h1>
 
 ![](https://img.shields.io/badge/licenes-GPL-brightgreen.svg)
