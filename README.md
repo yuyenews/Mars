@@ -1,11 +1,13 @@
 <h1>
     <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
 </h1>
+
+![](https://img.shields.io/badge/licenes-GPL-brightgreen.svg)
+![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
+
 <p>
     Mars-java is a javaWeb development framework that does not require a container. It uses netty for http service management, supports AOP, IOC, MVC, and integrates Mybatis as a persistence layer. In addition, it provides Mars-config to support remote configuration. Mars-extends to support more features and tools
 </p>
-
-<video controls="controls" width="100%" height="100%" src="http://api.youku.com/videos/player/file?data=WcEl5oEuTdXlNRGczTURnd09BPT18MHwwfDEwMDUwfDAO0O0O&amp;is_https=1"></video>
 
 <h2>What can I do</h2>
 
