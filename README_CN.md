@@ -1,35 +1,30 @@
-<h1>
-    <p align="center"><img width="400px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
-</h1>
-<p>Mars-java是一个不需要容器的javaWeb开发框架，以netty作http服务管理，支持AOP,IOC,MVC,并且集成了Mybatis作为持久层，除此之外还提供了Mars-config 来支撑远程配置,Mars-extends 来支持更多的功能以及工具类</p>
+<p  align="center"><img width="300px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
+
+![](https://img.shields.io/badge/licenes-GPL-brightgreen.svg)
+![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
+
+<p>Js框架有React，Vue，AngularJS，但java框架只有一个Spring。 很多人说我正在制造轮子，但我不这么认为，所以...是时候挑战Spring了，我希望每个人都能参与进来，贡献代码，让java开发人员有另一种选择</p>
 
 <h2>我能做什么</h2>
 
 <p>
-    &nbsp;
-    - 使用netty做的http服务
-    <br/>
-    &nbsp;
-    - 使用JWT做的会话管理
-    <br/>
-    &nbsp;
-    - 支持AOP,IOC,MVC,Mybatis,事务管理
-    <br/>
-    &nbsp;
-    - 通过 Mars-cloud 可以分布式部署
-    <br/>
-    &nbsp;
-    - 通过 Mars-config 可以远程配置【迭代中】
+    <ul>
+        <li>搭建简单，开箱即用</li>
+        <li>使用netty做的http服务</li>
+        <li>使用JWT做的会话管理</li>
+        <li>支持AOP,IOC,MVC,Mybatis,事务管理</li>
+        <li>通过 Mars-cloud 可以分布式部署</li>
+        <li>通过 Mars-config 可以远程配置【迭代中】</li>
+    </ul>
 </p>
 
 <h2>我不能做什么</h2>
 
 <p>
-    &nbsp;
-    - 只支持main方法启动，不可以打war包
-    <br/>
-    &nbsp;
-    - 只能给前端返回json，二进制流，不支持转发和重定向
+    <ul>
+        <li>只支持main方法启动，不可以打war包</li>
+        <li>只能给前端返回json，二进制流，不支持转发和重定向</li>
+    </ul>
 </p>
 
 <h2>帮助文档</h2>
@@ -54,8 +49,8 @@
             <td>IOC</td>
             <td>MVC</td>
             <td>持久层</td>
-            <td>configuration file</td>
-            <td>startup method</td>
+            <td>配置文件</td>
+            <td>启动方式</td>
         </tr>
         <tr>
             <td>Mars-java</td>
