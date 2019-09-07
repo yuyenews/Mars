@@ -11,22 +11,22 @@
 
 <p>
     &nbsp;
-    - Simple to build, out of the box
-    &nbsp;
-    <br/>
-    - http service using netty
+    Simple to build, out of the box
     <br/>
     &nbsp;
-    - Session management using JWT
+    http service using netty
     <br/>
     &nbsp;
-    - Support AOP, IOC, MVC, Mybatis, transaction management
+    Session management using JWT
     <br/>
     &nbsp;
-    - Distributed deployment via Mars-cloud
+    Support AOP, IOC, MVC, Mybatis, transaction management
     <br/>
     &nbsp;
-    - Remote configuration via Mars-config [iteration]
+    Distributed deployment via Mars-cloud
+    <br/>
+    &nbsp;
+    Remote configuration via Mars-config [iteration]
 </p>
 
 <h2>What can't I do</h2>
