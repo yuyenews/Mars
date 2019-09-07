@@ -45,7 +45,7 @@ public class MarsSpace {
 	
 	/**
 	 * 移除元素
-	 * @param key
+	 * @param key 键
 	 */
 	public void remove(String key) {
 		map.remove(key);

@@ -26,8 +26,8 @@ public class LoadHelper {
 
     /**
      * 获取Bean的名称
-     * @param map
-     * @param cls
+     * @param map 集合
+     * @param cls 类
      * @return 名称
      */
     public static String getBeanName(Map<String,Object> map,Class<?> cls){
@@ -38,7 +38,8 @@ public class LoadHelper {
 
     /**
      * 获取Bean的名称
-     * @param cls
+     * @param beanName bean名称
+     * @param cls 类
      * @return 名称
      */
     public static String getBeanName(String beanName,Class<?> cls){
@@ -50,8 +51,8 @@ public class LoadHelper {
 
     /**
      * 获取字段名
-     * @param resource
-     * @param f
+     * @param resource 资源
+     * @param f 字段
      * @return 名称
      */
     public static String getResourceName(Resource resource, Field f){
@@ -77,6 +78,7 @@ public class LoadHelper {
 
     /**
      * 获取所有的bean对象
+     * @return 集合
      */
     public static Map<String, MarsBeanModel> getBeanObjectMap(){
         Object objs2 = constants.getAttr(MarsConstant.MARS_BEAN_OBJECTS);

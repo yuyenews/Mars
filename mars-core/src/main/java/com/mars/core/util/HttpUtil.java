@@ -18,7 +18,7 @@ public class HttpUtil {
      * @param name 参数name
      * @param timeOut 超时时间
      * @return 相应数据
-     * @throws Exception
+     * @throws Exception 异常
      */
     public static String request(String url, String name, byte[] value, long timeOut) throws Exception {
 
@@ -46,7 +46,7 @@ public class HttpUtil {
      * @param params 参数
      * @param timeOut 超时时间
      * @return 相应数据
-     * @throws Exception
+     * @throws Exception 异常
      */
     public static String post(String url, Map<String,Object> params,long timeOut) throws Exception {
         OkHttpClient okHttpClient = getOkHttpClient(timeOut);
@@ -69,10 +69,10 @@ public class HttpUtil {
      * 发起get请求
      * @param strUrl 链接
      * @param params 参数
-     * @param timeOut
+     * @param timeOut 超时时间
      * @return 响应结果
      *
-     * @throws Exception
+     * @throws Exception 异常
      */
     public static Object get(String strUrl, Map<String,String> params,long timeOut) throws Exception {
         String url = strUrl+"?"+getParams(params);
@@ -90,7 +90,7 @@ public class HttpUtil {
      * @param okHttpClient
      * @param request
      * @return 相应数据
-     * @throws Exception
+     * @throws Exception 异常
      */
     private static String okCall(OkHttpClient okHttpClient,Request request) throws Exception {
         Call call = okHttpClient.newCall(request);
@@ -126,7 +126,7 @@ public class HttpUtil {
      * 获取okhttp客户端
      * @param timeOut
      * @return 客户端
-     * @throws Exception
+     * @throws Exception 异常
      */
     private static OkHttpClient getOkHttpClient(long timeOut) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
