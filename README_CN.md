@@ -49,8 +49,8 @@
             <td>IOC</td>
             <td>MVC</td>
             <td>持久层</td>
-            <td>configuration file</td>
-            <td>startup method</td>
+            <td>配置文件</td>
+            <td>启动方式</td>
         </tr>
         <tr>
             <td>Mars-java</td>
