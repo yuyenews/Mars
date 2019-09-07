@@ -11,6 +11,9 @@
 
 <p>
     &nbsp;
+    - Simple to build, out of the box
+    &nbsp;
+    <br/>
     - http service using netty
     <br/>
     &nbsp;
