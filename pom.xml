@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars-java</artifactId>
-	<version>2.1.5</version>
+	<version>2.1.6</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-aop</module>
@@ -13,9 +13,7 @@
 		<module>mars-mvc</module>
 		<module>mars-netty</module>
 		<module>mars-server</module>
-		<module>mars-start</module>
         <module>mars-jdbc</module>
-        <module>mars-junit</module>
 		<module>mars-timer</module>
 	</modules>
 
