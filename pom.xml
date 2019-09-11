@@ -13,7 +13,6 @@
 		<module>mars-mvc</module>
 		<module>mars-netty</module>
 		<module>mars-server</module>
-		<module>mars-start</module>
         <module>mars-jdbc</module>
         <module>mars-junit</module>
 		<module>mars-timer</module>
