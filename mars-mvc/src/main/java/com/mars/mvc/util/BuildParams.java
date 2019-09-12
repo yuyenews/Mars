@@ -5,7 +5,7 @@ import com.mars.core.enums.DataType;
 import com.mars.core.util.SerializableUtil;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
-import com.mars.server.server.request.model.FileUpLoad;
+import com.mars.server.server.request.model.MarsFileUpLoad;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -74,10 +74,10 @@ public class BuildParams {
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){
             List<Object> valList = request.getParameterValues(f.getName());
-            FileUpLoad fileUpLoad = request.getFile(f.getName());
-            if(fileUpLoad != null){
+            MarsFileUpLoad marsFileUpLoad = request.getFile(f.getName());
+            if(marsFileUpLoad != null){
                 f.setAccessible(true);
-                f.set(obj,fileUpLoad);
+                f.set(obj, marsFileUpLoad);
             } else if(valList != null && !valList.isEmpty()){
                 f.setAccessible(true);
                 String fieldTypeName = f.getType().getSimpleName().toUpperCase();
@@ -129,8 +129,8 @@ public class BuildParams {
     private static Object builderCloudObject(Class cls,HttpRequest request) throws Exception {
         Object requestType = request.getParameter(MarsCloudConstant.REQUEST_TYPE);
         if(requestType != null && requestType.toString().equals(MarsCloudConstant.REQUEST_TYPE)){
-            FileUpLoad fileUpLoad = request.getFile(MarsCloudConstant.PARAM);
-            byte[] bytes = fileUpLoad.getBytes();
+            MarsFileUpLoad marsFileUpLoad = request.getFile(MarsCloudConstant.PARAM);
+            byte[] bytes = marsFileUpLoad.getBytes();
             return SerializableUtil.deSerialization(bytes, cls);
         }
         return null;
