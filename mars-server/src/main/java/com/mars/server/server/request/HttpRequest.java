@@ -1,7 +1,7 @@
 package com.mars.server.server.request;
 
 import com.mars.server.server.jwt.JwtManager;
-import com.mars.server.server.request.model.FileUpLoad;
+import com.mars.server.server.request.model.MarsFileUpLoad;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -48,7 +48,7 @@ public class HttpRequest {
 	/**
 	 * 请求的文件
 	 */
-	private Map<String,FileUpLoad> files;
+	private Map<String, MarsFileUpLoad> files;
 
 	/**
 	 * 构造函数，框架自己用的，程序员用不到，用了也没意义
@@ -110,7 +110,7 @@ public class HttpRequest {
 	private void setParameters(Map<String, Object> paremeters) {
 		Object obj = paremeters.get("files");
 		if (obj != null) {
-			Map<String,FileUpLoad> files = (Map<String,FileUpLoad>) obj;
+			Map<String, MarsFileUpLoad> files = (Map<String, MarsFileUpLoad>) obj;
 			this.files = files;
 			paremeters.remove("files");
 		}
@@ -151,7 +151,7 @@ public class HttpRequest {
 	 * 获取请求的文件
 	 * @return 文件列表
 	 */
-	public Map<String,FileUpLoad> getFiles() {
+	public Map<String, MarsFileUpLoad> getFiles() {
 		return files;
 	}
 
@@ -161,7 +161,7 @@ public class HttpRequest {
 	 * @param name 名称
 	 * @return 单个文件
 	 */
-	public FileUpLoad getFile(String name) {
+	public MarsFileUpLoad getFile(String name) {
 		if (files != null && files.size() > 0) {
 			return files.get(name);
 		} else {

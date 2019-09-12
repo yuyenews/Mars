@@ -7,7 +7,7 @@ import java.io.InputStream;
  * @author yuye
  *
  */
-public class FileUpLoad {
+public class MarsFileUpLoad {
 
 	/**
 	 * 请求name

@@ -8,15 +8,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import com.mars.server.server.request.model.FileUpLoad;
+import com.mars.server.server.request.model.MarsFileUpLoad;
 
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.QueryStringDecoder;
-import io.netty.handler.codec.http.multipart.Attribute;
-import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
-import io.netty.handler.codec.http.multipart.InterfaceHttpData;
-import io.netty.handler.codec.http.multipart.MixedFileUpload;
+import io.netty.handler.codec.http.multipart.*;
 
 /**
  * 参数解析器
@@ -63,7 +60,7 @@ public class RequestParser {
 
 			List<InterfaceHttpData> parmList = decoder.getBodyHttpDatas();
 
-			Map<String, FileUpLoad> files = new Hashtable<>();
+			Map<String, MarsFileUpLoad> files = new Hashtable<>();
 
 			for (InterfaceHttpData parmListItem : parmList) {
 
@@ -79,14 +76,14 @@ public class RequestParser {
 					params.add(data.getValue());
 					parmMap.put(data.getName(), params);
 
-				} else if (parmListItem instanceof MixedFileUpload) {
-					MixedFileUpload fileUpload = (MixedFileUpload) parmListItem;
+				} else if (parmListItem instanceof FileUpload) {
+					FileUpload fileUpload = (FileUpload) parmListItem;
 
 					byte[] bs = fileUpload.get();
 
 					InputStream inputStream = new ByteArrayInputStream(bs);
 					
-					FileUpLoad upLoad = new FileUpLoad();
+					MarsFileUpLoad upLoad = new MarsFileUpLoad();
 					upLoad.setFileName(fileUpload.getFilename());
 					upLoad.setInputStream(inputStream);
 					upLoad.setName(fileUpload.getName());
