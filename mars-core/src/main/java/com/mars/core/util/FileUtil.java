@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
 
@@ -77,80 +75,5 @@ public class FileUtil {
             } catch (Exception e){
             }
         }
-    }
-
-    /**
-     * 将file转化成二进制流
-     *
-     * @param file 文件流
-     * @return 转化后的二进制流
-     */
-    public static byte[] getFileToByte(File file) {
-        InputStream is = null;
-        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
-        byte[] by = new byte[(int) file.length()];
-        try {
-            is = new FileInputStream(file);
-            byte[] bb = new byte[2048];
-            int ch;
-            ch = is.read(bb);
-            while (ch != -1) {
-                bytestream.write(bb, 0, ch);
-                ch = is.read(bb);
-            }
-            return bytestream.toByteArray();
-        } catch (Exception ex) {
-            logger.error("File转化成byte[]报错",ex);
-            return null;
-        } finally {
-            try{
-                bytestream.close();
-                is.close();
-            } catch (Exception e) {
-            }
-        }
-    }
-
-    /**
-     * 将InputStream转化成二进制流
-     * @param inStream InputStream
-     * @return 二进制流
-     */
-    public static byte[] getInputStreamToByte(InputStream inStream) {
-        ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-        try {
-            byte[] buff = new byte[100];
-            int rc = 0;
-            while ((rc = inStream.read(buff, 0, 100)) > 0) {
-                swapStream.write(buff, 0, rc);
-            }
-            return swapStream.toByteArray();
-        } catch (Exception e) {
-            logger.error("InputStream转化成byte[]报错",e);
-            return null;
-        } finally {
-            try{
-                swapStream.close();
-            } catch (Exception e) {
-            }
-        }
-
-    }
-
-    public static byte[] getBufferedImageToByte(BufferedImage bufferedImage){
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try{
-            ImageIO.write(bufferedImage, "gif", out);
-            return out.toByteArray();
-        } catch (Exception e){
-            logger.error("BufferedImage转化成byte[]报错",e);
-            return null;
-        } finally {
-            try{
-                out.close();
-            } catch (Exception e) {
-            }
-        }
-
     }
 }
