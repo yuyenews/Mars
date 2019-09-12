@@ -2,12 +2,13 @@ package com.mars.mvc.resolve;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.mvc.resolve.access.PathAccess;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 import com.mars.server.util.RequestUtil;
 import com.mars.mvc.model.MarsMappingModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 public class ResolveRequest {
 	
-	private static MarsLogger log = MarsLogger.getLogger(ResolveRequest.class);
+	private static Logger log = LoggerFactory.getLogger(ResolveRequest.class);
 
 	private static ResolveRequest resolveRequest;
 	

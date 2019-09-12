@@ -2,7 +2,6 @@ package com.mars.server.server.request;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.ConfigUtil;
 import com.mars.core.util.FileUtil;
 import com.mars.core.util.MesUtil;
@@ -11,6 +10,8 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,7 +28,7 @@ import java.util.Map;
  */
 public class HttpResponse {
 
-    private MarsLogger logger = MarsLogger.getLogger(HttpResponse.class);
+    private Logger logger = LoggerFactory.getLogger(HttpResponse.class);
 
     /**
      * netty原生通道

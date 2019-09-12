@@ -1,12 +1,13 @@
 package com.mars.netty.server;
 
-import com.mars.core.logger.MarsLogger;
 import com.mars.netty.execute.RequestExecute;
 import com.mars.netty.util.ResponseUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.timeout.IdleStateEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 
@@ -17,7 +18,7 @@ import java.net.InetAddress;
  */
 public class MarsServerHandler extends ChannelInboundHandlerAdapter {
 
-	private MarsLogger log = MarsLogger.getLogger(MarsServerHandler.class);
+	private Logger log = LoggerFactory.getLogger(MarsServerHandler.class);
 
 	/**
 	 * 接收并处理 客户端请求

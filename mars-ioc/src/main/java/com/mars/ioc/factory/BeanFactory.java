@@ -6,10 +6,11 @@ import com.mars.core.annotation.MarsAopType;
 import com.mars.core.annotation.Traction;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.load.LoadHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public class BeanFactory {
 	
-	private static MarsLogger log = MarsLogger.getLogger(BeanFactory.class);
+	private static Logger log = LoggerFactory.getLogger(BeanFactory.class);
 
 	private static MarsSpace constants = MarsSpace.getEasySpace();
 	

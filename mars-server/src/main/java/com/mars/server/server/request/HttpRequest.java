@@ -1,6 +1,5 @@
 package com.mars.server.server.request;
 
-import com.mars.core.logger.MarsLogger;
 import com.mars.server.server.jwt.JwtManager;
 import com.mars.server.server.request.model.FileUpLoad;
 import io.netty.buffer.ByteBuf;
@@ -9,6 +8,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public class HttpRequest {
 	
-	private MarsLogger logger = MarsLogger.getLogger(HttpRequest.class);
+	private Logger logger = LoggerFactory.getLogger(HttpRequest.class);
 	
 	/**
 	 * netty原生request

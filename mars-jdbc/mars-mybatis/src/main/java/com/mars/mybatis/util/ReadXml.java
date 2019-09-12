@@ -1,6 +1,7 @@
 package com.mars.mybatis.util;
 
-import com.mars.core.logger.MarsLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -22,7 +23,7 @@ import java.util.jar.JarFile;
  */
 public class ReadXml {
 	
-	private static MarsLogger log = MarsLogger.getLogger(ReadXml.class);
+	private static Logger log = LoggerFactory.getLogger(ReadXml.class);
 	
 
 	/**

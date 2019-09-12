@@ -38,9 +38,6 @@ public class ConfigUtil {
 
 			/* 将配置信息缓存下来 */
 			constants.setAttr("config", config);
-
-			/* 加载log4j配置文件 */
-            MarsLog4jUtil.initLog4jConfig(config);
 		} catch (Exception e) {
 			throw new Exception("加载配置文件出错",e);
 		}

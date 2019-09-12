@@ -2,12 +2,13 @@ package com.mars.netty.server;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * netty服务
@@ -16,7 +17,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class MarsServer {
 
-	private static MarsLogger log = MarsLogger.getLogger(MarsServer.class);
+	private static Logger log = LoggerFactory.getLogger(MarsServer.class);
 
 	/**
 	 * 获取全局存储空间

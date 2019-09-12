@@ -3,11 +3,12 @@ package com.mars.mybatis.init;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.FileUtil;
 import com.mars.jdbc.util.JdbcConfigUtil;
 import com.mars.mybatis.util.ReadXml;
 import com.mars.mybatis.util.extend.MyDataSourceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.Set;
  */
 public class LoadMybatisConfig {
 	
-	private static MarsLogger logger = MarsLogger.getLogger(LoadMybatisConfig.class);
+	private static Logger logger = LoggerFactory.getLogger(LoadMybatisConfig.class);
 	
 	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 

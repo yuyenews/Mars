@@ -2,13 +2,14 @@ package com.mars.netty.execute;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.MesUtil;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,7 +21,7 @@ import java.lang.reflect.Method;
  */
 public class RequestExecute {
 	
-	private MarsLogger log = MarsLogger.getLogger(RequestExecute.class);
+	private Logger log = LoggerFactory.getLogger(RequestExecute.class);
 
 	/**
 	 * netty的request对象

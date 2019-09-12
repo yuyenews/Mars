@@ -53,7 +53,11 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 	 */
 	@Override
 	public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-		
+
+		if(args != null && args.length > 1){
+			throw new Exception("MarsDAO的方法只允许有一个参数");
+		}
+
 		/* 获取当前线程中的sqlSession */
 		Object obj =  marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
 		

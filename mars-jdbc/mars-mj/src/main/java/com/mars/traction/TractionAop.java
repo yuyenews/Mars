@@ -3,9 +3,10 @@ package com.mars.traction;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
 import com.mars.core.util.ThreadUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 public class TractionAop {
 
-	private MarsLogger logger = MarsLogger.getLogger(TractionAop.class);
+	private Logger logger = LoggerFactory.getLogger(TractionAop.class);
 
 	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 	

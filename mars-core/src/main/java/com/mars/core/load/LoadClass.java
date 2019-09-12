@@ -1,6 +1,8 @@
 package com.mars.core.load;
 
 import com.mars.core.annotation.*;
+import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ReadClass;
 
 import java.util.Set;
@@ -12,6 +14,8 @@ import java.util.Set;
  *
  */
 public class LoadClass {
+
+	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 	
 	/**
 	 * 加载所有bean，包括controller 的class对象
@@ -40,6 +44,9 @@ public class LoadClass {
 	private static void loadAllBeans(String packageName) throws Exception {
 		try {
 			Set<String> classList = ReadClass.loadClassList(packageName);
+			//这里是存下来给cloud加载rpc用的，避免二次扫描
+			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,classList);
+
 			for (String str : classList) {
 				Class<?> cls = Class.forName(str);
 				Controller controller = cls.getAnnotation(Controller.class);

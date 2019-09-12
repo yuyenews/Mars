@@ -1,6 +1,7 @@
 package com.mars.core.remote.config;
 
-import com.mars.core.logger.MarsLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 远程配置服务
@@ -8,7 +9,7 @@ import com.mars.core.logger.MarsLogger;
 public class RemoteConfigService {
 
 
-    private static MarsLogger marsLogger = MarsLogger.getLogger(RemoteConfigService.class);
+    private static Logger marsLogger = LoggerFactory.getLogger(RemoteConfigService.class);
 
     /**
      * 重新加载配置

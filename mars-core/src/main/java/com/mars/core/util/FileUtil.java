@@ -1,7 +1,8 @@
 package com.mars.core.util;
 
 import com.alibaba.fastjson.JSON;
-import com.mars.core.logger.MarsLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.imageio.ImageIO;
@@ -16,7 +17,7 @@ import java.util.HashMap;
  */
 public class FileUtil {
 
-    private static MarsLogger logger = MarsLogger.getLogger(FileUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     public static String local = null;
 

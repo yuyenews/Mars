@@ -15,7 +15,7 @@ import java.util.Map;
  * @author yuye
  *
  */
-public class LoadEasyBean {
+public class LoadMarsBean {
 	
 	/**
 	 * 获取全局存储空间 
