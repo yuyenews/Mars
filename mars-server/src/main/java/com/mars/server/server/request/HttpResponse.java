@@ -3,8 +3,6 @@ package com.mars.server.server.request;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.util.ConfigUtil;
-import com.mars.core.util.FileUtil;
-import com.mars.core.util.MesUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,9 +11,6 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,72 +94,6 @@ public class HttpResponse {
 
         response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/json; charset=UTF-8");
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
-    }
-
-    /**
-     * 文件下载
-     *
-     * @param file 要下载的文件
-     */
-    public void sendFile(File file) {
-        try{
-            setHeader("Content-Length", String.valueOf(file.length()));
-            sendFile(FileUtil.getFileToByte(file),file.getName());
-        } catch (Exception e){
-            logger.error("将流文件流响应给客户端出错",e);
-        }
-    }
-
-    /**
-     * 文件下载
-     *
-     * @param file 要下载的文件
-     */
-    public void sendFile(InputStream file,String fileName) {
-        sendFile(FileUtil.getInputStreamToByte(file),fileName);
-    }
-
-    /**
-     * 文件下载
-     *
-     * @param file 要下载的文件
-     */
-    public void sendFile(BufferedImage file, String fileName){
-        sendFile(FileUtil.getBufferedImageToByte(file),fileName);
-    }
-
-    /**
-     * 文件下载
-     *
-     * @param file 要下载的文件
-     */
-    public void sendFile(byte[] file,String fileName) {
-        try{
-
-            if(file == null){
-                if(this.header.get("Content-Length") != null){
-                    this.header.remove("Content-Length");
-                }
-                send(MesUtil.getMes(404,"要下载的文件不存在").toJSONString());
-                throw new Exception("要下载的文件不存在");
-            }
-
-            FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK,
-                    Unpooled.copiedBuffer(file));
-
-            crossDomain(response);
-
-            if (header != null) {
-                for (String key : header.keySet()) {
-                    response.headers().set(key, header.get(key));
-                }
-            }
-            response.headers().set("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(),"UTF-8"));
-            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/octet-stream; charset=UTF-8");
-            ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
-        } catch (Exception e){
-            logger.error("将流文件流响应给客户端出错",e);
-        }
     }
 
     /**
