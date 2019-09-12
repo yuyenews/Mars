@@ -2,7 +2,6 @@ package com.mars.mvc.resolve;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
-import com.mars.core.logger.MarsLogger;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.mvc.util.BuildParams;
 import com.mars.server.server.request.HttpRequest;
@@ -10,6 +9,8 @@ import com.mars.server.server.request.HttpResponse;
 import com.mars.server.util.RequestUtil;
 import com.mars.mvc.model.MarsMappingModel;
 import io.netty.handler.codec.http.HttpMethod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class ExecuteEasy {
 
-	private MarsLogger log = MarsLogger.getLogger(ExecuteEasy.class);
+	private Logger log = LoggerFactory.getLogger(ExecuteEasy.class);
 
 	private static ExecuteEasy executeEasy;
 

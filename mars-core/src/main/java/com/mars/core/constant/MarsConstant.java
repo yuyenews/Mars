@@ -97,4 +97,9 @@ public class MarsConstant {
      */
     public static final String TRACTION_CLASS = "com.mars.traction.TractionAop";
 
+    /**
+     * 扫描到的所有类
+     */
+    public static final String SCAN_ALL_CLASS = "scanAllClass";
+
 }

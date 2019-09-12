@@ -3,8 +3,9 @@ package com.mars.timer.execute;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.MarsTimerModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.TimerTask;
  */
 public class ExecuteMarsTimer {
 
-    private static MarsLogger marsLogger = MarsLogger.getLogger(ExecuteMarsTimer.class);
+    private static Logger marsLogger = LoggerFactory.getLogger(ExecuteMarsTimer.class);
 
     /**
      * 获取全局存储空间

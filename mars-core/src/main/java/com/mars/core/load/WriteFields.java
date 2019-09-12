@@ -4,9 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.mars.core.annotation.MarsValue;
 import com.mars.core.annotation.Resource;
 import com.mars.core.enums.DataType;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.util.ConfigUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public class WriteFields {
 
-    private static MarsLogger log = MarsLogger.getLogger(WriteFields.class);
+    private static Logger log = LoggerFactory.getLogger(WriteFields.class);
 
     private static JSONObject config = ConfigUtil.getConfig();
 

@@ -1,15 +1,16 @@
 package com.mars.mybatis.util.extend;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.mars.core.logger.MarsLogger;
 import org.apache.ibatis.datasource.DataSourceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 public class MyDataSourceFactory extends DruidDataSourceFactory implements DataSourceFactory {
 	
-	private MarsLogger logger = MarsLogger.getLogger(MyDataSourceFactory.class);
+	private Logger logger = LoggerFactory.getLogger(MyDataSourceFactory.class);
 
 	protected Properties properties;
 

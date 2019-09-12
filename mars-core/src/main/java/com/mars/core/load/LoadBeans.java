@@ -92,15 +92,15 @@ public class LoadBeans {
      */
     public static void loadDao(Class<?> cls, MarsDao marsDao){
         Object objs = constants.getAttr(MarsConstant.MARS_DAOS);
-        List<Map<String,Object>> easyDaos = new ArrayList<>();
+        List<Map<String,Object>> marsDaos = new ArrayList<>();
         if(objs != null) {
-            easyDaos = (List<Map<String,Object>>)objs;
+            marsDaos = (List<Map<String,Object>>)objs;
         }
         Map<String,Object> eb = new HashMap<>();
         eb.put("className", cls);
         eb.put("annotation", marsDao);
-        easyDaos.add(eb);
-        constants.setAttr(MarsConstant.MARS_DAOS, easyDaos);
+        marsDaos.add(eb);
+        constants.setAttr(MarsConstant.MARS_DAOS, marsDaos);
     }
 
     /**

@@ -2,10 +2,11 @@ package com.mars.mybatis.init;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -21,7 +22,7 @@ import java.util.Map;
  */
 public class LoadSqlSessionFactory {
 	
-	private MarsLogger logger = MarsLogger.getLogger(LoadSqlSessionFactory.class);
+	private Logger logger = LoggerFactory.getLogger(LoadSqlSessionFactory.class);
 	
 	private static LoadSqlSessionFactory factory;
 	

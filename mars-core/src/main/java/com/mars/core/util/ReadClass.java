@@ -1,6 +1,7 @@
 package com.mars.core.util;
 
-import com.mars.core.logger.MarsLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -23,7 +24,7 @@ import java.util.jar.JarFile;
  */
 public class ReadClass {
 	
-	private static MarsLogger log = MarsLogger.getLogger(ReadClass.class);
+	private static Logger log = LoggerFactory.getLogger(ReadClass.class);
 	
 
 	/**

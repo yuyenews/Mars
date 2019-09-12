@@ -2,13 +2,14 @@ package com.mars.traction;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.model.AopModel;
 import com.mars.core.util.ThreadUtil;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.TransactionIsolationLevel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +21,9 @@ import java.util.Map;
  */
 public class TractionAop {
 
-	private MarsLogger logger = MarsLogger.getLogger(TractionAop.class);
+	private Logger logger = LoggerFactory.getLogger(TractionAop.class);
 
-	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
+	private MarsSpace marsSpace = MarsSpace.getEasySpace();
 	
 	/**
 	 * 获取数据库连接，并设置为不自动提交

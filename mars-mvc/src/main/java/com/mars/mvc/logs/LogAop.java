@@ -1,8 +1,9 @@
 package com.mars.mvc.logs;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.logger.MarsLogger;
 import com.mars.server.server.request.HttpRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  */
 public class LogAop {
 
-    private MarsLogger logger = MarsLogger.getLogger(LogAop.class);
+    private Logger logger = LoggerFactory.getLogger(LogAop.class);
 
     private Class cls;
     private String methodName;

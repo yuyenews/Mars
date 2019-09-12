@@ -5,8 +5,9 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.load.WriteFields;
-import com.mars.core.logger.MarsLogger;
 import com.mars.mvc.model.MarsInterModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class LoadInters {
 
-    private static MarsLogger log = MarsLogger.getLogger(LoadController.class);
+    private static Logger log = LoggerFactory.getLogger(LoadController.class);
 
     /**
      * 获取全局存储空间

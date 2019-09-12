@@ -4,12 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.logger.MarsLogger;
 import com.mars.core.util.MatchUtil;
 import com.mars.core.util.MesUtil;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class ExecuteInters {
 	
-	private static MarsLogger logger = MarsLogger.getLogger(ExecuteInters.class);
+	private static Logger logger = LoggerFactory.getLogger(ExecuteInters.class);
 
 	/**
 	 * 执行拦截器的开始方法

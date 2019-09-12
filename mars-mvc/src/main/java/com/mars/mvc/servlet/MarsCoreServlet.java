@@ -3,10 +3,11 @@ package com.mars.mvc.servlet;
 import com.alibaba.fastjson.JSON;
 import com.mars.core.enums.DataType;
 import com.mars.mvc.resolve.ResolveRequest;
-import com.mars.core.logger.MarsLogger;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
 import com.mars.server.server.servlet.MarsServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 核心servlet，用于接收所有请求，并调用相应的方法进行处理
@@ -15,7 +16,7 @@ import com.mars.server.server.servlet.MarsServlet;
  */
 public class MarsCoreServlet implements MarsServlet {
 	
-	private static MarsLogger log = MarsLogger.getLogger(MarsCoreServlet.class);
+	private static Logger log = LoggerFactory.getLogger(MarsCoreServlet.class);
 	
 	@Override
 	public Object doRequest(HttpRequest request, HttpResponse response) throws Exception {
