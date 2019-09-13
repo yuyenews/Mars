@@ -45,4 +45,12 @@ public class HttpContext {
 	public Object getAttr(String key) {
 		return map.get(key);
 	}
+
+	/**
+	 * 删除数据
+	 * @param key 键
+	 */
+	public void remove(String key){
+		map.remove(key);
+	}
 }
