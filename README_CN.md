@@ -5,6 +5,15 @@
 
 <p>Js框架有React，Vue，AngularJS，但java框架只有一个Spring。 很多人说我正在制造轮子，但我不这么认为，所以...是时候挑战Spring了，我希望每个人都能参与进来，贡献代码，让java开发人员有另一种选择</p>
 
+<h2>其他子项目</h2>
+
+<p>
+    <ul>
+        <li>Mars-cloud: &nbsp;<a href="https://gitee.com/SherlockHolmnes/Mars-cloud">https://gitee.com/SherlockHolmnes/Mars-cloud</a></li>
+        <li>Mars-start: &nbsp;<a href="https://gitee.com/SherlockHolmnes/Mars-start">https://gitee.com/SherlockHolmnes/Mars-start</a></li>
+    </ul>
+</p>
+
 <h2>我能做什么</h2>
 
 <p>

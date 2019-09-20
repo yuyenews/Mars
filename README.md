@@ -7,6 +7,15 @@
     The Js framework has React, Vue, AngularJS, but the Java framework has only one Spring. Many people say that I am making wheels, but I don't think so, so... it's time to challenge Spring, I hope everyone can get involved, contribute code, and give Java developers another option.
 </p>
 
+<h2>Other project</h2>
+
+<p>
+    <ul>
+        <li>Mars-cloud: &nbsp;<a href="https://github.com/yuyenews/Mars-cloud">https://github.com/yuyenews/Mars-cloud</a></li>
+        <li>Mars-start: &nbsp;<a href="https://github.com/yuyenews/Mars-start">https://github.com/yuyenews/Mars-start</a></li>
+    </ul>
+</p>
+
 <h2>What can I do</h2>
 
 <p>
