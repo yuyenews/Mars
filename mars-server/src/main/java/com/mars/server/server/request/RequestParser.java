@@ -63,11 +63,11 @@ public class RequestParser {
 
 			Map<String, MarsFileUpLoad> files = new Hashtable<>();
 
-			for (InterfaceHttpData parmListItem : parmList) {
-				if (parmListItem instanceof Attribute) {
-					parmMap = setAttr(parmListItem,parmMap);
-				} else if (parmListItem instanceof FileUpload) {
-					files = setFile(parmListItem,files);
+			for (InterfaceHttpData paramListItem : parmList) {
+				if (paramListItem instanceof Attribute) {
+					parmMap = setAttr(paramListItem,parmMap);
+				} else if (paramListItem instanceof FileUpload) {
+					files = setFile(paramListItem,files);
 				}
 			}
 			parmMap.put(MarsConstant.REQUEST_FILE, files);
@@ -78,13 +78,13 @@ public class RequestParser {
 
 	/**
 	 * 获取常规参数
-	 * @param parmListItem
+	 * @param paramListItem
 	 * @param parmMap
 	 * @return
 	 * @throws Exception
 	 */
-	private Map<String, Object> setAttr(InterfaceHttpData parmListItem,Map<String, Object> parmMap) throws Exception {
-		Attribute data = (Attribute) parmListItem;
+	private Map<String, Object> setAttr(InterfaceHttpData paramListItem,Map<String, Object> parmMap) throws Exception {
+		Attribute data = (Attribute) paramListItem;
 		List<Object> params = null;
 		Object paramItem = parmMap.get(data.getName());
 		if (paramItem == null) {
@@ -100,13 +100,13 @@ public class RequestParser {
 
 	/**
 	 * 获取文件参数
-	 * @param parmListItem
+	 * @param paramListItem
 	 * @param files
 	 * @return
 	 * @throws Exception
 	 */
-	private Map<String, MarsFileUpLoad> setFile(InterfaceHttpData parmListItem,Map<String, MarsFileUpLoad> files) throws Exception {
-		FileUpload fileUpload = (FileUpload) parmListItem;
+	private Map<String, MarsFileUpLoad> setFile(InterfaceHttpData paramListItem,Map<String, MarsFileUpLoad> files) throws Exception {
+		FileUpload fileUpload = (FileUpload) paramListItem;
 
 		byte[] bs = fileUpload.get();
 
