@@ -45,8 +45,12 @@ public class FileUtil {
             }
         } finally {
             try{
-                reader.close();
-                inputStream.close();
+                if(reader != null){
+                    reader.close();
+                }
+                if(inputStream != null){
+                    inputStream.close();
+                }
             } catch (Exception e){
             }
         }
@@ -70,9 +74,8 @@ public class FileUtil {
             logger.error("", e);
             throw e;
         } finally {
-            try{
+            if(inputStream != null){
                 inputStream.close();
-            } catch (Exception e){
             }
         }
     }

@@ -62,7 +62,7 @@ public class RequestExecute {
 				return;
 			}
 			/* 将控制层返回的数据响应给客户端 */
-			response.send(result.toString());
+			response.send(String.valueOf(result));
 		} catch (InvocationTargetException e){
 			log.error("处理请求的时候出错",e);
 			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e.getTargetException().getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);

@@ -102,7 +102,7 @@ public class JdbcTemplete {
             List<Map<String, Object>> mapList = select(sql, param, connectionManager.getConnection());
             if (mapList != null && mapList.size() == 1) {
                 return mapList.get(0);
-            } else if (mapList.size() > 1) {
+            } else if (mapList != null && mapList.size() > 1) {
                 throw new Exception("查出来的数据不止一条");
             }
         } catch (Exception e) {
@@ -126,7 +126,7 @@ public class JdbcTemplete {
             List<Map<String, Object>> mapList = select(sql, null, connectionManager.getConnection());
             if (mapList != null && mapList.size() == 1) {
                 return mapList.get(0);
-            } else if (mapList.size() > 1) {
+            } else if (mapList != null && mapList.size() > 1) {
                 throw new Exception("查出来的数据不止一条");
             }
         } catch (Exception e) {

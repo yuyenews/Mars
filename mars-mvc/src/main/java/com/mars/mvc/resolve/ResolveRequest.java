@@ -28,7 +28,7 @@ public class ResolveRequest {
 	/**
 	 * 执行器对象
 	 */
-	private ExecuteEasy executeEasy = ExecuteEasy.getExecuteEasy();
+	private ExecuteMars executeMars = ExecuteMars.getExecuteMars();
 	
 	private ResolveRequest() {}
 	
@@ -54,7 +54,7 @@ public class ResolveRequest {
 			if(PathAccess.hasAccess(uri)){
 				return "ok";
 			}
-			return executeEasy.execute(maps.get(uri),request.getMethod(),request,response);
+			return executeMars.execute(maps.get(uri),request.getMethod(),request,response);
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
 			throw e;
