@@ -33,11 +33,12 @@ public class ExecuteInters {
 	 * @return duix
 	 */
 	public static Object executeIntersStart(List<MarsInterModel> list,HttpRequest request, HttpResponse response) throws Exception {
-		Class<?> clss = null;
+		String className = "";
 		try {
 			for(MarsInterModel marsInterModel : list) {
-				clss = marsInterModel.getCls();
-				
+				Class<?> clss = marsInterModel.getCls();
+				className = clss.getName();
+
 				Method method2 = clss.getDeclaredMethod("startRequest", new Class[] { HttpRequest.class, HttpResponse.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response });
 				if(!result.toString().equals(BaseInterceptor.SUCCESS)) {
@@ -46,8 +47,8 @@ public class ExecuteInters {
 			}
 			return BaseInterceptor.SUCCESS;
 		} catch (Exception e) {
-			logger.error("执行拦截器报错，拦截器类型["+clss.getName()+"]",e);
-			throw new Exception(errorResult(clss,e),e) ;
+			logger.error("执行拦截器报错，拦截器类型["+className+"]",e);
+			throw new Exception(errorResult(className,e),e) ;
 		}
 	}
 	
@@ -59,12 +60,13 @@ public class ExecuteInters {
 	 * @return duix
 	 */
 	public static Object executeIntersEnd(List<MarsInterModel> list,HttpRequest request, HttpResponse response,Object conResult) throws Exception {
-		Class<?> clss = null;
+		String className = "";
 		try {
 			
 			for(MarsInterModel marsInterModel : list) {
-				clss = marsInterModel.getCls();
-				
+				Class<?> clss = marsInterModel.getCls();
+				className = clss.getName();
+
 				Method method2 = clss.getDeclaredMethod("endRequest", new Class[] { HttpRequest.class, HttpResponse.class, Object.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response, conResult });
 				if(!result.toString().equals(BaseInterceptor.SUCCESS)) {
@@ -74,8 +76,8 @@ public class ExecuteInters {
 			
 			return BaseInterceptor.SUCCESS;
 		} catch (Exception e) {
-			logger.error("执行拦截器报错，拦截器类型["+clss.getName()+"]",e);
-			throw new Exception(errorResult(clss,e),e) ;
+			logger.error("执行拦截器报错，拦截器类型["+className+"]",e);
+			throw new Exception(errorResult(className,e),e) ;
 		} 
 	}
 	
@@ -107,11 +109,11 @@ public class ExecuteInters {
 
 	/**
 	 * 返回错误信息
-	 * @param cls
+	 * @param className
 	 * @return
 	 */
-	private static String errorResult(Class<?> cls,Exception e) {
-		JSONObject jsonObject = MesUtil.getMes(500,"执行拦截器报错，拦截器类型["+cls.getName()+"],"+e.getMessage());
+	private static String errorResult(String className,Exception e) {
+		JSONObject jsonObject = MesUtil.getMes(500,"执行拦截器报错，拦截器类型["+className+"],"+e.getMessage());
 		return jsonObject.toJSONString();
 	}
 }

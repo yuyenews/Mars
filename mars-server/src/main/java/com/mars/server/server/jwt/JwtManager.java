@@ -122,6 +122,9 @@ public class JwtManager {
         JSONObject json = new JSONObject();
         try {
             Map<String, Claim> claims = decryptToken(token);
+            if(claims == null || claims.isEmpty()){
+                return null;
+            }
             for (String key : claims.keySet()) {
                 json.put(key, claims.get(key).asString());
             }

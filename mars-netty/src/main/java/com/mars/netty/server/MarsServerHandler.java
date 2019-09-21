@@ -48,7 +48,9 @@ public class MarsServerHandler extends ChannelInboundHandlerAdapter {
 			/* 已经通过RequestExecute中的finally 释放请求了，所以这里，在出异常的时候，才释放 */
 			try {
 				ctx.close();
-				httpRequest.release();
+				if(httpRequest != null){
+					httpRequest.release();
+				}
 			} catch (Exception e2) {
 			}
 		}

@@ -21,20 +21,20 @@ import java.util.List;
  * @author yuye
  *
  */
-public class ExecuteEasy {
+public class ExecuteMars {
 
-	private Logger log = LoggerFactory.getLogger(ExecuteEasy.class);
+	private Logger log = LoggerFactory.getLogger(ExecuteMars.class);
 
-	private static ExecuteEasy executeEasy;
+	private static ExecuteMars executeMars;
 
-	private ExecuteEasy() {
+	private ExecuteMars() {
 	}
 
-	public static ExecuteEasy getExecuteEasy() {
-		if (executeEasy == null) {
-			executeEasy = new ExecuteEasy();
+	public static ExecuteMars getExecuteMars() {
+		if (executeMars == null) {
+			executeMars = new ExecuteMars();
 		}
-		return executeEasy;
+		return executeMars;
 	}
 
 	/**
