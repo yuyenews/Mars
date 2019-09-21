@@ -80,7 +80,7 @@ public class RequestParser {
 	 * 获取常规参数
 	 * @param paramListItem
 	 * @param parmMap
-	 * @return
+	 * @return 返回参数集合
 	 * @throws Exception 异常
 	 */
 	private Map<String, Object> setAttr(InterfaceHttpData paramListItem,Map<String, Object> parmMap) throws Exception {
@@ -102,8 +102,8 @@ public class RequestParser {
 	 * 获取文件参数
 	 * @param paramListItem
 	 * @param files
-	 * @return
-	 * @throws Exception
+	 * @return 返回参数集合
+	 * @throws Exception 异常
 	 */
 	private Map<String, MarsFileUpLoad> setFile(InterfaceHttpData paramListItem,Map<String, MarsFileUpLoad> files) throws Exception {
 		FileUpload fileUpload = (FileUpload) paramListItem;
