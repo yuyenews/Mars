@@ -1,8 +1,7 @@
 # These are supported funding model platforms
 
-github: [贝克街的天才]
-patreon: [yuyenews]
-open_collective: Mars
-tidelift: maven
-liberapay: 贝克街的天才
-custom: ['http://www.baidu.com']
+github: [yuyenews]
+patreon: yuyenews
+open_collective: holmes-sherlocke
+liberapay: sherlockholmes
+custom: ['http://mars-framework.com/sponsor/sponsor.png']
