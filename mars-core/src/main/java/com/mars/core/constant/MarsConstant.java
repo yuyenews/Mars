@@ -102,4 +102,8 @@ public class MarsConstant {
      */
     public static final String SCAN_ALL_CLASS = "scanAllClass";
 
+    /**
+     * 请求的文件参数的key
+     */
+    public static final String REQUEST_FILE = "files";
 }

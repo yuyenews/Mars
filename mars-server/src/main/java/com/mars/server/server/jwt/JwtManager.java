@@ -69,10 +69,7 @@ public class JwtManager {
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
-        // header
         JWTCreator.Builder builder = JWT.create().withHeader(map);
-        // payload
-
         JSONObject json = JSONObject.parseObject(JSON.toJSONString(obj));
 
         for (String key : json.keySet()) {
@@ -128,11 +125,9 @@ public class JwtManager {
             for (String key : claims.keySet()) {
                 json.put(key, claims.get(key).asString());
             }
-
             return json.toJavaObject(cls);
         } catch (Exception e) {
             return null;
         }
     }
-
 }

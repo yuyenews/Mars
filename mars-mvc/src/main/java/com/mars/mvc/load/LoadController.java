@@ -2,6 +2,7 @@ package com.mars.mvc.load;
 
 import com.mars.core.load.WriteFields;
 import com.mars.core.load.LoadHelper;
+import com.mars.core.model.MarsBeanClassModel;
 import com.mars.mvc.proxy.MvcCglibProxy;
 import com.mars.core.annotation.MarsMapping;
 import com.mars.core.constant.MarsConstant;
@@ -35,13 +36,13 @@ public class LoadController {
 			Map<String, MarsMappingModel> controlObjects = new HashMap<>();
 			
 			/* 获取所有的controller数据 */
-			List<Map<String,Object>> controlList = LoadHelper.getControllerList();
+			List<MarsBeanClassModel> controlList = LoadHelper.getControllerList();
 			
 			Map<String, MarsBeanModel> marsBeanObjs = getMarsBeans();
 			
-			for(Map<String,Object> map : controlList) {
+			for(MarsBeanClassModel marsBeanClassModel : controlList) {
 				
-				Class<?> cls = (Class<?>)map.get("className");
+				Class<?> cls = marsBeanClassModel.getClassName();
 				
 				/*
 				 * 由于controller里只允许注入MarsBean，所以不需要等controller都创建好了再注入

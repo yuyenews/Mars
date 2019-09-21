@@ -3,6 +3,7 @@ package com.mars.ioc.load;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.WriteFields;
+import com.mars.core.model.MarsBeanClassModel;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.load.LoadHelper;
 import com.mars.ioc.factory.BeanFactory;
@@ -28,15 +29,15 @@ public class LoadMarsBean {
 	public static void loadBean() throws Exception{
 		try {
 			/* 获取所有的bean数据 */
-			List<Map<String,Object>> marsBeansList = LoadHelper.getBeanList();
+			List<MarsBeanClassModel> marsBeansList = LoadHelper.getBeanList();
 			
 			/* 创建bean对象，并保存起来 */
 			Map<String, MarsBeanModel> marsBeanObjects = LoadHelper.getBeanObjectMap();
 
-			for(Map<String,Object> map : marsBeansList) {
+			for(MarsBeanClassModel marsBeanClassModel : marsBeansList) {
 
-				Class<?> cls = (Class<?>)map.get("className");
-				String beanName = LoadHelper.getBeanName(map,cls);
+				Class<?> cls = marsBeanClassModel.getClassName();
+				String beanName = LoadHelper.getBeanName(marsBeanClassModel,cls);
 
 				if(marsBeanObjects.get(beanName) == null) {
 					MarsBeanModel beanModel = new MarsBeanModel();

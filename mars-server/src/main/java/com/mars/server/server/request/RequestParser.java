@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import com.mars.core.constant.MarsConstant;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -63,40 +64,62 @@ public class RequestParser {
 			Map<String, MarsFileUpLoad> files = new Hashtable<>();
 
 			for (InterfaceHttpData parmListItem : parmList) {
-
 				if (parmListItem instanceof Attribute) {
-					Attribute data = (Attribute) parmListItem;
-					List<Object> params = null;
-					Object paramItem = parmMap.get(data.getName());
-					if (paramItem == null) {
-						params = new ArrayList<>();
-					} else {
-						params = (List<Object>) paramItem;
-					}
-					params.add(data.getValue());
-					parmMap.put(data.getName(), params);
-
+					parmMap = setAttr(parmListItem,parmMap);
 				} else if (parmListItem instanceof FileUpload) {
-					FileUpload fileUpload = (FileUpload) parmListItem;
-
-					byte[] bs = fileUpload.get();
-
-					InputStream inputStream = new ByteArrayInputStream(bs);
-					
-					MarsFileUpLoad upLoad = new MarsFileUpLoad();
-					upLoad.setFileName(fileUpload.getFilename());
-					upLoad.setInputStream(inputStream);
-					upLoad.setName(fileUpload.getName());
-					upLoad.setBytes(bs);
-
-					files.put(fileUpload.getName(), upLoad);
+					files = setFile(parmListItem,files);
 				}
-
 			}
-			parmMap.put("files", files);
+			parmMap.put(MarsConstant.REQUEST_FILE, files);
 		}
 
 		return parmMap;
 	}
 
+	/**
+	 * 获取常规参数
+	 * @param parmListItem
+	 * @param parmMap
+	 * @return
+	 * @throws Exception
+	 */
+	private Map<String, Object> setAttr(InterfaceHttpData parmListItem,Map<String, Object> parmMap) throws Exception {
+		Attribute data = (Attribute) parmListItem;
+		List<Object> params = null;
+		Object paramItem = parmMap.get(data.getName());
+		if (paramItem == null) {
+			params = new ArrayList<>();
+		} else {
+			params = (List<Object>) paramItem;
+		}
+		params.add(data.getValue());
+		parmMap.put(data.getName(), params);
+
+		return parmMap;
+	}
+
+	/**
+	 * 获取文件参数
+	 * @param parmListItem
+	 * @param files
+	 * @return
+	 * @throws Exception
+	 */
+	private Map<String, MarsFileUpLoad> setFile(InterfaceHttpData parmListItem,Map<String, MarsFileUpLoad> files) throws Exception {
+		FileUpload fileUpload = (FileUpload) parmListItem;
+
+		byte[] bs = fileUpload.get();
+
+		InputStream inputStream = new ByteArrayInputStream(bs);
+
+		MarsFileUpLoad upLoad = new MarsFileUpLoad();
+		upLoad.setFileName(fileUpload.getFilename());
+		upLoad.setInputStream(inputStream);
+		upLoad.setName(fileUpload.getName());
+		upLoad.setBytes(bs);
+
+		files.put(fileUpload.getName(), upLoad);
+
+		return files;
+	}
 }

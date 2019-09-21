@@ -1,5 +1,6 @@
 package com.mars.server.server.request;
 
+import com.mars.core.constant.MarsConstant;
 import com.mars.server.server.jwt.JwtManager;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 import io.netty.buffer.ByteBuf;
@@ -108,15 +109,12 @@ public class HttpRequest {
 	 * @param paremeters 请求参数
 	 */
 	private void setParameters(Map<String, Object> paremeters) {
-		Object obj = paremeters.get("files");
+		Object obj = paremeters.get(MarsConstant.REQUEST_FILE);
 		if (obj != null) {
-			Map<String, MarsFileUpLoad> files = (Map<String, MarsFileUpLoad>) obj;
-			this.files = files;
-			paremeters.remove("files");
+			this.files = (Map<String, MarsFileUpLoad>) obj;
+			paremeters.remove(MarsConstant.REQUEST_FILE);
 		}
-
 		this.paremeters = paremeters;
-
 	}
 	
 	/**
@@ -141,8 +139,7 @@ public class HttpRequest {
 	public List<Object> getParameterValues(String key) {
 		Object objs = paremeters.get(key);
 		if(objs != null) {
-			List<Object> lis = (List<Object>)objs;
-			return lis;
+			return (List<Object>)objs;
 		}
 		return null;
 	}
