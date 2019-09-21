@@ -6,11 +6,9 @@ import com.mars.core.annotation.MarsDao;
 import com.mars.core.annotation.MarsInterceptor;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
+import com.mars.core.model.MarsBeanClassModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 加载本地资源
@@ -37,15 +35,14 @@ public class LoadBeans {
      * @param controller 注解
      */
     public static void loadController(Class<?> cls,Controller controller) {
-        Object objs = constants.getAttr(MarsConstant.CONTROLLERS);
-        List<Map<String,Object>> contorls = new ArrayList<>();
-        if(objs != null) {
-            contorls = (List<Map<String,Object>>)objs;
-        }
-        Map<String,Object> contorl = new HashMap<>();
-        contorl.put("className", cls);
-        contorl.put("annotation", controller);
-        contorls.add(contorl);
+
+        List<MarsBeanClassModel> contorls = LoadHelper.getControllerList();
+
+        MarsBeanClassModel marsBeanClassModel = new MarsBeanClassModel();
+        marsBeanClassModel.setClassName(cls);
+        marsBeanClassModel.setAnnotation(controller);
+
+        contorls.add(marsBeanClassModel);
         constants.setAttr(MarsConstant.CONTROLLERS, contorls);
     }
 
@@ -55,16 +52,15 @@ public class LoadBeans {
      * @param marsBean 注解
      */
     public static void loadEasyBean(Class<?> cls, MarsBean marsBean) {
-        Object objs = constants.getAttr(MarsConstant.MARS_BEANS);
-        List<Map<String,Object>> easyBeans = new ArrayList<>();
-        if(objs != null) {
-            easyBeans = (List<Map<String,Object>>)objs;
-        }
-        Map<String,Object> eb = new HashMap<>();
-        eb.put("className", cls);
-        eb.put("annotation", marsBean);
-        easyBeans.add(eb);
-        constants.setAttr(MarsConstant.MARS_BEANS, easyBeans);
+
+        List<MarsBeanClassModel> marsBeans = LoadHelper.getBeanList();
+
+        MarsBeanClassModel marsBeanClassModel = new MarsBeanClassModel();
+        marsBeanClassModel.setClassName(cls);
+        marsBeanClassModel.setAnnotation(marsBean);
+
+        marsBeans.add(marsBeanClassModel);
+        constants.setAttr(MarsConstant.MARS_BEANS, marsBeans);
     }
 
     /**
@@ -73,15 +69,14 @@ public class LoadBeans {
      * @param interceptor 注解
      */
     public static void loadInterceptor(Class<?> cls, MarsInterceptor interceptor){
-        Object objs = constants.getAttr(MarsConstant.INTERCEPTORS);
-        List<Map<String,Object>> interceptors = new ArrayList<>();
-        if(objs != null) {
-            interceptors = (List<Map<String,Object>>)objs;
-        }
-        Map<String,Object> eb = new HashMap<>();
-        eb.put("className", cls);
-        eb.put("annotation", interceptor);
-        interceptors.add(eb);
+
+        List<MarsBeanClassModel> interceptors = LoadHelper.getInterceptorList();
+
+        MarsBeanClassModel marsBeanClassModel = new MarsBeanClassModel();
+        marsBeanClassModel.setClassName(cls);
+        marsBeanClassModel.setAnnotation(interceptor);
+
+        interceptors.add(marsBeanClassModel);
         constants.setAttr(MarsConstant.INTERCEPTORS, interceptors);
     }
 
@@ -91,15 +86,14 @@ public class LoadBeans {
      * @param marsDao 注解
      */
     public static void loadDao(Class<?> cls, MarsDao marsDao){
-        Object objs = constants.getAttr(MarsConstant.MARS_DAOS);
-        List<Map<String,Object>> marsDaos = new ArrayList<>();
-        if(objs != null) {
-            marsDaos = (List<Map<String,Object>>)objs;
-        }
-        Map<String,Object> eb = new HashMap<>();
-        eb.put("className", cls);
-        eb.put("annotation", marsDao);
-        marsDaos.add(eb);
+
+        List<MarsBeanClassModel> marsDaos = LoadHelper.getDaoList();
+
+        MarsBeanClassModel marsBeanClassModel = new MarsBeanClassModel();
+        marsBeanClassModel.setClassName(cls);
+        marsBeanClassModel.setAnnotation(marsDao);
+
+        marsDaos.add(marsBeanClassModel);
         constants.setAttr(MarsConstant.MARS_DAOS, marsDaos);
     }
 
@@ -108,11 +102,7 @@ public class LoadBeans {
      * @param cls 类型
      */
     public static void loadMarsAfter(Class<?> cls){
-        Object objs = constants.getAttr(MarsConstant.MARS_AFTERS);
-        List<Class> marsAfters = new ArrayList<>();
-        if(objs != null) {
-            marsAfters = (List<Class>)objs;
-        }
+        List<Class> marsAfters = LoadHelper.getMarsAfterList();
         marsAfters.add(cls);
         constants.setAttr(MarsConstant.MARS_AFTERS, marsAfters);
     }

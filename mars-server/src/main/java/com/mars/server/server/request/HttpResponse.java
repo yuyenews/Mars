@@ -1,8 +1,8 @@
 package com.mars.server.server.request;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.util.ConfigUtil;
+import com.mars.server.server.request.model.CrossDomain;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -85,45 +85,45 @@ public class HttpResponse {
                 Unpooled.copiedBuffer(context, CharsetUtil.UTF_8));
 
         crossDomain(response);
-
-        if (header != null) {
-            for (String key : header.keySet()) {
-                response.headers().set(key, header.get(key));
-            }
-        }
+        loadHeader(response);
 
         response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/json; charset=UTF-8");
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 
     /**
-     * 设置跨域
+     * 加载设置的header
+     * @param response
      */
-    private void crossDomain(FullHttpResponse response) {
-        try{
-            JSONObject jsonObject = getConfig();
-            Object object = jsonObject.get("cross_domain");
-            if (object != null) {
-                JSONObject ob = JSONObject.parseObject(JSON.toJSONString(object));
-
-                response.headers().set("Access-Control-Allow-Origin", ob.get("origin").toString());
-                response.headers().set("Access-Control-Allow-Methods", ob.get("methods").toString());
-                response.headers().set("Access-Control-Max-Age", ob.get("maxAge").toString());
-                response.headers().set("Access-Control-Allow-Headers", ob.get("headers").toString());
-                response.headers().set("Access-Control-Allow-Credentials", ob.get("credentials").toString());
+    private void loadHeader(FullHttpResponse response){
+        if (header != null && !header.isEmpty()) {
+            for (String key : header.keySet()) {
+                response.headers().set(key, header.get(key));
             }
-        } catch (Exception e){
-
-            this.header.put("Access-Control-Allow-Origin", "*");
-            this.header.put("Access-Control-Allow-Methods", "GET,POST");
-            this.header.put("Access-Control-Max-Age", "9");
-            this.header.put("Access-Control-Allow-Headers", "x-requested-with,Cache-Control,Pragma,Content-Type,Token");
-            this.header.put("Access-Control-Allow-Credentials", "true");
-
-            logger.warn("跨域配置缺少参数，已启动默认配置",e);
         }
     }
 
+    /**
+     * 设置跨域
+     */
+    private void crossDomain(FullHttpResponse response) {
+        try {
+            JSONObject object = getConfig().getJSONObject("cross_domain");
+            CrossDomain.origin = object.get("origin").toString();
+            CrossDomain.methods = object.get("methods").toString();
+            CrossDomain.maxAge = object.get("maxAge").toString();
+            CrossDomain.headers = object.get("headers").toString();
+            CrossDomain.credentials = object.get("credentials").toString();
+        } catch (Exception e) {
+            logger.warn("跨域配置缺少参数，已启动默认配置", e);
+        } finally {
+            response.headers().set("Access-Control-Allow-Origin", CrossDomain.origin);
+            response.headers().set("Access-Control-Allow-Methods", CrossDomain.methods);
+            response.headers().set("Access-Control-Max-Age", CrossDomain.maxAge);
+            response.headers().set("Access-Control-Allow-Headers", CrossDomain.headers);
+            response.headers().set("Access-Control-Allow-Credentials", CrossDomain.credentials);
+        }
+    }
 
     /**
      * 获取配置文件

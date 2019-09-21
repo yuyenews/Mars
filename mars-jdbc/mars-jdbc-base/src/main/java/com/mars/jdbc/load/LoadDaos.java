@@ -5,6 +5,7 @@ import com.mars.core.annotation.MarsDao;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
+import com.mars.core.model.MarsBeanClassModel;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.jdbc.base.BaseJdbcProxy;
 
@@ -26,14 +27,14 @@ public class LoadDaos {
      */
     public static void loadDao(BaseJdbcProxy baseProxy) throws Exception {
         try {
-            List<Map<String, Object>> marsDaoList = LoadHelper.getDaoList();
+            List<MarsBeanClassModel> marsDaoList = LoadHelper.getDaoList();
 
             /* 创建bean对象，并保存起来 */
             Map<String, MarsBeanModel> easyBeanObjs = LoadHelper.getBeanObjectMap();
 
-            for (Map<String, Object> map : marsDaoList) {
-                Class<?> cls = (Class) map.get("className");
-                MarsDao marsDao = (MarsDao) map.get("annotation");
+            for (MarsBeanClassModel marsBeanClassModel : marsDaoList) {
+                Class<?> cls = marsBeanClassModel.getClassName();
+                MarsDao marsDao = (MarsDao) marsBeanClassModel.getAnnotation();
 
                 String beanName = LoadHelper.getBeanName(marsDao.value(), cls);
 

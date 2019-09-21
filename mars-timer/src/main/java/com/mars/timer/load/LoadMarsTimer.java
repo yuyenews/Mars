@@ -3,13 +3,13 @@ package com.mars.timer.load;
 import com.mars.core.annotation.MarsTimer;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
+import com.mars.core.model.MarsBeanClassModel;
 import com.mars.core.model.MarsTimerModel;
 import com.mars.core.load.LoadHelper;
 import com.mars.ioc.factory.BeanFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 加载所有加了MarsTimer注解的bean
@@ -27,13 +27,13 @@ public class LoadMarsTimer {
      */
     public static void loadMarsTimers() throws Exception {
         /* 获取所有的bean数据 */
-        List<Map<String,Object>> marsBeansList = LoadHelper.getBeanList();
+        List<MarsBeanClassModel> marsBeansList = LoadHelper.getBeanList();
 
         List<MarsTimerModel> marsTimerObjects = LoadHelper.getMarsTimersList();
 
-        for(Map<String,Object> map : marsBeansList) {
-            Class<?> cls = (Class<?>)map.get("className");
-            String beanName = LoadHelper.getBeanName(map,cls);
+        for(MarsBeanClassModel marsBeanClassModel : marsBeansList) {
+            Class<?> cls = marsBeanClassModel.getClassName();
+            String beanName = LoadHelper.getBeanName(marsBeanClassModel,cls);
             loadMethods(cls,marsTimerObjects,beanName);
         }
     }
