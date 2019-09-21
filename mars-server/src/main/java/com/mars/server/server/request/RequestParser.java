@@ -81,7 +81,7 @@ public class RequestParser {
 	 * @param paramListItem
 	 * @param parmMap
 	 * @return
-	 * @throws Exception
+	 * @throws Exception 异常
 	 */
 	private Map<String, Object> setAttr(InterfaceHttpData paramListItem,Map<String, Object> parmMap) throws Exception {
 		Attribute data = (Attribute) paramListItem;
