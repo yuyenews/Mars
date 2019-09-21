@@ -1,25 +1,21 @@
 package com.mars.mj.helper;
 
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.util.ThreadUtil;
 import com.mars.mj.manager.ConnectionManager;
 import com.mars.mj.util.DataCheckUtil;
 
-import java.lang.reflect.Field;
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
 /**
  * jdbc模板
  */
-public class JdbcTemplete {
+public class JdbcTemplete extends BaseJdbcTemplete {
 
     private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
-    private String dataSourceName;
-
     private JdbcTemplete() {
+
     }
 
     /**
@@ -54,17 +50,8 @@ public class JdbcTemplete {
      * @throws Exception
      */
     public List<Map<String, Object>> selectList(String sql, Object param) throws Exception {
-        DataCheckUtil.isNull(param,"传参不可以为null");
-
         ConnectionManager connectionManager = getConnection();
-        try {
-            List<Map<String, Object>> result = select(sql, param, connectionManager.getConnection());
-            return result;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connectionManager.close();
-        }
+        return JdbcSelect.selectList(sql,param,connectionManager);
     }
 
     /**
@@ -76,14 +63,30 @@ public class JdbcTemplete {
      */
     public List<Map<String, Object>> selectList(String sql) throws Exception {
         ConnectionManager connectionManager = getConnection();
-        try {
-            List<Map<String, Object>> result = select(sql, null, connectionManager.getConnection());
-            return result;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connectionManager.close();
-        }
+        return JdbcSelect.selectList(sql,connectionManager);
+    }
+
+    /**
+     * 无参查询列表，指定返回类型
+     * @param sql sql语句
+     * @param cls 返回类型
+     * @return 数据
+     */
+    public <T> List<T> selectList(String sql, Class<T> cls) throws Exception {
+        ConnectionManager connectionManager = getConnection();
+        return JdbcSelect.selectList(sql,cls,connectionManager);
+    }
+
+    /**
+     * 有参查询列表，指定返回类型
+     * @param sql sql语句
+     * @param param 参数
+     * @param cls 返回类型
+     * @return 数据
+     */
+    public <T> List<T> selectList(String sql, Object param, Class<T> cls) throws Exception {
+        ConnectionManager connectionManager = getConnection();
+        return JdbcSelect.selectList(sql,param,cls,connectionManager);
     }
 
     /**
@@ -95,22 +98,8 @@ public class JdbcTemplete {
      * @throws Exception
      */
     public Map<String, Object> selectOne(String sql, Object param) throws Exception {
-        DataCheckUtil.isNull(param,"传参不可以为null");
-
         ConnectionManager connectionManager = getConnection();
-        try {
-            List<Map<String, Object>> mapList = select(sql, param, connectionManager.getConnection());
-            if (mapList != null && mapList.size() == 1) {
-                return mapList.get(0);
-            } else if (mapList != null && mapList.size() > 1) {
-                throw new Exception("查出来的数据不止一条");
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connectionManager.close();
-        }
-        return null;
+        return JdbcSelect.selectOne(sql,param,connectionManager);
     }
 
     /**
@@ -122,20 +111,47 @@ public class JdbcTemplete {
      */
     public Map<String, Object> selectOne(String sql) throws Exception {
         ConnectionManager connectionManager = getConnection();
-        try {
-            List<Map<String, Object>> mapList = select(sql, null, connectionManager.getConnection());
-            if (mapList != null && mapList.size() == 1) {
-                return mapList.get(0);
-            } else if (mapList != null && mapList.size() > 1) {
-                throw new Exception("查出来的数据不止一条");
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connectionManager.close();
-        }
-        return null;
+        return JdbcSelect.selectOne(sql,connectionManager);
     }
+
+
+    /**
+     * 无参查询一条，指定返回类型
+     * @param sql sql语句
+     * @param cls 返回类型
+     * @return 数据
+     */
+    public <T> T selectOne(String sql, Class<T> cls) throws Exception {
+        ConnectionManager connectionManager = getConnection();
+        return JdbcSelect.selectOne(sql,cls,connectionManager);
+    }
+
+    /**
+     * 有参查询一条，指定返回类型
+     * @param sql sql语句
+     * @param param 参数
+     * @param cls 返回类型
+     * @return 数据
+     */
+    public <T> T selectOne(String sql, Object param, Class<T> cls) throws Exception {
+        ConnectionManager connectionManager = getConnection();
+        return JdbcSelect.selectOne(sql,param,cls,connectionManager);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 增删改
@@ -154,7 +170,7 @@ public class JdbcTemplete {
                 Object[] params = (Object[]) param;
                 return DBHelper.update(sql, connectionManager.getConnection(), params);
             } else {
-                return DBHelper.update(builderSql(sql, param), connectionManager.getConnection(), null);
+                return DBHelper.update(BaseJdbcTemplete.builderSql(sql, param), connectionManager.getConnection(), null);
             }
         } catch (Exception e) {
             throw e;
@@ -182,98 +198,5 @@ public class JdbcTemplete {
         }
     }
 
-    /**
-     * 获取数据库连接
-     *
-     * @return
-     * @throws Exception
-     */
-    private ConnectionManager getConnection() throws Exception {
-        ConnectionManager connectionManager = new ConnectionManager();
 
-        /* 获取当前线程中的Connection */
-        Object obj = marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
-
-        /* 数据库连接 */
-        Connection connection = null;
-
-        /* 获取数据源名称 */
-        String dataSourceName2 = getDataSourceName(dataSourceName);
-
-        if (obj != null) {
-            Map<String, Connection> connections = (Map<String, Connection>) obj;
-            connection = connections.get(dataSourceName2);
-            connectionManager.setHasTrantion(false);
-        } else {
-            connection = DBHelper.getConnection(dataSourceName2);
-            connectionManager.setHasTrantion(true);
-        }
-        connectionManager.setConnection(connection);
-        return connectionManager;
-    }
-
-    /**
-     * 查询
-     *
-     * @param args
-     * @param connection
-     * @return
-     * @throws Exception
-     */
-    private List<Map<String, Object>> select(String sql, Object args, Connection connection) throws Exception {
-        List<Map<String, Object>> result = null;
-        if (args != null) {
-            if (args instanceof Object[]) {
-                Object[] params = (Object[]) args;
-                result = DBHelper.selectList(sql, connection, params);
-            } else {
-                result = DBHelper.selectList(builderSql(sql, args), connection, null);
-            }
-        } else {
-            result = DBHelper.selectList(sql, connection);
-        }
-        return result;
-    }
-
-    /**
-     * 构建sql语句
-     *
-     * @param sql
-     * @param args
-     * @return
-     * @throws Exception
-     */
-    private String builderSql(String sql, Object args) throws Exception {
-
-        Class cls = args.getClass();
-
-        /* 替换sql中的占位符 */
-        Field[] fields = cls.getDeclaredFields();
-        for (Field f : fields) {
-            f.setAccessible(true);
-            String pre = "{" + f.getName() + "}";
-            if (sql.indexOf(pre) > -1) {
-                String ftname = f.getType().getName();
-                if(ftname.equals(String.class.getName()) || ftname.equals(Character.class.getName())){
-                    sql = sql.replace(pre, "'"+f.get(args).toString()+"'");
-                } else {
-                    sql = sql.replace(pre, f.get(args).toString());
-                }
-            }
-        }
-
-        return sql;
-    }
-
-    /**
-     * 获取数据源名称
-     *
-     * @return str
-     */
-    private String getDataSourceName(String dataSourceName) {
-        if (dataSourceName == null) {
-            dataSourceName = marsSpace.getAttr("defaultDataSource").toString();
-        }
-        return dataSourceName;
-    }
 }
