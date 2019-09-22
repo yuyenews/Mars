@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.MarsConstant;
 import com.mars.jdbc.util.JdbcConfigUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.sql.*;
@@ -14,6 +16,8 @@ import java.util.*;
  * JDBC连接帮助类
  */
 public class DBHelper {
+
+    private static Logger logger = LoggerFactory.getLogger(DBHelper.class);
 
     /**
      * 数据源对象集合
@@ -82,6 +86,8 @@ public class DBHelper {
      * @throws Exception
      */
     public static ResultSet select(String sql, Connection connection, Object[] params) throws Exception {
+        logger.info("sql:{}",sql);
+
         if (params == null) {
             params = new Object[]{};
         }
@@ -114,6 +120,7 @@ public class DBHelper {
      * @throws Exception
      */
     public static int update(String sql, Connection connection, Object[] params) throws Exception {
+        logger.info("sql:{}",sql);
         if(params == null){
             params = new Object[]{};
         }

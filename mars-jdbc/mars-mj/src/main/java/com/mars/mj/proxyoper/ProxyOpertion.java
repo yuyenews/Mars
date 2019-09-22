@@ -7,8 +7,6 @@ import com.mars.mj.annotation.MarsSelect;
 import com.mars.mj.annotation.MarsUpdate;
 import com.mars.mj.helper.templete.JdbcTemplete;
 
-import java.lang.reflect.Method;
-
 /**
  * 代理操作数据库
  */
@@ -18,12 +16,11 @@ public class ProxyOpertion {
      * 根据主键查询一条数据
      * @param marsGet 注解
      * @param dataSourceName 数据源
-     * @param method 方法
      * @param param 参数
      * @return 数据
      * @throws Exception 异常
      */
-    public static Object get(MarsGet marsGet, String dataSourceName, Method method, Object param) throws Exception {
+    public static Object get(MarsGet marsGet, String dataSourceName, Object param) throws Exception {
 
         StringBuffer sql = new StringBuffer();
         sql.append("select * from ");
@@ -32,20 +29,19 @@ public class ProxyOpertion {
         sql.append(marsGet.primaryKey());
         sql.append(" = ?");
 
-        return JdbcTemplete.get(dataSourceName).selectOne(sql.toString(),new Object[]{param},method.getReturnType());
+        return JdbcTemplete.get(dataSourceName).selectOne(sql.toString(),new Object[]{param});
     }
 
     /**
      * 根据sql查询数据
      * @param marsSelect 注解
      * @param dataSourceName 数据源
-     * @param method 方法
      * @param param 参数
      * @return 数据
      * @throws Exception 异常
      */
-    public static Object select(MarsSelect marsSelect, String dataSourceName, Method method, Object param) throws Exception {
-        return JdbcTemplete.get(dataSourceName).selectList(marsSelect.sql(),param, method.getReturnType());
+    public static Object select(MarsSelect marsSelect, String dataSourceName, Object param) throws Exception {
+        return JdbcTemplete.get(dataSourceName).selectList(marsSelect.sql(),param);
     }
 
     /**
@@ -82,7 +78,9 @@ public class ProxyOpertion {
         StringBuffer sql = new StringBuffer();
         sql.append("delete from ");
         sql.append(marsUpdate.tableName());
-        sql.append(builderWhere(marsUpdate));
+        sql.append(" where ");
+        sql.append(marsUpdate.primaryKey());
+        sql.append(" = ?");
 
         return JdbcTemplete.get(dataSourceName).update(sql.toString(),new Object[]{param});
     }
@@ -104,22 +102,28 @@ public class ProxyOpertion {
         sql.append("(");
         boolean isFirst = true;
         for(String key : jsonObject.keySet()){
-            if(!isFirst){
-                sql.append(",");
+            Object val = jsonObject.get(key);
+            if(val != null && !val.toString().equals("-1")){
+                if(!isFirst){
+                    sql.append(",");
+                }
+                sql.append(key);
+                isFirst = false;
             }
-            sql.append(key);
-            isFirst = false;
         }
         sql.append(") values(");
         isFirst = true;
         for(String key : jsonObject.keySet()){
-            if(!isFirst){
-                sql.append(",");
+            Object val = jsonObject.get(key);
+            if(val != null && !val.toString().equals("-1")){
+                if (!isFirst) {
+                    sql.append(",");
+                }
+                sql.append("#{");
+                sql.append(key);
+                sql.append("}");
+                isFirst = false;
             }
-            sql.append("#{");
-            sql.append(key);
-            sql.append("}");
-            isFirst = false;
         }
         sql.append(")");
 
@@ -142,14 +146,17 @@ public class ProxyOpertion {
         sql.append(" set ");
         boolean isFirst = true;
         for(String key : jsonObject.keySet()){
-            if(!isFirst){
-                sql.append(",");
+            Object val = jsonObject.get(key);
+            if(val != null && !val.toString().equals("-1") && !key.equals(marsUpdate.primaryKey())) {
+                if (!isFirst) {
+                    sql.append(",");
+                }
+                sql.append(key);
+                sql.append(" = #{");
+                sql.append(key);
+                sql.append("}");
+                isFirst = false;
             }
-            sql.append(key);
-            sql.append(" = #{");
-            sql.append(key);
-            sql.append("}");
-            isFirst = false;
         }
         sql.append(builderWhere(marsUpdate));
 

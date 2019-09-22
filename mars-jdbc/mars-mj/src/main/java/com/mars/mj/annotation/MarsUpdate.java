@@ -19,7 +19,7 @@ public @interface MarsUpdate {
      * 主键名称
      * @return
      */
-    String primaryKey();
+    String primaryKey() default "";
 
     /**
      * 操作类型
