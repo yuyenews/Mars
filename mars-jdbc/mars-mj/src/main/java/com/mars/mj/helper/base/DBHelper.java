@@ -1,4 +1,4 @@
-package com.mars.mj.helper;
+package com.mars.mj.helper.base;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSONArray;
@@ -24,10 +24,6 @@ public class DBHelper {
      */
     private static PreparedStatement preparedStatement;
     /**
-     * sql语句处理接口
-     */
-    private static Statement statement;
-    /**
      * 默认数据源名称
      */
     private static String defaultDataSourceName;
@@ -44,7 +40,7 @@ public class DBHelper {
      * @return 结果集
      * @throws Exception
      */
-    public static List<Map<String, Object>> selectList(String sql, Connection connection) throws Exception {
+    public static List<JSONObject> selectList(String sql, Connection connection) throws Exception {
         return selectList(sql, connection, new Object[]{});
     }
 
@@ -57,15 +53,15 @@ public class DBHelper {
      * @return 结果集
      * @throws Exception
      */
-    public static List<Map<String, Object>> selectList(String sql, Connection connection, Object[] params) throws Exception {
+    public static List<JSONObject> selectList(String sql, Connection connection, Object[] params) throws Exception {
         ResultSet resultSet = select(sql, connection, params);
-        List<Map<String, Object>> list = new ArrayList<>();
+        List<JSONObject> list = new ArrayList<>();
 
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         int count = resultSetMetaData.getColumnCount();
 
         while (resultSet.next()) {
-            Map<String, Object> rows = new HashMap<>();
+            JSONObject rows = new JSONObject();
             for (int i = 1; i <= count; i++) {
                 String key = resultSetMetaData.getColumnLabel(i);
                 Object value = resultSet.getObject(i);
@@ -74,18 +70,6 @@ public class DBHelper {
             list.add(rows);
         }
         return list;
-    }
-
-    /**
-     * 无条件查询
-     *
-     * @param sql        sql语句
-     * @param connection 数据库连接
-     * @return 结果集
-     * @throws Exception
-     */
-    public static ResultSet select(String sql, Connection connection) throws Exception {
-        return select(sql, connection, new Object[]{});
     }
 
     /**
@@ -98,17 +82,14 @@ public class DBHelper {
      * @throws Exception
      */
     public static ResultSet select(String sql, Connection connection, Object[] params) throws Exception {
-        if (params != null) {
-            preparedStatement = connection.prepareStatement(sql);
-            for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
-            }
-            return preparedStatement.executeQuery();
-        } else {
-            statement = connection.createStatement();
-            return statement.executeQuery(sql);
+        if (params == null) {
+            params = new Object[]{};
         }
-
+        preparedStatement = connection.prepareStatement(sql);
+        for (int i = 0; i < params.length; i++) {
+            preparedStatement.setObject(i + 1, params[i]);
+        }
+        return preparedStatement.executeQuery();
     }
 
     /**
@@ -133,16 +114,14 @@ public class DBHelper {
      * @throws Exception
      */
     public static int update(String sql, Connection connection, Object[] params) throws Exception {
-        if(params != null){
-            preparedStatement = connection.prepareStatement(sql);
-            for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
-            }
-            return preparedStatement.executeUpdate();
-        } else {
-            statement = connection.createStatement();
-            return statement.executeUpdate(sql);
+        if(params == null){
+            params = new Object[]{};
         }
+        preparedStatement = connection.prepareStatement(sql);
+        for (int i = 0; i < params.length; i++) {
+            preparedStatement.setObject(i + 1, params[i]);
+        }
+        return preparedStatement.executeUpdate();
     }
 
     /**
@@ -174,7 +153,7 @@ public class DBHelper {
      * @return
      * @throws Exception
      */
-    private static void init() throws Exception {
+    private static synchronized void init() throws Exception {
         if (druidDataSources == null) {
             initConnections();
         }

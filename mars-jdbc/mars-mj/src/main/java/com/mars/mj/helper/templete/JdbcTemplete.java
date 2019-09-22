@@ -1,8 +1,8 @@
-package com.mars.mj.helper;
+package com.mars.mj.helper.templete;
 
 import com.mars.core.constant.MarsSpace;
-import com.mars.mj.manager.ConnectionManager;
-import com.mars.mj.util.DataCheckUtil;
+import com.mars.mj.helper.model.PageModel;
+import com.mars.mj.helper.model.PageParamModel;
 
 import java.util.List;
 import java.util.Map;
@@ -14,8 +14,9 @@ public class JdbcTemplete extends BaseJdbcTemplete {
 
     private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
-    private JdbcTemplete() {
+    private String dataSourceName;
 
+    private JdbcTemplete() {
     }
 
     /**
@@ -24,9 +25,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @return
      */
     public static JdbcTemplete get() {
-        JdbcTemplete jdbcTemplete = new JdbcTemplete();
-        jdbcTemplete.dataSourceName = jdbcTemplete.getDataSourceName(null);
-        return jdbcTemplete;
+        return get(null);
     }
 
     /**
@@ -49,9 +48,8 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @return
      * @throws Exception
      */
-    public List<Map<String, Object>> selectList(String sql, Object param) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectList(sql,param,connectionManager);
+    public List<Map> selectList(String sql, Object param) throws Exception {
+        return JdbcSelect.selectList(sql,param,dataSourceName);
     }
 
     /**
@@ -61,9 +59,8 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @return
      * @throws Exception
      */
-    public List<Map<String, Object>> selectList(String sql) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectList(sql,connectionManager);
+    public List<Map> selectList(String sql) throws Exception {
+        return JdbcSelect.selectList(sql,dataSourceName);
     }
 
     /**
@@ -73,8 +70,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @return 数据
      */
     public <T> List<T> selectList(String sql, Class<T> cls) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectList(sql,cls,connectionManager);
+        return JdbcSelect.selectList(sql,cls,dataSourceName);
     }
 
     /**
@@ -85,8 +81,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @return 数据
      */
     public <T> List<T> selectList(String sql, Object param, Class<T> cls) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectList(sql,param,cls,connectionManager);
+        return JdbcSelect.selectList(sql,param,cls,dataSourceName);
     }
 
     /**
@@ -98,8 +93,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @throws Exception
      */
     public Map<String, Object> selectOne(String sql, Object param) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectOne(sql,param,connectionManager);
+        return JdbcSelect.selectOne(sql,param,dataSourceName);
     }
 
     /**
@@ -110,8 +104,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @throws Exception
      */
     public Map<String, Object> selectOne(String sql) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectOne(sql,connectionManager);
+        return JdbcSelect.selectOne(sql,dataSourceName);
     }
 
 
@@ -122,8 +115,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @return 数据
      */
     public <T> T selectOne(String sql, Class<T> cls) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectOne(sql,cls,connectionManager);
+        return JdbcSelect.selectOne(sql,cls,dataSourceName);
     }
 
     /**
@@ -134,24 +126,29 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @return 数据
      */
     public <T> T selectOne(String sql, Object param, Class<T> cls) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        return JdbcSelect.selectOne(sql,param,cls,connectionManager);
+        return JdbcSelect.selectOne(sql,param,cls,dataSourceName);
     }
 
+    /**
+     * 有参分页查询列表
+     * @param sql sql语句
+     * @param param 参数
+     * @return 数据
+     */
+    public PageModel<Map> selectPageList(String sql, PageParamModel param) throws Exception {
+        return JdbcPage.selectList(sql, param,dataSourceName);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 有参分页查询列表，指定返回类型
+     * @param sql sql语句
+     * @param param 参数
+     * @param cls 返回类型
+     * @return 数据
+     */
+    public <T> PageModel<T> selectPageList(String sql, PageParamModel param, Class<T> cls) throws Exception {
+        return JdbcPage.selectList(sql,param,cls,dataSourceName);
+    }
 
     /**
      * 增删改
@@ -162,21 +159,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @throws Exception
      */
     public int update(String sql, Object param) throws Exception {
-        DataCheckUtil.isNull(param,"传参不可以为null");
-
-        ConnectionManager connectionManager = getConnection();
-        try {
-            if (param instanceof Object[]) {
-                Object[] params = (Object[]) param;
-                return DBHelper.update(sql, connectionManager.getConnection(), params);
-            } else {
-                return DBHelper.update(BaseJdbcTemplete.builderSql(sql, param), connectionManager.getConnection(), null);
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connectionManager.close();
-        }
+        return JdbcUpdate.update(sql,param,dataSourceName);
     }
 
     /**
@@ -187,16 +170,6 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @throws Exception
      */
     public int update(String sql) throws Exception {
-        ConnectionManager connectionManager = getConnection();
-        try {
-            int result = DBHelper.update(sql, connectionManager.getConnection());
-            return result;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            connectionManager.close();
-        }
+       return JdbcUpdate.update(sql,dataSourceName);
     }
-
-
 }
