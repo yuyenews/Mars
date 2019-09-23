@@ -7,6 +7,8 @@ import com.mars.mj.annotation.MarsSelect;
 import com.mars.mj.annotation.MarsUpdate;
 import com.mars.mj.helper.templete.JdbcTemplete;
 
+import java.lang.reflect.Method;
+
 /**
  * 代理操作数据库
  */
@@ -20,7 +22,7 @@ public class ProxyOpertion {
      * @return 数据
      * @throws Exception 异常
      */
-    public static Object get(MarsGet marsGet, String dataSourceName, Object param) throws Exception {
+    public static Object get(MarsGet marsGet, String dataSourceName, Object param, Method method) throws Exception {
 
         StringBuffer sql = new StringBuffer();
         sql.append("select * from ");
@@ -29,7 +31,7 @@ public class ProxyOpertion {
         sql.append(marsGet.primaryKey());
         sql.append(" = ?");
 
-        return JdbcTemplete.get(dataSourceName).selectOne(sql.toString(),new Object[]{param});
+        return JdbcTemplete.get(dataSourceName).selectOne(sql.toString(),new Object[]{param},method.getReturnType());
     }
 
     /**
@@ -41,7 +43,7 @@ public class ProxyOpertion {
      * @throws Exception 异常
      */
     public static Object select(MarsSelect marsSelect, String dataSourceName, Object param) throws Exception {
-        return JdbcTemplete.get(dataSourceName).selectList(marsSelect.sql(),param);
+        return JdbcTemplete.get(dataSourceName).selectList(marsSelect.sql(),param,marsSelect.resultType());
     }
 
     /**
@@ -103,7 +105,7 @@ public class ProxyOpertion {
         boolean isFirst = true;
         for(String key : jsonObject.keySet()){
             Object val = jsonObject.get(key);
-            if(val != null && !val.toString().equals("-1")){
+            if(val != null){
                 if(!isFirst){
                     sql.append(",");
                 }
@@ -115,7 +117,7 @@ public class ProxyOpertion {
         isFirst = true;
         for(String key : jsonObject.keySet()){
             Object val = jsonObject.get(key);
-            if(val != null && !val.toString().equals("-1")){
+            if(val != null){
                 if (!isFirst) {
                     sql.append(",");
                 }
@@ -147,7 +149,7 @@ public class ProxyOpertion {
         boolean isFirst = true;
         for(String key : jsonObject.keySet()){
             Object val = jsonObject.get(key);
-            if(val != null && !val.toString().equals("-1") && !key.equals(marsUpdate.primaryKey())) {
+            if(val != null && !key.equals(marsUpdate.primaryKey())) {
                 if (!isFirst) {
                     sql.append(",");
                 }

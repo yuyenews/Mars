@@ -21,7 +21,8 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
 
     /**
      * 获取代理对象
-     * @param clazz  bean的class
+     *
+     * @param clazz bean的class
      * @return 对象
      */
     @Override
@@ -37,6 +38,7 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
 
     /**
      * 绑定代理
+     *
      * @param o
      * @param method
      * @param args
@@ -50,42 +52,43 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
         MarsSelect marsSelect = method.getAnnotation(MarsSelect.class);
         MarsUpdate marsUpdate = method.getAnnotation(MarsUpdate.class);
 
-        int count = checkAnnot(marsGet,marsSelect,marsUpdate);
+        int count = checkAnnot(marsGet, marsSelect, marsUpdate);
 
-        if(count == 0){
+        if (count == 0) {
             return methodProxy.invokeSuper(o, args);
-        } else if(count == 1){
+        } else if (count == 1) {
             Object param = checkArgs(args);
             String dataSourceName = null;
             DataSource dataSource = method.getAnnotation(DataSource.class);
-            if(dataSource != null){
+            if (dataSource != null) {
                 dataSourceName = dataSource.value();
             }
-            if(marsGet != null){
-                return ProxyOpertion.get(marsGet,dataSourceName,param);
+            if (marsGet != null) {
+                return ProxyOpertion.get(marsGet, dataSourceName, param, method);
             }
-            if(marsSelect != null){
-                return ProxyOpertion.select(marsSelect,dataSourceName,param);
+            if (marsSelect != null) {
+                return ProxyOpertion.select(marsSelect, dataSourceName, param);
             }
-            if(marsUpdate != null){
-                return ProxyOpertion.update(marsUpdate,dataSourceName,param);
+            if (marsUpdate != null) {
+                return ProxyOpertion.update(marsUpdate, dataSourceName, param);
             }
         } else {
-            throw new Exception(method.getName()+"方法上不允许有多个sql注解");
+            throw new Exception(method.getName() + "方法上不允许有多个sql注解");
         }
         return null;
     }
 
     /**
      * 校验参数
+     *
      * @param args 参数
      * @return 数据
      * @throws Exception 异常
      */
     private Object checkArgs(Object[] args) throws Exception {
-        if(args != null && args.length > 1){
+        if (args != null && args.length > 1) {
             throw new Exception("MarsDAO的方法只允许有一个参数");
-        } else if(args == null || args.length < 1){
+        } else if (args == null || args.length < 1) {
             return null;
         }
         return args[0];
@@ -93,20 +96,21 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
 
     /**
      * 校验注解
-     * @param marsGet 注解
+     *
+     * @param marsGet    注解
      * @param marsSelect 注解
      * @param marsUpdate 注解
      * @return
      */
-    private int checkAnnot(MarsGet marsGet,MarsSelect marsSelect,MarsUpdate marsUpdate){
+    private int checkAnnot(MarsGet marsGet, MarsSelect marsSelect, MarsUpdate marsUpdate) {
         int count = 0;
-        if(marsGet != null){
+        if (marsGet != null) {
             count++;
         }
-        if(marsSelect != null){
+        if (marsSelect != null) {
             count++;
         }
-        if(marsUpdate != null){
+        if (marsUpdate != null) {
             count++;
         }
         return count;

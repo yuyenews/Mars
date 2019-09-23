@@ -1,6 +1,7 @@
 package com.mars.mj.annotation;
 
 import java.lang.annotation.*;
+import java.util.Map;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -12,4 +13,10 @@ public @interface MarsSelect {
      * @return
      */
     String sql();
+
+    /**
+     * 返回类型
+     * @return
+     */
+    Class<?> resultType() default Map.class;
 }
