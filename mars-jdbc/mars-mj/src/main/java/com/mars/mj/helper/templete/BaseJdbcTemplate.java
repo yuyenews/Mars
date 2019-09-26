@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * jdbc模板父类
  */
-public class BaseJdbcTemplete {
+public class BaseJdbcTemplate {
 
     private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 

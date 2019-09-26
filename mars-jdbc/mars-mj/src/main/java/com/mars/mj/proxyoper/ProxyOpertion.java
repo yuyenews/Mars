@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mars.mj.annotation.MarsGet;
 import com.mars.mj.annotation.MarsSelect;
 import com.mars.mj.annotation.MarsUpdate;
-import com.mars.mj.helper.templete.JdbcTemplete;
+import com.mars.mj.helper.templete.JdbcTemplate;
 
 import java.lang.reflect.Method;
 
@@ -32,7 +32,7 @@ public class ProxyOpertion {
         sql.append(marsGet.primaryKey());
         sql.append(" = ?");
 
-        return JdbcTemplete.get(dataSourceName).selectOne(sql.toString(),new Object[]{param},method.getReturnType());
+        return JdbcTemplate.get(dataSourceName).selectOne(sql.toString(),new Object[]{param},method.getReturnType());
     }
 
     /**
@@ -44,7 +44,7 @@ public class ProxyOpertion {
      * @throws Exception 异常
      */
     public static Object select(MarsSelect marsSelect, String dataSourceName, Object param) throws Exception {
-        return JdbcTemplete.get(dataSourceName).selectList(marsSelect.sql(),param,marsSelect.resultType());
+        return JdbcTemplate.get(dataSourceName).selectList(marsSelect.sql(),param,marsSelect.resultType());
     }
 
     /**
@@ -85,7 +85,7 @@ public class ProxyOpertion {
         sql.append(marsUpdate.primaryKey());
         sql.append(" = ?");
 
-        return JdbcTemplete.get(dataSourceName).update(sql.toString(),new Object[]{param});
+        return JdbcTemplate.get(dataSourceName).update(sql.toString(),new Object[]{param});
     }
 
     /**
@@ -130,7 +130,7 @@ public class ProxyOpertion {
         }
         sql.append(")");
 
-        return JdbcTemplete.get(dataSourceName).update(sql.toString(),param);
+        return JdbcTemplate.get(dataSourceName).update(sql.toString(),param);
     }
 
     /**
@@ -163,7 +163,7 @@ public class ProxyOpertion {
         }
         sql.append(builderWhere(marsUpdate));
 
-        return JdbcTemplete.get(dataSourceName).update(sql.toString(),param);
+        return JdbcTemplate.get(dataSourceName).update(sql.toString(),param);
     }
 
     /**

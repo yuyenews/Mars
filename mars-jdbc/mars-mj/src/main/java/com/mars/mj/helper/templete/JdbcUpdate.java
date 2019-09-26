@@ -16,13 +16,13 @@ public class JdbcUpdate {
      * @throws Exception
      */
     public static int update(String sql, Object param, String dataSourceName) throws Exception {
-        ConnectionManager connectionManager = BaseJdbcTemplete.getConnection(dataSourceName);
+        ConnectionManager connectionManager = BaseJdbcTemplate.getConnection(dataSourceName);
         try {
             if (param instanceof Object[]) {
                 Object[] params = (Object[]) param;
                 return DBHelper.update(sql, connectionManager.getConnection(), params);
             } else {
-                SqlBuilderModel sqlBuilderModel = BaseJdbcTemplete.builderSql(sql, param);
+                SqlBuilderModel sqlBuilderModel = BaseJdbcTemplate.builderSql(sql, param);
                 return DBHelper.update(sqlBuilderModel.getSql(), connectionManager.getConnection(), sqlBuilderModel.getParams());
             }
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class JdbcUpdate {
      * @throws Exception
      */
     public static int update(String sql, String dataSourceName) throws Exception {
-        ConnectionManager connectionManager = BaseJdbcTemplete.getConnection(dataSourceName);
+        ConnectionManager connectionManager = BaseJdbcTemplate.getConnection(dataSourceName);
         try {
             int result = DBHelper.update(sql, connectionManager.getConnection());
             return result;
