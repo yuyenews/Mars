@@ -2,10 +2,12 @@ package com.mars.mj.init;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mars.core.constant.MarsSpace;
+import com.mars.core.traction.TractionClass;
 import com.mars.mj.helper.base.DBHelper;
 import com.mars.mj.proxy.MjProxy;
 import com.mars.jdbc.base.BaseInitJdbc;
 import com.mars.jdbc.load.LoadDaos;
+import com.mars.mj.traction.TractionAop;
 
 import java.util.Map;
 
@@ -23,6 +25,9 @@ public class InitJdbc implements BaseInitJdbc {
 	 */
 	@Override
 	public void init() throws Exception{
+
+		/* 设置处理事务的类 */
+		TractionClass.setCls(TractionAop.class);
 
 		/* 加载mj数据源 */
 		loadDataSource();

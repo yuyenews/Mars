@@ -1,4 +1,4 @@
-package com.mars.traction;
+package com.mars.mybatis.traction;
 
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;

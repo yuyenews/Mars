@@ -9,6 +9,7 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.AopModel;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.load.LoadHelper;
+import com.mars.core.traction.TractionClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,9 +94,8 @@ public class BeanFactory {
 				aopModel.setCls(marsAop.className());
 				list.put(method.getName(), aopModel);
 			} else if(traction != null) {
-				Class<?> aopClass = Class.forName(traction.className());
 				AopModel aopModel = new AopModel();
-				aopModel.setCls(aopClass);
+				aopModel.setCls(TractionClass.getCls());
 				aopModel.setTractionLevel(traction.level());
 				aopModel.setExecutorType(traction.executorType());
 				list.put(method.getName(),aopModel);
