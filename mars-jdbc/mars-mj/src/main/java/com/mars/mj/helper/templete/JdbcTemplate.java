@@ -10,13 +10,13 @@ import java.util.Map;
 /**
  * jdbc模板
  */
-public class JdbcTemplete extends BaseJdbcTemplete {
+public class JdbcTemplate extends BaseJdbcTemplate {
 
     private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
     private String dataSourceName;
 
-    private JdbcTemplete() {
+    private JdbcTemplate() {
     }
 
     /**
@@ -24,7 +24,7 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      *
      * @return
      */
-    public static JdbcTemplete get() {
+    public static JdbcTemplate get() {
         return get(null);
     }
 
@@ -34,10 +34,10 @@ public class JdbcTemplete extends BaseJdbcTemplete {
      * @param dataSourceName
      * @return
      */
-    public static JdbcTemplete get(String dataSourceName) {
-        JdbcTemplete jdbcTemplete = new JdbcTemplete();
-        jdbcTemplete.dataSourceName = jdbcTemplete.getDataSourceName(dataSourceName);
-        return jdbcTemplete;
+    public static JdbcTemplate get(String dataSourceName) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.dataSourceName = jdbcTemplate.getDataSourceName(dataSourceName);
+        return jdbcTemplate;
     }
 
     /**

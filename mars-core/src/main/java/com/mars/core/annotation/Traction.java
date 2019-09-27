@@ -1,6 +1,5 @@
 package com.mars.core.annotation;
 
-import com.mars.core.constant.MarsConstant;
 import com.mars.core.enums.ExecutorType;
 import com.mars.core.enums.TractionLevel;
 
@@ -14,8 +13,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Traction {
-
-    String className() default MarsConstant.TRACTION_CLASS;
 
     TractionLevel level() default TractionLevel.READ_UNCOMMITTED;
 

@@ -1,4 +1,4 @@
-package com.mars.traction;
+package com.mars.mj.traction;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mars.core.constant.MarsConstant;
