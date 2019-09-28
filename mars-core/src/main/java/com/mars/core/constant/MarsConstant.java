@@ -101,4 +101,14 @@ public class MarsConstant {
      * 请求的文件参数的key
      */
     public static final String REQUEST_FILE = "files";
+
+    /**
+     * 默认数据源储存在内存中的key
+     */
+    public static final String DEFAULT_DATASOURCE_NAME = "defaultDataSource";
+
+    /**
+     * 所有数据源储存在内存中的key
+     */
+    public static final String DATASOURCE_NAMES = "dataSourceNames";
 }

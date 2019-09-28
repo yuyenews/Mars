@@ -2,6 +2,7 @@ package com.mars.mj.helper.templete;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ThreadUtil;
 import com.mars.mj.helper.base.DBHelper;
@@ -57,7 +58,7 @@ public class BaseJdbcTemplate {
      */
     protected static String getDataSourceName(String dataSourceName) {
         if (dataSourceName == null) {
-            dataSourceName = marsSpace.getAttr("defaultDataSource").toString();
+            dataSourceName = marsSpace.getAttr(MarsConstant.DEFAULT_DATASOURCE_NAME).toString();
         }
         return dataSourceName;
     }

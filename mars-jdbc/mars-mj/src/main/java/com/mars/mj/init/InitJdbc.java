@@ -1,6 +1,7 @@
 package com.mars.mj.init;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.ncfg.traction.TractionClass;
 import com.mars.mj.helper.base.DBHelper;
@@ -46,6 +47,6 @@ public class InitJdbc implements BaseInitJdbc {
 		marsSpace.setAttr("druidDataSourceMap",druidDataSourceMap);
 
 		/* 保存默认数据源名称 */
-		marsSpace.setAttr("defaultDataSource", DBHelper.getDefaultDataSourceName());
+		marsSpace.setAttr(MarsConstant.DEFAULT_DATASOURCE_NAME, DBHelper.getDefaultDataSourceName());
 	}
 }

@@ -1,6 +1,7 @@
 package com.mars.mybatis.proxy;
 
 import com.mars.core.annotation.DataSource;
+import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ThreadUtil;
 import com.mars.mybatis.init.LoadSqlSessionFactory;
@@ -171,7 +172,7 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 			dataSourceName = dataSource.value();
 		} else {
 			/* 否则使用默认数据源名称 */
-			dataSourceName = marsSpace.getAttr("defaultDataSource").toString();
+			dataSourceName = marsSpace.getAttr(MarsConstant.DEFAULT_DATASOURCE_NAME).toString();
 		}
 		return dataSourceName;
 	}

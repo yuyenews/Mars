@@ -65,7 +65,7 @@ public class LoadSqlSessionFactory {
 	 * 加载sqlSessionFactory
 	 */
 	private void loadSqlSessionFactorys() {
-		List<String> daNames = (List<String>) marsSpace.getAttr("dataSourceNames");
+		List<String> daNames = (List<String>) marsSpace.getAttr(MarsConstant.DATASOURCE_NAMES);
 		
 		Map<String,SqlSessionFactory> maps = new HashMap<>();
 		for(String str : daNames) {
@@ -90,7 +90,7 @@ public class LoadSqlSessionFactory {
 	public SqlSession getSqlSession(String dataSourceName,Boolean autoCommit) {
 		Map<String,SqlSessionFactory> maps = (Map<String,SqlSessionFactory>) marsSpace.getAttr(MarsConstant.DATA_SOURCE_MAP);
 		if(dataSourceName == null) {
-			Object defDa = marsSpace.getAttr("defaultDataSource");
+			Object defDa = marsSpace.getAttr(MarsConstant.DEFAULT_DATASOURCE_NAME);
 			return maps.get(defDa.toString()).openSession(autoCommit);
 		}
 		return maps.get(dataSourceName).openSession(autoCommit);
