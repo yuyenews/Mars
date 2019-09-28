@@ -22,7 +22,7 @@ public class JdbcConfigUtil {
 
             if (jsonObject != null) {
 
-                JSONObject jdbc = JSONObject.parseObject(JSON.toJSONString(jsonObject.get("jdbc")));
+                JSONObject jdbc = jsonObject.getJSONObject("jdbc");
 
                 return jdbc;
             }

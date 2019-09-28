@@ -1,4 +1,4 @@
-package com.mars.core.traction;
+package com.mars.core.ncfg.traction;
 
 /**
  * 保存管理事务类
