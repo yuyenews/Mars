@@ -2,7 +2,7 @@ package com.mars.mj.init;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.traction.TractionClass;
+import com.mars.core.ncfg.traction.TractionClass;
 import com.mars.mj.helper.base.DBHelper;
 import com.mars.mj.proxy.MjProxy;
 import com.mars.jdbc.base.BaseInitJdbc;

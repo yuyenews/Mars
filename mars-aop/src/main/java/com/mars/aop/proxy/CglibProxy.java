@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import com.mars.core.model.AopModel;
-import com.mars.core.traction.TractionClass;
+import com.mars.core.ncfg.traction.TractionClass;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;

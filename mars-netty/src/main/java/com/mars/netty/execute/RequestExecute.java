@@ -1,7 +1,7 @@
 package com.mars.netty.execute;
 
 import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.core.ncfg.mvc.CoreServletClass;
 import com.mars.core.util.MesUtil;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
@@ -47,14 +47,9 @@ public class RequestExecute {
 		HttpResponse response = new HttpResponse(ctx);
 
 		try {
-			
-			/* 获取全局存储空间 */
-			MarsSpace constants = MarsSpace.getEasySpace();
-			/* 从存储空间里获取核心servlet的全限名 */
-			String className = constants.getAttr("core").toString();
-			
+
 			/* 通过反射执行核心servlet */
-			Class<?> cls = Class.forName(className);
+			Class<?> cls = CoreServletClass.getCls();
 			Object object = cls.getDeclaredConstructor().newInstance();
 			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[] { HttpRequest.class ,HttpResponse.class});
 			Object result = helloMethod.invoke(object, new Object[] { request ,response});

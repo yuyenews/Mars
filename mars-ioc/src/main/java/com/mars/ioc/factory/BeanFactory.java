@@ -9,7 +9,7 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.AopModel;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.load.LoadHelper;
-import com.mars.core.traction.TractionClass;
+import com.mars.core.ncfg.traction.TractionClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

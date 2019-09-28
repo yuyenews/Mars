@@ -1,7 +1,7 @@
 package com.mars.core.model;
 
 /**
- * easybean的实体类
+ * marsBean的实体类
  * 
  * @author yuye
  *

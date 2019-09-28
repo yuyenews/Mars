@@ -69,7 +69,6 @@ public class TractionAop {
 		} finally {
 			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
 		}
-		
 	}
 
 	/**

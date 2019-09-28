@@ -1,6 +1,6 @@
 package com.mars.mybatis.init;
 
-import com.mars.core.traction.TractionClass;
+import com.mars.core.ncfg.traction.TractionClass;
 import com.mars.mybatis.proxy.MappersProxy;
 import com.mars.jdbc.base.BaseInitJdbc;
 import com.mars.jdbc.load.LoadDaos;
