@@ -40,7 +40,7 @@
 
 <h2>Document</h2>
 
-[Document](http://mars-framework.com/doc.html)
+[Document](http://mars-framework.com)
 
 <h2>Expansion pack</h2>
 
