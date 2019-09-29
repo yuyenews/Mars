@@ -38,7 +38,7 @@
 
 <h2>帮助文档</h2>
 
-[Document](http://mars-framework.com/doc.html)
+[Document](http://mars-framework.com)
 
 <h2>扩展包</h2>
 
