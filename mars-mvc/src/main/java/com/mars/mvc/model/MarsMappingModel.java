@@ -1,6 +1,6 @@
 package com.mars.mvc.model;
 
-import com.mars.core.annotation.enums.RequestMetohd;
+import com.mars.core.annotation.enums.ReqMethod;
 
 /**
  * 控制器映射实体
@@ -18,7 +18,7 @@ public class MarsMappingModel {
 	/**
 	 * 请求方式
 	 */
-	private RequestMetohd requestMetohd;
+	private ReqMethod reqMethod;
 
 	/**
 	 * 映射的方法
@@ -38,12 +38,12 @@ public class MarsMappingModel {
 		this.object = object;
 	}
 
-	public RequestMetohd getRequestMetohd() {
-		return requestMetohd;
+	public ReqMethod getReqMethod() {
+		return reqMethod;
 	}
 
-	public void setRequestMetohd(RequestMetohd requestMetohd) {
-		this.requestMetohd = requestMetohd;
+	public void setReqMethod(ReqMethod reqMethod) {
+		this.reqMethod = reqMethod;
 	}
 
 	public String getMethod() {
@@ -61,5 +61,4 @@ public class MarsMappingModel {
 	public void setCls(Class<?> cls) {
 		this.cls = cls;
 	}
-
 }

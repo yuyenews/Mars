@@ -3,7 +3,7 @@ package com.mars.mvc.remote.controller;
 import com.mars.core.annotation.Controller;
 import com.mars.core.annotation.MarsLog;
 import com.mars.core.annotation.RequestMethod;
-import com.mars.core.annotation.enums.RequestMetohd;
+import com.mars.core.annotation.enums.ReqMethod;
 import com.mars.core.remote.config.RemoteConfigService;
 import com.mars.server.server.request.HttpRequest;
 import com.mars.server.server.request.HttpResponse;
@@ -23,7 +23,7 @@ public class RemoteConfigController {
      * @param response
      * @return 结果
      */
-    @RequestMethod(RequestMetohd.POST)
+    @RequestMethod(ReqMethod.POST)
     @MarsLog
     public Map<String,Object> reloadConfig(HttpRequest request, HttpResponse response) {
 
