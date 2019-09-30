@@ -54,32 +54,31 @@ public class ExecuteMars {
 			
 			String strMethod = method.name().toLowerCase();
 
-			String requestMethod = marsMappingModel.getRequestMetohd().name().toLowerCase();
+			String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
 			
-			if (strMethod.equals(requestMethod)) {
-
-				/* 获取拦截器 并执行 控制层执行前的方法 */
-				String uriEnd = RequestUtil.getUriName(request);
-				List<MarsInterModel> list = ExecuteInters.getInters(uriEnd);
-				Object intersStartResult = ExecuteInters.executeIntersStart(list,request, response);
-				if(!intersStartResult.toString().equals(BaseInterceptor.SUCCESS)) {
-					return intersStartResult;
-				}
-
-				/* 执行controller的方法 */
-				Object result = executeControllerMethod(marsMappingModel,request,response);
-
-				/* 执行拦截器 在控制层执行后的方法 */
-				Object intersEndResult = ExecuteInters.executeIntersEnd(list,request, response,result);
-				if(!intersEndResult.toString().equals(BaseInterceptor.SUCCESS)) {
-					return intersEndResult;
-				}
-				
-				return result;
-			} else {
+			if (!strMethod.equals(requestMethod)) {
 				/* 如果请求方式和controller的映射不一致，则提示客户端 */
 				throw new Exception("此接口的请求方式为[" + requestMethod + "]");
 			}
+
+			/* 获取拦截器 并执行 控制层执行前的方法 */
+			String uriEnd = RequestUtil.getUriName(request);
+			List<MarsInterModel> list = ExecuteInters.getInters(uriEnd);
+			Object intersStartResult = ExecuteInters.executeIntersStart(list,request, response);
+			if(!intersStartResult.toString().equals(BaseInterceptor.SUCCESS)) {
+				return intersStartResult;
+			}
+
+			/* 执行controller的方法 */
+			Object result = executeControllerMethod(marsMappingModel,request,response);
+
+			/* 执行拦截器 在控制层执行后的方法 */
+			Object intersEndResult = ExecuteInters.executeIntersEnd(list,request, response,result);
+			if(!intersEndResult.toString().equals(BaseInterceptor.SUCCESS)) {
+				return intersEndResult;
+			}
+
+			return result;
 		} catch (Exception e) {
 			log.error("执行控制层的时候报错",e);
 			throw e;
