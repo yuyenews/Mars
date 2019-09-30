@@ -2,7 +2,7 @@ package com.mars.core.load;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.annotation.MarsValue;
-import com.mars.core.annotation.Resource;
+import com.mars.core.annotation.MarsWrite;
 import com.mars.core.enums.DataType;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.util.ConfigUtil;
@@ -32,15 +32,15 @@ public class WriteFields {
     public static void writeFields(Class cls, Object obj, Map<String, MarsBeanModel> marsBeanObjects) throws Exception {
         Field[] fields = cls.getDeclaredFields();
         for (Field f : fields) {
-            Resource resource = f.getAnnotation(Resource.class);
+            MarsWrite marsWrite = f.getAnnotation(MarsWrite.class);
             MarsValue marsValue = f.getAnnotation(MarsValue.class);
-            if (resource != null && marsValue != null) {
+            if (marsWrite != null && marsValue != null) {
                 throw new Exception("属性不可以同时有Resource和MarsValue注解,类名:" + cls.getName());
             }
-            if (resource != null) {
+            if (marsWrite != null) {
                 f.setAccessible(true);
 
-                String filedName = LoadHelper.getResourceName(resource, f);
+                String filedName = LoadHelper.getResourceName(marsWrite, f);
 
                 MarsBeanModel beanModel = marsBeanObjects.get(filedName);
                 if (beanModel != null) {

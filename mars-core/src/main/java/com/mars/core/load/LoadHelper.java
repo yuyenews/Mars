@@ -1,7 +1,7 @@
 package com.mars.core.load;
 
 import com.mars.core.annotation.MarsBean;
-import com.mars.core.annotation.Resource;
+import com.mars.core.annotation.MarsWrite;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.MarsBeanClassModel;
@@ -49,12 +49,12 @@ public class LoadHelper {
 
     /**
      * 获取字段名
-     * @param resource 资源
+     * @param marsWrite 资源
      * @param f 字段
      * @return 名称
      */
-    public static String getResourceName(Resource resource, Field f){
-        String filedName = resource.value();
+    public static String getResourceName(MarsWrite marsWrite, Field f){
+        String filedName = marsWrite.value();
         if(filedName == null || filedName.equals("")) {
             filedName = f.getName();
         }
