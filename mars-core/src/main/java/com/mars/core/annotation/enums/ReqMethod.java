@@ -6,7 +6,7 @@ package com.mars.core.annotation.enums;
  * @author yuye
  *
  */
-public enum RequestMetohd {
+public enum ReqMethod {
 
 	POST, GET, HEAD, OPTIONS, PUT, DELETE, TRACE, CONNECT
 }

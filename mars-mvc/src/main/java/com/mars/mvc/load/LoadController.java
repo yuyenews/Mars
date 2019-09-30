@@ -58,7 +58,7 @@ public class LoadController {
 						if(requestMethod != null) {
 							MarsMappingModel marsMappingModel = new MarsMappingModel();
 							marsMappingModel.setObject(obj);
-							marsMappingModel.setRequestMetohd(requestMethod.value());
+							marsMappingModel.setReqMethod(requestMethod.value());
 							marsMappingModel.setMethod(method.getName());
 							marsMappingModel.setCls(cls);
 							controlObjects.put(method.getName(), marsMappingModel);
