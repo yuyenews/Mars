@@ -23,7 +23,7 @@ public class RemoteConfigController {
      * @param response
      * @return 结果
      */
-    @RequestMethod(value = "reloadConfig",method = RequestMetohd.POST)
+    @RequestMethod(RequestMetohd.POST)
     @MarsLog
     public Map<String,Object> reloadConfig(HttpRequest request, HttpResponse response) {
 
