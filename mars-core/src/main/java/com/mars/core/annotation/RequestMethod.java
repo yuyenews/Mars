@@ -6,10 +6,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
+import com.mars.core.annotation.enums.RequestMetohd;
+
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Resource {
+public @interface RequestMethod {
 
-	String value() default "";
+	RequestMetohd value() default RequestMetohd.GET;
 }

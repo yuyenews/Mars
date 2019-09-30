@@ -4,7 +4,7 @@ import com.mars.core.load.WriteFields;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.mvc.proxy.MvcCglibProxy;
-import com.mars.core.annotation.MarsMapping;
+import com.mars.core.annotation.RequestMethod;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.MarsBeanModel;
@@ -54,14 +54,14 @@ public class LoadController {
 					/* 获取controller的所有方法 */
 					Method[] methods = cls.getMethods();
 					for(Method method : methods) {
-						MarsMapping marsMapping = method.getAnnotation(MarsMapping.class);
-						if(marsMapping != null) {
+						RequestMethod requestMethod = method.getAnnotation(RequestMethod.class);
+						if(requestMethod != null) {
 							MarsMappingModel marsMappingModel = new MarsMappingModel();
 							marsMappingModel.setObject(obj);
-							marsMappingModel.setRequestMetohd(marsMapping.method());
+							marsMappingModel.setRequestMetohd(requestMethod.value());
 							marsMappingModel.setMethod(method.getName());
 							marsMappingModel.setCls(cls);
-							controlObjects.put(marsMapping.value(), marsMappingModel);
+							controlObjects.put(method.getName(), marsMappingModel);
 						}
 					}
 				}
