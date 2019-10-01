@@ -21,7 +21,7 @@ public class TractionAop {
 
 	private Logger logger = LoggerFactory.getLogger(TractionAop.class);
 
-	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
+	private MarsSpace marsSpace = MarsSpace.getEasySpace();
 	
 	/**
 	 * 获取数据库连接，并设置为不自动提交
