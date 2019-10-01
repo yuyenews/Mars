@@ -1,5 +1,6 @@
 package com.mars.mvc.load;
 
+import com.mars.core.annotation.enums.ReqMethod;
 import com.mars.core.load.WriteFields;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanClassModel;
@@ -55,14 +56,18 @@ public class LoadController {
 					Method[] methods = cls.getMethods();
 					for(Method method : methods) {
 						RequestMethod requestMethod = method.getAnnotation(RequestMethod.class);
+
+						MarsMappingModel marsMappingModel = new MarsMappingModel();
+						marsMappingModel.setObject(obj);
+						marsMappingModel.setMethod(method.getName());
+						marsMappingModel.setCls(cls);
+						marsMappingModel.setReqMethod(ReqMethod.GET);
+
 						if(requestMethod != null) {
-							MarsMappingModel marsMappingModel = new MarsMappingModel();
-							marsMappingModel.setObject(obj);
 							marsMappingModel.setReqMethod(requestMethod.value());
-							marsMappingModel.setMethod(method.getName());
-							marsMappingModel.setCls(cls);
-							controlObjects.put(method.getName(), marsMappingModel);
 						}
+
+						controlObjects.put(method.getName(), marsMappingModel);
 					}
 				}
 			}

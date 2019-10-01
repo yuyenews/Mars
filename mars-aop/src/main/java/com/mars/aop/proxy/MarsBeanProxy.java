@@ -1,8 +1,9 @@
 package com.mars.aop.proxy;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
+import com.mars.core.annotation.MarsAop;
+import com.mars.core.annotation.Traction;
 import com.mars.core.model.AopModel;
 import com.mars.core.ncfg.traction.TractionClass;
 import net.sf.cglib.proxy.Enhancer;
@@ -14,22 +15,20 @@ import net.sf.cglib.proxy.MethodProxy;
  * @author yuye
  *
  */
-public class CglibProxy implements MethodInterceptor {
+public class MarsBeanProxy implements MethodInterceptor {
 
 	private Enhancer enhancer;
 
-	private Map<String, AopModel> list;
+	private Class<?> cls;
 
 	/**
 	 * 获取代理对象
 	 *
 	 * @param clazz bean的class
-	 * @param list  aop类的class
 	 * @return 对象
 	 */
-	public Object getProxy(Class<?> clazz, Map<String, AopModel> list) {
-
-		this.list = list;
+	public Object getProxy(Class<?> clazz) {
+		this.cls = clazz;
 		enhancer = new Enhancer();
 		// 设置需要创建子类的类
 		enhancer.setSuperclass(clazz);
@@ -48,7 +47,14 @@ public class CglibProxy implements MethodInterceptor {
 		Class c = null;
 
 		try {
-			AopModel aopModel = list.get(method.getName());
+
+			MarsAop marsAop = method.getAnnotation(MarsAop.class);
+			Traction traction = method.getAnnotation(Traction.class);
+
+			/* 校验同一个方法上不能同时存在aop和traction注解 */
+			checkAnnot(marsAop,traction,method);
+
+			AopModel aopModel = getAopModel(marsAop,traction);
 			if (aopModel != null) {
 				c = aopModel.getCls();
 			}
@@ -115,5 +121,38 @@ public class CglibProxy implements MethodInterceptor {
 		}
 		Method m4 = c.getDeclaredMethod("exp", new Class[]{Throwable.class});
 		m4.invoke(obj, new Object[]{e});
+	}
+
+	/**
+	 * 校验注解是否符合规则
+	 * @param marsAop aop注解
+	 * @param traction 事务监听注解
+	 * @param method 被监听的方法
+	 * @throws Exception 异常
+	 */
+	private void checkAnnot(MarsAop marsAop,Traction traction,Method method) throws Exception {
+		if(marsAop != null && traction != null) {
+			throw new Exception(cls.getName()+"类中的["+method.getName()+"]方法同时存在MarsAop和Traction注解");
+		}
+	}
+
+	/**
+	 * 获取aop实体
+	 * @param marsAop aop注解
+	 * @param traction 事务监听注解
+	 * @return aop实体
+	 */
+	private AopModel getAopModel(MarsAop marsAop,Traction traction){
+		AopModel aopModel = null;
+		if(marsAop != null) {
+			aopModel = new AopModel();
+			aopModel.setCls(marsAop.className());
+		} else if(traction != null) {
+			aopModel = new AopModel();
+			aopModel.setCls(TractionClass.getCls());
+			aopModel.setTractionLevel(traction.level());
+			aopModel.setExecutorType(traction.executorType());
+		}
+		return aopModel;
 	}
 }

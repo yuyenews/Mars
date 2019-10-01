@@ -30,7 +30,7 @@ public class InitJdbc implements BaseInitJdbc {
 		/* 设置处理事务的类 */
 		TractionClass.setCls(TractionAop.class);
 
-		/* 加载mj数据源 */
+		/* 加载数据源 */
 		loadDataSource();
 
 		/* 创建dao对象 */
@@ -44,7 +44,7 @@ public class InitJdbc implements BaseInitJdbc {
 	 */
 	private void loadDataSource() throws Exception {
 		Map<String,DruidDataSource> druidDataSourceMap = DBHelper.getDruidDataSources();
-		marsSpace.setAttr("druidDataSourceMap",druidDataSourceMap);
+		marsSpace.setAttr(MarsConstant.DATA_SOURCE_MAP,druidDataSourceMap);
 
 		/* 保存默认数据源名称 */
 		marsSpace.setAttr(MarsConstant.DEFAULT_DATASOURCE_NAME, DBHelper.getDefaultDataSourceName());

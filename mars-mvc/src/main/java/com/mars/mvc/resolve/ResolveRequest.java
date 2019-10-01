@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class ResolveRequest {
 	
-	private static Logger log = LoggerFactory.getLogger(ResolveRequest.class);
+	private Logger log = LoggerFactory.getLogger(ResolveRequest.class);
 
 	private static ResolveRequest resolveRequest;
 	
