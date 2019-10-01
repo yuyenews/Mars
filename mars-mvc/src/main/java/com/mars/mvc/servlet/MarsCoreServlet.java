@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MarsCoreServlet implements MarsServlet {
 	
-	private static Logger log = LoggerFactory.getLogger(MarsCoreServlet.class);
+	private Logger log = LoggerFactory.getLogger(MarsCoreServlet.class);
 	
 	@Override
 	public Object doRequest(HttpRequest request, HttpResponse response) throws Exception {

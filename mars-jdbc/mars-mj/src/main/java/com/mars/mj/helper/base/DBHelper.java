@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.MarsConstant;
+import com.mars.core.constant.MarsSpace;
 import com.mars.jdbc.util.JdbcConfigUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,12 +89,11 @@ public class DBHelper {
     public static ResultSet select(String sql, Connection connection, Object[] params) throws Exception {
         logger.info("sql:{}",sql);
 
-        if (params == null) {
-            params = new Object[]{};
-        }
         preparedStatement = connection.prepareStatement(sql);
-        for (int i = 0; i < params.length; i++) {
-            preparedStatement.setObject(i + 1, params[i]);
+        if(params != null && params.length > 0){
+            for (int i = 0; i < params.length; i++) {
+                preparedStatement.setObject(i + 1, params[i]);
+            }
         }
         return preparedStatement.executeQuery();
     }
@@ -121,12 +121,12 @@ public class DBHelper {
      */
     public static int update(String sql, Connection connection, Object[] params) throws Exception {
         logger.info("sql:{}",sql);
-        if(params == null){
-            params = new Object[]{};
-        }
+
         preparedStatement = connection.prepareStatement(sql);
-        for (int i = 0; i < params.length; i++) {
-            preparedStatement.setObject(i + 1, params[i]);
+        if(params != null && params.length > 0){
+            for (int i = 0; i < params.length; i++) {
+                preparedStatement.setObject(i + 1, params[i]);
+            }
         }
         return preparedStatement.executeUpdate();
     }
@@ -161,9 +161,15 @@ public class DBHelper {
      * @throws Exception
      */
     private static synchronized void init() throws Exception {
-        if (druidDataSources == null) {
-            initConnections();
+        if (druidDataSources != null) {
+            return;
         }
+        Object dataSourceMap = MarsSpace.getEasySpace().getAttr(MarsConstant.DATA_SOURCE_MAP);
+        if(dataSourceMap != null){
+            druidDataSources = (Map<String, DruidDataSource>)dataSourceMap;
+            return;
+        }
+        initConnections();
     }
 
     /**
@@ -172,22 +178,19 @@ public class DBHelper {
      * @throws Exception
      */
     private static void initConnections() throws Exception {
-        if(druidDataSources == null){
-            druidDataSources = new HashMap<>();
+        druidDataSources = new HashMap<>();
 
-            JSONArray dataSourceList = JdbcConfigUtil.getJdbcDataSourceList();
-            if (dataSourceList != null) {
-                for (int i = 0; i < dataSourceList.size(); i++) {
-                    JSONObject dataSource = dataSourceList.getJSONObject(i);
-                    DruidDataSource druidDataSource = initDataSource(dataSource);
-                    druidDataSources.put(dataSource.getString("name"), druidDataSource);
-                    if(i == 0){
-                        defaultDataSourceName = dataSource.getString("name");
-                    }
+        JSONArray dataSourceList = JdbcConfigUtil.getJdbcDataSourceList();
+        if (dataSourceList != null) {
+            for (int i = 0; i < dataSourceList.size(); i++) {
+                JSONObject dataSource = dataSourceList.getJSONObject(i);
+                DruidDataSource druidDataSource = initDataSource(dataSource);
+                druidDataSources.put(dataSource.getString("name"), druidDataSource);
+                if (i == 0) {
+                    defaultDataSourceName = dataSource.getString("name");
                 }
             }
         }
-
     }
 
     /**
