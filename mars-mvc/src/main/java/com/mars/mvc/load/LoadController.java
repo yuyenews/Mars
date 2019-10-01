@@ -1,6 +1,5 @@
 package com.mars.mvc.load;
 
-import com.mars.core.annotation.enums.ReqMethod;
 import com.mars.core.load.WriteFields;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanClassModel;
@@ -50,24 +49,23 @@ public class LoadController {
 				 * 直接 迭代一次 就给一个controller注入一次
 				 */
 				Object obj = iocControl(cls,marsBeanObjs);
-				
+
 				if(obj != null) {
 					/* 获取controller的所有方法 */
 					Method[] methods = cls.getMethods();
 					for(Method method : methods) {
 						RequestMethod requestMethod = method.getAnnotation(RequestMethod.class);
+						if(requestMethod != null){
+							/* 校验方法 */
+							checkMethodName(controlObjects,cls,method);
 
-						MarsMappingModel marsMappingModel = new MarsMappingModel();
-						marsMappingModel.setObject(obj);
-						marsMappingModel.setMethod(method.getName());
-						marsMappingModel.setCls(cls);
-						marsMappingModel.setReqMethod(ReqMethod.GET);
-
-						if(requestMethod != null) {
+							MarsMappingModel marsMappingModel = new MarsMappingModel();
+							marsMappingModel.setObject(obj);
+							marsMappingModel.setMethod(method.getName());
+							marsMappingModel.setCls(cls);
 							marsMappingModel.setReqMethod(requestMethod.value());
+							controlObjects.put(method.getName(), marsMappingModel);
 						}
-
-						controlObjects.put(method.getName(), marsMappingModel);
 					}
 				}
 			}
@@ -106,5 +104,21 @@ public class LoadController {
 	 */
 	private static Map<String, MarsBeanModel> getMarsBeans() {
 		return LoadHelper.getBeanObjectMap();
+	}
+
+	/**
+	 * 校验Controller里的方法名是否全局唯一
+	 * @param controlObjects Controller对象
+	 * @param cls Controller类
+	 * @param method Controller中的方法
+	 * @throws Exception 异常
+	 */
+	private static void checkMethodName(Map<String, MarsMappingModel> controlObjects, Class<?> cls, Method method) throws Exception {
+		MarsMappingModel marsMappingModel = controlObjects.get(method.getName());
+		if (marsMappingModel != null) {
+			String yName = marsMappingModel.getCls().getName();
+			String xName = cls.getName();
+			throw new Exception("Controller中的方法名发生冲突[" + yName + "." + marsMappingModel.getMethod() + "," + xName + "." + method.getName() + "]");
+		}
 	}
 }

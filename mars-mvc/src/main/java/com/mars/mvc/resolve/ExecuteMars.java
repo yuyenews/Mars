@@ -123,7 +123,7 @@ public class ExecuteMars {
 	 */
 	private Method getMethod(MarsMappingModel marsMappingModel){
 		Class<?> cls = marsMappingModel.getCls();
-		Method[] methods = cls.getDeclaredMethods();
+		Method[] methods = cls.getMethods();
 		for(Method methodItem : methods){
 			if(methodItem.getName().equals(marsMappingModel.getMethod())){
 				return methodItem;
