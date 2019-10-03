@@ -35,7 +35,7 @@ public class WriteFields {
             MarsWrite marsWrite = f.getAnnotation(MarsWrite.class);
             MarsValue marsValue = f.getAnnotation(MarsValue.class);
             if (marsWrite != null && marsValue != null) {
-                throw new Exception("属性不可以同时有Resource和MarsValue注解,类名:" + cls.getName());
+                throw new Exception("属性不可以同时有MarsWrite和MarsValue注解,类名:" + cls.getName());
             }
             if (marsWrite != null) {
                 f.setAccessible(true);
