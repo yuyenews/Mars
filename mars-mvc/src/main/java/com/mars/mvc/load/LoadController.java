@@ -37,7 +37,7 @@ public class LoadController {
 			
 			/* 获取所有的controller数据 */
 			List<MarsBeanClassModel> controlList = LoadHelper.getControllerList();
-			
+
 			Map<String, MarsBeanModel> marsBeanObjs = getMarsBeans();
 			
 			for(MarsBeanClassModel marsBeanClassModel : controlList) {
