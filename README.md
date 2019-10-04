@@ -38,6 +38,78 @@
     </ul>
 </p>
 
+<h2>Only need one jar package</h2>
+
+````
+<dependency>
+    <groupId>com.github.yuyenews</groupId>
+    <artifactId>mars-start-pure</artifactId>
+    <version>[The latest version, you can see the document]</version>
+</dependency>
+````
+
+<h2>A configuration file</h2>
+
+````
+port: 8088
+
+jdbc:
+  #Configure the data source, it must be Alibaba's druid data source
+  dataSource:
+      name: dataSource
+      url: jdbc:mysql://10.211.55.5:3306/test?serverTimezone=GMT%2B8
+      username: root
+      password: rootroot
+      driverClassName: com.mysql.cj.jdbc.Driver
+````
+
+<h2>Then start from the main method</h2>
+
+````
+public class Start {
+    public static void main(String[] args){
+        StartMars.start(Start.class);
+    }
+}
+````
+
+<h2>No other configuration files other than this</h2>
+<p>
+    <ul>
+        <li>Many frameworks claim that they don't have a configuration file. In fact, they put the configuration in the Java class, and Mars-java has only one yml, which is more flexible and more code-saving than the Java class.</li>
+        <li>Controller, Bean, DAO, single table operations can be completed with pure annotations, and it is simple</li>
+    </ul>
+</p>
+
+<h2>Upgrade the Mars-java project to the Mars-cloud project and its simplicity</h2>
+
+<h2>Just need to change one start</h2>
+
+````
+<dependency>
+    <groupId>com.github.yuyenews</groupId>
+    <artifactId>mars-cloud-start</artifactId>
+    <version>[The latest version, you can see the document]</version>
+</dependency>
+````
+
+<h2>Add 5 rows configuration</h2>
+
+````
+cloud:
+  # Service name, the name of the load balancing cluster of the same service must be the same, and must be unique between different clusters.
+  name: cloud-client1
+  sessionTimeout: 10000
+  # Whether as a gateway
+  gateWay: yes
+  timeOut: 10000
+  # Zookeeper address, multiple addresses are separated by commas, 
+  # multiple addresses, must be double quotes, otherwise parsing yml files will be wrong
+  register: 10.211.55.9:2180
+````
+
+<p>Very easy to learn</p>
+
 <h2>Document</h2>
 
 [Document](http://mars-framework.com)

@@ -60,10 +60,10 @@ public class RequestExecute {
 			response.send(String.valueOf(result));
 		} catch (InvocationTargetException e){
 			log.error("处理请求的时候出错",e);
-			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e.getTargetException().getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
+			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getTargetException().getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			log.error("处理请求的时候出错",e);
-			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e.getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
+			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
 		} finally {
 			try{
 				// 释放请求
