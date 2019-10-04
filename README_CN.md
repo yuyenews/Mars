@@ -14,9 +14,6 @@
     </ul>
 </p>
 
-<p>------------------------------------------------------</p>
-
-
 <h2>我能做什么</h2>
 
 <p>
@@ -39,9 +36,8 @@
     </ul>
 </p>
 
-<p>------------------------------------------------------</p>
-
 <h2>只需要一个jar包</h2>
+
 ````
 <dependency>
     <groupId>com.github.yuyenews</groupId>
@@ -49,7 +45,9 @@
     <version>最新版，可看文档</version>
 </dependency>
 ````
+
 <h2>一个配置文件</h2>
+
 ````
 #配置端口号（默认8080）
 port: 8088
@@ -64,7 +62,9 @@ jdbc:
       password: rootroot
       driverClassName: com.mysql.cj.jdbc.Driver
 ````
+
 <h2>然后从main方法启动</h2>
+
 ````
 public class Start {
     public static void main(String[] args){
@@ -81,11 +81,10 @@ public class Start {
     </ul>
 </p>
 
-<p>------------------------------------------------------</p>
-
 <h2>将Mars-java项目升级为Mars-cloud项目及其简单</h2>
 
 <h2>只需要换一个start</h2>
+
 ````
 <dependency>
     <groupId>com.github.yuyenews</groupId>
@@ -95,6 +94,7 @@ public class Start {
 ````
 
 <h2>添加5行配置</h2>
+
 ````
 cloud:
   # 服务名称，同一个服务的负载均衡集群的name必须一致，不同集群之间必须唯一
@@ -112,8 +112,6 @@ cloud:
 
 <p>搭建是不是超简单？ 简直秒懂</p>
 
-<p>------------------------------------------------------</p>
-
 <h2>帮助文档</h2>
 
 [Document](http://mars-framework.com)
@@ -125,8 +123,6 @@ cloud:
 <p>封装了 Email, MD5, AES 和 其他工具类 并 集成了hutool</p>
 
 [Extension package](https://github.com/yuyenews/Mars-extends)
-
-<p>------------------------------------------------------</p>
 
 <h2>简单对比</h2>
 
