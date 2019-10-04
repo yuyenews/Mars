@@ -81,7 +81,7 @@ public class Start {
     </ul>
 </p>
 
-<h3>-----Upgrade the Mars-java project to the Mars-cloud project and its simplicity-----</h3>
+<h3>----------Upgrade the Mars-java project to the Mars-cloud project and its simplicity----------</h3>
 
 <h2>Just need to change one start</h2>
 
