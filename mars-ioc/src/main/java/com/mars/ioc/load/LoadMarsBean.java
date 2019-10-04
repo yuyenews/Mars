@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 加载easyBean
+ * 加载marsBean
  * @author yuye
  *
  */
@@ -24,7 +24,7 @@ public class LoadMarsBean {
 	private static MarsSpace constants = MarsSpace.getEasySpace();
 
 	/**
-	 * 创建easyBean对象，并完成对象注入
+	 * 创建marsBean对象，并完成对象注入
 	 */
 	public static void loadBean() throws Exception{
 		try {
@@ -57,7 +57,7 @@ public class LoadMarsBean {
 	}
 	
 	/**
-	 * easyBean注入
+	 * marsBean注入
 	 * @param marsBeanObjects 对象
 	 */
 	private static void iocBean(Map<String, MarsBeanModel> marsBeanObjects) throws Exception{
