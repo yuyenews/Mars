@@ -107,7 +107,7 @@ public class DBHelper {
      * @throws Exception
      */
     public static int update(String sql, Connection connection) throws Exception {
-        return update(sql, connection, new Object[]{});
+        return update(sql, connection, null);
     }
 
     /**
