@@ -5,9 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.mars.mj.annotation.MarsGet;
 import com.mars.mj.annotation.MarsSelect;
 import com.mars.mj.annotation.MarsUpdate;
+import com.mars.mj.helper.model.PageModel;
+import com.mars.mj.helper.model.PageParamModel;
 import com.mars.mj.helper.templete.JdbcTemplate;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * 代理操作数据库
@@ -43,8 +46,22 @@ public class ProxyOpertion {
      * @return 数据
      * @throws Exception 异常
      */
-    public static Object select(MarsSelect marsSelect, String dataSourceName, Object param) throws Exception {
-        return JdbcTemplate.get(dataSourceName).selectList(marsSelect.sql(),param,marsSelect.resultType());
+    public static Object select(MarsSelect marsSelect, String dataSourceName, Object param, Method method) throws Exception {
+        if(marsSelect.page()){
+            if(!method.getReturnType().getName().equals(PageModel.class.getName())){
+                throw new Exception("方法["+method.getName()+"]由于设置了分页，所以它的返回类型必须是["+PageModel.class.getName()+"]类型");
+            }
+            if(!(param instanceof PageParamModel)){
+                throw new Exception("方法["+method.getName()+"]由于设置了分页，所以它的参数必须是["+PageParamModel.class.getName()+"]类型");
+            }
+            return JdbcTemplate.get(dataSourceName).selectPageList(marsSelect.sql(),(PageParamModel)param,marsSelect.resultType());
+        } else {
+            if(method.getReturnType().getName().equals(List.class.getName())){
+                return JdbcTemplate.get(dataSourceName).selectList(marsSelect.sql(),param,marsSelect.resultType());
+            } else {
+                return JdbcTemplate.get(dataSourceName).selectOne(marsSelect.sql(),param,marsSelect.resultType());
+            }
+        }
     }
 
     /**

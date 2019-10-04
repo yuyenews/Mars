@@ -67,7 +67,7 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
                 return ProxyOpertion.get(marsGet, dataSourceName, param, method);
             }
             if (marsSelect != null) {
-                return ProxyOpertion.select(marsSelect, dataSourceName, param);
+                return ProxyOpertion.select(marsSelect, dataSourceName, param, method);
             }
             if (marsUpdate != null) {
                 return ProxyOpertion.update(marsUpdate, dataSourceName, param);
