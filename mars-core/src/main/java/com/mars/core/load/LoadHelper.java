@@ -54,7 +54,10 @@ public class LoadHelper {
      * @return 名称
      */
     public static String getResourceName(MarsWrite marsWrite, Field f){
-        String filedName = marsWrite.value();
+        String filedName = null;
+        if(marsWrite != null){
+            filedName = marsWrite.value();
+        }
         if(filedName == null || filedName.equals("")) {
             filedName = f.getName();
         }

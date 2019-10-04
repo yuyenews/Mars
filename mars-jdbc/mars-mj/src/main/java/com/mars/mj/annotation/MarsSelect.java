@@ -19,4 +19,10 @@ public @interface MarsSelect {
      * @return
      */
     Class<?> resultType() default Map.class;
+
+    /**
+     * 是否分页
+     * @return
+     */
+    boolean page() default false;
 }

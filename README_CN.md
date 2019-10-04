@@ -14,6 +14,9 @@
     </ul>
 </p>
 
+<p>------------------------------------------------------</p>
+
+
 <h2>我能做什么</h2>
 
 <p>
@@ -36,6 +39,81 @@
     </ul>
 </p>
 
+<p>------------------------------------------------------</p>
+
+<h2>只需要一个jar包</h2>
+````
+<dependency>
+    <groupId>com.github.yuyenews</groupId>
+    <artifactId>mars-start-pure</artifactId>
+    <version>最新版，可看文档</version>
+</dependency>
+````
+<h2>一个配置文件</h2>
+````
+#配置端口号（默认8080）
+port: 8088
+
+#配置持久层
+jdbc:
+  #配置数据源，必须是阿里巴巴的 druid数据源
+  dataSource:
+      name: dataSource
+      url: jdbc:mysql://10.211.55.5:3306/test?serverTimezone=GMT%2B8
+      username: root
+      password: rootroot
+      driverClassName: com.mysql.cj.jdbc.Driver
+````
+<h2>然后从main方法启动</h2>
+````
+public class Start {
+    public static void main(String[] args){
+        StartMars.start(Start.class);
+    }
+}
+````
+
+<h2>除此之外再无任何配置文件</h2>
+<p>
+    <ul>
+        <li>很多框架宣称自己没配置文件，其实是把配置放在了java类里面，而Mars-java只有一个yml，比java类更加灵活，更省代码</li>
+        <li>Controller，Bean，DAO，单表操作都可以使用纯注解完成，而且及其简洁</li>
+    </ul>
+</p>
+
+<p>------------------------------------------------------</p>
+
+<h2>将Mars-java项目升级为Mars-cloud项目及其简单</h2>
+
+<h2>只需要换一个start</h2>
+````
+<dependency>
+    <groupId>com.github.yuyenews</groupId>
+    <artifactId>mars-cloud-start</artifactId>
+    <version>最新版，可看目录《版本指引》</version>
+</dependency>
+````
+
+<h2>添加5行配置</h2>
+````
+cloud:
+  # 服务名称，同一个服务的负载均衡集群的name必须一致，不同集群之间必须唯一
+  name: cloud-client1
+  # 尽量长一点，防止接口过多来不及发布
+  sessionTimeout: 10000
+  # 是否作为网关
+  gateWay: yes
+  # 请求Mars-Cloud接口超时时间
+  timeOut: 10000
+  # zookeeper地址，多个地址用英文逗号分割
+  # 多个地址，一定要加双引号，不然解析yml文件会出错
+  register: 10.211.55.9:2180
+````
+
+<p>搭建是不是超简单？ 简直秒懂</p>
+
+<p>------------------------------------------------------</p>
+
 <h2>帮助文档</h2>
 
 [Document](http://mars-framework.com)
@@ -47,6 +125,8 @@
 <p>封装了 Email, MD5, AES 和 其他工具类 并 集成了hutool</p>
 
 [Extension package](https://github.com/yuyenews/Mars-extends)
+
+<p>------------------------------------------------------</p>
 
 <h2>简单对比</h2>
 
