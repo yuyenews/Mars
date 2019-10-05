@@ -55,7 +55,6 @@ public class JedisPoolFactory {
             logger.error("获取JedisPool对象出错",e);
             throw  new Exception(e);
         }
-
     }
 
     /**
