@@ -8,7 +8,9 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.MarsBeanClassModel;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 加载本地资源
@@ -21,12 +23,13 @@ public class LoadBeans {
      * 加载本地bean
      * @throws Exception 异常
      */
-    public static void loadNativeBeans() throws Exception {
+    public static Set<String> loadNativeBeans() throws Exception {
+        Set<String> navClassList = new HashSet<>();
 
         /* 加载 接受远程配置中心通知的controller */
-        Class<?> cls = Class.forName(MarsConstant.REMOTE_CONFIG_CONTROLLER);
-        Controller controller = cls.getAnnotation(Controller.class);
-        loadController(cls, controller);
+        navClassList.add("com.mars.mvc.remote.controller.RemoteConfigController");
+
+        return navClassList;
     }
 
     /**

@@ -78,11 +78,6 @@ public class MarsConstant {
     public static final String MARS_TIMER_OBJECTS = "marsTimerObjects";
 
     /**
-     * 接受远程配置中心通知的controller
-     */
-    public static final String REMOTE_CONFIG_CONTROLLER = "com.mars.mvc.remote.controller.RemoteConfigController";
-
-    /**
      * 读取远程配置的路径
      */
     public static final String READ_REMOTE_CONFIG = "${0}/getConfig";

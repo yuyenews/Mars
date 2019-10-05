@@ -57,23 +57,25 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
         if (count == 0) {
             return methodProxy.invokeSuper(o, args);
         } else if (count == 1) {
-            Object param = checkArgs(args);
-            String dataSourceName = null;
-            DataSource dataSource = method.getAnnotation(DataSource.class);
-            if (dataSource != null) {
-                dataSourceName = dataSource.value();
-            }
-            if (marsGet != null) {
-                return ProxyOpertion.get(marsGet, dataSourceName, param, method);
-            }
-            if (marsSelect != null) {
-                return ProxyOpertion.select(marsSelect, dataSourceName, param, method);
-            }
-            if (marsUpdate != null) {
-                return ProxyOpertion.update(marsUpdate, dataSourceName, param);
-            }
+            return executeMethod(args,method,marsGet,marsSelect,marsUpdate);
         } else {
             throw new Exception(method.getName() + "方法上不允许有多个sql注解");
+        }
+    }
+
+    private Object executeMethod(Object[] args,Method method,MarsGet marsGet, MarsSelect marsSelect, MarsUpdate marsUpdate) throws Exception {
+        Object param = checkArgs(args);
+        String dataSourceName = null;
+        DataSource dataSource = method.getAnnotation(DataSource.class);
+        if (dataSource != null) {
+            dataSourceName = dataSource.value();
+        }
+        if (marsGet != null) {
+            return ProxyOpertion.get(marsGet, dataSourceName, param, method);
+        } else if (marsSelect != null) {
+            return ProxyOpertion.select(marsSelect, dataSourceName, param, method);
+        } else if (marsUpdate != null) {
+            return ProxyOpertion.update(marsUpdate, dataSourceName, param);
         }
         return null;
     }
