@@ -6,30 +6,10 @@ package com.mars.core.util;
  *
  */
 public class ThreadUtil {
-	
-	/**
-	 * 获取当前线程的ID
-	 * @return id
-	 */
-	public static String getThreadIdToTraction() {
-		return getThreadId("traction");
-	}
 
-	/**
-	 * 获取当前线程的ID
-	 * @param tag 标记
-	 * @return id
-	 */
-	public static String getThreadId(String tag) {
-		return String.valueOf(Thread.currentThread().getId())+tag;
-	}
+	private static ThreadLocal threadLocal = new ThreadLocal();
 	
-	/**
-	 * 获取当前线程的ID
-	 * @return id
-	 */
-	public static String getThreadId() {
-		return String.valueOf(Thread.currentThread().getId());
+	public static ThreadLocal getThreadLocal(){
+		return threadLocal;
 	}
-	
 }

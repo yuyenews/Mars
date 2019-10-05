@@ -33,7 +33,7 @@ public class BaseJdbcTemplate {
         ConnectionManager connectionManager = new ConnectionManager();
 
         /* 获取当前线程中的Connection */
-        Object obj = marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
+        Object obj = ThreadUtil.getThreadLocal().get();
 
         /* 获取数据源名称 */
         String dataSourceName2 = getDataSourceName(dataSourceName);

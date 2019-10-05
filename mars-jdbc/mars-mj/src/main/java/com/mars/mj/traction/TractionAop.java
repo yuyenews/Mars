@@ -44,7 +44,7 @@ public class TractionAop {
 				connections.put(key, connection);
 			}
 
-			marsSpace.setAttr(ThreadUtil.getThreadIdToTraction(), connections);
+			ThreadUtil.getThreadLocal().set(connections);
 		} catch (Exception e) {
 			logger.error("开启事务出错",e);
 		}
@@ -57,7 +57,7 @@ public class TractionAop {
 	 */
 	public void endMethod(Object[] args) {
 		try {
-			Map<String,Connection> connections = (Map<String,Connection>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,Connection> connections = (Map<String,Connection>) ThreadUtil.getThreadLocal().get();
 
 			for(String key : connections.keySet()) {
 				Connection connection = connections.get(key);
@@ -67,7 +67,7 @@ public class TractionAop {
 		} catch (Exception e) {
 			logger.error("提交事务出错",e);
 		} finally {
-			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
+			ThreadUtil.getThreadLocal().remove();
 		}
 	}
 
@@ -77,7 +77,7 @@ public class TractionAop {
 	 */
 	public void exp(Throwable e) {
 		try {
-			Map<String,Connection> connections = (Map<String,Connection>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,Connection> connections = (Map<String,Connection>) ThreadUtil.getThreadLocal().get();
 
 			for(String key : connections.keySet()) {
 				Connection connection = connections.get(key);
@@ -89,7 +89,7 @@ public class TractionAop {
 		} catch (Exception ex) {
 			logger.error("回滚事务出错",ex);
 		} finally {
-			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
+			ThreadUtil.getThreadLocal().remove();
 		}
 	}
 }

@@ -45,7 +45,7 @@ public class TractionAop {
 				sqlSessions.put(key, sqlSession);
 			}
 
-			marsSpace.setAttr(ThreadUtil.getThreadIdToTraction(), sqlSessions);
+			ThreadUtil.getThreadLocal().set(sqlSessions);
 		} catch (Exception e) {
 			logger.error("开启事务出错",e);
 		}
@@ -58,7 +58,7 @@ public class TractionAop {
 	 */
 	public void endMethod(Object[] args) {
 		try {
-			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>) ThreadUtil.getThreadLocal().get();
 
 			for(String key : sqlSessions.keySet()) {
 				SqlSession session = sqlSessions.get(key);
@@ -68,7 +68,7 @@ public class TractionAop {
 		} catch (Exception e) {
 			logger.error("提交事务出错",e);
 		} finally {
-			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
+			ThreadUtil.getThreadLocal().remove();
 		}
 		
 	}
@@ -79,7 +79,7 @@ public class TractionAop {
 	 */
 	public void exp(Throwable e) {
 		try {
-			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>) marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
+			Map<String,SqlSession> sqlSessions = (Map<String,SqlSession>) ThreadUtil.getThreadLocal().get();
 
 			for(String key : sqlSessions.keySet()) {
 				SqlSession session = sqlSessions.get(key);
@@ -91,7 +91,7 @@ public class TractionAop {
 		} catch (Exception ex) {
 			logger.error("回滚事务出错",ex);
 		} finally {
-			marsSpace.remove(ThreadUtil.getThreadIdToTraction());
+			ThreadUtil.getThreadLocal().remove();
 		}
 	}
 }

@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface MarsInterceptor {
-    String pattern() default "";
+    String pattern() default "*";
 }
