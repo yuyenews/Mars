@@ -26,10 +26,10 @@ public class LoadClass {
 	public static void loadBeans(String packageName) throws Exception{
 		try {
 			/* 加载本地bean */
-			LoadBeans.loadNativeBeans();
+			Set<String> navClassList = LoadBeans.loadNativeBeans();
 
 			/* 加载框架用户的所有bean */
-			loadAllBeans(packageName);
+			loadAllBeans(packageName,navClassList);
 		} catch (Exception e){
 			throw new Exception("加载bean出错",e);
 		}
@@ -41,9 +41,11 @@ public class LoadClass {
 	 *
 	 * @throws Exception 异常
 	 */
-	private static void loadAllBeans(String packageName) throws Exception {
+	private static void loadAllBeans(String packageName,Set<String> navClassList) throws Exception {
 		try {
 			Set<String> classList = ReadClass.loadClassList(packageName);
+			classList.addAll(navClassList);
+
 			//这里是存下来给cloud加载rpc用的，避免二次扫描
 			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,classList);
 

@@ -32,26 +32,42 @@ public class ExecuteMarsTimer {
         try {
             List<MarsTimerModel> marsTimerModelList = LoadHelper.getMarsTimersList();
             for(MarsTimerModel marsTimerModel : marsTimerModelList){
-                int loop = marsTimerModel.getMarsTimer().loop();
-                /* 开启定时任务 */
-                new Timer().scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        try {
-                            Object hasNettyStart = constants.getAttr(MarsConstant.HAS_NETTY_START);
-                            if(hasNettyStart != null){
-                                Object beanObject = marsTimerModel.getObj();
-                                Method method = marsTimerModel.getMethod();
-                                method.invoke(beanObject);
-                            }
-                        } catch (Exception e){
-                            marsLogger.error("执行定时任务出错,方法名:"+marsTimerModel.getCls().getName()+"."+marsTimerModel.getMethod().getName(),e);
-                        }
-                    }
-                }, new Date(),loop);
+                int fixedRate = marsTimerModel.getMarsTimer().loop();
+                loopTimer(fixedRate,marsTimerModel);
             }
         } catch (Exception e){
             marsLogger.error("加载定时任务出错",e);
+        }
+    }
+
+    /**
+     * 定时轮询
+     * @param fixedRate 轮询间隔
+     * @param marsTimerModel 对象
+     */
+    private static void loopTimer(int fixedRate, MarsTimerModel marsTimerModel){
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                executeTimer(marsTimerModel);
+            }
+        }, new Date(),fixedRate);
+    }
+
+    /**
+     * 开始执行
+     * @param marsTimerModel 对象
+     */
+    private static void executeTimer(MarsTimerModel marsTimerModel){
+        try {
+            Object hasNettyStart = constants.getAttr(MarsConstant.HAS_NETTY_START);
+            if(hasNettyStart != null){
+                Object beanObject = marsTimerModel.getObj();
+                Method method = marsTimerModel.getMethod();
+                method.invoke(beanObject);
+            }
+        } catch (Exception e){
+            marsLogger.error("执行定时任务出错,方法名:"+marsTimerModel.getCls().getName()+"."+marsTimerModel.getMethod().getName(),e);
         }
     }
 }

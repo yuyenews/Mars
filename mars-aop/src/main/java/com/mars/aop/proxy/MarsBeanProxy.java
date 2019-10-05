@@ -2,6 +2,7 @@ package com.mars.aop.proxy;
 
 import java.lang.reflect.Method;
 
+import com.mars.aop.constant.AopConstant;
 import com.mars.core.annotation.MarsAop;
 import com.mars.core.annotation.Traction;
 import com.mars.core.model.AopModel;
@@ -85,10 +86,10 @@ public class MarsBeanProxy implements MethodInterceptor {
 			return;
 		}
 		if (c.getName().equals(TractionClass.getCls().getName())) {
-			Method m2 = c.getDeclaredMethod("startMethod", new Class[]{Object[].class, AopModel.class});
+			Method m2 = c.getDeclaredMethod(AopConstant.START_METHOD, new Class[]{Object[].class, AopModel.class});
 			m2.invoke(obj, new Object[]{args, aopModel});
 		} else {
-			Method m2 = c.getDeclaredMethod("startMethod", new Class[]{Object[].class});
+			Method m2 = c.getDeclaredMethod(AopConstant.START_METHOD, new Class[]{Object[].class});
 			m2.invoke(obj, new Object[]{args});
 		}
 	}
@@ -104,7 +105,7 @@ public class MarsBeanProxy implements MethodInterceptor {
 		if (c == null) {
 			return;
 		}
-		Method m3 = c.getDeclaredMethod("endMethod", new Class[]{Object[].class});
+		Method m3 = c.getDeclaredMethod(AopConstant.END_METHOD, new Class[]{Object[].class});
 		m3.invoke(obj, new Object[]{args});
 	}
 
@@ -119,7 +120,7 @@ public class MarsBeanProxy implements MethodInterceptor {
 		if (c == null) {
 			return;
 		}
-		Method m4 = c.getDeclaredMethod("exp", new Class[]{Throwable.class});
+		Method m4 = c.getDeclaredMethod(AopConstant.EXP_METHOD, new Class[]{Throwable.class});
 		m4.invoke(obj, new Object[]{e});
 	}
 

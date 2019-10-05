@@ -60,7 +60,7 @@ public class MappersProxy extends BaseJdbcProxy implements MethodInterceptor {
 		}
 
 		/* 获取当前线程中的sqlSession */
-		Object obj =  marsSpace.getAttr(ThreadUtil.getThreadIdToTraction());
+		Object obj =  ThreadUtil.getThreadLocal().get();
 		
 		/* 用来执行sql的sqlSession */
 		SqlSession session = null;
