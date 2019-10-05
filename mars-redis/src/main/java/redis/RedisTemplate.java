@@ -13,9 +13,9 @@ import java.util.TreeSet;
 /**
  * Redis操作
  */
-public class RedisTemplete {
+public class RedisTemplate {
 
-    private static Logger logger = LoggerFactory.getLogger(RedisTemplete.class);// 日志
+    private static Logger logger = LoggerFactory.getLogger(RedisTemplate.class);// 日志
 
     /**
      * 从连接池获取redis连接
