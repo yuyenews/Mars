@@ -42,7 +42,7 @@ public class JedisPoolFactory {
      * 获取ShardedJedisPool对象
      * @return
      */
-    public static ShardedJedisPool getShardedJedisPool() throws Exception {
+    protected static ShardedJedisPool getShardedJedisPool() throws Exception {
         try{
             if(shardedJedisPool == null){
                 loadJedisPoolConfigParams();
@@ -196,11 +196,6 @@ public class JedisPoolFactory {
      * @return
      */
     private static JSONObject getConfig(){
-        JSONObject config = ConfigUtil.getConfig();
-        Object obj = config.get("redis");
-        if(obj != null){
-            return (JSONObject)obj;
-        }
-        return null;
+        return ConfigUtil.getConfig().getJSONObject("redis");
     }
 }
