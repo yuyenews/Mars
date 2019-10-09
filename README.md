@@ -29,15 +29,6 @@
     </ul>
 </p>
 
-<h2>What can't I do</h2>
-
-<p>
-    <ul>
-        <li>Only support the main method to start, can not play the war package</li>
-        <li>Can only return json, binary stream to the front end, does not support forwarding and redirection</li>
-    </ul>
-</p>
-
 <h2>Only need one jar package</h2>
 
 ````
