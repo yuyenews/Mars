@@ -21,12 +21,13 @@ public class RedisTemplate {
      * 从连接池获取redis连接
      * @return
      */
-    public static ShardedJedis getShardedJedis() {
+    public static ShardedJedis getShardedJedis() throws Exception {
         ShardedJedis jedis = null;
         try {
             jedis = JedisPoolFactory.getShardedJedisPool().getResource();
         } catch (Exception e) {
             logger.error("get Jedis error", e);
+            throw new Exception("get Jedis error");
         }
 
         return jedis;
@@ -39,10 +40,11 @@ public class RedisTemplate {
      * @return
      */
     public static TreeSet<String> keys(String pattern) {
-        ShardedJedis jedis = getShardedJedis();
+        ShardedJedis jedis = null;
         TreeSet<String> allKeys = new TreeSet<>();
 
         try {
+            jedis = getShardedJedis();
             Collection<Jedis> jedisList = jedis.getAllShards();// 获取所有的缓存实例
             for (Jedis jedis2 : jedisList) {
                 allKeys.addAll(jedis2.keys(pattern));// 获取匹配prefix的所有的key
@@ -75,11 +77,9 @@ public class RedisTemplate {
      * @return
      */
     public static boolean set(byte[] key, byte[] value) {
-        ShardedJedis jedis = getShardedJedis();
+        ShardedJedis jedis = null;
         try {
-            if (logger.isInfoEnabled()) {
-                logger.info("set redis value:" + key + "@" + value);
-            }
+            jedis = getShardedJedis();
             jedis.set(key, value);
             return true;
         } catch (Exception e) {
@@ -99,11 +99,9 @@ public class RedisTemplate {
      * @return
      */
     public static boolean setex(byte[] key, byte[] value,Integer ex) {
-        ShardedJedis jedis = getShardedJedis();
+        ShardedJedis jedis = null;
         try {
-            if (logger.isInfoEnabled()) {
-                logger.info("set redis value:" + key + "@" + value);
-            }
+            jedis = getShardedJedis();
             jedis.setex(key,ex,value);
             return true;
         } catch (Exception e) {
@@ -144,12 +142,9 @@ public class RedisTemplate {
      * @return
      */
     public static byte[] get(byte[] key) {
-        ShardedJedis jedis = getShardedJedis();
+        ShardedJedis jedis = null;
         try {
-            if (logger.isInfoEnabled()) {
-                logger.info("get redis value:" + key);
-            }
-
+            jedis = getShardedJedis();
             return jedis.get(key);
         } catch (Exception e) {
             logger.error("get redis value error:" + key, e);
@@ -189,15 +184,14 @@ public class RedisTemplate {
      * @param key
      */
     public static void del(byte[] key) {
-        ShardedJedis jedis = getShardedJedis();
-        if (jedis != null) {
-            try {
-                jedis.del(key);
-            } catch (Exception e) {
-                logger.error("delString error:" + key, e);
-            } finally {
-                recycleJedis(jedis);
-            }
+        ShardedJedis jedis = null;
+        try {
+            jedis = getShardedJedis();
+            jedis.del(key);
+        } catch (Exception e) {
+            logger.error("delString error:" + key, e);
+        } finally {
+            recycleJedis(jedis);
         }
     }
 
@@ -207,17 +201,15 @@ public class RedisTemplate {
      * @param expireTimeSecond
      */
     public static void updateObjectEnableTime(byte[] key, int expireTimeSecond) {
-        ShardedJedis jedis = getShardedJedis();
-        if (jedis != null) {
-            try {
-                jedis.expire(key, expireTimeSecond);
-            } catch (Exception e) {
-                logger.error("updateObject error:" + key, e);
-            } finally {
-                recycleJedis(jedis);
-            }
+        ShardedJedis jedis = null;
+        try {
+            jedis = getShardedJedis();
+            jedis.expire(key, expireTimeSecond);
+        } catch (Exception e) {
+            logger.error("updateObject error:" + key, e);
+        } finally {
+            recycleJedis(jedis);
         }
-
     }
 
     /**
@@ -235,15 +227,14 @@ public class RedisTemplate {
      * @return
      */
     public static Set<String> getAllKeys(String pattern) {
-        ShardedJedis jedis = getShardedJedis();
-        if (jedis != null) {
-            try {
-                return jedis.hkeys(pattern);
-            } catch (Exception e) {
-                logger.error("getAllKeys error:" + pattern, e);
-            } finally {
-                recycleJedis(jedis);
-            }
+        ShardedJedis jedis = null;
+        try {
+            jedis = getShardedJedis();
+            return jedis.hkeys(pattern);
+        } catch (Exception e) {
+            logger.error("getAllKeys error:" + pattern, e);
+        } finally {
+            recycleJedis(jedis);
         }
         return null;
     }
@@ -258,9 +249,9 @@ public class RedisTemplate {
      * @return
      */
     public static boolean hset(String group,String key, String value) {
-        ShardedJedis jedis = getShardedJedis();
+        ShardedJedis jedis = null;
         try {
-
+            jedis = getShardedJedis();
             jedis.hset(group,key, value);
             return true;
         } catch (Exception e) {
@@ -279,9 +270,10 @@ public class RedisTemplate {
      * @return
      */
     public static String hget(String group, String key){
-        ShardedJedis jedis = getShardedJedis();
+        ShardedJedis jedis = null;
         String result = "";
         try {
+            jedis = getShardedJedis();
             result = jedis.hget(group, key);
         } catch (Exception e) {
             logger.error("hget redis value error:" + group + "@" + key, e);
@@ -298,9 +290,10 @@ public class RedisTemplate {
      * @return
      */
     public static Map<String, String> hgetAll(String group){
-        ShardedJedis jedis = getShardedJedis();
+        ShardedJedis jedis = null;
         Map<String, String>  result = null;
         try {
+            jedis = getShardedJedis();
             result = jedis.hgetAll(group);
         } catch (Exception e) {
             logger.error("hgetAll redis value error:" + group, e);
