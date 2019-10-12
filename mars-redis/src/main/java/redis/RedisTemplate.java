@@ -26,8 +26,7 @@ public class RedisTemplate {
         try {
             jedis = JedisPoolFactory.getShardedJedisPool().getResource();
         } catch (Exception e) {
-            logger.error("get Jedis error", e);
-            throw new Exception("get Jedis error");
+            throw new Exception("get Jedis error",e);
         }
 
         return jedis;
