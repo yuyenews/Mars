@@ -44,6 +44,9 @@ public class MarsCoreServlet implements MarsServlet {
 	 * @return
 	 */
 	public boolean isNotObject(Object result){
+		if(result == null){
+			return true;
+		}
 		String fieldTypeName = result.getClass().getSimpleName().toUpperCase();
 		switch (fieldTypeName){
 			case DataType.INT:

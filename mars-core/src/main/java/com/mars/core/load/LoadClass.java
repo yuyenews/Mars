@@ -1,10 +1,10 @@
 package com.mars.core.load;
 
-import com.mars.core.annotation.*;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ReadClass;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,69 +23,38 @@ public class LoadClass {
 	 *
 	 * @throws Exception 异常
 	 */
-	public static void loadBeans(String packageName) throws Exception{
+	public static void sacnClass(String packageName) throws Exception{
 		try {
-			/* 加载本地bean */
-			Set<String> navClassList = LoadBeans.loadNativeBeans();
 
-			/* 加载框架用户的所有bean */
-			loadAllBeans(packageName,navClassList);
+			Set<String> scanClassList = LoadHelper.getSacnClassList();
+
+			/* 扫描包下面的所有类 */
+			Set<String> classList = ReadClass.loadClassList(packageName);
+
+			/* 加载本地bean */
+			Set<String> navClassList = loadNativeBeans();
+
+			/* 将扫描出来的类保存到内存中 */
+			scanClassList.addAll(classList);
+			scanClassList.addAll(navClassList);
+
+			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,classList);
+
 		} catch (Exception e){
-			throw new Exception("加载bean出错",e);
+			throw new Exception("扫描["+packageName+"]包下的类发生错误",e);
 		}
 	}
 
 	/**
-	 * 加载所有的bean，包括controller 的class对象
-	 * @param packageName bean所在的包名
-	 *
+	 * 加载本地bean
 	 * @throws Exception 异常
 	 */
-	private static void loadAllBeans(String packageName,Set<String> navClassList) throws Exception {
-		try {
-			Set<String> classList = ReadClass.loadClassList(packageName);
-			classList.addAll(navClassList);
+	public static Set<String> loadNativeBeans() throws Exception {
+		Set<String> navClassList = new HashSet<>();
 
-			//这里是存下来给cloud加载rpc用的，避免二次扫描
-			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,classList);
+		/* 加载 接受远程配置中心通知的controller */
+		navClassList.add("com.mars.mvc.remote.controller.RemoteConfigController");
 
-			for (String str : classList) {
-				Class<?> cls = Class.forName(str);
-				Controller controller = cls.getAnnotation(Controller.class);
-				MarsBean marsBean = cls.getAnnotation(MarsBean.class);
-				MarsInterceptor marsInterceptor = cls.getAnnotation(MarsInterceptor.class);
-				MarsDao marsDao = cls.getAnnotation(MarsDao.class);
-				MarsAfter marsAfter = cls.getAnnotation(MarsAfter.class);
-
-				int count = 0;
-
-				if(controller != null) {
-					LoadBeans.loadController(cls, controller);
-					count++;
-				}
-				if(marsBean != null) {
-					LoadBeans.loadEasyBean(cls, marsBean);
-					count++;
-				}
-				if(marsInterceptor != null){
-					LoadBeans.loadInterceptor(cls, marsInterceptor);
-					count++;
-				}
-				if(marsDao != null){
-					LoadBeans.loadDao(cls, marsDao);
-					count++;
-				}
-				if(marsAfter != null){
-					LoadBeans.loadMarsAfter(cls);
-					count++;
-				}
-
-				if(count > 1){
-					throw new Exception("类:["+cls.getName()+"]上不允许有多个Mars注解");
-				}
-			}
-		} catch (Exception e) {
-			throw new Exception("扫描["+packageName+"]包下的类发生错误",e);
-		}
+		return navClassList;
 	}
 }

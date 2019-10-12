@@ -1,14 +1,10 @@
 package com.mars.core.load;
 
-import com.mars.core.annotation.Controller;
-import com.mars.core.annotation.MarsBean;
-import com.mars.core.annotation.MarsDao;
-import com.mars.core.annotation.MarsInterceptor;
+import com.mars.core.annotation.*;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.MarsBeanClassModel;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,16 +16,53 @@ public class LoadBeans {
     private static MarsSpace constants = MarsSpace.getEasySpace();
 
     /**
-     * 加载本地bean
+     * 加载所有的bean，包括controller 的class对象
+     *
      * @throws Exception 异常
      */
-    public static Set<String> loadNativeBeans() throws Exception {
-        Set<String> navClassList = new HashSet<>();
+    public static void loadBeans() throws Exception {
+        try {
 
-        /* 加载 接受远程配置中心通知的controller */
-        navClassList.add("com.mars.mvc.remote.controller.RemoteConfigController");
+            Set<String> scanClassList = LoadHelper.getSacnClassList();
 
-        return navClassList;
+            for (String str : scanClassList) {
+                Class<?> cls = Class.forName(str);
+                Controller controller = cls.getAnnotation(Controller.class);
+                MarsBean marsBean = cls.getAnnotation(MarsBean.class);
+                MarsInterceptor marsInterceptor = cls.getAnnotation(MarsInterceptor.class);
+                MarsDao marsDao = cls.getAnnotation(MarsDao.class);
+                MarsAfter marsAfter = cls.getAnnotation(MarsAfter.class);
+
+                int count = 0;
+
+                if(controller != null) {
+                    LoadBeans.loadController(cls, controller);
+                    count++;
+                }
+                if(marsBean != null) {
+                    LoadBeans.loadEasyBean(cls, marsBean);
+                    count++;
+                }
+                if(marsInterceptor != null){
+                    LoadBeans.loadInterceptor(cls, marsInterceptor);
+                    count++;
+                }
+                if(marsDao != null){
+                    LoadBeans.loadDao(cls, marsDao);
+                    count++;
+                }
+                if(marsAfter != null){
+                    LoadBeans.loadMarsAfter(cls);
+                    count++;
+                }
+
+                if(count > 1){
+                    throw new Exception("类:["+cls.getName()+"]上不允许有多个Mars注解");
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("从扫描出来的类里面筛选有注解的类,出现异常",e);
+        }
     }
 
     /**
