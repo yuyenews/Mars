@@ -74,13 +74,13 @@
 			<dependency>
 				<groupId>io.netty</groupId>
 				<artifactId>netty-all</artifactId>
-				<version>4.1.38.Final</version>
+				<version>4.1.42.Final</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>1.2.47</version>
+				<version>1.2.62</version>
 			</dependency>
 
 			<dependency>
@@ -102,7 +102,7 @@
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib</artifactId>
-				<version>3.2.5</version>
+				<version>3.3.0</version>
 			</dependency>
 
 			<dependency>
@@ -120,7 +120,7 @@
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
-				<version>1.1.10</version>
+				<version>1.1.20</version>
 			</dependency>
 
 			<dependency>
@@ -132,13 +132,13 @@
 			<dependency>
 				<groupId>com.auth0</groupId>
 				<artifactId>java-jwt</artifactId>
-				<version>3.4.1</version>
+				<version>3.8.3</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.yaml</groupId>
 				<artifactId>snakeyaml</artifactId>
-				<version>1.24</version>
+				<version>1.25</version>
 			</dependency>
 
 			<dependency>
