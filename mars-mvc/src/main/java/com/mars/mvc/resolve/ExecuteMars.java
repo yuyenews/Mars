@@ -142,6 +142,10 @@ public class ExecuteMars {
 	 * @throws Exception
 	 */
 	private void checkRequestMethod(HttpMethod method,MarsMappingModel marsMappingModel) throws Exception {
+		if(marsMappingModel == null){
+			throw new Exception("服务器上没有相应的接口");
+		}
+
 		String strMethod = method.name().toLowerCase();
 		String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
 		if (!strMethod.equals(requestMethod)) {
