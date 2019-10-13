@@ -47,23 +47,15 @@ public class ExecuteMars {
 	 */
 	public Object execute(MarsMappingModel marsMappingModel, HttpMethod method, HttpRequest request, HttpResponse response) throws Exception {
 		try {
-			
-			if(marsMappingModel == null) {
-				throw new Exception("服务器上没有相应的接口");
-			}
-			
-			String strMethod = method.name().toLowerCase();
 
-			String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
-			
-			if (!strMethod.equals(requestMethod)) {
-				/* 如果请求方式和controller的映射不一致，则提示客户端 */
-				throw new Exception("此接口的请求方式为[" + requestMethod + "]");
-			}
+			/* 校验请求方式 */
+			checkRequestMethod(method, marsMappingModel);
 
-			/* 获取拦截器 并执行 控制层执行前的方法 */
+			/* 获取拦截器 */
 			String uriEnd = RequestUtil.getUriName(request);
 			List<MarsInterModel> list = ExecuteInters.getInters(uriEnd);
+
+			/* 执行拦截器 在控制层执行前的方法 */
 			Object intersStartResult = ExecuteInters.executeIntersStart(list,request, response);
 			if(!intersStartResult.toString().equals(BaseInterceptor.SUCCESS)) {
 				return intersStartResult;
@@ -141,5 +133,20 @@ public class ExecuteMars {
 		Class cl = method.getReturnType();
 		String st = cl.getName();
 		return st.toLowerCase().trim().equals("void");
+	}
+
+	/**
+	 * 校验请求方式和接口设置的方式是否一致
+	 * @param method
+	 * @param marsMappingModel
+	 * @throws Exception
+	 */
+	private void checkRequestMethod(HttpMethod method,MarsMappingModel marsMappingModel) throws Exception {
+		String strMethod = method.name().toLowerCase();
+		String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
+		if (!strMethod.equals(requestMethod)) {
+			/* 如果请求方式和controller的映射不一致，则提示客户端 */
+			throw new Exception("此接口的请求方式为[" + requestMethod + "]");
+		}
 	}
 }
