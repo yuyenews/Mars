@@ -32,12 +32,13 @@ public class LoadClass {
 			Set<String> classList = ReadClass.loadClassList(packageName);
 
 			/* 加载本地bean */
-			Set<String> navClassList = loadNativeBeans();
+			Set<String> navClassList = loadNativeClass();
 
-			/* 将扫描出来的类保存到内存中 */
+			/* 将框架自有的Bean和扫描出来的类合并到一个集合 */
 			scanClassList.addAll(classList);
 			scanClassList.addAll(navClassList);
 
+			/* 将扫描出来的类保存到内存中 */
 			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,classList);
 
 		} catch (Exception e){
@@ -46,14 +47,13 @@ public class LoadClass {
 	}
 
 	/**
-	 * 加载本地bean
+	 * 加载本地Class
 	 * @throws Exception 异常
 	 */
-	public static Set<String> loadNativeBeans() throws Exception {
+	public static Set<String> loadNativeClass() throws Exception {
 		Set<String> navClassList = new HashSet<>();
 
-		/* 加载 接受远程配置中心通知的controller */
-		navClassList.add("com.mars.mvc.remote.controller.RemoteConfigController");
+		// 扩展用的，后期用来添加框架自有的Bean
 
 		return navClassList;
 	}
