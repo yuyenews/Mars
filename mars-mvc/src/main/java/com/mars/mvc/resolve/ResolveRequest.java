@@ -55,8 +55,7 @@ public class ResolveRequest {
 			if(PathAccess.hasAccess(uri)){
 				return "ok";
 			}
-			MarsMappingModel marsMappingModel = getMarsMappingModel(maps,uri);
-			return executeMars.execute(marsMappingModel,request.getMethod(),request,response);
+			return executeMars.execute(maps.get(uri),request.getMethod(),request,response);
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
 			throw e;
@@ -75,24 +74,6 @@ public class ResolveRequest {
 			uri = uri.substring(1);
 		}
 		return uri;
-	}
-
-	/**
-	 * 获取MarsMappingModel
-	 * @param maps
-	 * @param uri
-	 * @return
-	 * @throws Exception
-	 */
-	private MarsMappingModel getMarsMappingModel(Map<String, MarsMappingModel> maps, String uri) throws Exception {
-		if(maps == null || maps.size() < 1){
-			throw new Exception("服务器上没有相应的接口");
-		}
-		MarsMappingModel marsMappingModel = maps.get(uri);
-		if(marsMappingModel == null){
-			throw new Exception("服务器上没有相应的接口");
-		}
-		return marsMappingModel;
 	}
 	
 	/**
