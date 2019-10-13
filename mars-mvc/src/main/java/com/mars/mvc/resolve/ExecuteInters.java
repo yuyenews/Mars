@@ -41,7 +41,7 @@ public class ExecuteInters {
 
 				Method method2 = clss.getDeclaredMethod("startRequest", new Class[] { HttpRequest.class, HttpResponse.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response });
-				if(!result.toString().equals(BaseInterceptor.SUCCESS)) {
+				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
 			}
@@ -69,7 +69,7 @@ public class ExecuteInters {
 
 				Method method2 = clss.getDeclaredMethod("endRequest", new Class[] { HttpRequest.class, HttpResponse.class, Object.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response, conResult });
-				if(!result.toString().equals(BaseInterceptor.SUCCESS)) {
+				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
 			}
