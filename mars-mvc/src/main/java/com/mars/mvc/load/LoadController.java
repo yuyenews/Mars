@@ -1,5 +1,6 @@
 package com.mars.mvc.load;
 
+import com.mars.core.annotation.enums.ReqMethod;
 import com.mars.core.load.WriteFields;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanClassModel;
@@ -30,7 +31,7 @@ public class LoadController {
 	/**
 	 * 创建controller对象，并将服务层对象注入进去
 	 */
-	public static void loadContrl() throws Exception{
+	public static void loadControl() throws Exception{
 		
 		try {
 			Map<String, MarsMappingModel> controlObjects = new HashMap<>();
@@ -38,7 +39,8 @@ public class LoadController {
 			/* 获取所有的controller数据 */
 			List<MarsBeanClassModel> controlList = LoadHelper.getControllerList();
 
-			Map<String, MarsBeanModel> marsBeanObjs = getMarsBeans();
+			/* 获取所有的marsBean */
+			Map<String, MarsBeanModel> marsBeanObjs = LoadHelper.getBeanObjectMap();
 			
 			for(MarsBeanClassModel marsBeanClassModel : controlList) {
 				
@@ -49,23 +51,26 @@ public class LoadController {
 				 * 直接 迭代一次 就给一个controller注入一次
 				 */
 				Object obj = iocControl(cls,marsBeanObjs);
+				if(obj == null) {
+					continue;
+				}
 
-				if(obj != null) {
-					/* 获取controller的所有方法 */
-					Method[] methods = cls.getMethods();
-					for(Method method : methods) {
-						RequestMethod requestMethod = method.getAnnotation(RequestMethod.class);
-						if(requestMethod != null){
-							/* 校验方法 */
-							checkMethodName(controlObjects,cls,method);
+				/* 获取controller的所有方法 */
+				Method[] methods = cls.getMethods();
+				for(Method method : methods) {
+					if(method.getDeclaringClass().equals(cls)){
+						/* 校验方法 */
+						checkMethodName(controlObjects,cls,method);
 
-							MarsMappingModel marsMappingModel = new MarsMappingModel();
-							marsMappingModel.setObject(obj);
-							marsMappingModel.setMethod(method.getName());
-							marsMappingModel.setCls(cls);
-							marsMappingModel.setReqMethod(requestMethod.value());
-							controlObjects.put(method.getName(), marsMappingModel);
-						}
+						/* 创建映射对象 */
+						MarsMappingModel marsMappingModel = new MarsMappingModel();
+						marsMappingModel.setObject(obj);
+						marsMappingModel.setMethod(method.getName());
+						marsMappingModel.setCls(cls);
+						marsMappingModel.setReqMethod(getReqMethod(method));
+
+						/* 保存映射对象 */
+						controlObjects.put(method.getName(), marsMappingModel);
 					}
 				}
 			}
@@ -97,13 +102,18 @@ public class LoadController {
 			throw new Exception("创建controller并注入的时候报错",e);
 		} 
 	}
-	
+
 	/**
-	 * 获取所有的marsBean
-	 * @return duix
+	 * 获取接口的请求方式
+	 * @param method
+	 * @return
 	 */
-	private static Map<String, MarsBeanModel> getMarsBeans() {
-		return LoadHelper.getBeanObjectMap();
+	private static ReqMethod getReqMethod(Method method){
+		RequestMethod requestMethod = method.getAnnotation(RequestMethod.class);
+		if(requestMethod != null){
+			return requestMethod.value();
+		}
+		return ReqMethod.GET;
 	}
 
 	/**
