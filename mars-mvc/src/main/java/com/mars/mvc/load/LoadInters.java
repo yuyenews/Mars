@@ -32,7 +32,6 @@ public class LoadInters {
         try {
             List<MarsInterModel> list = new ArrayList<>();
 
-
             List<MarsBeanClassModel> interceptors = LoadHelper.getInterceptorList();
 
             for (MarsBeanClassModel marsBeanClassModel : interceptors) {
