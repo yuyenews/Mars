@@ -197,9 +197,8 @@ public class DBHelper {
      *
      * @param dataSource 数据源配置
      * @return DruidDataSource对象
-     * @throws Exception
      */
-    private static DruidDataSource initDataSource(JSONObject dataSource) throws Exception {
+    private static DruidDataSource initDataSource(JSONObject dataSource) {
 
         DruidDataSource druidDataSource = new DruidDataSource();
 
@@ -212,7 +211,7 @@ public class DBHelper {
 
         for (String key : dataSource.keySet()) {
             /* 如果配置里有上面的属性，则以配置中的为准 */
-            properties.setProperty("druid."+key,dataSource.get(key).toString());
+            properties.setProperty("druid."+key,dataSource.getString(key));
         }
 
         druidDataSource.configFromPropety(properties);
