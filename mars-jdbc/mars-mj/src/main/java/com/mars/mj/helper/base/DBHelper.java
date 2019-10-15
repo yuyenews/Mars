@@ -9,7 +9,6 @@ import com.mars.jdbc.util.JdbcConfigUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.*;
 
@@ -202,22 +201,23 @@ public class DBHelper {
      */
     private static DruidDataSource initDataSource(JSONObject dataSource) throws Exception {
 
-        Class cls = Class.forName(MarsConstant.DRUID_DATA_SOURCE);
-        Object druidDataSource = cls.getDeclaredConstructor().newInstance();
+        DruidDataSource druidDataSource = new DruidDataSource();
 
         Properties properties = new Properties();
+
+        /* 设置默认属性 */
         properties.setProperty("druid.maxWait","60000");
         properties.setProperty("druid.timeBetweenEvictionRunsMillis","2000");
         properties.setProperty("druid.minEvictableIdleTimeMillis","5000");
 
         for (String key : dataSource.keySet()) {
+            /* 如果配置里有上面的属性，则以配置中的为准 */
             properties.setProperty("druid."+key,dataSource.get(key).toString());
         }
 
-        Method configFromPropety = cls.getDeclaredMethod("configFromPropety",new Class[]{Properties.class});
-        configFromPropety.invoke(druidDataSource,new Object[]{properties});
+        druidDataSource.configFromPropety(properties);
 
-        return (DruidDataSource) druidDataSource;
+        return druidDataSource;
     }
 
 }
