@@ -17,8 +17,6 @@ public class FileUtil {
 
     private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
-    public static String local = null;
-
     /**
      * 根据文件路径 获取文件中的字符串内容
      *
@@ -38,11 +36,7 @@ public class FileUtil {
             }
             return sb.toString();
         } catch (Exception e) {
-            if (local == null) {
-                logger.error("", e);
-            } else {
-                logger.warn("自定义mybatis配置文件加载失败或者不存在，将自动使用默认配置");
-            }
+            logger.error("", e);
         } finally {
             try{
                 if(reader != null){
