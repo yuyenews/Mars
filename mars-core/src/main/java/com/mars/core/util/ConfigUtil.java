@@ -37,7 +37,7 @@ public class ConfigUtil {
 			config.put("port",object.get("port"));
 
 			/* 将配置信息缓存下来 */
-			constants.setAttr("config", config);
+			constants.setAttr(MarsConstant.CONFIG_CACHE_KEY, config);
 		} catch (Exception e) {
 			throw new Exception("加载配置文件出错",e);
 		}
@@ -49,7 +49,7 @@ public class ConfigUtil {
 	 * @return json
 	 */
 	public static JSONObject getConfig() {
-		Object obj = constants.getAttr("config");
+		Object obj = constants.getAttr(MarsConstant.CONFIG_CACHE_KEY);
 		if(obj != null) {
 			JSONObject jsonObject = (JSONObject)obj;
 			

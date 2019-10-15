@@ -10,10 +10,6 @@ public class MarsConstant {
      */
     public static final String DATA_SOURCE_MAP = "druidDataSourceMap";
     /**
-     * druid数据源加载类
-      */
-    public static final String DRUID_DATA_SOURCE = "com.alibaba.druid.pool.DruidDataSource";
-    /**
      * 配置文件中数据源节点的属性名
      */
     public static final String DATA_SOURCE = "dataSource";
@@ -106,4 +102,9 @@ public class MarsConstant {
      * 所有数据源储存在内存中的key
      */
     public static final String DATASOURCE_NAMES = "dataSourceNames";
+
+    /**
+     * config存放在内存中的key
+     */
+    public static final String CONFIG_CACHE_KEY = "config";
 }
