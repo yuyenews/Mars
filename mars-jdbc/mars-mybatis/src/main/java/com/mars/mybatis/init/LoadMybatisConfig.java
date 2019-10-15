@@ -45,9 +45,11 @@ public class LoadMybatisConfig {
 	 */
 	public static String getConfigStr() throws Exception {
 		try {
-			FileUtil.local = String.valueOf(JdbcConfigUtil.getJdbcConfig("config-location"));
-			String str = FileUtil.readFileString("/"+FileUtil.local);
+			String localConfig = String.valueOf(JdbcConfigUtil.getJdbcConfig("config-location"));
+			String str = FileUtil.readFileString("/"+localConfig);
 			if(str == null) {
+				logger.warn("自定义mybatis配置文件加载失败或者不存在，将自动使用默认配置");
+
 				str = defaultConfig();
 				str = str.replace(ENVIRONMENTS,getDataSources());
 				str = str.replace(MAPPERS,getMappers());
@@ -158,7 +160,6 @@ public class LoadMybatisConfig {
 	 */
 	private static boolean ckDsConfig(JSONObject jsonObject) throws Exception {
 		if(jsonObject.get("name") == null) {
-			logger.error("数据源没有指定name");
 			throw new Exception("数据源没有指定name");
 		}
 		return true;
