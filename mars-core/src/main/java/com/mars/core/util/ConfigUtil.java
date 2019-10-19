@@ -22,12 +22,7 @@ public class ConfigUtil {
 	public static void loadConfig(String suffix) throws Exception{
 		try {
 			/* 读取本地配置文件 */
-			String content = null;
-			if(suffix == null){
-				content = FileUtil.readYml(MarsConstant.CONFIG_PATH_DEFAULT);
-			} else {
-				content = FileUtil.readYml(MarsConstant.CONFIG_PATH.replace("{suffix}",suffix));
-			}
+			String content = configFilePath(suffix);
 			JSONObject object = JSONObject.parseObject(content);
 
 			/* 从配置中心获取配置信息 */
@@ -56,5 +51,18 @@ public class ConfigUtil {
 			return jsonObject;
 		}
 		return null;
+	}
+
+	/**
+	 * 获取配置文件路径
+	 * @param suffix 后缀
+	 * @return 配置文件路径
+	 */
+	private static String configFilePath(String suffix){
+		if(suffix == null){
+			return MarsConstant.CONFIG_PATH_DEFAULT;
+		} else {
+			return MarsConstant.CONFIG_PATH.replace("{suffix}",suffix);
+		}
 	}
 }
