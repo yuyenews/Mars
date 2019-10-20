@@ -33,26 +33,28 @@ public class JdbcPage {
      */
     public static <T> PageModel<T> selectList(String sql, PageParamModel param, Class<T> cls, String dataSourceName) throws Exception {
 
-        PageModel<T> pageModel = new PageModel<>();
-
+        /* 将查询sql转化成分页所需的两条语句 */
         String selectSql = getSelectSql(sql);
         String countSql = getCountSql(sql);
 
+        /* 将查询参数提取出来并转化成需要的格式 */
         Map<String,Object> pageParam = getParam(param);
-        List<T> dataList = BaseSelect.selectList(selectSql, pageParam, cls, dataSourceName);
+
+        /* 查询总条数 */
         List<Map> countList = BaseSelect.selectList(countSql, pageParam, Map.class, dataSourceName);
 
-        if (countList != null && countList.size() == 1) {
-            Map countItem = countList.get(0);
-            if (countItem != null && countItem.size() > 0) {
-                Object countNum = countItem.get("countNum");
-                if (countNum == null || countNum.toString().equals("")) {
-                    countNum = 0;
-                }
-                pageModel.setPageCount(Integer.parseInt(countNum.toString()));
-            }
+        /* 获取总条数 */
+        Object countNum = getCountNum(countList);
+        if(countNum == null){
+            return null;
         }
 
+        /* 如果能进到这一步说明有数据，此刻再查询需要的数据 */
+        List<T> dataList = BaseSelect.selectList(selectSql, pageParam, cls, dataSourceName);
+
+        /* 组装返回对象 */
+        PageModel<T> pageModel = new PageModel<>();
+        pageModel.setPageCount(Integer.parseInt(countNum.toString()));
         pageModel.setDataList(dataList);
         pageModel.setCurrentPage(param.getCurrentPage());
         pageModel.setPageSize(param.getPageSize());
@@ -65,6 +67,29 @@ public class JdbcPage {
             pageModel.setPageTotal(pageTotal + 1);
         }
         return pageModel;
+    }
+
+    /**
+     * 从返回数据中获取总条数
+     * @param countList 返回的数据
+     * @return 总条数
+     */
+    private static Object getCountNum(List<Map> countList) {
+        if (countList == null || countList.size() < 1) {
+            return null;
+        }
+
+        Map countItem = countList.get(0);
+        if (countItem == null || countItem.size() < 1) {
+            return null;
+        }
+
+        Object countNum = countItem.get("countNum");
+        if (countNum == null || countNum.toString().equals("")) {
+            return null;
+        }
+
+        return countNum;
     }
 
     /**
