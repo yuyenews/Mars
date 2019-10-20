@@ -63,6 +63,16 @@ public class MjProxy extends BaseJdbcProxy implements MethodInterceptor {
         }
     }
 
+    /**
+     * 执行方法
+     * @param args 参数
+     * @param method 要执行的方法
+     * @param marsGet 注解
+     * @param marsSelect 注解
+     * @param marsUpdate 注解
+     * @return 返回值
+     * @throws Exception 异常
+     */
     private Object executeMethod(Object[] args,Method method,MarsGet marsGet, MarsSelect marsSelect, MarsUpdate marsUpdate) throws Exception {
         Object param = checkArgs(args);
         String dataSourceName = null;
