@@ -21,8 +21,11 @@ public class ConfigUtil {
 	 */
 	public static void loadConfig(String suffix) throws Exception{
 		try {
+			/* 获取本地配置文件的路径 */
+			String configFilePath = configFilePath(suffix);
+
 			/* 读取本地配置文件 */
-			String content = configFilePath(suffix);
+			String content = FileUtil.readYml(configFilePath);
 			JSONObject object = JSONObject.parseObject(content);
 
 			/* 从配置中心获取配置信息 */
