@@ -80,8 +80,6 @@ public class MarsServerHandler extends ChannelInboundHandlerAdapter {
 
 			switch (idleStateEvent.state()){
 				case READER_IDLE:
-					ResponseUtil.sendTimeout(ctx,"请求超时");
-					break;
 				case WRITER_IDLE:
 					ResponseUtil.sendTimeout(ctx,"请求超时");
 					break;
