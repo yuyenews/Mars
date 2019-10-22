@@ -1,6 +1,6 @@
 package com.mars.server.util;
 
-import com.mars.server.server.request.HttpRequest;
+import com.mars.server.server.request.HttpMarsRequest;
 
 /**
  * 请求工具类
@@ -14,7 +14,7 @@ public class RequestUtil {
 	 * @param request 请求
 	 * @return string
 	 */
-	public static String getUriName(HttpRequest request) {
+	public static String getUriName(HttpMarsRequest request) {
 		/* 获取路径 */
 		String uri = request.getUri();
 		if(uri.indexOf("?")>-1) {

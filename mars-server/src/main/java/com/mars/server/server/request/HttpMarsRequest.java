@@ -22,9 +22,9 @@ import java.util.Map;
  * @author yuye
  *
  */
-public class HttpRequest {
+public class HttpMarsRequest {
 	
-	private Logger logger = LoggerFactory.getLogger(HttpRequest.class);
+	private Logger logger = LoggerFactory.getLogger(HttpMarsRequest.class);
 	
 	/**
 	 * netty原生request
@@ -56,7 +56,7 @@ public class HttpRequest {
 	 * @param httpRequest
 	 * @param ctx
 	 */
-	public HttpRequest(FullHttpRequest httpRequest,ChannelHandlerContext ctx) {
+	public HttpMarsRequest(FullHttpRequest httpRequest, ChannelHandlerContext ctx) {
 		this.body = getBody(httpRequest);
 		this.setParameters(getParams(httpRequest));
 		this.httpRequest = httpRequest;

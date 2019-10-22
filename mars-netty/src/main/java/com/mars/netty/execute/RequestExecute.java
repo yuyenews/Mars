@@ -3,8 +3,8 @@ package com.mars.netty.execute;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.ncfg.mvc.CoreServletClass;
 import com.mars.core.util.MesUtil;
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -41,17 +41,17 @@ public class RequestExecute {
 	public void execute() {
 
 		/* 组装httpRequest对象 */
-		HttpRequest request = new HttpRequest(httpRequest,ctx);
+		HttpMarsRequest request = new HttpMarsRequest(httpRequest,ctx);
 
 		/* 组装httpResponse对象 */
-		HttpResponse response = new HttpResponse(ctx);
+		HttpMarsResponse response = new HttpMarsResponse(ctx);
 
 		try {
 
 			/* 通过反射执行核心servlet */
 			Class<?> cls = CoreServletClass.getCls();
 			Object object = cls.getDeclaredConstructor().newInstance();
-			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[] { HttpRequest.class ,HttpResponse.class});
+			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[] { HttpMarsRequest.class , HttpMarsResponse.class});
 			Object result = helloMethod.invoke(object, new Object[] { request ,response});
 			if(result != null && result.toString().equals(MarsConstant.VOID)) {
 				return;

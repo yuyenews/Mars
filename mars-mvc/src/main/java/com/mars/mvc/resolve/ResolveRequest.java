@@ -3,8 +3,8 @@ package com.mars.mvc.resolve;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.mvc.resolve.access.PathAccess;
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
 import com.mars.mvc.model.MarsMappingModel;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class ResolveRequest {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public Object resolve(HttpRequest request,HttpResponse response) throws Exception {
+	public Object resolve(HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		
 		try {
 			Map<String, MarsMappingModel> maps = getControllers();
@@ -67,7 +67,7 @@ public class ResolveRequest {
 	 * @param request qingqiu
 	 * @return
 	 */
-	private String getRequestPath(HttpRequest request) {
+	private String getRequestPath(HttpMarsRequest request) {
 		/* 获取路径 */
 		String uri = RequestUtil.getUriName(request);
 		if(uri.startsWith("/")) {

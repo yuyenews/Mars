@@ -4,8 +4,8 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.mvc.util.BuildParams;
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
 import com.mars.mvc.model.MarsMappingModel;
 import io.netty.handler.codec.http.HttpMethod;
@@ -45,7 +45,7 @@ public class ExecuteMars {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public Object execute(MarsMappingModel marsMappingModel, HttpMethod method, HttpRequest request, HttpResponse response) throws Exception {
+	public Object execute(MarsMappingModel marsMappingModel, HttpMethod method, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		try {
 
 			/* 校验请求方式 */
@@ -85,7 +85,7 @@ public class ExecuteMars {
 	 * @return
 	 * @throws Exception
 	 */
-	private Object executeControllerMethod(MarsMappingModel marsMappingModel, HttpRequest request,HttpResponse response) throws Exception {
+	private Object executeControllerMethod(MarsMappingModel marsMappingModel, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		Object obj = marsMappingModel.getObject();
 		Method method = getMethod(marsMappingModel);
 

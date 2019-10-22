@@ -1,7 +1,7 @@
 package com.mars.mvc.logs;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mars.server.server.request.HttpRequest;
+import com.mars.server.server.request.HttpMarsRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +28,8 @@ public class LogAop {
      */
     public void startMethod(Object[] args) {
         Object obj = args[0];
-        if(obj != null && obj instanceof HttpRequest){
-            HttpRequest request = (HttpRequest)obj;
+        if(obj != null && obj instanceof HttpMarsRequest){
+            HttpMarsRequest request = (HttpMarsRequest)obj;
             Map<String, Object> params = request.getParemeters();
 
             StringBuffer buffer = new StringBuffer();
