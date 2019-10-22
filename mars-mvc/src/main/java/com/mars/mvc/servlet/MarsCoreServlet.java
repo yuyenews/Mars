@@ -3,8 +3,8 @@ package com.mars.mvc.servlet;
 import com.alibaba.fastjson.JSON;
 import com.mars.core.enums.DataType;
 import com.mars.mvc.resolve.ResolveRequest;
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.servlet.MarsServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ public class MarsCoreServlet implements MarsServlet {
 	private Logger log = LoggerFactory.getLogger(MarsCoreServlet.class);
 	
 	@Override
-	public Object doRequest(HttpRequest request, HttpResponse response) throws Exception {
+	public Object doRequest(HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		try {
 
 			/* 将请求丢给解释器 去解释，并调用对应的控制层方法进行处理 */

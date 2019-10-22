@@ -1,7 +1,7 @@
 package com.mars.mvc.base;
 
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 
 /**
  * 拦截器基类，强制继承
@@ -26,7 +26,7 @@ public interface BaseInterceptor {
 	 * @param response
 	 * @return
 	 */
-	Object startRequest(HttpRequest request,HttpResponse response);
+	Object startRequest(HttpMarsRequest request, HttpMarsResponse response);
 	
 	/**
 	 * 控制层执行之后
@@ -35,5 +35,5 @@ public interface BaseInterceptor {
 	 * @param obj 控制层返回的数据
 	 * @return
 	 */
-	Object endRequest(HttpRequest request,HttpResponse response,Object obj);
+	Object endRequest(HttpMarsRequest request, HttpMarsResponse response, Object obj);
 }

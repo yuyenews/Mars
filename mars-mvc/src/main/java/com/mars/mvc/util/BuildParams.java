@@ -3,8 +3,8 @@ package com.mars.mvc.util;
 import com.mars.core.constant.MarsCloudConstant;
 import com.mars.core.enums.DataType;
 import com.mars.core.util.SerializableUtil;
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 
 import java.lang.reflect.Field;
@@ -25,10 +25,10 @@ public class BuildParams {
      * @return
      * @throws Exception
      */
-    public static Object[] builder(Method method, HttpRequest request, HttpResponse response) throws Exception {
+    public static Object[] builder(Method method, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
         try {
-            Class requestClass = HttpRequest.class;
-            Class responseClass = HttpResponse.class;
+            Class requestClass = HttpMarsRequest.class;
+            Class responseClass = HttpMarsResponse.class;
             Class mapClass = Map.class;
             Class[] paramTypes = method.getParameterTypes();
             if(paramTypes == null || paramTypes.length < 1){
@@ -67,7 +67,7 @@ public class BuildParams {
      * @return
      * @throws Exception
      */
-    private static Object getObject(Class cls,HttpRequest request) throws Exception {
+    private static Object getObject(Class cls, HttpMarsRequest request) throws Exception {
         /* 如果参数类型既不是request，也不是response，那么就当做一个对象来处理 */
         Object obj = cls.getDeclaredConstructor().newInstance();
         Field[] fields = cls.getDeclaredFields();
@@ -125,7 +125,7 @@ public class BuildParams {
      * @return
      * @throws Exception
      */
-    private static Object builderCloudObject(Class cls,HttpRequest request) throws Exception {
+    private static Object builderCloudObject(Class cls, HttpMarsRequest request) throws Exception {
         Object requestType = request.getParameter(MarsCloudConstant.REQUEST_TYPE);
         if(requestType != null && requestType.toString().equals(MarsCloudConstant.REQUEST_TYPE)){
             MarsFileUpLoad marsFileUpLoad = request.getFile(MarsCloudConstant.PARAM);

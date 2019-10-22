@@ -7,8 +7,8 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.MatchUtil;
 import com.mars.core.util.MesUtil;
 import com.mars.mvc.model.MarsInterModel;
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,14 +32,14 @@ public class ExecuteInters {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public static Object executeIntersStart(List<MarsInterModel> list,HttpRequest request, HttpResponse response) throws Exception {
+	public static Object executeIntersStart(List<MarsInterModel> list, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		String className = "";
 		try {
 			for(MarsInterModel marsInterModel : list) {
 				Class<?> clss = marsInterModel.getCls();
 				className = clss.getName();
 
-				Method method2 = clss.getDeclaredMethod("startRequest", new Class[] { HttpRequest.class, HttpResponse.class });
+				Method method2 = clss.getDeclaredMethod("startRequest", new Class[] { HttpMarsRequest.class, HttpMarsResponse.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response });
 				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
@@ -59,7 +59,7 @@ public class ExecuteInters {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public static Object executeIntersEnd(List<MarsInterModel> list,HttpRequest request, HttpResponse response,Object conResult) throws Exception {
+	public static Object executeIntersEnd(List<MarsInterModel> list, HttpMarsRequest request, HttpMarsResponse response, Object conResult) throws Exception {
 		String className = "";
 		try {
 			
@@ -67,7 +67,7 @@ public class ExecuteInters {
 				Class<?> clss = marsInterModel.getCls();
 				className = clss.getName();
 
-				Method method2 = clss.getDeclaredMethod("endRequest", new Class[] { HttpRequest.class, HttpResponse.class, Object.class });
+				Method method2 = clss.getDeclaredMethod("endRequest", new Class[] { HttpMarsRequest.class, HttpMarsResponse.class, Object.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response, conResult });
 				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;

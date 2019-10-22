@@ -1,7 +1,7 @@
 package com.mars.server.server.servlet;
 
-import com.mars.server.server.request.HttpRequest;
-import com.mars.server.server.request.HttpResponse;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 
 /**
  * servlet 模板
@@ -17,5 +17,5 @@ public interface MarsServlet {
 	 * @param response
 	 * @return obj
 	 */
-	Object doRequest(HttpRequest request, HttpResponse response) throws Exception;
+	Object doRequest(HttpMarsRequest request, HttpMarsResponse response) throws Exception;
 }

@@ -21,9 +21,9 @@ import java.util.Map;
  *
  * @author yuye
  */
-public class HttpResponse {
+public class HttpMarsResponse {
 
-    private Logger logger = LoggerFactory.getLogger(HttpResponse.class);
+    private Logger logger = LoggerFactory.getLogger(HttpMarsResponse.class);
 
     /**
      * netty原生通道
@@ -41,7 +41,7 @@ public class HttpResponse {
      *
      * @param ctx netty原生通道
      */
-    public HttpResponse(ChannelHandlerContext ctx) {
+    public HttpMarsResponse(ChannelHandlerContext ctx) {
         this.ctx = ctx;
         this.header = new HashMap<>();
     }
