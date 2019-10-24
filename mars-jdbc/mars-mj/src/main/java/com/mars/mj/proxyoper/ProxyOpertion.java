@@ -48,7 +48,7 @@ public class ProxyOpertion {
      */
     public static Object select(MarsSelect marsSelect, String dataSourceName, Object param, Method method) throws Exception {
         if(marsSelect.page()){
-            if(!method.getReturnType().getName().equals(PageModel.class.getName())){
+            if(!method.getReturnType().equals(PageModel.class)){
                 throw new Exception("方法["+method.getName()+"]由于设置了分页，所以它的返回类型必须是["+PageModel.class.getName()+"]类型");
             }
             if(!(param instanceof PageParamModel)){
@@ -56,7 +56,7 @@ public class ProxyOpertion {
             }
             return JdbcTemplate.get(dataSourceName).selectPageList(marsSelect.sql(),(PageParamModel)param,marsSelect.resultType());
         } else {
-            if(method.getReturnType().getName().equals(List.class.getName())){
+            if(method.getReturnType().equals(List.class)){
                 return JdbcTemplate.get(dataSourceName).selectList(marsSelect.sql(),param,marsSelect.resultType());
             } else {
                 return JdbcTemplate.get(dataSourceName).selectOne(marsSelect.sql(),param,marsSelect.resultType());
