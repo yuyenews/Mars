@@ -79,7 +79,7 @@ public class WriteFields {
         if(marsValue == null){
             return;
         }
-        if (!f.getType().getSimpleName().toUpperCase().equals(DataType.STRING)) {
+        if (!f.getType().equals(String.class)) {
             throw new Exception("MarsValue只能给String类型的属性注入值,类名:" + cls.getName());
         }
         f.setAccessible(true);
