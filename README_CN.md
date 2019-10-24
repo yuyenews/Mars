@@ -45,7 +45,7 @@ port: 8088
 
 #配置持久层
 jdbc:
-  #配置数据源，必须是阿里巴巴的 druid数据源
+  #配置数据源，用的是阿里巴巴的 druid数据源，其他属性可以自行查阅
   dataSource:
       name: dataSource
       url: jdbc:mysql://10.211.55.5:3306/test?serverTimezone=GMT%2B8
