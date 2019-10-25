@@ -3,7 +3,6 @@ package com.mars.core.load;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.annotation.MarsValue;
 import com.mars.core.annotation.MarsWrite;
-import com.mars.core.enums.DataType;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.util.ConfigUtil;
 import org.slf4j.Logger;
