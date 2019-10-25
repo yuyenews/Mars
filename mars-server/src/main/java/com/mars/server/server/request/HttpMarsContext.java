@@ -4,23 +4,23 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 全局对象，类似于tomcat的servletcontext
+ * 全局对象，类似于tomcat的servletContext
  * 
  * @author yuye
  *
  */
-public class HttpContext {
+public class HttpMarsContext {
 
-	private static HttpContext context;
+	private static HttpMarsContext context;
 
 	private Map<String, Object> map = new ConcurrentHashMap<>();
 
-	private HttpContext() {
+	private HttpMarsContext() {
 	}
 
-	public static HttpContext getHttpContext() {
+	public static HttpMarsContext getHttpContext() {
 		if (context == null) {
-			context = new HttpContext();
+			context = new HttpMarsContext();
 		}
 
 		return context;
