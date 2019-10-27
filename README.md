@@ -1,6 +1,6 @@
 <p align="center"><img width="300px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
 
-![](https://img.shields.io/badge/licenes-GPL-brightgreen.svg)
+![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
 <p>
@@ -71,35 +71,6 @@ public class Start {
         <li>Controller, Bean, DAO, single table operations can be completed with pure annotations, and it is simple</li>
     </ul>
 </p>
-
-<h3 align="center">----------Upgrade the Mars-java project to the Mars-cloud project and its simplicity----------</h3>
-
-<h2>Just need to change one start</h2>
-
-````
-<dependency>
-    <groupId>com.github.yuyenews</groupId>
-    <artifactId>mars-cloud-start</artifactId>
-    <version>[The latest version, you can see the document]</version>
-</dependency>
-````
-
-<h2>Add 5 rows configuration</h2>
-
-````
-cloud:
-  # Service name, the name of the load balancing cluster of the same service must be the same, and must be unique between different clusters.
-  name: cloud-client1
-  sessionTimeout: 10000
-  # Whether as a gateway
-  gateWay: yes
-  timeOut: 10000
-  # Zookeeper address, multiple addresses are separated by commas, 
-  # multiple addresses, must be double quotes, otherwise parsing yml files will be wrong
-  register: 10.211.55.9:2180
-````
-
-<p>Very easy to learn</p>
 
 <h2>Document</h2>
 
