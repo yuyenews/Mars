@@ -1,6 +1,6 @@
 <p  align="center"><img width="300px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
 
-![](https://img.shields.io/badge/licenes-GPL-brightgreen.svg)
+![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
 <p>Js框架有React，Vue，AngularJS，但java框架只有一个Spring。 很多人说我正在制造轮子，但我不这么认为，所以...是时候挑战Spring了，我希望每个人都能参与进来，贡献代码，让java开发人员有另一种选择</p>
@@ -71,37 +71,6 @@ public class Start {
         <li>Controller，Bean，DAO，单表操作都可以使用纯注解完成，而且及其简洁</li>
     </ul>
 </p>
-
-<h3 align="center">----------将Mars-java项目升级为Mars-cloud项目及其简单----------</h3>
-
-<h2>只需要换一个start</h2>
-
-````
-<dependency>
-    <groupId>com.github.yuyenews</groupId>
-    <artifactId>mars-cloud-start</artifactId>
-    <version>最新版，可看目录《版本指引》</version>
-</dependency>
-````
-
-<h2>添加5行配置</h2>
-
-````
-cloud:
-  # 服务名称，同一个服务的负载均衡集群的name必须一致，不同集群之间必须唯一
-  name: cloud-client1
-  # 尽量长一点，防止接口过多来不及发布
-  sessionTimeout: 10000
-  # 是否作为网关
-  gateWay: yes
-  # 请求Mars-Cloud接口超时时间
-  timeOut: 10000
-  # zookeeper地址，多个地址用英文逗号分割
-  # 多个地址，一定要加双引号，不然解析yml文件会出错
-  register: 10.211.55.9:2180
-````
-
-<p>搭建是不是超简单？ 简直秒懂</p>
 
 <h2>帮助文档</h2>
 
