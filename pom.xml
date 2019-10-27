@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars-java</artifactId>
-	<version>2.2.3</version>
+	<version>2.2.5</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-aop</module>
@@ -174,8 +174,8 @@
 	</parent>
 	<licenses>
 		<license>
-			<name>The GPL Software License, Version 3.0</name>
-			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+			<name>The MIT License (MIT)</name>
+			<url>https://opensource.org/licenses/mit-license.php</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
