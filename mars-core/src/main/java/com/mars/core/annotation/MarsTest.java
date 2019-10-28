@@ -11,7 +11,7 @@ public @interface MarsTest {
      * main方法所在的类
      * @return 类
      */
-    Class testClass();
+    Class startClass();
 
     /**
      * 指定使用哪个配置文件
