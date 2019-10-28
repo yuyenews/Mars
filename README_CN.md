@@ -113,7 +113,7 @@ public class Start {
             <td>OK</td>
             <td>支持大部分主流框架</td>
             <td>只有一个，并支持远程配置</td>
-            <td>Main方法，War包+Tomcat</td>
+            <td>Main方法 或者 War包+Tomcat</td>
         </tr>
     </tbody>
 </table>
