@@ -74,14 +74,6 @@ public class Start {
 
 [Document](http://mars-framework.com)
 
-<h2>Expansion pack</h2>
-
-<p>Support redis connection</p>
-
-<p>Encapsulates Email, MD5, AES and other tool classes and integrates hutool</p>
-
-[Extension package](https://github.com/yuyenews/Mars-extends)
-
 <h2>Simple comparison</h2>
 
 <table>

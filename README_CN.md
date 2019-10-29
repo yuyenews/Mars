@@ -76,14 +76,6 @@ public class Start {
 
 [Document](http://mars-framework.com)
 
-<h2>扩展包</h2>
-
-<p>支持redis连接</p>
-
-<p>封装了 Email, MD5, AES 和 其他工具类 并 集成了hutool</p>
-
-[Extension package](https://github.com/yuyenews/Mars-extends)
-
 <h2>简单对比</h2>
 
 <table>
