@@ -94,7 +94,7 @@ public class LoadController {
 			Object obj = mvcCglibProxy.getProxy(cls);
 
 			/* 获取对象属性，完成注入 */
-			// 2.2.5 版本，controller改成interface以后，就不再需要注入了，代码先注释掉，防止以后有用
+			// 3.0.0 版本，controller改成interface以后，就不再需要注入了，代码先注释掉，防止以后有用
 			//WriteFields.writeFields(cls,obj,marsBeanObjs);
 
 			return obj;
