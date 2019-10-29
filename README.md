@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
 <p>
-    The Js framework has React, Vue, AngularJS, but the Java framework has only one Spring. Many people say that I am making wheels, but I don't think so, so... it's time to challenge Spring, I hope everyone can get involved, contribute code, and give Java developers another option.
+Mars-java is a javaWeb development framework that uses netty as the http service, supports AOP, IOC, MVC, JDBCTemplate and integrates Mybatis. It also supports microservice development. It is a small but well-functioning framework.    
 </p>
 
 <h2>Other project</h2>

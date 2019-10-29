@@ -3,7 +3,9 @@
 ![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
-<p>Js框架有React，Vue，AngularJS，但java框架只有一个Spring。 很多人说我正在制造轮子，但我不这么认为，所以...是时候挑战Spring了，我希望每个人都能参与进来，贡献代码，让java开发人员有另一种选择</p>
+<p>
+Mars-java是一个javaWeb开发框架，以netty作为http服务，支持AOP,IOC,MVC,JDBCTemplate 并且集成了Mybatis，还支持微服务开发，是一款很小，但是功能还算完善的框架
+</p>
 
 <h2>其他子项目</h2>
 
