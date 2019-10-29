@@ -27,7 +27,7 @@ public class LoadBeans {
 
             for (String str : scanClassList) {
                 Class<?> cls = Class.forName(str);
-                Controller controller = cls.getAnnotation(Controller.class);
+                MarsApi marsApi = cls.getAnnotation(MarsApi.class);
                 MarsBean marsBean = cls.getAnnotation(MarsBean.class);
                 MarsInterceptor marsInterceptor = cls.getAnnotation(MarsInterceptor.class);
                 MarsDao marsDao = cls.getAnnotation(MarsDao.class);
@@ -35,8 +35,8 @@ public class LoadBeans {
 
                 int count = 0;
 
-                if(controller != null) {
-                    LoadBeans.loadController(cls, controller);
+                if(marsApi != null) {
+                    LoadBeans.loadController(cls, marsApi);
                     count++;
                 }
                 if(marsBean != null) {
@@ -68,15 +68,15 @@ public class LoadBeans {
     /**
      * 将所有controller存到全局存储空间
      * @param cls 类型
-     * @param controller 注解
+     * @param marsApi 注解
      */
-    public static void loadController(Class<?> cls,Controller controller) {
+    public static void loadController(Class<?> cls, MarsApi marsApi) {
 
         List<MarsBeanClassModel> contorls = LoadHelper.getControllerList();
 
         MarsBeanClassModel marsBeanClassModel = new MarsBeanClassModel();
         marsBeanClassModel.setClassName(cls);
-        marsBeanClassModel.setAnnotation(controller);
+        marsBeanClassModel.setAnnotation(marsApi);
 
         contorls.add(marsBeanClassModel);
         constants.setAttr(MarsConstant.CONTROLLERS, contorls);

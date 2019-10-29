@@ -87,23 +87,27 @@ public class MvcCglibProxy implements MethodInterceptor {
 	 * @throws Exception 异常
 	 */
 	private Object executeRef(Method method,Object[] args) throws Exception {
+		/* 根据注解获取到对应的bean对象实体 */
 		MarsReference marsReference = method.getAnnotation(MarsReference.class);
-
 		MarsBeanModel marsBeanModel = getMarsBeanModel(marsReference);
 
+		/* 获取bean对象的class和实例 */
 		Class<?> cls = marsBeanModel.getCls();
 		Object obj = marsBeanModel.getObj();
 
 		if(marsReference.refType().equals(RefType.METHOD)){
+			/* 如果引用的是一个方法则执行bean里面对应的方法 */
 			Object result = executeRefMethod(cls,obj,args,marsReference);
 			if(!result.equals("errorRef")){
 				return result;
 			}
 		} else {
+			/* 否则就将bean里面对应的属性的值返回 */
 			Field field = cls.getDeclaredField(marsReference.refName());
 			if(field == null){
 				throw new Exception("没有找到名称为["+marsReference.refName()+"]的属性");
 			}
+			field.setAccessible(true);
 			return field.get(obj);
 		}
 
@@ -149,7 +153,7 @@ public class MvcCglibProxy implements MethodInterceptor {
 	}
 
 	/**
-	 * 成功的返回结构
+	 * 成功的返回数据结构
 	 * @param obj bean的返回值
 	 * @return json
 	 */
@@ -161,7 +165,7 @@ public class MvcCglibProxy implements MethodInterceptor {
 	}
 
 	/**
-	 * 失败的返回结构
+	 * 失败的返回数据结构
 	 * @param obj 错误提示
 	 * @return json
 	 */
@@ -173,7 +177,7 @@ public class MvcCglibProxy implements MethodInterceptor {
 	}
 
 	/**
-	 * 异常的返回结构
+	 * 异常的返回数据结构
 	 * @param e 错误提示
 	 * @return json
 	 */
