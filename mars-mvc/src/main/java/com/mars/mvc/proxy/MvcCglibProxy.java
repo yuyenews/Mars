@@ -98,9 +98,10 @@ public class MvcCglibProxy implements MethodInterceptor {
 		if(marsReference.refType().equals(RefType.METHOD)){
 			/* 如果引用的是一个方法则执行bean里面对应的方法 */
 			Object result = executeRefMethod(cls,obj,args,marsReference);
-			if(!result.equals("errorRef")){
-				return result;
+			if(result.equals("errorRef")){
+				throw new Exception("没有找到名称为["+marsReference.refName()+"]的方法");
 			}
+			return result;
 		} else {
 			/* 否则就将bean里面对应的属性的值返回 */
 			Field field = cls.getDeclaredField(marsReference.refName());
@@ -110,8 +111,6 @@ public class MvcCglibProxy implements MethodInterceptor {
 			field.setAccessible(true);
 			return field.get(obj);
 		}
-
-		return getFailResult(method.getName()+"方法引用的资源不正确");
 	}
 
 	/**
@@ -159,7 +158,7 @@ public class MvcCglibProxy implements MethodInterceptor {
 	 */
 	private JSONObject getSuccessResult(Object obj){
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("code","success");
+		jsonObject.put("error_code","success");
 		jsonObject.put("result",obj);
 		return jsonObject;
 	}
@@ -171,8 +170,8 @@ public class MvcCglibProxy implements MethodInterceptor {
 	 */
 	private JSONObject getFailResult(Object obj){
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("code","fail");
-		jsonObject.put("msg",obj);
+		jsonObject.put("error_code","fail");
+		jsonObject.put("error_info",obj);
 		return jsonObject;
 	}
 
