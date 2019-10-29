@@ -1,5 +1,3 @@
-<p  align="center"><img width="300px" src="https://github.com/yuyenews/Mars-java/blob/master/mars-images/logo-long.png?raw=true" /></p>
-
 ![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
