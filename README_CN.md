@@ -21,9 +21,10 @@ Mars-java是一个javaWeb开发框架，以netty作为http服务，支持AOP,IOC
         <li>搭建简单，开箱即用</li>
         <li>使用netty做的http服务</li>
         <li>使用JWT做的会话管理</li>
-        <li>支持AOP,IOC,MVC,Mybatis,事务管理</li>
-        <li>通过 Mars-cloud 可以分布式部署</li>
-        <li>通过 Mars-config 可以远程配置【迭代中】</li>
+        <li>声明式事务</li>
+        <li>支持AOP, IOC, MVC, JdbcTemplate, Mybatis</li>
+        <li>用 Mars-cloud 可以分布式部署</li>
+        <li>用 Mars-config 可以远程配置【迭代中】</li>
     </ul>
 </p>
 

@@ -21,7 +21,8 @@ Mars-java is a javaWeb development framework that uses netty as the http service
         <li>Simple to build, out of the box</li>
         <li>http service using netty</li>
         <li>Session management using JWT</li>
-        <li>Support AOP, IOC, MVC, Mybatis, transaction management</li>
+        <li>Declarative transaction</li>
+        <li>Support AOP, IOC, MVC, JdbcTemplate, Mybatis</li>
         <li>Distributed deployment via Mars-cloud</li>
         <li>Remote configuration via Mars-config [iteration]</li>
     </ul>
