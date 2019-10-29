@@ -1,7 +1,6 @@
 package com.mars.mvc.load;
 
 import com.mars.core.annotation.enums.ReqMethod;
-import com.mars.core.load.WriteFields;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.mvc.proxy.MvcCglibProxy;
@@ -83,9 +82,9 @@ public class LoadController {
 	
 	/**
 	 * 往controller对象中注入easybean
-	 * @param cls lei
-	 * @param marsBeanObjs duix
-	 * @return duix
+	 * @param cls 类
+	 * @param marsBeanObjs 对象
+	 * @return 对象
 	 */
 	private static Object iocControl(Class<?> cls,Map<String, MarsBeanModel> marsBeanObjs) throws Exception{
 		
@@ -95,7 +94,8 @@ public class LoadController {
 			Object obj = mvcCglibProxy.getProxy(cls);
 
 			/* 获取对象属性，完成注入 */
-			WriteFields.writeFields(cls,obj,marsBeanObjs);
+			// 2.2.5 版本，controller改成interface以后，就不再需要注入了，代码先注释掉，防止以后有用
+			//WriteFields.writeFields(cls,obj,marsBeanObjs);
 
 			return obj;
 		} catch (Exception e) {
