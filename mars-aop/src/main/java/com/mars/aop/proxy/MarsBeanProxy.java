@@ -65,7 +65,7 @@ public class MarsBeanProxy implements MethodInterceptor {
 
 			startMethod(c, obj, args, aopModel);
 			Object o1 = methodProxy.invokeSuper(o, args);
-			endMethod(c, obj, args);
+			endMethod(c, obj, args,o1);
 			return o1;
 		} catch (Throwable e) {
 			exp(c, obj, e);
@@ -101,12 +101,17 @@ public class MarsBeanProxy implements MethodInterceptor {
 	 * @param args 参数
 	 * @throws Exception 异常
 	 */
-	private void endMethod(Class c, Object obj, Object[] args) throws Exception {
+	private void endMethod(Class c, Object obj, Object[] args, Object result) throws Exception {
 		if (c == null) {
 			return;
 		}
-		Method m3 = c.getDeclaredMethod(AopConstant.END_METHOD, new Class[]{Object[].class});
-		m3.invoke(obj, new Object[]{args});
+		if (c.getName().equals(TractionClass.getCls().getName())) {
+			Method m2 = c.getDeclaredMethod(AopConstant.END_METHOD, new Class[]{Object[].class});
+			m2.invoke(obj, new Object[]{args});
+		} else {
+			Method m2 = c.getDeclaredMethod(AopConstant.END_METHOD, new Class[]{Object[].class, Object.class});
+			m2.invoke(obj, new Object[]{args,result});
+		}
 	}
 
 	/**

@@ -9,6 +9,7 @@ import com.mars.server.server.request.model.MarsFileUpLoad;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -108,6 +109,10 @@ public class BuildParams {
                         break;
                     case DataType.BOOLEAN:
                         f.set(obj,Boolean.parseBoolean(valStr));
+                        break;
+                    case DataType.DATE:
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        f.set(obj,simpleDateFormat.parse(valStr));
                         break;
                     case DataType.LIST:
                         f.set(obj,valList);

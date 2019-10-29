@@ -16,8 +16,9 @@ public interface BaseAop {
 	/**
 	 * 方法结束后调用
 	 * @param args 参数
+	 * @param result 被监听方法的返回值
 	 */
-	void endMethod(Object[] args);
+	void endMethod(Object[] args, Object result);
 	
 	/**
 	 * 出异常后调用
