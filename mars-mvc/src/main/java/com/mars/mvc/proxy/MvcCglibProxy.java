@@ -11,6 +11,8 @@ import com.mars.core.annotation.MarsLog;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -23,6 +25,8 @@ import java.util.Map;
  *
  */
 public class MvcCglibProxy implements MethodInterceptor {
+
+	private Logger logger = LoggerFactory.getLogger(MvcCglibProxy.class);
 
 	private Enhancer enhancer;
 
@@ -74,6 +78,8 @@ public class MvcCglibProxy implements MethodInterceptor {
 		} catch (Throwable e) {
 			if(c != null) {
 				c.exp(e);
+			} else {
+				logger.error("",e);
 			}
 			return getErrorResult(e);
 		}
