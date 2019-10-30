@@ -1,112 +1,70 @@
 ![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
-<p>
-Mars-java是一个javaWeb开发框架，以netty作为http服务，支持AOP,IOC,MVC,JDBCTemplate 并且集成了Mybatis，还支持微服务开发，是一款很小，但是功能还算完善的框架
-</p>
+## 面向声明式API编程(DAP)
 
-<h2>其他子项目</h2>
+按照传统的开发方式，如果要开发一个后端接口，需要分为以下三步
 
-<p>
-    <ul>
-        <li>Mars-cloud: &nbsp;<a href="https://gitee.com/SherlockHolmnes/Mars-cloud">https://gitee.com/SherlockHolmnes/Mars-cloud</a></li>
-        <li>Mars-start: &nbsp;<a href="https://gitee.com/SherlockHolmnes/Mars-start">https://gitee.com/SherlockHolmnes/Mars-start</a></li>
-    </ul>
-</p>
+1. 创建controller
+2. 创建service
+3. 创建dao（甚至会创建存放sql的xml）
 
-<h2>我能做什么</h2>
+但是，我们编写一个接口，重点应该是放在业务逻辑上的，也就是说 我们的关注点应该在第二步，但是通常第一步和第三步的重复工作量让我们感到窒息，所以我梳理了一下，制定了一个新玩法，这套新玩法就叫声明式API
 
-<p>
-    <ul>
-        <li>搭建简单，开箱即用</li>
-        <li>使用netty做的http服务</li>
-        <li>使用JWT做的会话管理</li>
-        <li>声明式事务</li>
-        <li>支持AOP, IOC, MVC, JdbcTemplate, Mybatis</li>
-        <li>用 Mars-cloud 可以分布式部署</li>
-        <li>用 Mars-config 可以远程配置【迭代中】</li>
-    </ul>
-</p>
+1. 写业务逻辑
+2. 声明一个API给前端
+3. 将API与业务逻辑关联
 
-<h2>只需要一个jar包</h2>
+所以我们是这样玩的
 
-````
-<dependency>
-    <groupId>com.github.yuyenews</groupId>
-    <artifactId>mars-start-pure</artifactId>
-    <version>最新版，可看文档</version>
-</dependency>
-````
+## 编写业务逻辑
 
-<h2>一个配置文件</h2>
+```
+@MarsBean("testService")
+public class TestService {
 
-````
-#配置端口号（默认8080）
-port: 8088
-
-#配置持久层
-jdbc:
-  #配置数据源，必须是阿里巴巴的 druid数据源
-  dataSource:
-      name: dataSource
-      url: jdbc:mysql://10.211.55.5:3306/test?serverTimezone=GMT%2B8
-      username: root
-      password: rootroot
-      driverClassName: com.mysql.cj.jdbc.Driver
-````
-
-<h2>然后从main方法启动</h2>
-
-````
-public class Start {
-    public static void main(String[] args){
-        StartMars.start(Start.class);
-    }
+	要返回的数据类型 selectListForName(TestDTO testDTO){
+		// 第一步 根据testDTO里的参数从xx表查询需要的数据
+		// 第二步 根据查出来的数据，去操作xx2表
+		// 第三步 对前两步的结果汇总，进行xxx操作
+		
+		return 数据（直接返回即可，会自动变成json）；
+	}
 }
-````
+```
+## 声明一个API接口
 
-<h2>除此之外再无任何配置文件</h2>
-<p>
-    <ul>
-        <li>很多框架宣称自己没配置文件，其实是把配置放在了java类里面，而Mars-java只有一个yml，比java类更加灵活，更省代码</li>
-        <li>Controller，Bean，DAO，单表操作都可以使用纯注解完成，而且及其简洁</li>
-    </ul>
-</p>
+```
+@MarsApi
+public interface TestApi {
 
-<h2>帮助文档</h2>
+    Object selectList(TestDTO testDTO);
+}
+```
 
-[Document](http://mars-framework.com)
+## 将api与业务逻辑关联
 
-<h2>简单对比</h2>
+```
+@MarsApi
+public interface TestApi {
+		
+	@MarsReference(beanName = "testService",refName = "selectListForName")
+    Object selectList(TestDTO testDTO);
+}
+```
 
-<table>
-    <tbody>
-        <tr class="firstRow">
-            <td>名称</td>
-            <td>AOP</td>
-            <td>IOC</td>
-            <td>MVC</td>
-            <td>持久层</td>
-            <td>配置文件</td>
-            <td>启动方式</td>
-        </tr>
-        <tr>
-            <td>Mars-java</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>支持mybatis，并有自己的JDBC</td>
-            <td>只有一个，并支持远程配置</td>
-            <td>Main方法</td>
-        </tr>
-        <tr>
-            <td>Springboot</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>支持大部分主流框架</td>
-            <td>只有一个，并支持远程配置</td>
-            <td>Main方法 或者 War包+Tomcat</td>
-        </tr>
-    </tbody>
-</table>
+这套思想的核心是，把后端看作是一个独立个体，并不是为服务前端而存在的，后端就写后端的业务逻辑好了，如果前端需要数据，那我们就开个门给他
+
+这么做的好处，还可以散藕
+
+- 通过更换MarsReference的配置，可以关联到不同的业务逻辑
+- 如果前端不需要这个接口了，直接无脑删就好了，因为这只是一个抽象方法
+- 后端专注业务逻辑就好了，不需要考虑跟前端互动，前端需要的时候开个门就好了
+
+## 接下来怎么做
+
+看到这里，大家肯定会有疑问，前端要怎么调用api，后端怎么操作数据库？ 这个就需要你们动动手指，去我的官网一探究竟
+
+## 官网
+
+[http://mars-framework.com](http://mars-framework.com)

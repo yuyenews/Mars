@@ -1,110 +1,66 @@
 ![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
-<p>
-Mars-java is a javaWeb development framework that uses netty as the http service, supports AOP, IOC, MVC, JDBCTemplate and integrates Mybatis. It also supports microservice development. It is a small but well-functioning framework.    
-</p>
+## Declarative API Programming (DAP)
 
-<h2>Other project</h2>
+According to the traditional development method, if you want to develop a back-end interface, you need to divide into the following three steps.
 
-<p>
-    <ul>
-        <li>Mars-cloud: &nbsp;<a href="https://github.com/yuyenews/Mars-cloud">https://github.com/yuyenews/Mars-cloud</a></li>
-        <li>Mars-start: &nbsp;<a href="https://github.com/yuyenews/Mars-start">https://github.com/yuyenews/Mars-start</a></li>
-    </ul>
-</p>
+1. Create a controller
+2. Create a service
+3. Create dao (even create xml to store sql)
 
-<h2>What can I do</h2>
+However, we write an interface, the focus should be on the business logic, which means that our focus should be in the second step, but usually the repetitive workload of the first and third steps makes us feel suffocated, so I After sorting out a bit, I developed a new gameplay. This new gameplay is called a declarative API.
 
-<p>
-    <ul>
-        <li>Simple to build, out of the box</li>
-        <li>http service using netty</li>
-        <li>Session management using JWT</li>
-        <li>Declarative transaction</li>
-        <li>Support AOP, IOC, MVC, JdbcTemplate, Mybatis</li>
-        <li>Distributed deployment via Mars-cloud</li>
-        <li>Remote configuration via Mars-config [iteration]</li>
-    </ul>
-</p>
+1. Write business logic
+2. Declare an API to the front end
+3. Associate the API with the business logic
 
-<h2>Only need one jar package</h2>
+So we are playing like this
 
-````
-<dependency>
-    <groupId>com.github.yuyenews</groupId>
-    <artifactId>mars-start-pure</artifactId>
-    <version>[The latest version, you can see the document]</version>
-</dependency>
-````
+## Writing business logic
 
-<h2>A configuration file</h2>
+```
+@MarsBean("testService")
+Public class TestService {
 
-````
-port: 8088
-
-jdbc:
-  #Configure the data source, it must be Alibaba's druid data source
-  dataSource:
-      name: dataSource
-      url: jdbc:mysql://10.211.55.5:3306/test?serverTimezone=GMT%2B8
-      username: root
-      password: rootroot
-      driverClassName: com.mysql.cj.jdbc.Driver
-````
-
-<h2>Then start from the main method</h2>
-
-````
-public class Start {
-    public static void main(String[] args){
-        StartMars.start(Start.class);
+    <The type of data to return> selectListForName(TestDTO testDTO){
+        // The first step is to query the required data from the xx table according to the parameters in testDTO.
+        // The second step is to operate the xx2 table based on the detected data.
+        // The third step summarizes the results of the first two steps and performs the xxx operation.
+        
+        Return data (return directly, it will automatically become json);
     }
 }
-````
+```
+## Declare an API interface
 
-<h2>No other configuration files other than this</h2>
-<p>
-    <ul>
-        <li>Many frameworks claim that they don't have a configuration file. In fact, they put the configuration in the Java class, and Mars-java has only one yml, which is more flexible and more code-saving than the Java class.</li>
-        <li>Controller, Bean, DAO, single table operations can be completed with pure annotations, and it is simple</li>
-    </ul>
-</p>
+```
+@MarsApi
+Public interface TestApi {
 
-<h2>Document</h2>
+    Object selectList(TestDTO testDTO);
+}
+```
 
-[Document](http://mars-framework.com)
+## Associating api with business logic
 
-<h2>Simple comparison</h2>
+```
+@MarsApi
+Public interface TestApi {
 
-<table>
-    <tbody>
-        <tr class="firstRow">
-            <td>name</td>
-            <td>AOP</td>
-            <td>IOC</td>
-            <td>MVC</td>
-            <td>ORM</td>
-            <td>configuration file</td>
-            <td>startup method</td>
-        </tr>
-        <tr>
-            <td>Mars-java</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>Mybatis，JDBCTemplete</td>
-            <td>Only one and supports remote configuration</td>
-            <td>Main Method</td>
-        </tr>
-        <tr>
-            <td>Springboot</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>OK</td>
-            <td>Support most mainstream frameworks</td>
-            <td>Only one and supports remote configuration</td>
-            <td>Main Method，War+Tomcat</td>
-        </tr>
-    </tbody>
-</table>
+    @MarsReference(beanName = "testService",refName = "selectListForName")
+    Object selectList(TestDTO testDTO);
+}
+```
+
+The core of this idea is that the back end is regarded as an independent entity, not for the service front end. The back end writes the business logic of the back end. If the front end needs data, then we will open a door to him.
+
+The benefits of doing this can also be dilated
+
+- Can be linked to different business logic by changing the configuration of MarsReference
+- If the front end does not need this interface, it is fine to delete it directly, because this is just an abstract method.
+- The back end focuses on the business logic, so you don't need to think about interacting with the front end. It's good to open the door when the front end needs it.
+
+## How do you do it next?
+
+Seeing this, everyone will have doubts, how should the front end call the api, how does the backend operate the database? This requires you to move your fingers and go to my official website to find out.
