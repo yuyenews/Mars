@@ -49,7 +49,7 @@ public class ResolveRequest {
 	public Object resolve(HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		
 		try {
-			Map<String, MarsMappingModel> maps = getControllers();
+			Map<String, MarsMappingModel> maps = getMarsApis();
 			
 			String uri = getRequestPath(request);
 			if(PathAccess.hasAccess(uri)){
@@ -77,10 +77,10 @@ public class ResolveRequest {
 	}
 	
 	/**
-	 * 获取所有的controller对象
+	 * 获取所有的MarsApi对象
 	 * @return duix
 	 */
-	private Map<String, MarsMappingModel> getControllers() {
+	private Map<String, MarsMappingModel> getMarsApis() {
 		
 		Map<String, MarsMappingModel> controlObjects = new HashMap<>();
 		Object obj = constants.getAttr(MarsConstant.CONTROLLER_OBJECTS);

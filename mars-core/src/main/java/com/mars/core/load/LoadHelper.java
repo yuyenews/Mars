@@ -121,10 +121,10 @@ public class LoadHelper {
     }
 
     /**
-     * 获取所有的加了Controller注解的基础数据
+     * 获取所有的加了MarsApi注解的基础数据
      * @return 数据
      */
-    public static List<MarsBeanClassModel> getControllerList(){
+    public static List<MarsBeanClassModel> getMarsApiList(){
         List<MarsBeanClassModel> contorls = new ArrayList<>();
 
         Object object = constants.getAttr(MarsConstant.CONTROLLERS);

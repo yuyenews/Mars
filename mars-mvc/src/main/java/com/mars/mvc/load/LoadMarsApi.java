@@ -2,6 +2,7 @@ package com.mars.mvc.load;
 
 import com.mars.core.annotation.enums.ReqMethod;
 import com.mars.core.load.LoadHelper;
+import com.mars.core.load.WriteFields;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.mvc.proxy.MvcCglibProxy;
 import com.mars.core.annotation.RequestMethod;
@@ -16,11 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 加载所有的controller，并完成注入
+ * 加载所有的MarsApi，并完成注入
  * @author yuye
  *
  */
-public class LoadController {
+public class LoadMarsApi {
 	
 	/**
 	 * 获取全局存储空间 
@@ -28,33 +29,33 @@ public class LoadController {
 	private static MarsSpace constants = MarsSpace.getEasySpace();
 
 	/**
-	 * 创建controller对象，并将服务层对象注入进去
+	 * 创建MarsApi对象，并将服务层对象注入进去
 	 */
 	public static void loadControl() throws Exception{
 		
 		try {
 			Map<String, MarsMappingModel> controlObjects = new HashMap<>();
 			
-			/* 获取所有的controller数据 */
-			List<MarsBeanClassModel> controlList = LoadHelper.getControllerList();
+			/* 获取所有的MarsApi数据 */
+			List<MarsBeanClassModel> marsApiList = LoadHelper.getMarsApiList();
 
 			/* 获取所有的marsBean */
 			Map<String, MarsBeanModel> marsBeanObjs = LoadHelper.getBeanObjectMap();
 			
-			for(MarsBeanClassModel marsBeanClassModel : controlList) {
+			for(MarsBeanClassModel marsBeanClassModel : marsApiList) {
 				
 				Class<?> cls = marsBeanClassModel.getClassName();
 				
 				/*
-				 * 由于controller里只允许注入MarsBean，所以不需要等controller都创建好了再注入
-				 * 直接 迭代一次 就给一个controller注入一次
+				 * 由于MarsApi里只允许注入MarsBean，所以不需要等MarsApi都创建好了再注入
+				 * 直接 迭代一次 就给一个MarsApi注入一次
 				 */
 				Object obj = iocControl(cls,marsBeanObjs);
 				if(obj == null) {
 					continue;
 				}
 
-				/* 获取controller的所有方法 */
+				/* 获取MarsApi的所有方法 */
 				Method[] methods = cls.getMethods();
 				for(Method method : methods) {
 					if(method.getDeclaringClass().equals(cls)){
@@ -76,12 +77,12 @@ public class LoadController {
 			
 			constants.setAttr(MarsConstant.CONTROLLER_OBJECTS, controlObjects);
 		} catch (Exception e) {
-			throw new Exception("加载controller并注入的时候报错",e);
+			throw new Exception("加载MarsApi并注入的时候报错",e);
 		}
 	}
 	
 	/**
-	 * 往controller对象中注入easybean
+	 * 往MarsApi对象中注入bean
 	 * @param cls 类
 	 * @param marsBeanObjs 对象
 	 * @return 对象
@@ -93,13 +94,13 @@ public class LoadController {
 			MvcCglibProxy mvcCglibProxy = new MvcCglibProxy();
 			Object obj = mvcCglibProxy.getProxy(cls);
 
-			/* 获取对象属性，完成注入 */
-			// 3.0.0 版本，controller改成interface以后，就不再需要注入了，代码先注释掉，防止以后有用
-			//WriteFields.writeFields(cls,obj,marsBeanObjs);
-
+			if(!cls.isInterface()){
+				/* 获取对象属性，完成注入 */
+				WriteFields.writeFields(cls,obj,marsBeanObjs);
+			}
 			return obj;
 		} catch (Exception e) {
-			throw new Exception("创建controller并注入的时候报错",e);
+			throw new Exception("创建MarsApi并注入的时候报错",e);
 		} 
 	}
 
@@ -117,10 +118,10 @@ public class LoadController {
 	}
 
 	/**
-	 * 校验Controller里的方法名是否全局唯一
-	 * @param controlObjects Controller对象
-	 * @param cls Controller类
-	 * @param method Controller中的方法
+	 * 校验MarsApi里的方法名是否全局唯一
+	 * @param controlObjects MarsApi对象
+	 * @param cls MarsApi类
+	 * @param method MarsApi中的方法
 	 * @throws Exception 异常
 	 */
 	private static void checkMethodName(Map<String, MarsMappingModel> controlObjects, Class<?> cls, Method method) throws Exception {
@@ -128,7 +129,7 @@ public class LoadController {
 		if (marsMappingModel != null) {
 			String yName = marsMappingModel.getCls().getName();
 			String xName = cls.getName();
-			throw new Exception("Controller中的方法名发生冲突[" + yName + "." + marsMappingModel.getMethod() + "," + xName + "." + method.getName() + "]");
+			throw new Exception("方法名发生冲突[" + yName + "." + marsMappingModel.getMethod() + "," + xName + "." + method.getName() + "]");
 		}
 	}
 }

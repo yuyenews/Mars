@@ -38,7 +38,7 @@ public class ExecuteMars {
 	}
 
 	/**
-	 * 执行controller
+	 * 执行MarsApi
 	 * @param marsMappingModel duix
 	 * @param method fangfa
 	 * @param request qingqiu
@@ -61,8 +61,8 @@ public class ExecuteMars {
 				return intersStartResult;
 			}
 
-			/* 执行controller的方法 */
-			Object result = executeControllerMethod(marsMappingModel,request,response);
+			/* 执行MarsApi的方法 */
+			Object result = executeMarsApiMethod(marsMappingModel,request,response);
 
 			/* 执行拦截器 在控制层执行后的方法 */
 			Object intersEndResult = ExecuteInters.executeIntersEnd(list,request, response,result);
@@ -78,14 +78,14 @@ public class ExecuteMars {
 	}
 
 	/**
-	 * 执行controller的方法
+	 * 执行MarsApi的方法
 	 * @param marsMappingModel
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	private Object executeControllerMethod(MarsMappingModel marsMappingModel, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
+	private Object executeMarsApiMethod(MarsMappingModel marsMappingModel, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		Object obj = marsMappingModel.getObject();
 		Method method = getMethod(marsMappingModel);
 
@@ -149,7 +149,7 @@ public class ExecuteMars {
 		String strMethod = method.name().toLowerCase();
 		String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
 		if (!strMethod.equals(requestMethod)) {
-			/* 如果请求方式和controller的映射不一致，则提示客户端 */
+			/* 如果请求方式和MarsApi的映射不一致，则提示客户端 */
 			throw new Exception("此接口的请求方式为[" + requestMethod + "]");
 		}
 	}

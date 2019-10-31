@@ -18,7 +18,7 @@ public class LoadClass {
 	private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 	
 	/**
-	 * 加载所有bean，包括controller 的class对象
+	 * 加载所有bean，包括MarsApi 的class对象
 	 * @param packageName 包名
 	 *
 	 * @throws Exception 异常
