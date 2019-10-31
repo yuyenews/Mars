@@ -5,7 +5,7 @@
     <parent>
         <artifactId>mars-jdbc</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
