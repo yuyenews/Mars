@@ -1,13 +1,6 @@
 ![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
-## Project structure diagram
-
-<img src="http://www.mars-framework.com/img/jgt.png" width="500px;" height="300px;" style="border:1px solid #cccccc;"/>
-<br/>
-
-##### The SQL Center is under development and is temporarily unavailable. Please look forward to it.
-
 ## Declarative API Programming (DAP)
 
 According to the traditional development method, if you want to develop a back-end interface, you need to divide into the following three steps.
