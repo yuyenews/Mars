@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * controller方法打印日志
+ * MarsApi方法打印日志
  */
 public class LogAop {
 
@@ -23,7 +23,7 @@ public class LogAop {
     }
 
     /**
-     * controller方法开始执行
+     * MarsApi方法开始执行
      * @param args
      */
     public void startMethod(Object[] args) {
@@ -46,7 +46,7 @@ public class LogAop {
     }
 
     /**
-     * controller方法结束执行
+     * MarsApi方法结束执行
      * @param args
      * @param result
      */
@@ -65,7 +65,7 @@ public class LogAop {
     }
 
     /**
-     * controller方法出异常
+     * MarsApi方法出异常
      * @param e
      */
     public void exp(Throwable e){

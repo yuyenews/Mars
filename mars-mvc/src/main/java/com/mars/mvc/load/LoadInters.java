@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class LoadInters {
 
-    private static Logger log = LoggerFactory.getLogger(LoadController.class);
+    private static Logger log = LoggerFactory.getLogger(LoadInters.class);
 
     /**
      * 获取全局存储空间

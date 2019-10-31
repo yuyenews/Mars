@@ -16,7 +16,7 @@ public class LoadBeans {
     private static MarsSpace constants = MarsSpace.getEasySpace();
 
     /**
-     * 加载所有的bean，包括controller 的class对象
+     * 加载所有的bean，包括MarsApi 的class对象
      *
      * @throws Exception 异常
      */
@@ -36,7 +36,7 @@ public class LoadBeans {
                 int count = 0;
 
                 if(marsApi != null) {
-                    LoadBeans.loadController(cls, marsApi);
+                    LoadBeans.loadMarsApi(cls, marsApi);
                     count++;
                 }
                 if(marsBean != null) {
@@ -66,20 +66,20 @@ public class LoadBeans {
     }
 
     /**
-     * 将所有controller存到全局存储空间
+     * 将所有MarsApi存到全局存储空间
      * @param cls 类型
      * @param marsApi 注解
      */
-    public static void loadController(Class<?> cls, MarsApi marsApi) {
+    public static void loadMarsApi(Class<?> cls, MarsApi marsApi) {
 
-        List<MarsBeanClassModel> contorls = LoadHelper.getControllerList();
+        List<MarsBeanClassModel> marsApis = LoadHelper.getMarsApiList();
 
         MarsBeanClassModel marsBeanClassModel = new MarsBeanClassModel();
         marsBeanClassModel.setClassName(cls);
         marsBeanClassModel.setAnnotation(marsApi);
 
-        contorls.add(marsBeanClassModel);
-        constants.setAttr(MarsConstant.CONTROLLERS, contorls);
+        marsApis.add(marsBeanClassModel);
+        constants.setAttr(MarsConstant.CONTROLLERS, marsApis);
     }
 
     /**

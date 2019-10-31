@@ -38,7 +38,7 @@ public class MarsConstant {
      */
     public static final String HAS_TEST="hasTest";
     /**
-     * 所有的controller类信息
+     * 所有的MarsApi类信息
      */
     public static final String CONTROLLERS = "contorllers";
     /**
@@ -59,7 +59,7 @@ public class MarsConstant {
     public static final String MARS_DAOS = "marsDaos";
 
     /**
-     * 所有的controller对象
+     * 所有的MarsApi对象
      */
     public static final String CONTROLLER_OBJECTS = "controlObjects";
 
