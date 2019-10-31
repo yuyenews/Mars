@@ -1,13 +1,6 @@
 ![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
 ![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
 
-## 项目架构图
-
-<img src="http://www.mars-framework.com/img/jgt.png" width="500px;" height="300px;" style="border:1px solid #cccccc;"/>
-<br/>
-
-##### SQL中心正在开发中，暂时不可用，尽请期待哦
-
 ## 面向声明式API编程(DAP)
 
 按照传统的开发方式，如果要开发一个后端接口，需要分为以下三步
