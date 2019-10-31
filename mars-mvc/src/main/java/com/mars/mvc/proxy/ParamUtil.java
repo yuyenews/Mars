@@ -21,7 +21,7 @@ public class ParamUtil {
                 return null;
             }
             if(args == null || args.length < 0){
-                return null;
+                return new Object[paramTypes.length];
             }
 
             Object[] params = new Object[paramTypes.length];
