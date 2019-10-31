@@ -3,8 +3,8 @@
 
 ## Project structure diagram
 
-<img src="http://www.mars-framework.com/img/jgt.png" width="600px;"/>
-<br/><br/>
+<img src="http://www.mars-framework.com/img/jgt.png" width="500px;" height="300px;" style="border:1px solid #cccccc;"/>
+<br/>
 
 ##### The SQL Center is under development and is temporarily unavailable. Please look forward to it.
 
