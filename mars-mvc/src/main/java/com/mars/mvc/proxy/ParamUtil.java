@@ -41,7 +41,7 @@ public class ParamUtil {
             }
             return params;
         } catch (Exception e){
-            throw new Exception("将API的参数适配到引用的方法上出异常了，请确认是否有以下情况: [API所引用的方法的参数只可以使用自定对象或者Map]",e);
+            throw new Exception("将API的参数适配到引用的方法上出异常了，请核对是否满足以下情况: [API所引用的方法的参数只可以使用自定对象或者Map]",e);
         }
     }
 }
