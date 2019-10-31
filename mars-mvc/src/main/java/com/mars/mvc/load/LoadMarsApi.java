@@ -94,10 +94,12 @@ public class LoadMarsApi {
 			MvcCglibProxy mvcCglibProxy = new MvcCglibProxy();
 			Object obj = mvcCglibProxy.getProxy(cls);
 
-			if(!cls.isInterface()){
+			// 为向下兼容做准备，只要去掉注释即可
+			// 但是尽量不要向下兼容，一旦API里可以写实现，肯定会被用的像Controller，这是大忌
+			//if(!cls.isInterface()){
 				/* 获取对象属性，完成注入 */
-				WriteFields.writeFields(cls,obj,marsBeanObjs);
-			}
+				//WriteFields.writeFields(cls,obj,marsBeanObjs);
+			//}
 			return obj;
 		} catch (Exception e) {
 			throw new Exception("创建MarsApi并注入的时候报错",e);
