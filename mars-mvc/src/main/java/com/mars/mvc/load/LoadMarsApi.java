@@ -2,7 +2,6 @@ package com.mars.mvc.load;
 
 import com.mars.core.annotation.enums.ReqMethod;
 import com.mars.core.load.LoadHelper;
-import com.mars.core.load.WriteFields;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.mvc.proxy.MvcCglibProxy;
 import com.mars.core.annotation.RequestMethod;
@@ -31,10 +30,10 @@ public class LoadMarsApi {
 	/**
 	 * 创建MarsApi对象，并将服务层对象注入进去
 	 */
-	public static void loadControl() throws Exception{
+	public static void loadMarsApis() throws Exception{
 		
 		try {
-			Map<String, MarsMappingModel> controlObjects = new HashMap<>();
+			Map<String, MarsMappingModel> marsApiObjects = new HashMap<>();
 			
 			/* 获取所有的MarsApi数据 */
 			List<MarsBeanClassModel> marsApiList = LoadHelper.getMarsApiList();
@@ -50,17 +49,14 @@ public class LoadMarsApi {
 				 * 由于MarsApi里只允许注入MarsBean，所以不需要等MarsApi都创建好了再注入
 				 * 直接 迭代一次 就给一个MarsApi注入一次
 				 */
-				Object obj = iocControl(cls,marsBeanObjs);
-				if(obj == null) {
-					continue;
-				}
+				Object obj = iocMarsApi(cls,marsBeanObjs);
 
 				/* 获取MarsApi的所有方法 */
 				Method[] methods = cls.getMethods();
 				for(Method method : methods) {
 					if(method.getDeclaringClass().equals(cls)){
 						/* 校验方法 */
-						checkMethodName(controlObjects,cls,method);
+						checkMethodName(marsApiObjects,cls,method);
 
 						/* 创建映射对象 */
 						MarsMappingModel marsMappingModel = new MarsMappingModel();
@@ -70,12 +66,12 @@ public class LoadMarsApi {
 						marsMappingModel.setReqMethod(getReqMethod(method));
 
 						/* 保存映射对象 */
-						controlObjects.put(method.getName(), marsMappingModel);
+						marsApiObjects.put(method.getName(), marsMappingModel);
 					}
 				}
 			}
 			
-			constants.setAttr(MarsConstant.CONTROLLER_OBJECTS, controlObjects);
+			constants.setAttr(MarsConstant.CONTROLLER_OBJECTS, marsApiObjects);
 		} catch (Exception e) {
 			throw new Exception("加载MarsApi并注入的时候报错",e);
 		}
@@ -87,7 +83,7 @@ public class LoadMarsApi {
 	 * @param marsBeanObjs 对象
 	 * @return 对象
 	 */
-	private static Object iocControl(Class<?> cls,Map<String, MarsBeanModel> marsBeanObjs) throws Exception{
+	private static Object iocMarsApi(Class<?> cls, Map<String, MarsBeanModel> marsBeanObjs) throws Exception{
 		
 		try {
 
