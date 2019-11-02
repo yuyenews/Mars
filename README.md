@@ -74,3 +74,7 @@ public interface TestApi {
 ## 官网
 
 [http://mars-framework.com](http://mars-framework.com)
+
+## 捐款赞助
+
+[爱帮帮](http://www.likebb.cn/crowdfund/detail/6358?showTitle=true)
