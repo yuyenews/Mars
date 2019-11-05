@@ -6,7 +6,7 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.core.model.MarsTimerModel;
 import com.mars.core.load.LoadHelper;
-import com.mars.ioc.factory.BeanFactory;
+import com.mars.core.ioc.factory.BeanFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.mars.ioc.factory;
+package com.mars.core.ioc.factory;
 
-import com.mars.aop.proxy.MarsBeanProxy;
+import com.mars.core.aop.proxy.MarsBeanProxy;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.MarsBeanModel;

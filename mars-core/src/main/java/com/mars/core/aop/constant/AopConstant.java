@@ -1,4 +1,4 @@
-package com.mars.aop.constant;
+package com.mars.core.aop.constant;
 
 /**
  * AOP常量

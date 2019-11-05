@@ -4,11 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars-java</artifactId>
-	<version>3.0.2</version>
+	<version>3.0.3</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>mars-aop</module>
-		<module>mars-ioc</module>
 		<module>mars-core</module>
 		<module>mars-mvc</module>
 		<module>mars-netty</module>
@@ -24,16 +22,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-aop</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-ioc</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-mvc</artifactId>
