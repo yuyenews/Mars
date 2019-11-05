@@ -12,7 +12,6 @@
 		<module>mars-netty</module>
 		<module>mars-server</module>
 		<module>mars-jdbc</module>
-		<module>mars-timer</module>
         <module>mars-redis</module>
     </modules>
 
@@ -46,11 +45,6 @@
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-junit</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-timer</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
