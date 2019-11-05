@@ -5,7 +5,7 @@
     <parent>
         <artifactId>Mars-java</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,11 +15,6 @@
         <dependency>
             <groupId>com.github.yuyenews</groupId>
             <artifactId>mars-core</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-ioc</artifactId>
             <optional>true</optional>
         </dependency>
     </dependencies>
