@@ -1,4 +1,4 @@
-package com.mars.core.aop.base;
+package com.mars.aop.base;
 
 /**
  * AOP定义模板
