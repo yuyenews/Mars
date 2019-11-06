@@ -82,6 +82,6 @@ public interface TestApi {
 
 ## 捐款赞助
 
-[爱帮帮，限时](http://www.likebb.cn/crowdfund/detail/6358?showTitle=true)
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G517AIY)
 
 [官网赞助](http://mars-framework.com/sponsor.html)

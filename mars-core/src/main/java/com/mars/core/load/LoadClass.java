@@ -23,7 +23,7 @@ public class LoadClass {
 	 *
 	 * @throws Exception 异常
 	 */
-	public static void sacnClass(String packageName) throws Exception{
+	public static void scanClass(String packageName) throws Exception{
 		try {
 
 			Set<String> scanClassList = LoadHelper.getSacnClassList();
