@@ -39,7 +39,7 @@ public class LoadClass {
 			scanClassList.addAll(navClassList);
 
 			/* 将扫描出来的类保存到内存中 */
-			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,classList);
+			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,scanClassList);
 
 		} catch (Exception e){
 			throw new Exception("扫描["+packageName+"]包下的类发生错误",e);
