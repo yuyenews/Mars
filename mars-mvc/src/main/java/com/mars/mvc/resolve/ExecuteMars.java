@@ -4,7 +4,6 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.mvc.util.BuildParams;
-import com.mars.mvc.util.ResultUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
