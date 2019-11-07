@@ -64,8 +64,6 @@ public class MvcCglibProxy implements MethodInterceptor {
 		} catch (Throwable e) {
 			if(c != null) {
 				c.exp(e);
-			} else {
-				logger.error("",e);
 			}
 			throw e;
 		}
