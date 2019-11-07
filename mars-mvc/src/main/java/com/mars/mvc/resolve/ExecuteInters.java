@@ -6,6 +6,7 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.MatchUtil;
 import com.mars.core.util.MesUtil;
+import com.mars.mvc.constant.InterConstant;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
@@ -27,19 +28,18 @@ public class ExecuteInters {
 
 	/**
 	 * 执行拦截器的开始方法
-	 * @param list jihe
-	 * @param request qingqiu
-	 * @param response xiangying
-	 * @return duix
+	 * @param list 拦截器集合
+	 * @param request 请求对象
+	 * @param response 响应对象
+	 * @return 拦截器的返回数据
 	 */
 	public static Object executeIntersStart(List<MarsInterModel> list, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		String className = "";
 		try {
 			for(MarsInterModel marsInterModel : list) {
-				Class<?> clss = marsInterModel.getCls();
-				className = clss.getName();
+				className = marsInterModel.getCls().getName();
 
-				Method method2 = clss.getDeclaredMethod("startRequest", new Class[] { HttpMarsRequest.class, HttpMarsResponse.class });
+				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.BEFORE_REQUEST, new Class[] { HttpMarsRequest.class, HttpMarsResponse.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response });
 				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
@@ -54,20 +54,20 @@ public class ExecuteInters {
 	
 	/**
 	 * 执行拦截器的结束方法
-	 * @param list jihe
-	 * @param request qingqiu
-	 * @param response xiangying
-	 * @return duix
+	 * @param list 拦截器集合
+	 * @param request 请求对象
+	 * @param response 响应对象
+	 * @param conResult api的返回数据
+	 * @return 拦截器的返回数据
 	 */
 	public static Object executeIntersEnd(List<MarsInterModel> list, HttpMarsRequest request, HttpMarsResponse response, Object conResult) throws Exception {
 		String className = "";
 		try {
 			
 			for(MarsInterModel marsInterModel : list) {
-				Class<?> clss = marsInterModel.getCls();
-				className = clss.getName();
+				className = marsInterModel.getCls().getName();
 
-				Method method2 = clss.getDeclaredMethod("endRequest", new Class[] { HttpMarsRequest.class, HttpMarsResponse.class, Object.class });
+				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.AFTER_REQUEST, new Class[] { HttpMarsRequest.class, HttpMarsResponse.class, Object.class });
 				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response, conResult });
 				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
@@ -83,21 +83,26 @@ public class ExecuteInters {
 	
 	/**
 	 * 获取所有符合条件的拦截器
-	 * @param uriEnd uel
-	 * @return duix
+	 * @param uriEnd url
+	 * @return 拦截器集合
 	 */
-	public static List<MarsInterModel> getInters(String uriEnd){
+	public static List<MarsInterModel> getInters(String uriEnd) {
 		try {
 			List<MarsInterModel> list = new ArrayList<>();
 
 			Object interceptorsObj = MarsSpace.getEasySpace().getAttr(MarsConstant.INTERCEPTOR_OBJECTS);
+			if(interceptorsObj == null) {
+				return list;
+			}
 
-			if(interceptorsObj != null) {
-				List<MarsInterModel> interceptors = (List<MarsInterModel>)interceptorsObj;
-				for(MarsInterModel marsInterModel : interceptors) {
-					if(MatchUtil.isMatch(marsInterModel.getPattern(), uriEnd)){
-						list.add(marsInterModel);
+			List<MarsInterModel> interceptors = (List<MarsInterModel>)interceptorsObj;
+			for(MarsInterModel marsInterModel : interceptors) {
+				if(MatchUtil.isMatch(marsInterModel.getPattern(), uriEnd)){
+					if(hasExclude(marsInterModel,uriEnd)){
+						/* 如果此url在此拦截器的排除名单中，则不进行拦截 */
+						continue;
 					}
+					list.add(marsInterModel);
 				}
 			}
 			return list;
@@ -108,8 +113,25 @@ public class ExecuteInters {
 	}
 
 	/**
+	 * 判断拦截器是否需要拦截此接口
+	 * @param marsInterModel
+	 * @return
+	 * @throws Exception
+	 */
+	private static Boolean hasExclude(MarsInterModel marsInterModel,String uriEnd) throws Exception {
+		Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.EXCLUDE);
+		Object result = method2.invoke(marsInterModel.getObj());
+		if(result == null) {
+			return false;
+		}
+		List<String> excludeList = (List<String>)result;
+		Boolean hasExc = excludeList.contains(uriEnd);
+		return hasExc;
+	}
+
+	/**
 	 * 返回错误信息
-	 * @param className
+	 * @param className 拦截器类名
 	 * @return
 	 */
 	private static String errorResult(String className,Exception e) {

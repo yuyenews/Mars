@@ -3,6 +3,8 @@ package com.mars.mvc.base;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 
+import java.util.List;
+
 /**
  * 拦截器基类，强制继承
  * @author yuye
@@ -14,11 +16,6 @@ public interface BaseInterceptor {
 	 * 通过
 	 */
 	String SUCCESS = "success";
-	
-	/**
-	 * 不通过
-	 */
-	String ERROR = "error";
 
 	/**
 	 * 控制层执行之前
@@ -26,7 +23,7 @@ public interface BaseInterceptor {
 	 * @param response
 	 * @return
 	 */
-	Object startRequest(HttpMarsRequest request, HttpMarsResponse response);
+	Object beforeRequest(HttpMarsRequest request, HttpMarsResponse response);
 	
 	/**
 	 * 控制层执行之后
@@ -35,5 +32,11 @@ public interface BaseInterceptor {
 	 * @param obj 控制层返回的数据
 	 * @return
 	 */
-	Object endRequest(HttpMarsRequest request, HttpMarsResponse response, Object obj);
+	Object afterRequest(HttpMarsRequest request, HttpMarsResponse response, Object obj);
+
+	/**
+	 * 不拦截的接口
+	 * @return
+	 */
+	List<String> exclude();
 }
