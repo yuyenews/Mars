@@ -1,6 +1,5 @@
 package com.mars.mvc.proxy;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mars.core.annotation.MarsReference;
 import com.mars.core.annotation.enums.RefType;
 import com.mars.core.load.LoadHelper;
@@ -8,7 +7,6 @@ import com.mars.core.model.MarsBeanModel;
 import com.mars.core.util.StringUtil;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -97,42 +95,5 @@ public class ExecuteRef {
             }
         }
         return "errorRef";
-    }
-
-    /**
-     * 成功的返回数据结构
-     * @param obj bean的返回值
-     * @return json
-     */
-    protected static JSONObject getSuccessResult(Object obj){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("error_code","success");
-        jsonObject.put("result",obj);
-        return jsonObject;
-    }
-
-    /**
-     * 失败的返回数据结构
-     * @param obj 错误提示
-     * @return json
-     */
-    protected static JSONObject getFailResult(Object obj){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("error_code","fail");
-        jsonObject.put("error_info",obj);
-        return jsonObject;
-    }
-
-    /**
-     * 异常的返回数据结构
-     * @param e 错误提示
-     * @return json
-     */
-    protected static JSONObject getErrorResult(Throwable e){
-        if(e instanceof InvocationTargetException){
-            InvocationTargetException targetException = (InvocationTargetException)e;
-            return getFailResult(targetException.getTargetException().getMessage());
-        }
-        return getFailResult(e.getMessage());
     }
 }

@@ -4,6 +4,7 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.mvc.util.BuildParams;
+import com.mars.mvc.util.ResultUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
@@ -45,7 +46,7 @@ public class ExecuteMars {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public Object execute(MarsMappingModel marsMappingModel, HttpMethod method, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
+	public Object execute(MarsMappingModel marsMappingModel, HttpMethod method, HttpMarsRequest request, HttpMarsResponse response) {
 		try {
 
 			/* 校验请求方式 */
@@ -69,11 +70,10 @@ public class ExecuteMars {
 			if(!intersEndResult.toString().equals(BaseInterceptor.SUCCESS)) {
 				return intersEndResult;
 			}
-
-			return result;
+			return ResultUtil.getSuccessResult(result);
 		} catch (Exception e) {
 			log.error("执行控制层的时候报错",e);
-			throw e;
+			return ResultUtil.getFailResult(e.getMessage());
 		}
 	}
 

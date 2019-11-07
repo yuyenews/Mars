@@ -60,14 +60,14 @@ public class MvcCglibProxy implements MethodInterceptor {
 				c.endMethod(args,o1);
 			}
 
-			return ExecuteRef.getSuccessResult(o1);
+			return o1;
 		} catch (Throwable e) {
 			if(c != null) {
 				c.exp(e);
 			} else {
 				logger.error("",e);
 			}
-			return ExecuteRef.getErrorResult(e);
+			throw e;
 		}
 	}
 }
