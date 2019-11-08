@@ -22,7 +22,7 @@ public class BaseSelect {
      * @param dataSourceName 连接名
      * @return 数据
      */
-    protected static <T> List<T> selectList(String sql, Object param, Class<T> cls,String dataSourceName) throws Exception {
+    public static <T> List<T> selectList(String sql, Object param, Class<T> cls,String dataSourceName) throws Exception {
         ConnectionManager connectionManager = BaseJdbcTemplate.getConnection(dataSourceName);
         try {
             List<JSONObject> result = select(sql, param, connectionManager.getConnection());

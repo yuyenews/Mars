@@ -29,7 +29,7 @@ public class BaseJdbcTemplate {
      * @return
      * @throws Exception
      */
-    protected static ConnectionManager getConnection(String dataSourceName) throws Exception {
+    public static ConnectionManager getConnection(String dataSourceName) throws Exception {
         ConnectionManager connectionManager = new ConnectionManager();
 
         /* 获取当前线程中的Connection */
@@ -56,7 +56,7 @@ public class BaseJdbcTemplate {
      *
      * @return str
      */
-    protected static String getDataSourceName(String dataSourceName) {
+    public static String getDataSourceName(String dataSourceName) {
         if (dataSourceName == null) {
             dataSourceName = marsSpace.getAttr(MarsConstant.DEFAULT_DATASOURCE_NAME).toString();
         }
@@ -71,7 +71,7 @@ public class BaseJdbcTemplate {
      * @return
      * @throws Exception
      */
-    protected static SqlBuilderModel builderSql(String sql, Object args) throws Exception {
+    public static SqlBuilderModel builderSql(String sql, Object args) throws Exception {
 
         SqlBuilderModel sqlBuilderModel = new SqlBuilderModel();
 
