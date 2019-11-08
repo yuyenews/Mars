@@ -1,4 +1,4 @@
-package com.mars.jdbc.proxyoper;
+package com.mars.jdbc.proxy.oper;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
