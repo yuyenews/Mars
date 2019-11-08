@@ -3,8 +3,8 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
-	<artifactId>Mars-java</artifactId>
-	<version>3.0.3</version>
+	<artifactId>Mars</artifactId>
+	<version>3.0.5</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-core</module>
