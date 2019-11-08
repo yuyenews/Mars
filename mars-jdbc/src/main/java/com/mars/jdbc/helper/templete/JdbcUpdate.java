@@ -3,6 +3,7 @@ package com.mars.jdbc.helper.templete;
 import com.mars.jdbc.helper.base.DBHelper;
 import com.mars.jdbc.helper.manager.ConnectionManager;
 import com.mars.jdbc.helper.model.SqlBuilderModel;
+import com.mars.jdbc.helper.templete.base.BaseJdbcTemplate;
 
 public class JdbcUpdate {
 

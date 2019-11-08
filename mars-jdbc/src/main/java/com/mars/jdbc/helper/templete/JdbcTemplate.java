@@ -3,6 +3,7 @@ package com.mars.jdbc.helper.templete;
 import com.mars.core.constant.MarsSpace;
 import com.mars.jdbc.helper.model.PageModel;
 import com.mars.jdbc.helper.model.PageParamModel;
+import com.mars.jdbc.helper.templete.base.BaseJdbcTemplate;
 
 import java.util.List;
 import java.util.Map;

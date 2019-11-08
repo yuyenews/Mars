@@ -1,4 +1,4 @@
-package com.mars.jdbc.helper.templete;
+package com.mars.jdbc.helper.templete.base;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

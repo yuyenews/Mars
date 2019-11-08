@@ -1,5 +1,7 @@
 package com.mars.jdbc.helper.templete;
 
+import com.mars.jdbc.helper.templete.base.BaseSelect;
+
 import java.util.List;
 import java.util.Map;
 
