@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
-		<artifactId>Mars-java</artifactId>
-		<version>3.0.3</version>
+		<artifactId>Mars</artifactId>
+		<version>3.0.5</version>
 	</parent>
 	<artifactId>mars-mvc</artifactId>
 
