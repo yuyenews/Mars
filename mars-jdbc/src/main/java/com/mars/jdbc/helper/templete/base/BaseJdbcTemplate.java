@@ -7,7 +7,7 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ThreadUtil;
 import com.mars.jdbc.helper.base.DBHelper;
 import com.mars.jdbc.helper.manager.ConnectionManager;
-import com.mars.jdbc.helper.model.SqlBuilderModel;
+import com.mars.jdbc.helper.templete.model.SqlBuilderModel;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -41,10 +41,10 @@ public class BaseJdbcTemplate {
         if (obj != null) {
             Map<String, Connection> connections = (Map<String, Connection>) obj;
             connectionManager.setConnection(connections.get(dataSourceName2));
-            connectionManager.setHasTrantion(false);
+            connectionManager.setHasTraction(false);
         } else {
             connectionManager.setConnection(DBHelper.getConnection(dataSourceName2));
-            connectionManager.setHasTrantion(true);
+            connectionManager.setHasTraction(true);
         }
         return connectionManager;
     }
@@ -132,8 +132,7 @@ public class BaseJdbcTemplate {
      * @return
      */
     private static String getFiledName(String matcherStr,String startStr){
-        matcherStr = matcherStr.replace(startStr+"{","").replace("}","");
-        return matcherStr;
+        return matcherStr.replace(startStr+"{","").replace("}","");
     }
 }
 

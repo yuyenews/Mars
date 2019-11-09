@@ -3,7 +3,7 @@ package com.mars.jdbc.helper.templete.base;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.jdbc.helper.base.DBHelper;
 import com.mars.jdbc.helper.manager.ConnectionManager;
-import com.mars.jdbc.helper.model.SqlBuilderModel;
+import com.mars.jdbc.helper.templete.model.SqlBuilderModel;
 
 import java.sql.Connection;
 import java.util.ArrayList;
