@@ -8,5 +8,7 @@ package com.mars.core.annotation.enums;
  */
 public enum ReqMethod {
 
-	POST, GET, HEAD, OPTIONS, PUT, DELETE, TRACE, CONNECT
+	POST, GET
+
+	//HEAD, OPTIONS, PUT, DELETE, TRACE, CONNECT
 }
