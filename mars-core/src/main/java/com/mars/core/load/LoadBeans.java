@@ -40,7 +40,7 @@ public class LoadBeans {
                     count++;
                 }
                 if(marsBean != null) {
-                    LoadBeans.loadEasyBean(cls, marsBean);
+                    LoadBeans.loadMarsBean(cls, marsBean);
                     count++;
                 }
                 if(marsInterceptor != null){
@@ -87,7 +87,7 @@ public class LoadBeans {
      * @param cls 类型
      * @param marsBean 注解
      */
-    public static void loadEasyBean(Class<?> cls, MarsBean marsBean) {
+    public static void loadMarsBean(Class<?> cls, MarsBean marsBean) {
 
         List<MarsBeanClassModel> marsBeans = LoadHelper.getBeanList();
 

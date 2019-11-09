@@ -52,7 +52,7 @@ public class LoadMarsBean {
 			/* 注入对象 */
 			iocBean(marsBeanObjects);
 		} catch (Exception e) {
-			throw new Exception("加载并注入EasyBean的时候出现错误",e);
+			throw new Exception("加载并注入MarsBean的时候出现错误",e);
 		} 
 	}
 	
