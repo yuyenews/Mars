@@ -25,15 +25,12 @@ public class ExecuteMars {
 
 	private Logger log = LoggerFactory.getLogger(ExecuteMars.class);
 
-	private static ExecuteMars executeMars;
+	private static ExecuteMars executeMars = new ExecuteMars();
 
 	private ExecuteMars() {
 	}
 
 	public static ExecuteMars getExecuteMars() {
-		if (executeMars == null) {
-			executeMars = new ExecuteMars();
-		}
 		return executeMars;
 	}
 

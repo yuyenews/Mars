@@ -22,7 +22,7 @@ public class ResolveRequest {
 	
 	private Logger log = LoggerFactory.getLogger(ResolveRequest.class);
 
-	private static ResolveRequest resolveRequest;
+	private static ResolveRequest resolveRequest = new ResolveRequest();
 	
 	private MarsSpace constants = MarsSpace.getEasySpace();
 	
@@ -34,9 +34,6 @@ public class ResolveRequest {
 	private ResolveRequest() {}
 	
 	public static ResolveRequest getResolveRequest() {
-		if(resolveRequest == null) {
-			resolveRequest = new ResolveRequest();
-		}
 		return resolveRequest;
 	}
 	

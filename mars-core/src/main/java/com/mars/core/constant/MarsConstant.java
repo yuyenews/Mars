@@ -42,7 +42,7 @@ public class MarsConstant {
      */
     public static final String CONTROLLERS = "contorllers";
     /**
-     * 所有的easyBeans类信息
+     * 所有的marsBeans类信息
      */
     public static final String MARS_BEANS = "marsBeans";
     /**
@@ -64,7 +64,7 @@ public class MarsConstant {
     public static final String CONTROLLER_OBJECTS = "controlObjects";
 
     /**
-     * 所有的bean对象，包括 easyBean和easyDao
+     * 所有的bean对象，包括 marsBean和marsDao
      */
     public static final String MARS_BEAN_OBJECTS = "marsBeanObjects";
 

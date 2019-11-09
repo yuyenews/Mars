@@ -1,11 +1,11 @@
 package com.mars.mvc.logs;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 /**
  * MarsApi方法打印日志
@@ -27,22 +27,20 @@ public class LogAop {
      * @param args
      */
     public void startMethod(Object[] args) {
-        Object obj = args[0];
-        if(obj != null && obj instanceof HttpMarsRequest){
-            HttpMarsRequest request = (HttpMarsRequest)obj;
-            Map<String, Object> params = request.getParemeters();
-
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("开始执行");
-            buffer.append(cls.getName());
-            buffer.append("->");
-            buffer.append(methodName);
-            buffer.append(",参数:[");
-            buffer.append(JSONObject.toJSONString(params));
-            buffer.append("]");
-
-            logger.info(buffer.toString());
+        String params = "";
+        if(args != null && args.length > 0){
+            JSONObject jsonObject = new JSONObject();
+            for(Object obj : args){
+                if(obj == null || obj instanceof HttpMarsResponse || obj instanceof HttpMarsRequest){
+                    continue;
+                }
+                JSONObject param = JSONObject.parseObject(JSON.toJSONString(obj));
+                jsonObject.putAll(param);
+            }
         }
+
+        StringBuffer buffer = getLogInfo("开始执行","参数",params);
+        logger.info(buffer.toString());
     }
 
     /**
@@ -51,16 +49,11 @@ public class LogAop {
      * @param result
      */
     public void endMethod(Object[] args,Object result) {
-
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("执行结束");
-        buffer.append(cls.getName());
-        buffer.append("->");
-        buffer.append(methodName);
-        buffer.append(",返回数据:[");
-        buffer.append(JSONObject.toJSONString(result));
-        buffer.append("]");
-
+        String resultInfo = "";
+        if(result != null){
+            resultInfo = JSON.toJSONString(result);
+        }
+        StringBuffer buffer = getLogInfo("执行结束","返回数据", resultInfo);
         logger.info(buffer.toString());
     }
 
@@ -77,5 +70,20 @@ public class LogAop {
         buffer.append(",异常信息：");
 
         logger.error(buffer.toString(),e);
+    }
+
+    private StringBuffer getLogInfo(String startWith, String tag, String result){
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(startWith);
+        buffer.append(cls.getName());
+        buffer.append("->");
+        buffer.append(methodName);
+        buffer.append(",");
+        buffer.append(tag);
+        buffer.append("[");
+        buffer.append(result);
+        buffer.append("]");
+
+        return buffer;
     }
 }

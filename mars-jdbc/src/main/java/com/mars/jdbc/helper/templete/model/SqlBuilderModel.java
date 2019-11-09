@@ -1,4 +1,4 @@
-package com.mars.jdbc.helper.model;
+package com.mars.jdbc.helper.templete.model;
 
 public class SqlBuilderModel {
 

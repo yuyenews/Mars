@@ -84,14 +84,14 @@ public class JedisPoolFactory {
      * 获取JedisShardInfoList
      * @return
      */
-    private static List<JedisShardInfo>  getJedisShardInfoList(){
-        JSONObject config = getConfig();
-        JSONArray jedisShardInfos = config.getJSONArray("jedisShardInfos");
+    private static List<JedisShardInfo>  getJedisShardInfoList() throws Exception {
+
+        JSONArray shardInfos = getJedisShardInfos();
 
         List<JedisShardInfo> list = new ArrayList<>();
-        for(int i=0; i<jedisShardInfos.size(); i++){
+        for(int i=0; i<shardInfos.size(); i++){
 
-            JSONObject jsonObject = jedisShardInfos.getJSONObject(i);
+            JSONObject jsonObject = shardInfos.getJSONObject(i);
             String host = jsonObject.getString("host");
             Integer port = jsonObject.getInteger("port");
             String password = jsonObject.getString("password");
@@ -120,74 +120,74 @@ public class JedisPoolFactory {
     private static void loadJedisPoolConfigParams(){
         JSONObject config = getConfig();
 
-        Object mt = config.get("maxTotal");
+        Integer mt = config.getInteger("maxTotal");
         if(mt != null){
-            maxTotal = Integer.parseInt(mt.toString());
+            maxTotal = mt;
         }
 
-        Object md = config.get("maxIdle");
+        Integer md = config.getInteger("maxIdle");
         if(md != null){
-            maxIdle = Integer.parseInt(md.toString());
+            maxIdle = md;
         }
 
-        Object mi = config.get("minIdle");
+        Integer mi = config.getInteger("minIdle");
         if(mi != null){
-            minIdle = Integer.parseInt(mi.toString());
+            minIdle = mi;
         }
 
-        Object ntper = config.get("numTestsPerEvictionRun");
+        Integer ntper = config.getInteger("numTestsPerEvictionRun");
         if(ntper != null){
-            numTestsPerEvictionRun = Integer.parseInt(ntper.toString());
+            numTestsPerEvictionRun = ntper;
         }
 
-        Object tberm = config.get("timeBetweenEvictionRunsMillis");
+        Integer tberm = config.getInteger("timeBetweenEvictionRunsMillis");
         if(tberm != null){
-            timeBetweenEvictionRunsMillis = Integer.parseInt(tberm.toString());
+            timeBetweenEvictionRunsMillis = tberm;
         }
 
-        Object meitm = config.get("minEvictableIdleTimeMillis");
+        Integer meitm = config.getInteger("minEvictableIdleTimeMillis");
         if(meitm != null){
-            minEvictableIdleTimeMillis = Integer.parseInt(meitm.toString());
+            minEvictableIdleTimeMillis = meitm;
         }
 
-        Object smeitm = config.get("softMinEvictableIdleTimeMillis");
+        Integer smeitm = config.getInteger("softMinEvictableIdleTimeMillis");
         if(smeitm != null){
-            softMinEvictableIdleTimeMillis = Integer.parseInt(smeitm.toString());
+            softMinEvictableIdleTimeMillis = smeitm;
         }
 
-        Object mwm = config.get("maxWaitMillis");
+        Integer mwm = config.getInteger("maxWaitMillis");
         if(mwm != null){
-            maxWaitMillis = Integer.parseInt(mwm.toString());
+            maxWaitMillis = mwm;
         }
 
-        Object tob = config.get("testOnBorrow");
+        Boolean tob = config.getBoolean("testOnBorrow");
         if(tob != null){
-            testOnBorrow = Boolean.parseBoolean(tob.toString());
+            testOnBorrow = tob;
         }
 
-        Object twi = config.get("testWhileIdle");
+        Boolean twi = config.getBoolean("testWhileIdle");
         if(twi != null){
-            testWhileIdle = Boolean.parseBoolean(twi.toString());
+            testWhileIdle = twi;
         }
 
-        Object tor = config.get("testOnReturn");
+        Boolean tor = config.getBoolean("testOnReturn");
         if(tor != null){
-            testOnReturn = Boolean.parseBoolean(tor.toString());
+            testOnReturn = tor;
         }
 
-        Object jeb = config.get("jmxEnabled");
+        Boolean jeb = config.getBoolean("jmxEnabled");
         if(jeb != null){
-            jmxEnabled = Boolean.parseBoolean(jeb.toString());
+            jmxEnabled = jeb;
         }
 
-        Object jnp = config.get("jmxNamePrefix");
+        String jnp = config.getString("jmxNamePrefix");
         if(jnp != null){
-            jmxNamePrefix = jnp.toString();
+            jmxNamePrefix = jnp;
         }
 
-        Object bwe = config.get("blockWhenExhausted");
+        Boolean bwe = config.getBoolean("blockWhenExhausted");
         if(bwe != null){
-            blockWhenExhausted = Boolean.parseBoolean(bwe.toString());
+            blockWhenExhausted = bwe;
         }
     }
 
@@ -195,7 +195,28 @@ public class JedisPoolFactory {
      * 从配置文件中获取redis相关配置
      * @return
      */
-    private static JSONObject getConfig(){
+    private static JSONObject getConfig() {
         return ConfigUtil.getConfig().getJSONObject("redis");
+    }
+
+    /**
+     * 获取连接信息
+     * @return 连接信息
+     * @throws Exception 异常
+     */
+    private static JSONArray getJedisShardInfos() throws Exception {
+        JSONArray jedisShardInfos = new JSONArray();
+
+        Object shardInfos = getConfig().get("jedisShardInfos");
+        if(shardInfos == null){
+            throw new Exception("jedisShardInfos配置不正确");
+        }
+
+        if(shardInfos instanceof JSONArray){
+            jedisShardInfos = (JSONArray)shardInfos;
+        } else {
+            jedisShardInfos.add(shardInfos);
+        }
+        return jedisShardInfos;
     }
 }

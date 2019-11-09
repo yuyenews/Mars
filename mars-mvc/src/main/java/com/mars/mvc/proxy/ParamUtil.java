@@ -2,6 +2,8 @@ package com.mars.mvc.proxy;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 
 /**
  * 将API的参数转成引用的方法的参数
@@ -29,6 +31,10 @@ public class ParamUtil {
             /* 把api的参数值拿出来，转成json */
             JSONObject jsonObject = new JSONObject();
             for(Object arg : args){
+                if(arg == null || arg instanceof HttpMarsResponse || arg instanceof HttpMarsRequest){
+                    continue;
+                }
+
                 String jsonString = JSON.toJSONString(arg);
                 JSONObject argJson = JSONObject.parseObject(jsonString);
                 jsonObject.putAll(argJson);

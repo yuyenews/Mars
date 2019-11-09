@@ -30,7 +30,7 @@ public class LoadDaos {
             List<MarsBeanClassModel> marsDaoList = LoadHelper.getDaoList();
 
             /* 创建bean对象，并保存起来 */
-            Map<String, MarsBeanModel> easyBeanObjs = LoadHelper.getBeanObjectMap();
+            Map<String, MarsBeanModel> marsBeanObjs = LoadHelper.getBeanObjectMap();
 
             for (MarsBeanClassModel marsBeanClassModel : marsDaoList) {
                 Class<?> cls = marsBeanClassModel.getClassName();
@@ -38,18 +38,18 @@ public class LoadDaos {
 
                 String beanName = LoadHelper.getBeanName(marsDao.value(), cls);
 
-                if (easyBeanObjs.get(beanName) == null) {
+                if (marsBeanObjs.get(beanName) == null) {
                     MarsBeanModel beanModel = new MarsBeanModel();
                     beanModel.setName(beanName);
                     beanModel.setCls(cls);
                     beanModel.setObj(new MjProxy().getProxy(cls));
-                    easyBeanObjs.put(beanName, beanModel);
+                    marsBeanObjs.put(beanName, beanModel);
                 } else {
                     throw new Exception("已经存在name为[" + beanName + "]的MarsDao了");
                 }
             }
 
-            constants.setAttr(MarsConstant.MARS_BEAN_OBJECTS, easyBeanObjs);
+            constants.setAttr(MarsConstant.MARS_BEAN_OBJECTS, marsBeanObjs);
 
         } catch (Exception e) {
             throw new Exception("加载MarsDao的时候出现错误", e);
