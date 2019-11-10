@@ -29,14 +29,12 @@ public class JwtManager {
     private final int calendarField = Calendar.SECOND;
     private int calendarInterval = 86400;
 
-    private static JwtManager jwtManager;
-    private JwtManager(){}
+    private static JwtManager jwtManager = new JwtManager();
+    private JwtManager(){
+        loadCalendarInterval();
+    }
 
     public static JwtManager getJwtManager(){
-        if(jwtManager == null){
-            jwtManager = new JwtManager();
-            jwtManager.loadCalendarInterval();
-        }
         return jwtManager;
     }
 
