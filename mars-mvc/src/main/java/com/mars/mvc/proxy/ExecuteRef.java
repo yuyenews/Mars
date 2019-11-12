@@ -42,7 +42,7 @@ public class ExecuteRef {
         if(marsReference.refType().equals(RefType.METHOD)){
             /* 如果引用的是一个方法则执行bean里面对应的方法 */
             Object result = executeRefMethod(cls,obj,args,refName);
-            if(result.equals("errorRef")){
+            if(result != null && result.equals("errorRef")){
                 throw new Exception("没有找到名称为["+refName+"]的方法");
             }
             return result;
