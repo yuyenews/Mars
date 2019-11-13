@@ -6,8 +6,6 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +18,6 @@ import java.util.Map;
  * @author yuye
  */
 public class HttpMarsResponse {
-
-    private Logger logger = LoggerFactory.getLogger(HttpMarsResponse.class);
 
     /**
      * netty原生通道
