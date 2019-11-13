@@ -4,7 +4,7 @@ public class MarsCloudConstant {
 
 
     /**
-     * rest请求只传一个基础类型参数时，用它做key，从request里取数据
+     * rest请求，用它做key，从request里取数据
      */
     public static final String PARAM = "param";
 
