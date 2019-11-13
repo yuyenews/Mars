@@ -1,7 +1,5 @@
 package com.mars.server.server.request;
 
-import com.alibaba.fastjson.JSONObject;
-import com.mars.core.util.ConfigUtil;
 import com.mars.server.server.request.model.CrossDomain;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -107,35 +105,11 @@ public class HttpMarsResponse {
      * 设置跨域
      */
     private void crossDomain(FullHttpResponse response) {
-        try {
-            JSONObject object = getConfig().getJSONObject("cross_domain");
-            CrossDomain.origin = object.get("origin").toString();
-            CrossDomain.methods = object.get("methods").toString();
-            CrossDomain.maxAge = object.get("maxAge").toString();
-            CrossDomain.headers = object.get("headers").toString();
-            CrossDomain.credentials = object.get("credentials").toString();
-        } catch (Exception e) {
-            logger.warn("跨域配置缺少参数，已启动默认配置", e);
-        } finally {
-            response.headers().set("Access-Control-Allow-Origin", CrossDomain.origin);
-            response.headers().set("Access-Control-Allow-Methods", CrossDomain.methods);
-            response.headers().set("Access-Control-Max-Age", CrossDomain.maxAge);
-            response.headers().set("Access-Control-Allow-Headers", CrossDomain.headers);
-            response.headers().set("Access-Control-Allow-Credentials", CrossDomain.credentials);
-        }
-    }
-
-    /**
-     * 获取配置文件
-     *
-     * @return 配置文件对象
-     */
-    private JSONObject getConfig() {
-        JSONObject jsonObject = ConfigUtil.getConfig();
-        if (jsonObject != null) {
-            return jsonObject;
-        }
-
-        return new JSONObject();
+        CrossDomain crossDomain = CrossDomain.getCrossDomain();
+        response.headers().set("Access-Control-Allow-Origin", crossDomain.getOrigin());
+        response.headers().set("Access-Control-Allow-Methods", crossDomain.getMethods());
+        response.headers().set("Access-Control-Max-Age", crossDomain.getMaxAge());
+        response.headers().set("Access-Control-Allow-Headers", crossDomain.getHeaders());
+        response.headers().set("Access-Control-Allow-Credentials", crossDomain.getCredentials());
     }
 }

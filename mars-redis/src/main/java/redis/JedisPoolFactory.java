@@ -53,7 +53,7 @@ public class JedisPoolFactory {
             return shardedJedisPool;
         } catch (Exception e) {
             logger.error("获取JedisPool对象出错",e);
-            throw  new Exception(e);
+            throw e;
         }
     }
 
