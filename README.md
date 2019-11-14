@@ -1,11 +1,21 @@
 <div align=center>
-<img src="https://github.com/yuyenews/resource/blob/master/mars/logo-simple.png?raw=true"/>
+<img width="200px" src="https://github.com/yuyenews/resource/blob/master/mars/logo-simple.png?raw=true"/>
 </div>
 
 <br/>
 
-![](https://img.shields.io/badge/licenes-MIT-brightgreen.svg)
-![](https://img.shields.io/badge/jdk-1.8+-brightgreen.svg)
+<div align=center>
+
+<img src="https://img.shields.io/badge/licenes-MIT-brightgreen.svg"/>
+<img src="https://img.shields.io/badge/jdk-1.8+-brightgreen.svg"/>
+
+</div>
+
+<div align=center>
+
+声明式API编程(DAP) 框架
+
+</div>
 
 ## 其他项目
 
