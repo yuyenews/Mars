@@ -1,5 +1,5 @@
 <div align=center>
-<img width="200px" src="https://github.com/yuyenews/resource/blob/master/mars/logo-simple.png?raw=true"/>
+<img width="200px" src="https://github.com/yuyenews/resource/blob/master/mars/logo-small.png?raw=true"/>
 </div>
 
 <br/>
