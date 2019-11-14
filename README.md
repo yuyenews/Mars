@@ -1,5 +1,5 @@
 <div align=center>
-<img width="200px" src="https://github.com/yuyenews/resource/blob/master/mars/logo-small.png?raw=true"/>
+<img width="150px" src="https://github.com/yuyenews/resource/blob/master/mars/logo-small.png?raw=true"/>
 </div>
 
 <br/>
@@ -11,8 +11,11 @@
 <img src="https://img.shields.io/badge/maven-3.5.4+-brightgreen.svg"/>
 <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
 <img src="https://img.shields.io/badge/release-3.0.5-brightgreen.svg"/>
+
 </div>
+
 <br/>
+
 <div align=center>
 
 声明式API编程(DAP) 框架
