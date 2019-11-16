@@ -55,6 +55,7 @@ public class LoadClass {
 
 		// 添加RedisTemplate
 		navClassList.add("com.mars.redis.template.MarsRedisTemplate");
+		// 添加分布式锁帮助类
 		navClassList.add("com.mars.redis.lock.MarsRedisLock");
 
 		return navClassList;
