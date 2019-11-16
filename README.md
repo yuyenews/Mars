@@ -10,7 +10,7 @@
 <img src="https://img.shields.io/badge/jdk-1.8+-brightgreen.svg"/>
 <img src="https://img.shields.io/badge/maven-3.5.4+-brightgreen.svg"/>
 <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
-<img src="https://img.shields.io/badge/release-3.0.5-brightgreen.svg"/>
+<img src="https://img.shields.io/badge/release-3.0.6-brightgreen.svg"/>
 
 </div>
 
