@@ -53,7 +53,10 @@ public class LoadClass {
 	public static Set<String> loadNativeClass() throws Exception {
 		Set<String> navClassList = new HashSet<>();
 
-		// 扩展用的，后期用来添加框架自有的Bean
+		// 添加RedisTemplate
+		navClassList.add("com.mars.redis.template.MarsRedisTemplate");
+		// 添加分布式锁帮助类
+		navClassList.add("com.mars.redis.lock.MarsRedisLock");
 
 		return navClassList;
 	}

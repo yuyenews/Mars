@@ -1,6 +1,6 @@
 package com.mars.jdbc.proxy;
 
-import com.mars.core.annotation.DataSource;
+import com.mars.jdbc.annotation.DataSource;
 import com.mars.jdbc.annotation.MarsGet;
 import com.mars.jdbc.annotation.MarsSelect;
 import com.mars.jdbc.annotation.MarsUpdate;

@@ -30,24 +30,27 @@ public class ExecuteRef {
     protected static Object executeRef(Method method, Object[] args) throws Exception {
         /* 根据注解获取到对应的bean对象实体 */
         MarsReference marsReference = method.getAnnotation(MarsReference.class);
-        MarsBeanModel marsBeanModel = getMarsBeanModel(marsReference);
 
         /* 获取bean对象的class和实例 */
+        MarsBeanModel marsBeanModel = getMarsBeanModel(marsReference);
         Class<?> cls = marsBeanModel.getCls();
         Object obj = marsBeanModel.getObj();
 
+        /* 获取引用的资源名称 */
+        String refName = getRefName(method,marsReference);
+
         if(marsReference.refType().equals(RefType.METHOD)){
             /* 如果引用的是一个方法则执行bean里面对应的方法 */
-            Object result = executeRefMethod(cls,obj,args,marsReference);
-            if(result.equals("errorRef")){
-                throw new Exception("没有找到名称为["+marsReference.refName()+"]的方法");
+            Object result = executeRefMethod(cls,obj,args,refName);
+            if(result != null && result.equals("errorRef")){
+                throw new Exception("没有找到名称为["+refName+"]的方法");
             }
             return result;
         } else {
             /* 否则就将bean里面对应的属性的值返回 */
-            Field field = cls.getDeclaredField(marsReference.refName());
+            Field field = cls.getDeclaredField(refName);
             if(field == null){
-                throw new Exception("没有找到名称为["+marsReference.refName()+"]的属性");
+                throw new Exception("没有找到名称为["+refName+"]的属性");
             }
             field.setAccessible(true);
             return field.get(obj);
@@ -61,8 +64,7 @@ public class ExecuteRef {
      * @throws Exception 异常
      */
     private static MarsBeanModel getMarsBeanModel(MarsReference marsReference) throws Exception {
-        if(marsReference == null || StringUtil.isNull(marsReference.beanName())
-                || StringUtil.isNull(marsReference.refName())){
+        if(marsReference == null || StringUtil.isNull(marsReference.beanName())){
             throw new Exception("没有配置MarsReference注解或者配置不正确");
         }
 
@@ -78,14 +80,14 @@ public class ExecuteRef {
      * @param cls 类
      * @param obj 对象
      * @param args 参数
-     * @param marsReference 引用注解
+     * @param refName 引用的资源
      * @return 返回值
      * @throws Exception 异常
      */
-    private static Object executeRefMethod(Class<?> cls,Object obj,Object[] args, MarsReference marsReference) throws Exception {
+    private static Object executeRefMethod(Class<?> cls,Object obj,Object[] args, String refName) throws Exception {
         Method[] methods = cls.getDeclaredMethods();
         for(Method methodItem : methods){
-            if(methodItem.getName().equals(marsReference.refName())){
+            if(methodItem.getName().equals(refName)){
                 Class<?>[] paramTypes = methodItem.getParameterTypes();
                 Object[] refMethodParams =	ParamUtil.getServiceParams(paramTypes,args);
                 if(refMethodParams == null){
@@ -95,5 +97,19 @@ public class ExecuteRef {
             }
         }
         return "errorRef";
+    }
+
+    /**
+     * 获取引用的资源名称
+     * @param method api的方法
+     * @param marsReference 引用注解配置
+     * @return
+     */
+    private static String getRefName(Method method,MarsReference marsReference){
+        String refName = marsReference.refName();
+        if(StringUtil.isNull(refName)){
+            return method.getName();
+        }
+        return refName;
     }
 }

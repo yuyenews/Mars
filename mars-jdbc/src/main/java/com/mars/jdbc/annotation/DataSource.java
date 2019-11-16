@@ -1,4 +1,4 @@
-package com.mars.core.annotation;
+package com.mars.jdbc.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
