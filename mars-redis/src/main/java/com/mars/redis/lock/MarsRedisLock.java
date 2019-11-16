@@ -68,6 +68,8 @@ public class MarsRedisLock {
         } catch (Exception e){
             logger.error("获取redis锁发生异常",e);
             return false;
+        } finally {
+            marsRedisTemplate.recycleJedis(shardedJedis);
         }
     }
 
@@ -102,6 +104,8 @@ public class MarsRedisLock {
         } catch (Exception e) {
             logger.error("释放redis锁发生异常", e);
             return false;
+        } finally {
+            marsRedisTemplate.recycleJedis(shardedJedis);
         }
     }
 }
