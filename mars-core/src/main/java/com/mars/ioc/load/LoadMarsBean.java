@@ -1,5 +1,6 @@
 package com.mars.ioc.load;
 
+import com.mars.core.base.InitBean;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.load.WriteFields;
@@ -8,6 +9,7 @@ import com.mars.core.model.MarsBeanModel;
 import com.mars.core.load.LoadHelper;
 import com.mars.ioc.factory.BeanFactory;
 
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +53,8 @@ public class LoadMarsBean {
 			}
 			/* 注入对象 */
 			iocBean(marsBeanObjects);
+			/* 初始化MarsBean */
+			initBean(marsBeanObjects);
 		} catch (Exception e) {
 			throw new Exception("加载并注入MarsBean的时候出现错误",e);
 		} 
@@ -59,6 +63,7 @@ public class LoadMarsBean {
 	/**
 	 * marsBean注入
 	 * @param marsBeanObjects 对象
+	 * @throws Exception 异常
 	 */
 	private static void iocBean(Map<String, MarsBeanModel> marsBeanObjects) throws Exception{
 		
@@ -80,5 +85,27 @@ public class LoadMarsBean {
 		} catch (Exception e) {
 			throw new Exception("加载并注入MarsBean的时候出现错误",e);
 		} 
+	}
+
+	/**
+	 * 初始化MarsBean
+	 * @param marsBeanObjects 对象
+	 * @throws Exception 异常
+	 */
+	private static void initBean(Map<String, MarsBeanModel> marsBeanObjects) throws Exception {
+		try {
+			for(String key : marsBeanObjects.keySet()){
+				MarsBeanModel marsBeanModel = marsBeanObjects.get(key);
+				Object obj = marsBeanModel.getObj();
+				if(obj instanceof InitBean){
+					Class<?> cls = marsBeanModel.getCls();
+
+					Method method = cls.getMethod("init");
+					method.invoke(obj);
+				}
+			}
+		} catch (Exception e){
+			throw new Exception("初始化MarsBean的时候出现错误",e);
+		}
 	}
 }

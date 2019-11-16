@@ -1,5 +1,6 @@
-package redis;
+package com.mars.redis.template;
 
+import com.mars.core.annotation.MarsBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
@@ -13,15 +14,16 @@ import java.util.TreeSet;
 /**
  * Redis操作
  */
-public class RedisTemplate {
+@MarsBean
+public class MarsRedisTemplate {
 
-    private static Logger logger = LoggerFactory.getLogger(RedisTemplate.class);// 日志
+    private Logger logger = LoggerFactory.getLogger(MarsRedisTemplate.class);
 
     /**
      * 从连接池获取redis连接
      * @return
      */
-    public static ShardedJedis getShardedJedis() throws Exception {
+    public ShardedJedis getShardedJedis() throws Exception {
         ShardedJedis jedis = null;
         try {
             jedis = JedisPoolFactory.getShardedJedisPool().getResource();
@@ -38,15 +40,15 @@ public class RedisTemplate {
      * @param pattern
      * @return
      */
-    public static TreeSet<String> keys(String pattern) {
+    public TreeSet<String> keys(String pattern) {
         ShardedJedis jedis = null;
         TreeSet<String> allKeys = new TreeSet<>();
 
         try {
             jedis = getShardedJedis();
             Collection<Jedis> jedisList = jedis.getAllShards();// 获取所有的缓存实例
-            for (Jedis jedis2 : jedisList) {
-                allKeys.addAll(jedis2.keys(pattern));// 获取匹配prefix的所有的key
+            for (Jedis jedisItem : jedisList) {
+                allKeys.addAll(jedisItem.keys(pattern));// 获取匹配prefix的所有的key
             }
         } catch (Exception e) {
             logger.error("Getting keys error: {}", e);
@@ -64,7 +66,7 @@ public class RedisTemplate {
      * @param value
      * @return
      */
-    public static boolean set(String key, String value) {
+    public boolean set(String key, String value) {
         return set(key.getBytes(),value.getBytes());
     }
 
@@ -75,7 +77,7 @@ public class RedisTemplate {
      * @param value
      * @return
      */
-    public static boolean set(byte[] key, byte[] value) {
+    public boolean set(byte[] key, byte[] value) {
         ShardedJedis jedis = null;
         try {
             jedis = getShardedJedis();
@@ -97,7 +99,7 @@ public class RedisTemplate {
      * @param value
      * @return
      */
-    public static boolean setex(byte[] key, byte[] value,Integer ex) {
+    public boolean setex(byte[] key, byte[] value,Integer ex) {
         ShardedJedis jedis = null;
         try {
             jedis = getShardedJedis();
@@ -119,7 +121,7 @@ public class RedisTemplate {
      * @param value
      * @return
      */
-    public static boolean setex(String key, String value,Integer ex) {
+    public boolean setex(String key, String value,Integer ex) {
         return setex(key.getBytes(),value.getBytes(),ex);
     }
 
@@ -129,7 +131,7 @@ public class RedisTemplate {
      * @param key
      * @return
      */
-    public static String get(String key) {
+    public String get(String key) {
         byte[] result = get(key.getBytes());
         return new String(result);
     }
@@ -140,7 +142,7 @@ public class RedisTemplate {
      * @param key
      * @return
      */
-    public static byte[] get(byte[] key) {
+    public byte[] get(byte[] key) {
         ShardedJedis jedis = null;
         try {
             jedis = getShardedJedis();
@@ -159,7 +161,7 @@ public class RedisTemplate {
      * 回收redis连接
      * @param jedis
      */
-    public static void recycleJedis(ShardedJedis jedis) {
+    public void recycleJedis(ShardedJedis jedis) {
         if (jedis != null) {
             try {
                 jedis.close();
@@ -174,7 +176,7 @@ public class RedisTemplate {
      * 根据key删除数据
      * @param key
      */
-    public static void del(String key) {
+    public void del(String key) {
         del(key.getBytes());
     }
 
@@ -182,7 +184,7 @@ public class RedisTemplate {
      * 根据key删除数据
      * @param key
      */
-    public static void del(byte[] key) {
+    public void del(byte[] key) {
         ShardedJedis jedis = null;
         try {
             jedis = getShardedJedis();
@@ -199,7 +201,7 @@ public class RedisTemplate {
      * @param key
      * @param expireTimeSecond
      */
-    public static void updateObjectEnableTime(byte[] key, int expireTimeSecond) {
+    public void updateObjectEnableTime(byte[] key, int expireTimeSecond) {
         ShardedJedis jedis = null;
         try {
             jedis = getShardedJedis();
@@ -216,7 +218,7 @@ public class RedisTemplate {
      * @param key
      * @param expireTimeSecond
      */
-    public static void updateObjectEnableTime(String key, int expireTimeSecond) {
+    public void updateObjectEnableTime(String key, int expireTimeSecond) {
         updateObjectEnableTime(key.getBytes(),expireTimeSecond);
     }
 
@@ -225,7 +227,7 @@ public class RedisTemplate {
      * @param pattern
      * @return
      */
-    public static Set<String> getAllKeys(String pattern) {
+    public Set<String> getAllKeys(String pattern) {
         ShardedJedis jedis = null;
         try {
             jedis = getShardedJedis();
@@ -247,7 +249,7 @@ public class RedisTemplate {
      * @param value
      * @return
      */
-    public static boolean hset(String group,String key, String value) {
+    public boolean hset(String group,String key, String value) {
         ShardedJedis jedis = null;
         try {
             jedis = getShardedJedis();
@@ -268,7 +270,7 @@ public class RedisTemplate {
      * @param key
      * @return
      */
-    public static String hget(String group, String key){
+    public String hget(String group, String key){
         ShardedJedis jedis = null;
         String result = "";
         try {
@@ -288,7 +290,7 @@ public class RedisTemplate {
      * @param group
      * @return
      */
-    public static Map<String, String> hgetAll(String group){
+    public Map<String, String> hgetAll(String group){
         ShardedJedis jedis = null;
         Map<String, String>  result = null;
         try {
@@ -302,5 +304,4 @@ public class RedisTemplate {
 
         return result;
     }
-
 }

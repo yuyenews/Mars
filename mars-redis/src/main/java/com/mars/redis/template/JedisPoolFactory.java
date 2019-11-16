@@ -1,4 +1,4 @@
-package redis;
+package com.mars.redis.template;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class JedisPoolFactory {
 
-    private static  Logger logger = LoggerFactory.getLogger(JedisPoolFactory.class);// 日志
+    private static  Logger logger = LoggerFactory.getLogger(JedisPoolFactory.class);
 
     private static int maxTotal = 2048;
     private static int maxIdle = 200;
@@ -100,7 +100,10 @@ public class JedisPoolFactory {
             Object soTimeout = jsonObject.get("soTimeout");
 
             JedisShardInfo jedisShardInfo = new JedisShardInfo(host,port,name);
-            jedisShardInfo.setPassword(password);
+
+            if(password != null){
+                jedisShardInfo.setPassword(password);
+            }
             if(connectionTimeout != null){
                 jedisShardInfo.setConnectionTimeout(Integer.parseInt(connectionTimeout.toString()));
             }
