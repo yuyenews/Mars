@@ -66,7 +66,6 @@ public class LoadMarsBean {
 	 * @throws Exception 异常
 	 */
 	private static void iocBean(Map<String, MarsBeanModel> marsBeanObjects) throws Exception{
-		
 		try {
 			for(String key : marsBeanObjects.keySet()) {
 				MarsBeanModel marsBeanModel = marsBeanObjects.get(key);
