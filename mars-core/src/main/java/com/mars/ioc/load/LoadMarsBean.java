@@ -35,7 +35,6 @@ public class LoadMarsBean {
 			
 			/* 创建bean对象，并保存起来 */
 			Map<String, MarsBeanModel> marsBeanObjects = LoadHelper.getBeanObjectMap();
-
 			for(MarsBeanClassModel marsBeanClassModel : marsBeansList) {
 
 				Class<?> cls = marsBeanClassModel.getClassName();
@@ -51,6 +50,7 @@ public class LoadMarsBean {
 					throw new Exception("已经存在name为["+beanName+"]的bean了");
 				}
 			}
+
 			/* 注入对象 */
 			iocBean(marsBeanObjects);
 			/* 初始化MarsBean */
