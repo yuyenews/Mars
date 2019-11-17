@@ -136,7 +136,7 @@ public class LoadHelper {
 
     /**
      * 获取所有的加了MarsInterceptor注解的基础数据
-     * @return
+     * @return 集合
      */
     public static List<MarsBeanClassModel> getInterceptorList(){
         List<MarsBeanClassModel> interceptors = new ArrayList<>();
@@ -150,7 +150,7 @@ public class LoadHelper {
 
     /**
      * 获取所有的加了MarsAfter注解的基础数据
-     * @return
+     * @return 集合
      */
     public static List<Class> getMarsAfterList(){
         List<Class> marsAfters = new ArrayList<>();
@@ -164,7 +164,7 @@ public class LoadHelper {
 
     /**
      * 获取扫描出来的类
-     * @return
+     * @return 集合
      */
     public static Set<String> getSacnClassList(){
         Set<String> classList = new HashSet<>();

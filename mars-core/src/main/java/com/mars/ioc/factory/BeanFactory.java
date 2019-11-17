@@ -25,6 +25,8 @@ public class BeanFactory {
 	 * 创建bean
 	 * @param className lei
 	 * @return beanObject
+	 *
+	 * @throws Exception 异常
 	 */
 	public static Object createBean(Class<?> className) throws Exception {
 		try {
@@ -33,15 +35,17 @@ public class BeanFactory {
 			if(hasStart != null){
 				throw new Exception("只有Mars才可以调用此方法，不可以手动显式调用");
 			}
-			Method[] methods = className.getMethods();
-			for(Method method : methods){
-				MarsAop marsAop = method.getAnnotation(MarsAop.class);
-				Traction traction = method.getAnnotation(Traction.class);
-				RedisLock redisLock = method.getAnnotation(RedisLock.class);
-				if(marsAop != null || traction != null || redisLock != null){
-					/* 如果bean里面用到了AOP，就从动态代理创建对象 */
-					MarsBeanProxy marsBeanProxy = new MarsBeanProxy();
-					return marsBeanProxy.getProxy(className);
+			Method[] methods = className.getDeclaredMethods();
+			if(methods != null && methods.length > 0){
+				for(Method method : methods){
+					MarsAop marsAop = method.getAnnotation(MarsAop.class);
+					Traction traction = method.getAnnotation(Traction.class);
+					RedisLock redisLock = method.getAnnotation(RedisLock.class);
+					if(marsAop != null || traction != null || redisLock != null){
+						/* 如果bean里面用到了AOP，就从动态代理创建对象 */
+						MarsBeanProxy marsBeanProxy = new MarsBeanProxy();
+						return marsBeanProxy.getProxy(className);
+					}
 				}
 			}
 			/* 如果bean里面没有用到AOP，就直接创建对象 */
@@ -55,7 +59,10 @@ public class BeanFactory {
 	/**
 	 * 获取bean
 	 * @param name bean名称
+	 * @param cls bean类型
 	 * @return bean对象
+	 *
+	 * @throws Exception 异常
 	 */
 	public static <T> T getBean(String name,Class<T> cls) throws Exception {
 		try {

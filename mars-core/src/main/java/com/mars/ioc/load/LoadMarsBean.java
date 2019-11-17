@@ -27,6 +27,8 @@ public class LoadMarsBean {
 
 	/**
 	 * 创建marsBean对象，并完成对象注入
+	 *
+	 * @throws Exception 异常
 	 */
 	public static void loadBean() throws Exception{
 		try {

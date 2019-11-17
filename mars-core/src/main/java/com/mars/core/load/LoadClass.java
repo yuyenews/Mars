@@ -48,6 +48,8 @@ public class LoadClass {
 
 	/**
 	 * 加载本地Class
+	 *
+	 * @return 类集合
 	 * @throws Exception 异常
 	 */
 	public static Set<String> loadNativeClass() throws Exception {

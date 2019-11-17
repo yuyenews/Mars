@@ -30,7 +30,6 @@ public class ExecRedisLock {
      * 加锁
      * @param redisLock 注解
      * @return 加锁结果
-     * @throws Exception 异常
      */
     public static Boolean lock(RedisLock redisLock) {
         return exec(redisLock,"lock");
@@ -40,7 +39,6 @@ public class ExecRedisLock {
      * 解锁
      * @param redisLock 注解
      * @return 解锁结果
-     * @throws Exception 异常
      */
     public static Boolean unlock(RedisLock redisLock) {
         return exec(redisLock,"unlock");
@@ -51,7 +49,6 @@ public class ExecRedisLock {
      * @param redisLock 注解
      * @param methodName 执行的方法
      * @return 结果
-     * @throws Exception 异常
      */
     private static Boolean exec(RedisLock redisLock,String methodName) {
         try {
