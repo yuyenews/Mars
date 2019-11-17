@@ -84,8 +84,13 @@ public class MarsBeanProxy implements MethodInterceptor {
 			ExecAop.exp(c, obj, e);
 			throw e;
 		} finally {
-			/* 解分布式锁 */
-			ExecRedisLock.unlock(redisLock);
+			/* 解分布式锁, 如果失败了就重试，十次之后还失败，就不管了，由程序员排查问题 */
+			for(int i = 0;i<10;i++){
+				Boolean hasUnlock = ExecRedisLock.unlock(redisLock);
+				if(hasUnlock){
+					break;
+				}
+			}
 		}
 	}
 }
