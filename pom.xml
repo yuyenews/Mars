@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars</artifactId>
-	<version>3.0.6</version>
+	<version>3.0.7</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-core</module>

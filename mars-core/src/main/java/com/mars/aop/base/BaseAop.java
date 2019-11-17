@@ -22,6 +22,7 @@ public interface BaseAop {
 	
 	/**
 	 * 出异常后调用
+	 * @param e 异常
 	 */
 	void exp(Throwable e);
 }

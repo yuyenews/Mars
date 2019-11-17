@@ -3,7 +3,7 @@ package com.mars.jdbc.traction;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.model.AopModel;
+import com.mars.aop.model.AopModel;
 import com.mars.core.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +28,9 @@ public class TractionAop {
 	 * 
 	 * 将获取到的连接 放到缓存中
 	 * 
-	 * @param args canshu
+	 * @param aopModel aop对象
 	 */
-	public void startMethod(Object[] args, AopModel aopModel) {
+	public void startMethod(AopModel aopModel) {
 		try {
 
 			Map<String, DruidDataSource> maps = (Map<String,DruidDataSource>) marsSpace.getAttr(MarsConstant.DATA_SOURCE_MAP);
@@ -52,10 +52,9 @@ public class TractionAop {
 
 	/**
 	 * 从缓存中获取当前线程的数据库连接，并提交事务
-	 * 
-	 * @param args canshu
+	 *
 	 */
-	public void endMethod(Object[] args) {
+	public void endMethod() {
 		try {
 			Map<String,Connection> connections = (Map<String,Connection>) ThreadUtil.getThreadLocal().get();
 

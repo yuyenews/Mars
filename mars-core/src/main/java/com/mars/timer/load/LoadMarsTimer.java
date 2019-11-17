@@ -23,7 +23,7 @@ public class LoadMarsTimer {
 
     /**
      * 加载所有加了MarsTimer注解的对象
-     * @throws Exception
+     * @throws Exception 异常
      */
     public static void loadMarsTimers() throws Exception {
         /* 获取所有的bean数据 */
@@ -40,8 +40,11 @@ public class LoadMarsTimer {
 
     /**
      * 加载加了MarsTimer注解的方法，并保存
-     * @param cls
-     * @param marsTimerObjects
+     * @param cls 类
+     * @param marsTimerObjects 对象
+     * @param beanName bean名称
+     *
+     * @throws Exception 异常
      */
     private static void loadMethods(Class<?> cls, List<MarsTimerModel> marsTimerObjects,String beanName) throws Exception {
         Method[] methods = cls.getDeclaredMethods();
