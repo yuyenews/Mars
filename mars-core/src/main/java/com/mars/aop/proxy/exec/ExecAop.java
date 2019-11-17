@@ -59,7 +59,7 @@ public class ExecAop {
      * @param marsAop aop注解
      * @return aop实体
      */
-    public static  AopModel getAopModel(MarsAop marsAop) throws Exception {
+    public static AopModel getAopModel(MarsAop marsAop) throws Exception {
         if(marsAop == null) {
             return null;
         }

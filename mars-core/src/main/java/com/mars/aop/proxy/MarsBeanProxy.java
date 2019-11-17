@@ -22,8 +22,6 @@ public class MarsBeanProxy implements MethodInterceptor {
 
 	private Enhancer enhancer;
 
-	private Class<?> cls;
-
 	/**
 	 * 获取代理对象
 	 *
@@ -31,7 +29,6 @@ public class MarsBeanProxy implements MethodInterceptor {
 	 * @return 对象
 	 */
 	public Object getProxy(Class<?> clazz) {
-		this.cls = clazz;
 		enhancer = new Enhancer();
 		// 设置需要创建子类的类
 		enhancer.setSuperclass(clazz);
@@ -67,7 +64,7 @@ public class MarsBeanProxy implements MethodInterceptor {
 			}
 
 			/* 开启事务 */
-			ExecTraction.beginTraction(args, tractionModel);
+			ExecTraction.beginTraction(tractionModel);
 
 			/* 执行aop的开始方法 */
 			ExecAop.startMethod(args, aopModel);
@@ -79,7 +76,7 @@ public class MarsBeanProxy implements MethodInterceptor {
 			ExecAop.endMethod(args,o1,aopModel);
 
 			/* 提交事务 */
-			ExecTraction.commit(args, tractionModel);
+			ExecTraction.commit(tractionModel);
 			return o1;
 		} catch (Throwable e) {
 			/* 回滚事务 */
