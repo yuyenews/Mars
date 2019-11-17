@@ -57,14 +57,14 @@ public class ExecTraction {
      * @return aop实体
      */
     public static  AopModel getAopModel(Traction traction) throws Exception {
-        if(traction != null){
-            AopModel aopModel = new AopModel();
-            aopModel.setCls(TractionClass.getCls());
-            aopModel.setTractionLevel(traction.level());
-            aopModel.setExecutorType(traction.executorType());
-            aopModel.setObj(TractionClass.getCls().getDeclaredConstructor().newInstance());
-            return aopModel;
+        if(traction == null){
+           return null;
         }
-        return null;
+        AopModel aopModel = new AopModel();
+        aopModel.setCls(TractionClass.getCls());
+        aopModel.setTractionLevel(traction.level());
+        aopModel.setExecutorType(traction.executorType());
+        aopModel.setObj(TractionClass.getCls().getDeclaredConstructor().newInstance());
+        return aopModel;
     }
 }

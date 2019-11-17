@@ -60,11 +60,12 @@ public class ExecAop {
      * @return aop实体
      */
     public static  AopModel getAopModel(MarsAop marsAop) throws Exception {
-        if(marsAop != null) {
-            AopModel aopModel = new AopModel();
-            aopModel.setCls(marsAop.className());
-            aopModel.setObj(marsAop.className().getDeclaredConstructor().newInstance());
+        if(marsAop == null) {
+            return null;
         }
-        return null;
+        AopModel aopModel = new AopModel();
+        aopModel.setCls(marsAop.className());
+        aopModel.setObj(marsAop.className().getDeclaredConstructor().newInstance());
+        return aopModel;
     }
 }
