@@ -4,10 +4,11 @@ import java.lang.reflect.Method;
 
 import com.mars.aop.proxy.exec.ExecAop;
 import com.mars.aop.proxy.exec.ExecRedisLock;
+import com.mars.aop.proxy.exec.ExecTraction;
 import com.mars.core.annotation.MarsAop;
 import com.mars.core.annotation.RedisLock;
 import com.mars.core.annotation.Traction;
-import com.mars.core.model.AopModel;
+import com.mars.aop.model.AopModel;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -45,50 +46,55 @@ public class MarsBeanProxy implements MethodInterceptor {
 	 */
 	@Override
 	public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-		Object obj = null;
-		Class c = null;
+		AopModel aopModel = null;
+		AopModel tractionModel = null;
 		RedisLock redisLock = null;
+		Boolean hasLock = false;
 		try {
 
 			MarsAop marsAop = method.getAnnotation(MarsAop.class);
 			Traction traction = method.getAnnotation(Traction.class);
 			redisLock = method.getAnnotation(RedisLock.class);
 
-			/* 校验同一个方法上不能同时存在aop和traction注解 */
-			ExecAop.checkAnnot(marsAop,traction,method,cls);
+			tractionModel = ExecTraction.getAopModel(traction);
+			aopModel = ExecAop.getAopModel(marsAop);
 
-			AopModel aopModel = ExecAop.getAopModel(marsAop,traction);
-			if (aopModel != null) {
-				c = aopModel.getCls();
-			}
-			if (c != null) {
-				obj = c.getDeclaredConstructor().newInstance();
-			}
 
 			/* 加分布式锁 */
-			Boolean hasLock = ExecRedisLock.lock(redisLock);
+			hasLock = ExecRedisLock.lock(redisLock);
 			if(!hasLock){
 				return null;
 			}
 
+			/* 开启事务 */
+			ExecTraction.beginTraction(args, tractionModel);
+
 			/* 执行aop的开始方法 */
-			ExecAop.startMethod(c, obj, args, aopModel);
+			ExecAop.startMethod(args, aopModel);
 
 			/* 执行方法本体 */
 			Object o1 = methodProxy.invokeSuper(o, args);
 
 			/* 执行aop的结束方法 */
-			ExecAop.endMethod(c, obj, args,o1);
+			ExecAop.endMethod(args,o1,aopModel);
+
+			/* 提交事务 */
+			ExecTraction.commit(args, tractionModel);
 			return o1;
 		} catch (Throwable e) {
-			ExecAop.exp(c, obj, e);
+			/* 回滚事务 */
+			ExecTraction.rollback(tractionModel,e);
+			/* AOP处理异常 */
+			ExecAop.exp(aopModel, e);
 			throw e;
 		} finally {
 			/* 解分布式锁, 如果失败了就重试，十次之后还失败，就不管了，由程序员排查问题 */
-			for(int i = 0;i<10;i++){
-				Boolean hasUnlock = ExecRedisLock.unlock(redisLock);
-				if(hasUnlock){
-					break;
+			if(hasLock){
+				for(int i = 0;i<10;i++){
+					Boolean hasUnlock = ExecRedisLock.unlock(redisLock);
+					if(hasUnlock){
+						break;
+					}
 				}
 			}
 		}

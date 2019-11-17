@@ -3,7 +3,7 @@ package com.mars.jdbc.traction;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
-import com.mars.core.model.AopModel;
+import com.mars.aop.model.AopModel;
 import com.mars.core.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
