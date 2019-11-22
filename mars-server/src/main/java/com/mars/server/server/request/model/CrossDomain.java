@@ -31,7 +31,9 @@ public class CrossDomain {
      */
     private void init(){
         JSONObject object = getConfig();
-
+        if(object == null){
+            return;
+        }
         String origin2 = object.getString("origin");
         if(origin2 != null){
             this.origin = origin2;
