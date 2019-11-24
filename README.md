@@ -1,5 +1,5 @@
 <div align=center>
-<img width="200px;" src="https://github.com/yuyenews/resource/blob/master/joker/logo.png?raw=true">
+<img width="150px;" src="https://github.com/yuyenews/resource/raw/master/mars/logo-small.png?raw=true">
 </div>
 
 <br/>
