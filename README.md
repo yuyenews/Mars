@@ -1,5 +1,5 @@
 <div align=center>
-<span style="font-size: 50px;color:red;">Joker</span>
+<font color=#0099FF size=7>Joker</font>
 </div>
 
 <br/>
