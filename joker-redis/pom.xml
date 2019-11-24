@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>Mars</artifactId>
+        <artifactId>Joker</artifactId>
         <groupId>com.github.yuyenews</groupId>
         <version>3.0.8</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mars-redis</artifactId>
+    <artifactId>joker-redis</artifactId>
 
     <dependencies>
         <dependency>
@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-core</artifactId>
+            <artifactId>joker-core</artifactId>
             <optional>true</optional>
         </dependency>
     </dependencies>

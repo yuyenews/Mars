@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
-		<artifactId>Mars</artifactId>
+		<artifactId>Joker</artifactId>
 		<version>3.0.8</version>
 	</parent>
-	<artifactId>mars-core</artifactId>
+	<artifactId>joker-core</artifactId>
 
 	<dependencies>
 		<dependency>

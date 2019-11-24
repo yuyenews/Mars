@@ -1,5 +1,5 @@
 <div align=center>
-<img width="150px" src="https://github.com/yuyenews/resource/blob/master/mars/logo-small.png?raw=true"/>
+<span style="font-size: 50px;color:red;">Joker</span>
 </div>
 
 <br/>
