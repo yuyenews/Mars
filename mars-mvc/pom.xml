@@ -4,15 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
-		<artifactId>Joker</artifactId>
+		<artifactId>Mars</artifactId>
 		<version>3.0.8</version>
 	</parent>
-	<artifactId>joker-netty</artifactId>
+	<artifactId>mars-mvc</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
-			<artifactId>joker-server</artifactId>
+			<artifactId>mars-netty</artifactId>
 		</dependency>
 	</dependencies>
 </project>

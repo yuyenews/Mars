@@ -3,16 +3,16 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
-	<artifactId>Joker</artifactId>
+	<artifactId>Mars</artifactId>
 	<version>3.0.8</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>joker-core</module>
-		<module>joker-mvc</module>
-		<module>joker-netty</module>
-		<module>joker-server</module>
-		<module>joker-jdbc</module>
-        <module>joker-redis</module>
+		<module>mars-core</module>
+		<module>mars-mvc</module>
+		<module>mars-netty</module>
+		<module>mars-server</module>
+		<module>mars-jdbc</module>
+        <module>mars-redis</module>
     </modules>
 
 	<properties>
@@ -23,33 +23,33 @@
 		<dependencies>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>joker-mvc</artifactId>
+				<artifactId>mars-mvc</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>joker-core</artifactId>
+				<artifactId>mars-core</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>joker-netty</artifactId>
+				<artifactId>mars-netty</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>joker-server</artifactId>
+				<artifactId>mars-server</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>joker-junit</artifactId>
+				<artifactId>mars-junit</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>joker-redis</artifactId>
+				<artifactId>mars-redis</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 

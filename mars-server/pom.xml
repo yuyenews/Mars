@@ -4,15 +4,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
-		<artifactId>Joker</artifactId>
+		<artifactId>Mars</artifactId>
 		<version>3.0.8</version>
 	</parent>
-	<artifactId>joker-mvc</artifactId>
+	<artifactId>mars-server</artifactId>
 
 	<dependencies>
 		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>com.github.yuyenews</groupId>
-			<artifactId>joker-netty</artifactId>
+			<artifactId>mars-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>
