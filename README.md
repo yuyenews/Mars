@@ -1,5 +1,5 @@
 <div align=center>
-<font color=#0099FF size=7>Joker</font>
+<img src="https://github.com/yuyenews/resource/blob/master/joker/logo.png?raw=true">
 </div>
 
 <br/>
