@@ -1,6 +1,6 @@
 package com.mars.jdbc.annotation;
 
-import com.mars.jdbc.enums.OperType;
+import com.mars.jdbc.annotation.enums.OperType;
 
 import java.lang.annotation.*;
 
