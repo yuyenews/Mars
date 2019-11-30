@@ -3,7 +3,7 @@ package com.mars.mvc.resolve;
 import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.model.MarsInterModel;
-import com.mars.mvc.util.BuildParams;
+import com.mars.netty.par.factory.ParamAndResultFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
@@ -85,7 +85,7 @@ public class ExecuteMars {
 		Object obj = marsMappingModel.getObject();
 		Method method = getMethod(marsMappingModel);
 
-		Object[] params = BuildParams.builder(method,request,response);
+		Object[] params = ParamAndResultFactory.getBaseParamAndResult().getParam(method,request,response);
 
 		Object result = null;
 

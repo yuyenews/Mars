@@ -3,6 +3,7 @@ package com.mars.netty.execute;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.ncfg.mvc.CoreServletClass;
 import com.mars.core.util.MesUtil;
+import com.mars.netty.par.factory.ParamAndResultFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import io.netty.channel.ChannelHandlerContext;
@@ -53,11 +54,9 @@ public class RequestExecute {
 			Object object = cls.getDeclaredConstructor().newInstance();
 			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[] { HttpMarsRequest.class , HttpMarsResponse.class});
 			Object result = helloMethod.invoke(object, new Object[] { request ,response});
-			if(result != null && result.toString().equals(MarsConstant.VOID)) {
-				return;
-			}
-			/* 将控制层返回的数据响应给客户端 */
-			response.send(String.valueOf(result));
+
+			/* 响应 */
+			ParamAndResultFactory.getBaseParamAndResult().result(response,result);
 		} catch (InvocationTargetException e){
 			log.error("处理请求的时候出错",e);
 			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getTargetException().getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
