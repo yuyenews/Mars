@@ -69,6 +69,7 @@ public class LoadMarsApi {
 						marsMappingModel.setObject(obj);
 						marsMappingModel.setMethod(method.getName());
 						marsMappingModel.setCls(cls);
+						marsMappingModel.setExeMethod(method);
 						marsMappingModel.setReqMethod(getReqMethod(method));
 
 						/* 保存映射对象 */

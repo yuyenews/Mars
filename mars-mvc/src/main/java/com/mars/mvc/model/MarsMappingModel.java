@@ -2,6 +2,8 @@ package com.mars.mvc.model;
 
 import com.mars.core.annotation.enums.ReqMethod;
 
+import java.lang.reflect.Method;
+
 /**
  * 控制器映射实体
  * 
@@ -21,9 +23,14 @@ public class MarsMappingModel {
 	private ReqMethod reqMethod;
 
 	/**
-	 * 映射的方法
+	 * 映射的方法名称
 	 */
 	private String method;
+
+	/**
+	 * 映射的方法
+	 */
+	private Method exeMethod;
 
 	/**
 	 * 控制层class对象
@@ -52,6 +59,14 @@ public class MarsMappingModel {
 
 	public void setMethod(String method) {
 		this.method = method;
+	}
+
+	public Method getExeMethod() {
+		return exeMethod;
+	}
+
+	public void setExeMethod(Method exeMethod) {
+		this.exeMethod = exeMethod;
 	}
 
 	public Class<?> getCls() {
