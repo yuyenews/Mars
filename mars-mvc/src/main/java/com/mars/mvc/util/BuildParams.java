@@ -1,8 +1,6 @@
 package com.mars.mvc.util;
 
-import com.mars.core.constant.MarsCloudConstant;
 import com.mars.core.enums.DataType;
-import com.mars.core.util.SerializableUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;
@@ -45,14 +43,7 @@ public class BuildParams {
                 } else if(mapClass.equals(cls)) {
                     params[i] = request.getParemeters();
                 } else {
-                    /* 先判断此次请求是不是cloud发起的，如果是的话就将对象反序列化出来 */
-                    Object obj = builderCloudObject(cls,request);
-                    if(obj == null){
-                        /* 如果此次请求不是cloud发起的，那么就走正常取参 */
-                        params[i] = getObject(cls,request);
-                    } else {
-                        params[i] = obj;
-                    }
+                    params[i] = getObject(cls,request);
                 }
             }
             return params;
@@ -121,22 +112,5 @@ public class BuildParams {
             }
         }
         return obj;
-    }
-
-    /**
-     * 获取cloud通过序列化传来的参数对象
-     * @param cls
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    private static Object builderCloudObject(Class cls, HttpMarsRequest request) throws Exception {
-        Object requestType = request.getParameter(MarsCloudConstant.REQUEST_TYPE);
-        if(requestType != null && requestType.toString().equals(MarsCloudConstant.REQUEST_TYPE)){
-            MarsFileUpLoad marsFileUpLoad = request.getFile(MarsCloudConstant.PARAM);
-            byte[] bytes = marsFileUpLoad.getBytes();
-            return SerializableUtil.deSerialization(bytes, cls);
-        }
-        return null;
     }
 }
