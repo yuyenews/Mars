@@ -49,7 +49,7 @@ public class ParamAndResult implements BaseParamAndResult {
      * @param result
      * @return
      */
-    public boolean isNotObject(Object result){
+    private boolean isNotObject(Object result){
         if(result == null){
             return true;
         }
