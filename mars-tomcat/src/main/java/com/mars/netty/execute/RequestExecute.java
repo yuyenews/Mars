@@ -1,18 +1,20 @@
 package com.mars.netty.execute;
 
-import com.mars.core.constant.MarsConstant;
 import com.mars.core.ncfg.mvc.CoreServletClass;
 import com.mars.core.util.MesUtil;
+import com.mars.netty.par.factory.ParamAndResultFactory;
+import com.mars.netty.util.FileUpLoad;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpResponseStatus;
+import com.mars.server.server.request.model.MarsFileUpLoad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * 处理请求的线程
@@ -26,52 +28,45 @@ public class RequestExecute {
 	/**
 	 * netty的request对象
 	 */
-	private FullHttpRequest httpRequest;
+	private HttpServletRequest httpRequest;
 
-	private ChannelHandlerContext ctx;
+	private HttpServletResponse httpResponse;
 	
-	public void setHttpRequest(FullHttpRequest httpRequest) {
+	public void setHttpRequest(HttpServletRequest httpRequest) {
 		this.httpRequest = httpRequest;
 	}
 
-	public void setCtx(ChannelHandlerContext ctx) {
-		this.ctx = ctx;
+	public void setHttpResponse(HttpServletResponse response) {
+		this.httpResponse = response;
 	}
 
 	public void execute() {
 
 		/* 组装httpRequest对象 */
-		HttpMarsRequest request = new HttpMarsRequest(httpRequest,ctx);
+		HttpMarsRequest request = new HttpMarsRequest(httpRequest,httpResponse);
 
 		/* 组装httpResponse对象 */
-		HttpMarsResponse response = new HttpMarsResponse(ctx);
+		HttpMarsResponse response = new HttpMarsResponse(httpResponse);
 
 		try {
+			/* 从请求中获取上传的文件 */
+			Map<String, MarsFileUpLoad> fileUpLoadMap = FileUpLoad.getFiles(httpRequest);
+			request.setFiles(fileUpLoadMap);
 
 			/* 通过反射执行核心servlet */
 			Class<?> cls = CoreServletClass.getCls();
 			Object object = cls.getDeclaredConstructor().newInstance();
 			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[] { HttpMarsRequest.class , HttpMarsResponse.class});
 			Object result = helloMethod.invoke(object, new Object[] { request ,response});
-			if(result != null && result.toString().equals(MarsConstant.VOID)) {
-				return;
-			}
-			/* 将控制层返回的数据响应给客户端 */
-			response.send(String.valueOf(result));
+
+			/* 响应 */
+			ParamAndResultFactory.getBaseParamAndResult().result(response,result);
 		} catch (InvocationTargetException e){
 			log.error("处理请求的时候出错",e);
-			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getTargetException().getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
+			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getTargetException().getMessage()).toJSONString());
 		} catch (Exception e) {
 			log.error("处理请求的时候出错",e);
-			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getMessage()).toJSONString(), HttpResponseStatus.INTERNAL_SERVER_ERROR);
-		} finally {
-			try{
-				// 释放请求
-				ctx.close();
-				httpRequest.release();
-			} catch (Exception e){
-				log.error("释放请求出错",e);
-			}
+			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getMessage()).toJSONString());
 		}
 	}
 }

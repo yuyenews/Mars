@@ -9,6 +9,8 @@ import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.mvc.model.MarsMappingModel;
+import com.mars.mvc.util.ParamAndResult;
+import com.mars.netty.par.factory.ParamAndResultFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -33,6 +35,10 @@ public class LoadMarsApi {
 	public static void loadMarsApis() throws Exception{
 		
 		try {
+			/* 指定 处理参数和响应的对象实例 */
+			ParamAndResultFactory.setBaseParamAndResult(new ParamAndResult());
+
+			/* 创建一个Map用来储存API信息 */
 			Map<String, MarsMappingModel> marsApiObjects = new HashMap<>();
 			
 			/* 获取所有的MarsApi数据 */
@@ -63,6 +69,7 @@ public class LoadMarsApi {
 						marsMappingModel.setObject(obj);
 						marsMappingModel.setMethod(method.getName());
 						marsMappingModel.setCls(cls);
+						marsMappingModel.setExeMethod(method);
 						marsMappingModel.setReqMethod(getReqMethod(method));
 
 						/* 保存映射对象 */

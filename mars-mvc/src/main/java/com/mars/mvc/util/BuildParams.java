@@ -1,8 +1,7 @@
 package com.mars.mvc.util;
 
-import com.mars.core.constant.MarsCloudConstant;
+import com.mars.core.constant.MarsConstant;
 import com.mars.core.enums.DataType;
-import com.mars.core.util.SerializableUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;
@@ -10,7 +9,6 @@ import com.mars.server.server.request.model.MarsFileUpLoad;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,16 +41,13 @@ public class BuildParams {
                 } else if(responseClass.equals(cls)){
                     params[i] = response;
                 } else if(mapClass.equals(cls)) {
-                    params[i] = request.getParemeters();
-                } else {
-                    /* 先判断此次请求是不是cloud发起的，如果是的话就将对象反序列化出来 */
-                    Object obj = builderCloudObject(cls,request);
-                    if(obj == null){
-                        /* 如果此次请求不是cloud发起的，那么就走正常取参 */
-                        params[i] = getObject(cls,request);
-                    } else {
-                        params[i] = obj;
+                    Map<String, Object> paramMap = request.getParameters();
+                    if(paramMap != null){
+                        paramMap.put(MarsConstant.REQUEST_FILE,request.getFiles());
                     }
+                    params[i] = paramMap;
+                } else {
+                    params[i] = getObject(cls,request);
                 }
             }
             return params;
@@ -73,70 +68,86 @@ public class BuildParams {
         Object obj = cls.getDeclaredConstructor().newInstance();
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){
-            List<Object> valList = request.getParameterValues(f.getName());
-            MarsFileUpLoad marsFileUpLoad = request.getFile(f.getName());
-            if(marsFileUpLoad != null){
-                f.setAccessible(true);
-                f.set(obj, marsFileUpLoad);
-            } else if(valList != null && !valList.isEmpty()){
-                f.setAccessible(true);
-                String fieldTypeName = f.getType().getSimpleName().toUpperCase();
-                String valStr = valList.get(0).toString();
-                switch (fieldTypeName){
-                    case DataType.INT:
-                    case DataType.INTEGER:
-                        f.set(obj,Integer.parseInt(valStr));
-                        break;
-                    case DataType.BYTE:
-                        f.set(obj,Byte.parseByte(valStr));
-                        break;
-                    case DataType.STRING:
-                    case DataType.CHAR:
-                    case DataType.CHARACTER:
-                        f.set(obj,valStr);
-                        break;
-                    case DataType.DOUBLE:
-                        f.set(obj,Double.parseDouble(valStr));
-                        break;
-                    case DataType.FLOAT:
-                        f.set(obj,Float.parseFloat(valStr));
-                        break;
-                    case DataType.LONG:
-                        f.set(obj,Long.parseLong(valStr));
-                        break;
-                    case DataType.SHORT:
-                        f.set(obj,Short.valueOf(valStr));
-                        break;
-                    case DataType.BOOLEAN:
-                        f.set(obj,Boolean.parseBoolean(valStr));
-                        break;
-                    case DataType.DATE:
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        f.set(obj,simpleDateFormat.parse(valStr));
-                        break;
-                    case DataType.LIST:
-                        f.set(obj,valList);
-                        break;
-                }
+            f.setAccessible(true);
+
+            String[] valList = request.getParameterValues(f.getName());
+            Map<String,MarsFileUpLoad> marsFileUpLoadMap = request.getFiles();
+
+            if(f.getType().equals(MarsFileUpLoad.class) && marsFileUpLoadMap != null){
+                f.set(obj, marsFileUpLoadMap.get(f.getName()));
+            } else if(f.getType().equals(MarsFileUpLoad[].class) && marsFileUpLoadMap != null && marsFileUpLoadMap.size() > 0){
+                putMarsFileUploads(f,obj,marsFileUpLoadMap);
+            } else if(valList != null && valList.length > 0){
+                putAttr(f,obj,valList);
             }
         }
         return obj;
     }
 
     /**
-     * 获取cloud通过序列化传来的参数对象
-     * @param cls
-     * @param request
-     * @return
-     * @throws Exception
+     * 给参数赋值
+     * @param field 字段
+     * @param obj 对象
+     * @param marsFileUpLoadMap 文件
+     * @throws Exception 异常
      */
-    private static Object builderCloudObject(Class cls, HttpMarsRequest request) throws Exception {
-        Object requestType = request.getParameter(MarsCloudConstant.REQUEST_TYPE);
-        if(requestType != null && requestType.toString().equals(MarsCloudConstant.REQUEST_TYPE)){
-            MarsFileUpLoad marsFileUpLoad = request.getFile(MarsCloudConstant.PARAM);
-            byte[] bytes = marsFileUpLoad.getBytes();
-            return SerializableUtil.deSerialization(bytes, cls);
+    private static void putMarsFileUploads(Field field, Object obj, Map<String,MarsFileUpLoad> marsFileUpLoadMap) throws Exception{
+        MarsFileUpLoad[] marsFileUpLoads = new MarsFileUpLoad[marsFileUpLoadMap.size()];
+        int index = 0;
+        for(String key : marsFileUpLoadMap.keySet()){
+            marsFileUpLoads[index] = marsFileUpLoadMap.get(key);
+            index++;
         }
-        return null;
+        field.set(obj, marsFileUpLoads);
+    }
+
+    /**
+     * 给参数赋值
+     * @param field 字段
+     * @param obj 对象
+     * @param valList 数据
+     * @throws Exception 异常
+     */
+    private static void putAttr(Field field, Object obj, String[] valList) throws Exception{
+        String fieldTypeName = field.getType().getSimpleName().toUpperCase();
+        String valStr = valList[0];
+        switch (fieldTypeName){
+            case DataType.INT:
+            case DataType.INTEGER:
+                field.set(obj,Integer.parseInt(valStr));
+                break;
+            case DataType.BYTE:
+                field.set(obj,Byte.parseByte(valStr));
+                break;
+            case DataType.STRING:
+            case DataType.CHAR:
+            case DataType.CHARACTER:
+                field.set(obj,valStr);
+                break;
+            case DataType.DOUBLE:
+                field.set(obj,Double.parseDouble(valStr));
+                break;
+            case DataType.FLOAT:
+                field.set(obj,Float.parseFloat(valStr));
+                break;
+            case DataType.LONG:
+                field.set(obj,Long.parseLong(valStr));
+                break;
+            case DataType.SHORT:
+                field.set(obj,Short.valueOf(valStr));
+                break;
+            case DataType.BOOLEAN:
+                field.set(obj,Boolean.parseBoolean(valStr));
+                break;
+            case DataType.DATE:
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                field.set(obj,simpleDateFormat.parse(valStr));
+                break;
+            default:
+                if (field.getType().equals(String[].class)){
+                    field.set(obj,valList);
+                }
+                break;
+        }
     }
 }

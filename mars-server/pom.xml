@@ -5,19 +5,27 @@
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
 		<artifactId>Mars</artifactId>
-		<version>3.0.8</version>
+		<version>3.0.9</version>
 	</parent>
 	<artifactId>mars-server</artifactId>
 
 	<dependencies>
 		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>commons-fileupload</groupId>-->
+<!--			<artifactId>commons-fileupload</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>

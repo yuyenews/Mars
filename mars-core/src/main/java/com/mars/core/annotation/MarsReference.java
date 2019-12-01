@@ -11,7 +11,7 @@ public @interface MarsReference {
 
     String beanName();
 
-    String refName();
+    String refName() default "";
 
     RefType refType() default RefType.METHOD;
 }

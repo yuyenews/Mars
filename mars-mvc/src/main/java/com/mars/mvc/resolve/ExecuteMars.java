@@ -3,12 +3,11 @@ package com.mars.mvc.resolve;
 import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.model.MarsInterModel;
-import com.mars.mvc.util.BuildParams;
+import com.mars.netty.par.factory.ParamAndResultFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
 import com.mars.mvc.model.MarsMappingModel;
-import io.netty.handler.codec.http.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +41,7 @@ public class ExecuteMars {
 	 * @param response xiangying
 	 * @return duix
 	 */
-	public Object execute(MarsMappingModel marsMappingModel, HttpMethod method, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
+	public Object execute(MarsMappingModel marsMappingModel, String method, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		try {
 
 			/* 校验请求方式 */
@@ -85,7 +84,7 @@ public class ExecuteMars {
 		Object obj = marsMappingModel.getObject();
 		Method method = getMethod(marsMappingModel);
 
-		Object[] params = BuildParams.builder(method,request,response);
+		Object[] params = ParamAndResultFactory.getBaseParamAndResult().getParam(method,request,response);
 
 		Object result = null;
 
@@ -137,12 +136,12 @@ public class ExecuteMars {
 	 * @param marsMappingModel
 	 * @throws Exception
 	 */
-	private void checkRequestMethod(HttpMethod method,MarsMappingModel marsMappingModel) throws Exception {
+	private void checkRequestMethod(String method,MarsMappingModel marsMappingModel) throws Exception {
 		if(marsMappingModel == null){
 			throw new Exception("服务器上没有相应的接口");
 		}
 
-		String strMethod = method.name().toLowerCase();
+		String strMethod = method.toLowerCase();
 		String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
 		if (!strMethod.equals(requestMethod)) {
 			/* 如果请求方式和MarsApi的映射不一致，则提示客户端 */

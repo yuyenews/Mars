@@ -5,9 +5,9 @@
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
 		<artifactId>Mars</artifactId>
-		<version>3.0.8</version>
+		<version>3.0.9</version>
 	</parent>
-	<artifactId>mars-netty</artifactId>
+	<artifactId>mars-tomcat</artifactId>
 
 	<dependencies>
 		<dependency>

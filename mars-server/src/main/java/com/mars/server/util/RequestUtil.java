@@ -16,9 +16,11 @@ public class RequestUtil {
 	 */
 	public static String getUriName(HttpMarsRequest request) {
 		/* 获取路径 */
-		String uri = request.getUri();
+		String uri = request.getUrl();
 		if(uri.indexOf("?")>-1) {
-			uri = uri.substring(0,uri.indexOf("?"));
+			uri = uri.substring(uri.lastIndexOf("/"),uri.indexOf("?"));
+		} else {
+			uri = uri.substring(uri.lastIndexOf("/"));
 		}
 		return uri;
 	}

@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars</artifactId>
-	<version>3.0.8</version>
+	<version>3.0.9</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-core</module>
 		<module>mars-mvc</module>
-		<module>mars-netty</module>
+		<module>mars-tomcat</module>
 		<module>mars-server</module>
 		<module>mars-jdbc</module>
         <module>mars-redis</module>
@@ -33,7 +33,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-netty</artifactId>
+				<artifactId>mars-tomcat</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 
@@ -54,10 +54,22 @@
 			</dependency>
 
 			<dependency>
-				<groupId>io.netty</groupId>
-				<artifactId>netty-all</artifactId>
-				<version>4.1.42.Final</version>
+				<groupId>org.apache.tomcat.embed</groupId>
+				<artifactId>tomcat-embed-core</artifactId>
+				<version>8.5.49</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-servlet-api</artifactId>
+				<version>8.5.49</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>1.4</version>
+			</dependency>
+
 
 			<dependency>
 				<groupId>com.alibaba</groupId>
