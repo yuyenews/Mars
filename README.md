@@ -50,7 +50,7 @@
 ```
 public interface TestService {
 
-    Object selectList(TestVO testVO);
+    要返回的数据类型 selectList(TestVO testVO);
 }
 ```
 实现类
