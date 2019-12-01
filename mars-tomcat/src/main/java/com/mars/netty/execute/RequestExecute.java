@@ -42,19 +42,16 @@ public class RequestExecute {
 
 	public void execute() {
 
-		HttpMarsRequest request = null;
-		HttpMarsResponse response = null;
+		/* 组装httpRequest对象 */
+		HttpMarsRequest request = new HttpMarsRequest(httpRequest,httpResponse);
+
+		/* 组装httpResponse对象 */
+		HttpMarsResponse response = new HttpMarsResponse(httpResponse);
 
 		try {
 			/* 从请求中获取上传的文件 */
 			Map<String, MarsFileUpLoad> fileUpLoadMap = FileUpLoad.getFiles(httpRequest);
-
-			/* 组装httpRequest对象 */
-			request = new HttpMarsRequest(httpRequest,httpResponse,fileUpLoadMap);
-
-			/* 组装httpResponse对象 */
-			response = new HttpMarsResponse(httpResponse);
-
+			request.setFiles(fileUpLoadMap);
 
 			/* 通过反射执行核心servlet */
 			Class<?> cls = CoreServletClass.getCls();

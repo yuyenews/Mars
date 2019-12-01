@@ -33,11 +33,18 @@ public class HttpMarsRequest {
 	 * 构造函数，框架自己用的，程序员用不到，用了也没意义
 	 * @param httpRequest
 	 * @param response
-	 * @param files
 	 */
-	public HttpMarsRequest(HttpServletRequest httpRequest, HttpServletResponse response,Map<String,MarsFileUpLoad> files) {
+	public HttpMarsRequest(HttpServletRequest httpRequest, HttpServletResponse response) {
 		this.httpRequest = httpRequest;
 		this.response = response;
+
+	}
+
+	/**
+	 * 添加上传的文件
+	 * @param files
+	 */
+	public void setFiles(Map<String,MarsFileUpLoad> files){
 		this.files = files;
 	}
 	
