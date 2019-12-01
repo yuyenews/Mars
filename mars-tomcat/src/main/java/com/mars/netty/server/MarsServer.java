@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * netty服务
+ * tomcat服务
  * @author yuye
  *
  */
@@ -22,7 +22,7 @@ public class MarsServer {
 	private static MarsSpace constants = MarsSpace.getEasySpace();
 	
 	/**
-	 * 启动netty服务
+	 * 启动tomcat服务
 	 * @param portNumber
 	 */
 	public static void start(final int portNumber) {
@@ -32,8 +32,8 @@ public class MarsServer {
 			tomcat.setBaseDir(".");
 
 			final Context context = tomcat.addContext("/", null);
-			Tomcat.addServlet(context, "dispatch", new MarsServerHandler());
-			context.addServletMappingDecoded("/*", "dispatch");
+			Tomcat.addServlet(context, "dispatcher", new MarsServerHandler());
+			context.addServletMappingDecoded("/*", "dispatcher");
 
 			tomcat.init();
 			tomcat.start();

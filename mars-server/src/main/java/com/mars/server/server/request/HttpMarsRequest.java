@@ -85,7 +85,7 @@ public class HttpMarsRequest {
 	 * @param key 键
 	 * @return 请求参数
 	 */
-	public Object getParameter(String key) {
+	public String getParameter(String key) {
 		return httpRequest.getParameter(key);
 	}
 	

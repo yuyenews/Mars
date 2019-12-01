@@ -1,9 +1,14 @@
 package com.mars.server.server.request;
 
 import com.mars.server.server.request.model.CrossDomain;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +20,8 @@ import java.util.Map;
  * @author yuye
  */
 public class HttpMarsResponse {
+
+    private Logger logger = LoggerFactory.getLogger(HttpMarsResponse.class);
 
     /**
      * netty原生通道
@@ -71,11 +78,41 @@ public class HttpMarsResponse {
             out = response.getWriter();
             out.println(context);
         } catch (Exception e){
-            // 不处理
+            logger.error("相应数据异常",e);
         } finally {
             if (out != null){
                 out.flush();
                 out.close();
+            }
+        }
+    }
+
+    /**
+     * 文件下载
+     * @param fileName
+     * @param inputStream
+     */
+    public void downLoad(String fileName, InputStream inputStream) {
+        try {
+            if(fileName == null || inputStream == null){
+                logger.error("downLoad方法的传参不可以为空");
+                return;
+            }
+            crossDomain();
+            response.setHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,"UTF-8"));
+
+            int len=0;
+            byte[] buffer = new byte[1024];
+            ServletOutputStream out = response.getOutputStream();
+            while((len=inputStream.read(buffer))!=-1){
+                out.write(buffer, 0, len);
+            }
+        } catch (Exception e){
+            logger.error("相应数据异常",e);
+        } finally {
+            try{
+                inputStream.close();
+            } catch (Exception e){
             }
         }
     }

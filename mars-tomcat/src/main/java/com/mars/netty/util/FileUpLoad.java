@@ -36,12 +36,13 @@ public class FileUpLoad {
                 for(FileItem item : fileItemList){
                     if(item.isFormField()){
                         continue;
+                    } else {
+                        MarsFileUpLoad marsFileUpLoad = new MarsFileUpLoad();
+                        marsFileUpLoad.setName(item.getFieldName());
+                        marsFileUpLoad.setInputStream(item.getInputStream());
+                        marsFileUpLoad.setFileName(item.getName());
+                        files.put(marsFileUpLoad.getName(),marsFileUpLoad);
                     }
-                    MarsFileUpLoad marsFileUpLoad = new MarsFileUpLoad();
-                    marsFileUpLoad.setName(item.getFieldName());
-                    marsFileUpLoad.setInputStream(item.getInputStream());
-                    marsFileUpLoad.setFileName(item.getName());
-                    files.put(marsFileUpLoad.getName(),marsFileUpLoad);
                 }
             }
             return files;
