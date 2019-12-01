@@ -42,10 +42,7 @@ public class RequestExecute {
 
 	public void execute() {
 
-		/* 组装httpRequest对象 */
 		HttpMarsRequest request = null;
-
-		/* 组装httpResponse对象 */
 		HttpMarsResponse response = null;
 
 		try {

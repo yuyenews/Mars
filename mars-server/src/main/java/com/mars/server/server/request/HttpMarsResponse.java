@@ -111,7 +111,9 @@ public class HttpMarsResponse {
             logger.error("相应数据异常",e);
         } finally {
             try{
-                inputStream.close();
+                if(inputStream != null){
+                    inputStream.close();
+                }
             } catch (Exception e){
             }
         }
