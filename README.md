@@ -45,13 +45,15 @@
 所以我们是这样玩的
 
 ## 编写业务逻辑
+
+父接口
 ```
 public interface TestService {
 
     Object selectList(TestVO testVO);
 }
 ```
-
+实现类
 ```
 @MarsBean("testService")
 public class TestServiceImpl implements TestService{
