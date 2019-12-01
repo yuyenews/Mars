@@ -45,12 +45,18 @@
 所以我们是这样玩的
 
 ## 编写业务逻辑
+```
+public interface TestService {
+
+    Object selectList(TestVO testVO);
+}
+```
 
 ```
 @MarsBean("testService")
-public class TestService {
+public class TestServiceImpl implements TestService{
 
-	要返回的数据类型 selectListForName(参数1, 参数2, 参数3, 参数4){
+	要返回的数据类型 selectList(TestVO testVO){
 		// 第一步 根据testDTO里的参数从xx表查询需要的数据
 		// 第二步 根据查出来的数据，去操作xx2表
 		// 第三步 对前两步的结果汇总，进行xxx操作
@@ -59,40 +65,19 @@ public class TestService {
 	}
 }
 ```
-## 声明一个API接口
+## 在Servlce的父接口上加上两个注解
 
 ```
 @MarsApi
 public interface TestApi {
 
+    @MarsReference(beanName = "testService[要引用的bean名称]")
     Object selectList(TestVO testVO);
 }
 ```
-
-## 将api与业务逻辑关联
-
-```
-@MarsApi
-public interface TestApi {
-		
-	@MarsReference(beanName = "testService",refName = "selectListForName")
-    Object selectList(TestVO testVO);
-}
-```
-
-对，你没看错，API的方法和他引用的那个方法，参数列表可以不一样，
-框架会自动把API的参数的值赋值到引用的那个方法的参数列表
-
-引用的方法甚至可以无参，参数目前只支持自定义对象和Map
 
 这套思想的核心是，把后端看作是一个独立个体，并不是为服务前端而存在的，
 后端就写后端的业务逻辑好了，如果前端需要数据，那我们就开个门给他
-
-## 这么做的好处，还可以散藕
-
-- 通过更换MarsReference的配置，可以关联到不同的业务逻辑
-- 如果前端不需要这个接口了，直接无脑删就好了，因为这只是一个抽象方法
-- 后端专注业务逻辑就好了，不需要考虑跟前端互动，前端需要的时候开个门就好了
 
 ## 接下来怎么做
 
