@@ -1,5 +1,6 @@
 package com.mars.mvc.util;
 
+import com.mars.core.constant.MarsConstant;
 import com.mars.core.enums.DataType;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
@@ -8,7 +9,6 @@ import com.mars.server.server.request.model.MarsFileUpLoad;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +41,11 @@ public class BuildParams {
                 } else if(responseClass.equals(cls)){
                     params[i] = response;
                 } else if(mapClass.equals(cls)) {
-                    params[i] = request.getParemeters();
+                    Map<String, Object> paramMap = request.getParameters();
+                    if(paramMap != null){
+                        paramMap.put(MarsConstant.REQUEST_FILE,request.getFiles());
+                    }
+                    params[i] = paramMap;
                 } else {
                     params[i] = getObject(cls,request);
                 }
@@ -64,53 +68,72 @@ public class BuildParams {
         Object obj = cls.getDeclaredConstructor().newInstance();
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){
-            List<Object> valList = request.getParameterValues(f.getName());
-            MarsFileUpLoad marsFileUpLoad = request.getFile(f.getName());
-            if(marsFileUpLoad != null){
-                f.setAccessible(true);
-                f.set(obj, marsFileUpLoad);
-            } else if(valList != null && !valList.isEmpty()){
-                f.setAccessible(true);
-                String fieldTypeName = f.getType().getSimpleName().toUpperCase();
-                String valStr = valList.get(0).toString();
-                switch (fieldTypeName){
-                    case DataType.INT:
-                    case DataType.INTEGER:
-                        f.set(obj,Integer.parseInt(valStr));
-                        break;
-                    case DataType.BYTE:
-                        f.set(obj,Byte.parseByte(valStr));
-                        break;
-                    case DataType.STRING:
-                    case DataType.CHAR:
-                    case DataType.CHARACTER:
-                        f.set(obj,valStr);
-                        break;
-                    case DataType.DOUBLE:
-                        f.set(obj,Double.parseDouble(valStr));
-                        break;
-                    case DataType.FLOAT:
-                        f.set(obj,Float.parseFloat(valStr));
-                        break;
-                    case DataType.LONG:
-                        f.set(obj,Long.parseLong(valStr));
-                        break;
-                    case DataType.SHORT:
-                        f.set(obj,Short.valueOf(valStr));
-                        break;
-                    case DataType.BOOLEAN:
-                        f.set(obj,Boolean.parseBoolean(valStr));
-                        break;
-                    case DataType.DATE:
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        f.set(obj,simpleDateFormat.parse(valStr));
-                        break;
-                    case DataType.LIST:
-                        f.set(obj,valList);
-                        break;
-                }
+            f.setAccessible(true);
+
+            String[] valList = request.getParameterValues(f.getName());
+            Map<String,MarsFileUpLoad> marsFileUpLoadMap = request.getFiles();
+
+            if(f.getType().equals(MarsFileUpLoad.class) && marsFileUpLoadMap != null){
+                f.set(obj, marsFileUpLoadMap.get(f.getName()));
+            } else if(f.getType().equals(MarsFileUpLoad[].class) && marsFileUpLoadMap != null && marsFileUpLoadMap.size() > 0){
+                putMarsFileUploads(f,obj,marsFileUpLoadMap);
+            } else if(valList != null && valList.length > 0){
+                putAttr(f,obj,valList);
             }
         }
         return obj;
+    }
+
+    private static void putMarsFileUploads(Field field, Object obj, Map<String,MarsFileUpLoad> marsFileUpLoadMap) throws Exception{
+        MarsFileUpLoad[] marsFileUpLoads = new MarsFileUpLoad[marsFileUpLoadMap.size()];
+        int index = 0;
+        for(String key : marsFileUpLoadMap.keySet()){
+            marsFileUpLoads[index] = marsFileUpLoadMap.get(key);
+            index++;
+        }
+        field.set(obj, marsFileUpLoads);
+    }
+
+    private static void putAttr(Field field, Object obj, String[] valList) throws Exception{
+        String fieldTypeName = field.getType().getSimpleName().toUpperCase();
+        String valStr = valList[0];
+        switch (fieldTypeName){
+            case DataType.INT:
+            case DataType.INTEGER:
+                field.set(obj,Integer.parseInt(valStr));
+                break;
+            case DataType.BYTE:
+                field.set(obj,Byte.parseByte(valStr));
+                break;
+            case DataType.STRING:
+            case DataType.CHAR:
+            case DataType.CHARACTER:
+                field.set(obj,valStr);
+                break;
+            case DataType.DOUBLE:
+                field.set(obj,Double.parseDouble(valStr));
+                break;
+            case DataType.FLOAT:
+                field.set(obj,Float.parseFloat(valStr));
+                break;
+            case DataType.LONG:
+                field.set(obj,Long.parseLong(valStr));
+                break;
+            case DataType.SHORT:
+                field.set(obj,Short.valueOf(valStr));
+                break;
+            case DataType.BOOLEAN:
+                field.set(obj,Boolean.parseBoolean(valStr));
+                break;
+            case DataType.DATE:
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                field.set(obj,simpleDateFormat.parse(valStr));
+                break;
+            default:
+                if (field.getType().equals(String[].class)){
+                    field.set(obj,valList);
+                }
+                break;
+        }
     }
 }

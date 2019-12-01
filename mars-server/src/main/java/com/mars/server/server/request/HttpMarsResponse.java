@@ -1,12 +1,9 @@
 package com.mars.server.server.request;
 
 import com.mars.server.server.request.model.CrossDomain;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.*;
-import io.netty.util.CharsetUtil;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +19,7 @@ public class HttpMarsResponse {
     /**
      * netty原生通道
      */
-    private ChannelHandlerContext ctx;
+    private HttpServletResponse response;
 
     /**
      * 响应头
@@ -33,19 +30,19 @@ public class HttpMarsResponse {
     /**
      * 构造函数，框架自己用的，程序员用不到，用了也没意义
      *
-     * @param ctx netty原生通道
+     * @param response netty原生通道
      */
-    public HttpMarsResponse(ChannelHandlerContext ctx) {
-        this.ctx = ctx;
+    public HttpMarsResponse(HttpServletResponse response) {
+        this.response = response;
         this.header = new HashMap<>();
     }
 
     /**
-     * 获取netty原生通道
+     * 获取tomcat原生response
      * @return netty原生通道
      */
-    public ChannelHandlerContext getChannelHandlerContext() {
-        return ctx;
+    public HttpServletResponse geHttpServletResponse() {
+        return response;
     }
 
     /**
@@ -64,35 +61,32 @@ public class HttpMarsResponse {
      * @param context 消息
      */
     public void send(String context) {
-        send(context, HttpResponseStatus.OK);
-    }
+        PrintWriter out = null;
+        try {
+            crossDomain();
+            loadHeader();
 
-
-    /**
-     * 响应数据
-     *
-     * @param context 消息
-     * @param status  状态
-     */
-    public void send(String context, HttpResponseStatus status) {
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status,
-                Unpooled.copiedBuffer(context, CharsetUtil.UTF_8));
-
-        crossDomain(response);
-        loadHeader(response);
-
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/json; charset=UTF-8");
-        ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+            response.setContentType("text/json;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            out = response.getWriter();
+            out.println(context);
+        } catch (Exception e){
+            // 不处理
+        } finally {
+            if (out != null){
+                out.flush();
+                out.close();
+            }
+        }
     }
 
     /**
      * 加载设置的header
-     * @param response
      */
-    private void loadHeader(FullHttpResponse response){
+    private void loadHeader(){
         if (header != null && !header.isEmpty()) {
             for (String key : header.keySet()) {
-                response.headers().set(key, header.get(key));
+                response.setHeader(key, header.get(key));
             }
         }
     }
@@ -100,12 +94,12 @@ public class HttpMarsResponse {
     /**
      * 设置跨域
      */
-    private void crossDomain(FullHttpResponse response) {
+    private void crossDomain() {
         CrossDomain crossDomain = CrossDomain.getCrossDomain();
-        response.headers().set("Access-Control-Allow-Origin", crossDomain.getOrigin());
-        response.headers().set("Access-Control-Allow-Methods", crossDomain.getMethods());
-        response.headers().set("Access-Control-Max-Age", crossDomain.getMaxAge());
-        response.headers().set("Access-Control-Allow-Headers", crossDomain.getHeaders());
-        response.headers().set("Access-Control-Allow-Credentials", crossDomain.getCredentials());
+        response.setHeader("Access-Control-Allow-Origin", crossDomain.getOrigin());
+        response.setHeader("Access-Control-Allow-Methods", crossDomain.getMethods());
+        response.setHeader("Access-Control-Max-Age", crossDomain.getMaxAge());
+        response.setHeader("Access-Control-Allow-Headers", crossDomain.getHeaders());
+        response.setHeader("Access-Control-Allow-Credentials", crossDomain.getCredentials());
     }
 }

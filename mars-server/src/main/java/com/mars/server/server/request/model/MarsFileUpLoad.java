@@ -24,11 +24,6 @@ public class MarsFileUpLoad {
 	 */
 	private InputStream inputStream;
 
-	/**
-	 * 二进制流
-	 */
-	private byte[] bytes;
-
 	public String getName() {
 		return name;
 	}
@@ -53,11 +48,4 @@ public class MarsFileUpLoad {
 		this.inputStream = inputStream;
 	}
 
-	public byte[] getBytes() {
-		return bytes;
-	}
-
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
-	}
 }

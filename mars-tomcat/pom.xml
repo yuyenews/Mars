@@ -7,7 +7,7 @@
 		<artifactId>Mars</artifactId>
 		<version>3.0.9</version>
 	</parent>
-	<artifactId>mars-netty</artifactId>
+	<artifactId>mars-tomcat</artifactId>
 
 	<dependencies>
 		<dependency>

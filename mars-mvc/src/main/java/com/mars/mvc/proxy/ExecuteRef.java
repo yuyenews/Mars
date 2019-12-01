@@ -88,12 +88,10 @@ public class ExecuteRef {
         Method[] methods = cls.getDeclaredMethods();
         for(Method methodItem : methods){
             if(methodItem.getName().equals(refName)){
-                Class<?>[] paramTypes = methodItem.getParameterTypes();
-                Object[] refMethodParams =	ParamUtil.getServiceParams(paramTypes,args);
-                if(refMethodParams == null){
+                if(args == null || args.length < 1){
                     return methodItem.invoke(obj);
                 }
-                return methodItem.invoke(obj,refMethodParams);
+                return methodItem.invoke(obj,args);
             }
         }
         return "errorRef";
