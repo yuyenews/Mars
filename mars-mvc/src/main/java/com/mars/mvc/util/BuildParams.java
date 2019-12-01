@@ -84,6 +84,13 @@ public class BuildParams {
         return obj;
     }
 
+    /**
+     * 给参数赋值
+     * @param field 字段
+     * @param obj 对象
+     * @param marsFileUpLoadMap 文件
+     * @throws Exception 异常
+     */
     private static void putMarsFileUploads(Field field, Object obj, Map<String,MarsFileUpLoad> marsFileUpLoadMap) throws Exception{
         MarsFileUpLoad[] marsFileUpLoads = new MarsFileUpLoad[marsFileUpLoadMap.size()];
         int index = 0;
@@ -94,6 +101,13 @@ public class BuildParams {
         field.set(obj, marsFileUpLoads);
     }
 
+    /**
+     * 给参数赋值
+     * @param field 字段
+     * @param obj 对象
+     * @param valList 数据
+     * @throws Exception 异常
+     */
     private static void putAttr(Field field, Object obj, String[] valList) throws Exception{
         String fieldTypeName = field.getType().getSimpleName().toUpperCase();
         String valStr = valList[0];

@@ -45,4 +45,21 @@ public class SerializableUtil {
             throw new Exception("将二进制流反序列化成参数，出现异常",e);
         }
     }
+
+    /**
+     * 将二进制流反序列化成对象
+     * @param inputStream 对象
+     * @param cls 类型
+     * @param <T> 对象
+     * @return 对象
+     * @throws Exception 异常
+     */
+    public static <T> T deSerialization(InputStream inputStream,Class<T> cls) throws Exception {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            return (T)objectInputStream.readObject();
+        } catch (Exception e){
+            throw new Exception("将二进制流反序列化成参数，出现异常",e);
+        }
+    }
 }

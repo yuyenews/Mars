@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 接收netty服务
+ * 接收tomcat服务
  * @author yuye
  *
  */
