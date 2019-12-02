@@ -17,96 +17,93 @@
 
 <div align=center>
 
-声明式API编程(DAP) 框架
+Declarative API programming (DAP) framework
 
 </div>
 
 <div align="center">
 
-[Mars-start源码(启动器)](https://github.com/yuyenews/Mars-start)，
-[Mars-cloud源码(分布式中间件)](https://github.com/yuyenews/Mars-cloud)
+[Mars-start Source (launcher)](https://github.com/yuyenews/Mars-start)，
+[Mars-cloud Source (distributed middleware)](https://github.com/yuyenews/Mars-cloud)
 
 </div>
 
-## 面向声明式API编程(DAP)
+## Declarative API programming (DAP)
 
-按照传统的开发方式，如果要开发一个后端接口，需要分为以下三步
+According to the traditional development method, if you want to develop a back-end interface, you need to divide into the following three steps
 
-1. 创建controller
-2. 创建service
-3. 创建dao（甚至会创建存放sql的xml）
+1. Create controller
+2. Create a service
+3. Create dao (and even create xml to store sql)
 
-但是，我们编写一个接口，重点应该是放在业务逻辑上的，也就是说 我们的关注点应该在第二步，但是通常第一步和第三步的重复工作量让我们感到窒息，所以我梳理了一下，制定了一个新玩法，这套新玩法就叫声明式API
+However, when we write an interface, the focus should be on business logic, which means that our focus should be on the second step, but usually the repeated workload of the first and third steps suffocates us, so I Arranged a bit, formulated a new development method, this new set of development methods is called a declarative API
 
-1. 写业务逻辑
-2. 声明一个API给前端
-3. 将API与业务逻辑关联
+1. Write business logic
+2. Declare an API to the front end
+3. Associate API with business logic
 
-所以我们是这样玩的
+So we play like this
 
-## 编写业务逻辑
+## Write business logic
 
-父接口
+interface
 ```
 public interface TestService {
 
-    要返回的数据类型 selectList(TestDTO testDTO);
+    <Data type to return> selectList(TestDTO testDTO);
 }
 ```
-实现类
+Implementation class
 ```
 @MarsBean("testService")
 public class TestServiceImpl implements TestService{
 
-    要返回的数据类型 selectList(TestDTO testDTO){
-        // 第一步 根据testDTO里的参数从xx表查询需要的数据
-        // 第二步 根据查出来的数据，去操作xx2表
-        // 第三步 对前两步的结果汇总，进行xxx操作
+    <Data type to return> selectList(TestDTO testDTO){
+        
+        // Writing business logic
 		
-        return 数据（直接返回即可，会自动变成json）；
+        return data（Just return directly, it will automatically become json）；
     }
 }
 ```
-## 在Servlce的父接口上加上两个注解
+## Add two annotations to the super interface of Service
 
 ```
 @MarsApi
 public interface TestApi {
 
-    @MarsReference(beanName = "testService[要引用的bean名称]")
+    @MarsReference(beanName = "testService")
     Object selectList(TestVO testVO);
 }
 ```
 
-这套思想的核心是，把后端看作是一个独立个体，并不是为服务前端而存在的，
-后端就写后端的业务逻辑好了，如果前端需要数据，那我们就开个门给他
+At the core of this set of ideas is to treat the back end as a separate entity and completely separate it from the front end.Back-end write back-end business logic. If the front end needs data, then we declare an interface
 
-## 接下来怎么做
+## What to do next
 
-看到这里，大家肯定会有疑问，前端要怎么调用api，后端怎么操作数据库？ 这个就需要你们动动手指，去我的官网一探究竟
+Seeing this, everyone will definitely have questions, how to call the api on the front end, and how to operate the database on the back end? This requires you to move your fingers and check out my official website
 
-## 还可以做什么
+## What else can i do
 
-首先声明式API是对前后端交互方式的一次变革，省去了Controller。
+First, the declarative API is a change to the front-end and back-end interaction methods, eliminating the need for a Controller.
 
-其实这种风格在微服务里很常见，比如Dubbo的api，
-既然微服务接口可以用interface来提供对外的服务，那么我们也可以把它用到http接口上吧。
+In fact, this style is very common in microservices, such as Dubbo's api,
+Since the microservice interface can use interface to provide external services, we can also use it on the http interface.
 
-除了声明式API，我们还提供以下功能
+In addition to the declarative API, we also provide the following features
 
-1. 单表操作和固定sql操作，仅需一行注解
-2. 分页仅需调用一个方法，没有任何第三方依赖
-3. 分布式锁只需要一行注解
-3. 没有像Mybatis一样的sqlMapper.xml
-4. 支持AOP,IOC,声明式事务
-5. 搭建仅需三步，并提供官方中文文档，再也不需要满大街的搜Spring的机翻文档或者个人博客了
+1. Single table operation and fixed sql operation, only one line of annotation is required
+2. Paging only needs to call one method, without any third-party dependencies
+3. Distributed lock requires only one line of annotations
+3. No sqlMapper.xml like Mybatis
+4. Support AOP, IOC, declarative transactions
 
-## 官网
+## Official website
 
 [http://mars-framework.com](http://mars-framework.com)
 
-## 捐款赞助
+## Donation sponsorship
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G517AIY)
 
-[官网赞助](http://mars-framework.com/sponsor.html)
+[Go to the official website to sponsor](http://mars-framework.com/sponsor.html)
