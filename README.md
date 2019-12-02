@@ -70,10 +70,10 @@ public class TestServiceImpl implements TestService{
 
 ```
 @MarsApi
-public interface TestApi {
+public interface TestService {
 
     @MarsReference(beanName = "testService")
-    Object selectList(TestVO testVO);
+    <Data type to return> selectList(TestDTO testDTO);
 }
 ```
 
