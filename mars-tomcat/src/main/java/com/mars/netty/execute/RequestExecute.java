@@ -6,7 +6,8 @@ import com.mars.netty.par.factory.ParamAndResultFactory;
 import com.mars.netty.util.FileUpLoad;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
-import com.mars.server.server.request.model.MarsFileUpLoad;
+import com.mars.netty.util.FileItemUtil;
+import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Map;
+import java.util.List;
 
 /**
  * 处理请求的线程
@@ -43,15 +44,16 @@ public class RequestExecute {
 	public void execute() {
 
 		/* 组装httpRequest对象 */
-		HttpMarsRequest request = new HttpMarsRequest(httpRequest,httpResponse);
+		HttpMarsRequest request = new HttpMarsRequest(httpRequest);
 
 		/* 组装httpResponse对象 */
 		HttpMarsResponse response = new HttpMarsResponse(httpResponse);
 
 		try {
-			/* 从请求中获取上传的文件 */
-			Map<String, MarsFileUpLoad> fileUpLoadMap = FileUpLoad.getFiles(httpRequest);
-			request.setFiles(fileUpLoadMap);
+			/* 从请求中获取数据 */
+			List<FileItem> fileItemList = FileUpLoad.getFileItem(httpRequest);
+			/* 请求的数据中分出表单数据和文件流 */
+			request = FileItemUtil.getHttpMarsRequest(fileItemList,request);
 
 			/* 通过反射执行核心servlet */
 			Class<?> cls = CoreServletClass.getCls();
