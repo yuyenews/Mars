@@ -50,7 +50,7 @@
 ```
 public interface TestService {
 
-    要返回的数据类型 selectList(TestVO testVO);
+    要返回的数据类型 selectList(TestDTO testDTO);
 }
 ```
 实现类
@@ -58,7 +58,7 @@ public interface TestService {
 @MarsBean("testService")
 public class TestServiceImpl implements TestService{
 
-    要返回的数据类型 selectList(TestVO testVO){
+    要返回的数据类型 selectList(TestDTO testDTO){
         // 第一步 根据testDTO里的参数从xx表查询需要的数据
         // 第二步 根据查出来的数据，去操作xx2表
         // 第三步 对前两步的结果汇总，进行xxx操作
