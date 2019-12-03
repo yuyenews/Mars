@@ -78,7 +78,7 @@ public class HttpMarsResponse {
             out = response.getWriter();
             out.println(context);
         } catch (Exception e){
-            logger.error("相应数据异常",e);
+            logger.error("响应数据异常",e);
         } finally {
             if (out != null){
                 out.flush();
@@ -108,7 +108,7 @@ public class HttpMarsResponse {
                 out.write(buffer, 0, len);
             }
         } catch (Exception e){
-            logger.error("相应数据异常",e);
+            logger.error("响应数据异常",e);
         } finally {
             try{
                 if(inputStream != null){
