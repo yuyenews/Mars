@@ -17,7 +17,7 @@ import java.util.Map;
 public class BuildParams {
 
     /**
-     * 构建MarsApi的传参列表
+     * 构建MarsApi的传参
      * @param method
      * @param request
      * @param response
