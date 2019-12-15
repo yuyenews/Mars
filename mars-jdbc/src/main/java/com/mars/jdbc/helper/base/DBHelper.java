@@ -1,7 +1,6 @@
 package com.mars.jdbc.helper.base;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
@@ -179,14 +178,14 @@ public class DBHelper {
     private static void initConnections() throws Exception {
         druidDataSources = new HashMap<>();
 
-        JSONArray dataSourceList = JdbcConfigUtil.getJdbcDataSourceList();
+        List<Properties> dataSourceList = JdbcConfigUtil.getJdbcConfig();
         if (dataSourceList != null) {
             for (int i = 0; i < dataSourceList.size(); i++) {
-                JSONObject dataSource = dataSourceList.getJSONObject(i);
+                Properties dataSource = dataSourceList.get(i);
                 DruidDataSource druidDataSource = initDataSource(dataSource);
-                druidDataSources.put(dataSource.getString("name"), druidDataSource);
+                druidDataSources.put(dataSource.getProperty("name"), druidDataSource);
                 if (i == 0) {
-                    defaultDataSourceName = dataSource.getString("name");
+                    defaultDataSourceName = dataSource.getProperty("name");
                 }
             }
         }
@@ -198,24 +197,23 @@ public class DBHelper {
      * @param dataSource 数据源配置
      * @return DruidDataSource对象
      */
-    private static DruidDataSource initDataSource(JSONObject dataSource) {
-
+    private static DruidDataSource initDataSource(Properties dataSource) throws Exception {
         DruidDataSource druidDataSource = new DruidDataSource();
 
         Properties properties = new Properties();
 
-        /* 设置默认属性 */
-        properties.setProperty("druid.maxWait","60000");
-        properties.setProperty("druid.timeBetweenEvictionRunsMillis","2000");
-        properties.setProperty("druid.minEvictableIdleTimeMillis","5000");
-
-        for (String key : dataSource.keySet()) {
-            /* 如果配置里有上面的属性，则以配置中的为准 */
-            properties.setProperty("druid."+key,dataSource.getString(key));
+        if(dataSource.getProperty("name") == null){
+            throw new Exception("jdbc配置缺少name属性");
+        }
+        Set proSet = dataSource.keySet();
+        if(proSet == null){
+            throw new Exception("jdbc配置中缺少必要的属性");
+        }
+        for(Object key : proSet){
+            properties.put("druid."+key, dataSource.get(key));
         }
 
         druidDataSource.configFromPropety(properties);
-
         return druidDataSource;
     }
 }

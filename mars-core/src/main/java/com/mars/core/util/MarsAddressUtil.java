@@ -16,11 +16,6 @@ public class MarsAddressUtil {
     private static String ip;
 
     /**
-     * 本服务的端口号
-     */
-    private static String port;
-
-    /**
      * 获取本机在局域网的IP
      * @return ip
      * @throws Exception 异常
@@ -36,11 +31,8 @@ public class MarsAddressUtil {
      * 获取端口号
      * @return 端口
      */
-    public static String getPort() {
-        if(port == null){
-            port = ConfigUtil.getConfig().getString("port");
-        }
-        return port;
+    public static int getPort() {
+        return MarsConfiguration.getConfig().port();
     }
 
     /**

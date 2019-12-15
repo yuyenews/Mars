@@ -1,6 +1,8 @@
 package com.mars.server.server.request;
 
-import com.mars.server.server.request.model.CrossDomain;
+import com.mars.core.base.config.MarsConfig;
+import com.mars.core.base.config.model.CrossDomainConfig;
+import com.mars.core.util.MarsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,11 +136,12 @@ public class HttpMarsResponse {
      * 设置跨域
      */
     private void crossDomain() {
-        CrossDomain crossDomain = CrossDomain.getCrossDomain();
-        response.setHeader("Access-Control-Allow-Origin", crossDomain.getOrigin());
-        response.setHeader("Access-Control-Allow-Methods", crossDomain.getMethods());
-        response.setHeader("Access-Control-Max-Age", crossDomain.getMaxAge());
-        response.setHeader("Access-Control-Allow-Headers", crossDomain.getHeaders());
-        response.setHeader("Access-Control-Allow-Credentials", crossDomain.getCredentials());
+        MarsConfig marsConfig = MarsConfiguration.getConfig();
+        CrossDomainConfig crossDomainConfig = marsConfig.crossDomainConfig();
+        response.setHeader("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
+        response.setHeader("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
+        response.setHeader("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
+        response.setHeader("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
+        response.setHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
     }
 }

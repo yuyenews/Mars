@@ -13,10 +13,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.yuyenews</groupId>
             <artifactId>mars-core</artifactId>
             <optional>true</optional>
