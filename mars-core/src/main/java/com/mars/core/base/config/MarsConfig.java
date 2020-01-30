@@ -55,7 +55,7 @@ public abstract class MarsConfig {
 
     /**
      * jedis配置
-     * @return edis配置
+     * @return jedis配置
      */
     public JedisConfig jedisConfig(){
         return new JedisConfig();
