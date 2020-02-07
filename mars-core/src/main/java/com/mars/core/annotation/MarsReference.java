@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface MarsReference {
 
-    String beanName();
+    String beanName() default "";
 
     String refName() default "";
 
