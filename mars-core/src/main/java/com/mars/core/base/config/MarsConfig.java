@@ -49,9 +49,7 @@ public abstract class MarsConfig {
      * 连接池配置
      * @return 连接池配置
      */
-    public List<Properties> jdbcProperties(){
-        return null;
-    }
+    public abstract List<Properties> jdbcProperties();
 
     /**
      * jedis配置
