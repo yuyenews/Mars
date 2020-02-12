@@ -50,12 +50,15 @@ public class MvcCglibProxy implements MethodInterceptor {
 		}
 
 		try{
-			Object o1 = ExecuteRef.executeRef(cls,method,args);
-
+			Object o1 = null;
+			if(cls.isInterface()){
+				o1 = ExecuteRef.executeRef(cls,method,args);
+			} else {
+				o1 = methodProxy.invokeSuper(o,args);
+			}
 			if(c != null){
 				c.endMethod(args,o1);
 			}
-
 			return o1;
 		} catch (Throwable e) {
 			if(c != null) {
