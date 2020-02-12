@@ -8,7 +8,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.mars.core.util.ConfigUtil;
+import com.mars.core.util.MarsConfiguration;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,12 +42,7 @@ public class JwtManager {
      * 加载配置文件中的jwt失效时间
      */
     private void loadCalendarInterval(){
-        JSONObject config = ConfigUtil.getConfig();
-        Object jwtTime = config.get("jwtTime");
-
-        if(jwtTime != null){
-            calendarInterval =  Integer.parseInt(jwtTime.toString());
-        }
+        calendarInterval =  MarsConfiguration.getConfig().jwtTime();
     }
 
     /**

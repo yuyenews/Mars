@@ -37,6 +37,7 @@ public class LogAop {
                 JSONObject param = JSONObject.parseObject(JSON.toJSONString(obj));
                 jsonObject.putAll(param);
             }
+            params = jsonObject.toJSONString();
         }
 
         StringBuffer buffer = getLogInfo("开始执行","参数",params);

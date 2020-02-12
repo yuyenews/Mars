@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars</artifactId>
-	<version>3.0.10</version>
+	<version>3.0.11</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-core</module>
@@ -56,12 +56,12 @@
 			<dependency>
 				<groupId>org.apache.tomcat.embed</groupId>
 				<artifactId>tomcat-embed-core</artifactId>
-				<version>8.5.49</version>
+				<version>8.5.50</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.tomcat</groupId>
 				<artifactId>tomcat-servlet-api</artifactId>
-				<version>8.5.49</version>
+				<version>8.5.50</version>
 			</dependency>
 
 			<dependency>

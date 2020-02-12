@@ -1,10 +1,10 @@
 package com.mars.core.load;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mars.core.annotation.MarsValue;
 import com.mars.core.annotation.MarsWrite;
+import com.mars.core.base.config.MarsConfig;
 import com.mars.core.model.MarsBeanModel;
-import com.mars.core.util.ConfigUtil;
+import com.mars.core.util.MarsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public class WriteFields {
      * @throws Exception 异常
      */
     public static void writeFields(Class cls, Object obj, Map<String, MarsBeanModel> marsBeanObjects) throws Exception {
-        JSONObject config = ConfigUtil.getConfig();
+        MarsConfig config = MarsConfiguration.getConfig();
 
         Field[] fields = cls.getDeclaredFields();
         for (Field f : fields) {
@@ -74,7 +74,7 @@ public class WriteFields {
      * @param marsValue 注解
      * @throws Exception 异常
      */
-    private static void doValue(Field f,Class cls,Object obj, JSONObject config, MarsValue marsValue) throws Exception {
+    private static void doValue(Field f,Class cls,Object obj, MarsConfig config, MarsValue marsValue) throws Exception {
         if(marsValue == null){
             return;
         }
@@ -99,36 +99,11 @@ public class WriteFields {
      * @return 值
      * @throws Exception 异常
      */
-    private static Object getValue(String value,JSONObject config) throws Exception {
-        if (value.indexOf(".") > 0) {
-            String[] values = value.split("\\.");
-            if (values == null || values.length < 1) {
-                throw new Exception("无法给属性注入:" + value);
-            }
-            if (values.length < 2) {
-                return config.get(value);
-            }
-            JSONObject jsonObject = config;
-            for (int i = 0; i < values.length; i++) {
-                if (i < values.length - 1) {
-                    jsonObject = jsonObject.getJSONObject(values[i]);
-                    if (jsonObject == null) {
-                        throw new Exception("无法给属性注入:" + value);
-                    }
-                } else {
-                    if (jsonObject == null) {
-                        throw new Exception("无法给属性注入:" + value);
-                    }
-                    Object filedValue = jsonObject.get(values[i]);
-                    if (filedValue == null) {
-                        throw new Exception("无法给属性注入:" + value);
-                    }
-                    return filedValue;
-                }
-            }
-        } else {
-            return config.get(value);
+    private static Object getValue(String value,MarsConfig config) throws Exception {
+        Map<String,String> marsValues = config.marsValues();
+        if(marsValues == null){
+            return null;
         }
-        return null;
+        return marsValues.get(value);
     }
 }

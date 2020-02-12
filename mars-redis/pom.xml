@@ -5,17 +5,13 @@
     <parent>
         <artifactId>Mars</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>3.0.10</version>
+        <version>3.0.11</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mars-redis</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
             <artifactId>mars-core</artifactId>

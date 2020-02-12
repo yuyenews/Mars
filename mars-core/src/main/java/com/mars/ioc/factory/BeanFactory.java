@@ -54,14 +54,12 @@ public class BeanFactory {
 			throw new Exception("创建["+className.getName()+"]类型的bean对象出现错误",e);
 		} 
 	}
-	
-	
+
 	/**
-	 * 获取bean
 	 * @param name bean名称
 	 * @param cls bean类型
+	 * @param <T> 类型
 	 * @return bean对象
-	 *
 	 * @throws Exception 异常
 	 */
 	public static <T> T getBean(String name,Class<T> cls) throws Exception {
