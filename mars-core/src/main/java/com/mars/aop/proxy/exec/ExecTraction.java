@@ -53,6 +53,7 @@ public class ExecTraction {
      * 获取aop实体
      * @param traction 事务监听注解
      * @return aop实体
+     * @throws Exception 异常
      */
     public static AopModel getAopModel(Traction traction) throws Exception {
         if(traction == null){

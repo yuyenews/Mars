@@ -17,7 +17,6 @@ public class MarsConfiguration {
 	/**
 	 * 加载配置文件
 	 * @param marsConfig 后缀
-	 * @throws Exception 异常
 	 */
 	public static void loadConfig(MarsConfig marsConfig) {
 		constants.setAttr(MarsConstant.CONFIG_CACHE_KEY,marsConfig);

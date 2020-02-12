@@ -61,7 +61,7 @@ public abstract class MarsConfig {
 
     /**
      * 其他配置项
-     * @return
+     * @return 配置
      */
     public Map<String,String> marsValues(){
         return null;
