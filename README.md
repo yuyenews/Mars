@@ -47,33 +47,33 @@ So we play like this
 ## Write business logic
 
 interface
-```
+```java
 public interface TestService {
 
-    <Data type to return> selectList(TestDTO testDTO);
+    Object/*Data type to return*/ selectList(TestDTO testDTO);
 }
 ```
 Implementation class
-```
+```java
 @MarsBean("testService")
 public class TestServiceImpl implements TestService{
 
-    <Data type to return> selectList(TestDTO testDTO){
+    Object/*Data type to return*/ selectList(TestDTO testDTO){
         
         // Writing business logic
 		
-        return data（Just return directly, it will automatically become json）；
+        return data;//Just return directly, it will automatically become json
     }
 }
 ```
 ## Add two annotations to the super interface of Service
 
-```
+```java
 @MarsApi
 public interface TestService {
 
     @MarsReference(beanName = "testService")
-    <Data type to return> selectList(TestDTO testDTO);
+    Object/*Data type to return*/ selectList(TestDTO testDTO);
 }
 ```
 
