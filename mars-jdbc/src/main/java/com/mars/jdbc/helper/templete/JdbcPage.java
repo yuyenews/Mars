@@ -99,11 +99,12 @@ public class JdbcPage {
      * @return
      */
     private static String getCountSql(String sql){
-        StringBuffer sqlBuilder = new StringBuffer();
-        sqlBuilder.append("select count(0) countNum from (");
-        sqlBuilder.append(sql);
-        sqlBuilder.append(") t");
+        sql = sql.toLowerCase();
+        int index = sql.indexOf("from");
+        sql = sql.substring(index);
 
+        StringBuffer sqlBuilder = new StringBuffer("select count(0)  ");
+        sqlBuilder.append(sql);
         return sqlBuilder.toString();
     }
 
