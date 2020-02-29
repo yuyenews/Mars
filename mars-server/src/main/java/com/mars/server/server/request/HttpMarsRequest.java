@@ -88,14 +88,15 @@ public class HttpMarsRequest {
 	public Map<String, Object> getParameters() {
 		Map<String, Object> params = new HashMap<>();
 		if(ServletFileUpload.isMultipartContent(httpRequest)){
-			if(marsParams != null){
-				for(String key : marsParams.keySet()){
-					List<String> paramsList = marsParams.get(key);
-					if(paramsList == null || paramsList.size() < 1){
-						continue;
-					}
-					params.put(key,paramsListToArray(paramsList));
+			if(marsParams == null){
+				return params;
+			}
+			for(String key : marsParams.keySet()){
+				List<String> paramsList = marsParams.get(key);
+				if(paramsList == null || paramsList.size() < 1){
+					continue;
 				}
+				params.put(key,paramsListToArray(paramsList));
 			}
 		} else {
 			Map<String,String[]> parameterMap = httpRequest.getParameterMap();
@@ -184,7 +185,7 @@ public class HttpMarsRequest {
 	 * 获取客户端IP
 	 * @return ip
 	 */
-	public String getIp() {
+	public String getRemoteHost() {
         return httpRequest.getRemoteHost();
 	}
 

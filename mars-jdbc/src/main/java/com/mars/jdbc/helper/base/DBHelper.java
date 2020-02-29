@@ -1,6 +1,7 @@
 package com.mars.jdbc.helper.base;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
@@ -85,8 +86,9 @@ public class DBHelper {
      * @throws Exception
      */
     public static ResultSet select(String sql, Connection connection, Object[] params) throws Exception {
-        logger.info("sql:{}",sql);
-
+        if(logger.isDebugEnabled()){
+            logger.debug("sql:{},params:{}",sql, JSON.toJSONString(params));
+        }
         preparedStatement = connection.prepareStatement(sql);
         if(params != null && params.length > 0){
             for (int i = 0; i < params.length; i++) {
@@ -118,8 +120,9 @@ public class DBHelper {
      * @throws Exception
      */
     public static int update(String sql, Connection connection, Object[] params) throws Exception {
-        logger.info("sql:{}",sql);
-
+        if(logger.isDebugEnabled()){
+            logger.debug("sql:{},params:{}",sql, JSON.toJSONString(params));
+        }
         preparedStatement = connection.prepareStatement(sql);
         if(params != null && params.length > 0){
             for (int i = 0; i < params.length; i++) {

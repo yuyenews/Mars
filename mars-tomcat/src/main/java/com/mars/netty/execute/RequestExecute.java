@@ -27,10 +27,13 @@ public class RequestExecute {
 	private Logger log = LoggerFactory.getLogger(RequestExecute.class);
 
 	/**
-	 * netty的request对象
+	 * tomcat的request对象
 	 */
 	private HttpServletRequest httpRequest;
 
+	/**
+	 * tomcat的response对象
+	 */
 	private HttpServletResponse httpResponse;
 	
 	public void setHttpRequest(HttpServletRequest httpRequest) {
