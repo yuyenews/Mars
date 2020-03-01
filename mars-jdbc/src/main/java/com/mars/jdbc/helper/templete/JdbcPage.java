@@ -103,7 +103,7 @@ public class JdbcPage {
         int index = sql.indexOf("from");
         sql = sql.substring(index);
 
-        StringBuffer sqlBuilder = new StringBuffer("select count(0)  ");
+        StringBuffer sqlBuilder = new StringBuffer("select count(0) countNum  ");
         sqlBuilder.append(sql);
         return sqlBuilder.toString();
     }
