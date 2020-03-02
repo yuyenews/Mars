@@ -71,7 +71,7 @@ public class ExecuteRef {
         String beanName = null;
         if(marsReference != null && !StringUtil.isNull(marsReference.beanName())){
             beanName = marsReference.beanName();
-        } else if(marsApi != null || !StringUtil.isNull(marsApi.refBean())){
+        } else if(marsApi != null && !StringUtil.isNull(marsApi.refBean())){
             beanName = marsApi.refBean();
         }
 
