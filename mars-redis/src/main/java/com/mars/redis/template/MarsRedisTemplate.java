@@ -28,7 +28,7 @@ public class MarsRedisTemplate {
         try {
             jedis = JedisPoolFactory.getShardedJedisPool().getResource();
         } catch (Exception e) {
-            throw new Exception("get Jedis error",e);
+            throw new Exception("获取redis连接失败",e);
         }
 
         return jedis;
@@ -46,12 +46,14 @@ public class MarsRedisTemplate {
 
         try {
             jedis = getShardedJedis();
-            Collection<Jedis> jedisList = jedis.getAllShards();// 获取所有的缓存实例
+            // 获取所有的缓存实例
+            Collection<Jedis> jedisList = jedis.getAllShards();
             for (Jedis jedisItem : jedisList) {
-                allKeys.addAll(jedisItem.keys(pattern));// 获取匹配prefix的所有的key
+                // 获取匹配prefix的所有的key
+                allKeys.addAll(jedisItem.keys(pattern));
             }
         } catch (Exception e) {
-            logger.error("Getting keys error: {}", e);
+            logger.error("获取keys失败", e);
         } finally {
             recycleJedis(jedis);
         }

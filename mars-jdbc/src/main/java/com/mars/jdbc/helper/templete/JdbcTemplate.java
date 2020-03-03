@@ -1,6 +1,5 @@
 package com.mars.jdbc.helper.templete;
 
-import com.mars.core.constant.MarsSpace;
 import com.mars.jdbc.helper.model.PageModel;
 import com.mars.jdbc.helper.model.PageParamModel;
 import com.mars.jdbc.helper.templete.base.BaseJdbcTemplate;
@@ -12,8 +11,6 @@ import java.util.Map;
  * jdbc模板
  */
 public class JdbcTemplate extends BaseJdbcTemplate {
-
-    private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
     private String dataSourceName;
 

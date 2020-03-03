@@ -49,8 +49,6 @@ public class BaseJdbcTemplate {
         return connectionManager;
     }
 
-
-
     /**
      * 获取数据源名称
      *
