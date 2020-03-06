@@ -13,16 +13,16 @@ public @interface MarsDataCheck {
     boolean notNull() default false;
 
     /**
-     * 是否是数字
+     * 最小长度
      * @return
      */
-    boolean number() default false;
+    long minLength() default 0;
 
     /**
      * 最大长度
      * @return
      */
-    long length() default Long.MAX_VALUE;
+    long maxLength() default Long.MAX_VALUE;
 
     /**
      * 正则

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,11 +73,7 @@ public class ParamsCheckUtil {
                     return MesUtil.getMes(errorCode,marsDataCheck.msg());
                 }
 
-                if(!notNull(marsDataCheck, val,marsDataCheck.length())){
-                    return MesUtil.getMes(errorCode,marsDataCheck.msg());
-                }
-
-                if(!number(marsDataCheck, val,marsDataCheck.length())){
+                if(!notNull(marsDataCheck, val)){
                     return MesUtil.getMes(errorCode,marsDataCheck.msg());
                 }
             }
@@ -110,11 +105,12 @@ public class ParamsCheckUtil {
     /**
      * 校验长度
      * @param val 数据
-     * @param length 长度
+     * @param marsDataCheck 注解
      * @return 结果
      */
-    private static boolean length(Object val,Long length){
-        if(val.toString().length() > length){
+    private static boolean length(MarsDataCheck marsDataCheck, Object val){
+        long valLen = val.toString().length();
+        if(valLen < marsDataCheck.minLength() || valLen > marsDataCheck.maxLength()){
             return false;
         }
         return true;
@@ -124,39 +120,15 @@ public class ParamsCheckUtil {
      * 非空校验
      * @param marsDataCheck 注解
      * @param val 数据
-     * @param length 长度
      * @return 结果
      */
-    private static boolean notNull(MarsDataCheck marsDataCheck, Object val,Long length){
+    private static boolean notNull(MarsDataCheck marsDataCheck, Object val){
         if(!marsDataCheck.notNull()){
             return true;
         }
         if(StringUtil.isNull(val)){
             return false;
         }
-        return length(val,length);
-    }
-
-    /**
-     * 数字校验
-     * @param marsDataCheck 集合
-     * @param val 数据
-     * @param length 长度
-     * @return 结果
-     */
-    private static boolean number(MarsDataCheck marsDataCheck, Object val,Long length){
-        if(!marsDataCheck.number()){
-            return true;
-        }
-        boolean result = reg(val,"(^[\\-0-9][0-9]*(.[0-9]+)?)$");
-        if(result){
-            BigDecimal fromVal = new BigDecimal(val.toString());
-            BigDecimal len = new BigDecimal(length.toString());
-            if(fromVal.compareTo(len) > 0){
-                return false;
-            }
-            return true;
-        }
-        return false;
+        return length(marsDataCheck, val);
     }
 }
