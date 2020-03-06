@@ -2,6 +2,7 @@ package com.mars.netty.execute;
 
 import com.mars.core.ncfg.mvc.CoreServletClass;
 import com.mars.core.util.MesUtil;
+import com.mars.core.util.StringUtil;
 import com.mars.netty.par.factory.ParamAndResultFactory;
 import com.mars.netty.util.FileUpLoad;
 import com.mars.server.server.request.HttpMarsRequest;
@@ -23,7 +24,7 @@ import java.util.List;
  *
  */
 public class RequestExecute {
-	
+
 	private Logger log = LoggerFactory.getLogger(RequestExecute.class);
 
 	/**
@@ -35,7 +36,7 @@ public class RequestExecute {
 	 * tomcat的response对象
 	 */
 	private HttpServletResponse httpResponse;
-	
+
 	public void setHttpRequest(HttpServletRequest httpRequest) {
 		this.httpRequest = httpRequest;
 	}
@@ -44,6 +45,9 @@ public class RequestExecute {
 		this.httpResponse = response;
 	}
 
+	/**
+	 * 执行请求
+	 */
 	public void execute() {
 
 		/* 组装httpRequest对象 */
@@ -56,22 +60,39 @@ public class RequestExecute {
 			/* 从请求中获取数据 */
 			List<FileItem> fileItemList = FileUpLoad.getFileItem(httpRequest);
 			/* 请求的数据中分出表单数据和文件流 */
-			request = FileItemUtil.getHttpMarsRequest(fileItemList,request);
+			request = FileItemUtil.getHttpMarsRequest(fileItemList, request);
 
 			/* 通过反射执行核心servlet */
 			Class<?> cls = CoreServletClass.getCls();
 			Object object = cls.getDeclaredConstructor().newInstance();
-			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[] { HttpMarsRequest.class , HttpMarsResponse.class});
-			Object result = helloMethod.invoke(object, new Object[] { request ,response});
+			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
+			Object result = helloMethod.invoke(object, new Object[]{request, response});
 
 			/* 响应 */
-			ParamAndResultFactory.getBaseParamAndResult().result(response,result);
-		} catch (InvocationTargetException e){
-			log.error("处理请求的时候出错",e);
-			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getTargetException().getMessage()).toJSONString());
+			ParamAndResultFactory.getBaseParamAndResult().result(response, result);
 		} catch (Exception e) {
-			log.error("处理请求的时候出错",e);
-			response.send(MesUtil.getMes(500,"处理请求发生错误:"+e+",message:"+e.getMessage()).toJSONString());
+			log.error("处理请求的时候出错", e);
+			String msg = getErrorMsg(e);
+			response.send(MesUtil.getMes(500, "处理请求发生错误:" + e + ",message:" + msg).toJSONString());
 		}
+	}
+
+	/**
+	 * 处理异常信息
+	 * @param e 异常对象
+	 * @return 信息
+	 */
+	private String getErrorMsg(Exception e) {
+		String msg = null;
+		if(e instanceof InvocationTargetException){
+			InvocationTargetException invocationTargetException = (InvocationTargetException)e;
+			msg = invocationTargetException.getTargetException().getMessage();
+		} else {
+			msg = e.getMessage();
+		}
+		if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
+			msg = "服务端出现异常";
+		}
+		return msg;
 	}
 }
