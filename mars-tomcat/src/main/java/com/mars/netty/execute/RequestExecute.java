@@ -91,7 +91,7 @@ public class RequestExecute {
 			msg = e.getMessage();
 		}
 		if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
-			msg = "服务端出现不明异常,请查看日志以及检查您的代码进行排查";
+			msg = "服务端出现异常,请查看日志以及检查您的代码进行排查";
 		}
 		return msg;
 	}
