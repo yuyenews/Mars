@@ -73,7 +73,7 @@ public class RequestExecute {
 		} catch (Exception e) {
 			log.error("处理请求的时候出错", e);
 			String msg = getErrorMsg(e);
-			response.send(MesUtil.getMes(500, "处理请求发生错误:" + e + ",message:" + msg).toJSONString());
+			response.send(MesUtil.getMes(500, msg).toJSONString());
 		}
 	}
 
@@ -91,7 +91,7 @@ public class RequestExecute {
 			msg = e.getMessage();
 		}
 		if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
-			msg = "服务端出现异常";
+			msg = "服务端出现不明异常,请查看日志以及检查您的代码进行排查";
 		}
 		return msg;
 	}
