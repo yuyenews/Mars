@@ -25,7 +25,7 @@ public class StringUtil {
 	 * @return string
 	 */
 	public static boolean isNull(Object obj) {
-		if(obj == null || obj.toString().trim().equals("")) {
+		if (obj == null || obj.toString().trim().equals("")) {
 			return true;
 		}
 		return false;

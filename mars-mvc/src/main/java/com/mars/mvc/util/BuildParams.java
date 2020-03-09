@@ -1,7 +1,9 @@
 package com.mars.mvc.util;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.enums.DataType;
+import com.mars.core.util.StringUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;
@@ -140,7 +142,12 @@ public class BuildParams {
                 field.set(obj,Boolean.parseBoolean(valStr));
                 break;
             case DataType.DATE:
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String fmt = "yyyy-MM-dd HH:mm:ss";
+                JSONField jsonField = field.getAnnotation(JSONField.class);
+                if(jsonField != null && !StringUtil.isNull(jsonField.format())){
+                    fmt = jsonField.format();
+                }
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(fmt);
                 field.set(obj,simpleDateFormat.parse(valStr));
                 break;
             default:

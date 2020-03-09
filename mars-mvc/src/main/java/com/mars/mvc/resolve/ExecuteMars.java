@@ -1,8 +1,10 @@
 package com.mars.mvc.resolve;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mars.core.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.model.MarsInterModel;
+import com.mars.mvc.util.ParamsCheckUtil;
 import com.mars.netty.par.factory.ParamAndResultFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
@@ -84,10 +86,17 @@ public class ExecuteMars {
 		Object obj = marsMappingModel.getObject();
 		Method method = getMethod(marsMappingModel);
 
+		/* 获取前端传参 */
 		Object[] params = ParamAndResultFactory.getBaseParamAndResult().getParam(method,request,response);
 
-		Object result = null;
+		/* 校验传参 */
+		JSONObject checkResult = ParamsCheckUtil.checkParam(params);
+		if(checkResult != null){
+			return checkResult;
+		}
 
+		/* 执行api方法 */
+		Object result = null;
 		if(params != null){
 			result = method.invoke(obj, params);
 		} else {
