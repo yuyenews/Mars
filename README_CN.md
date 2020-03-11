@@ -28,74 +28,78 @@
 
 </div>
 
-## 声明式API编程（DAP）
+Mars-java是一个声明式API编程(DAP) 框架，可以帮助你很快的开发后端服务
 
-根据传统的开发方法，如果要开发后端接口，则需要分为以下三个步骤
-
-1. 创建Controller
-2. 创建Service
-3. 创建dao（甚至创建xml来存储sql）
-
-但是，当我们编写接口时，重点应该放在业务逻辑上，这意味着我们的重点应该放在第二步上，但是通常第一步和第三步的重复工作量使我们感到窒息，因此我安排了一下，制定了一个新的开发方法，这套新的开发方法称为声明性API
-
-1. 编写业务逻辑
-2. 向前端声明API
-3. 将API与业务逻辑相关联
-
-所以我们这样玩
-
-## 编写业务逻辑
-
-接口
+## 项目特性
+### 一、声明式API
+只需要在你的service的父接口上加上一个注解，即可对外提供一个接口，并且我们还支持传统的Controller写法
 ```java
+@MarsApi(refBean="要引用的bean的name")// 这是应对多个实现类的情况
 public interface TestService {
 
-    Object/*Data type to return*/ selectList(TestDTO testDTO);
+   返回类型 selectList(TestDTO testDTO);
 }
 ```
-实现类
+### 二、单表增删改查无sql
 ```java
-@MarsBean("testService")
-public class TestServiceImpl implements TestService{
+// 根据主键查询一条数据
+@MarsGet(tableName = "userinfo",primaryKey = "id")
+public abstract 要返回的实体类 selectById(int id);
 
-    Object/*Data type to return*/ selectList(TestDTO testDTO){
-        
-        // Writing business logic
-		
-        return data;//Just return directly, it will automatically become json
-    }
-}
+// 单表新增
+@MarsUpdate(tableName = "userinfo",operType = OperType.INSERT)
+public abstract int insert(实体对象参数);
+
+// 单表根据主键删除
+@MarsUpdate(tableName = "userinfo",operType = OperType.DELETE,primaryKey = "id")
+public abstract int delete(int id);
+
+// 单表根据主键修改
+@MarsUpdate(tableName = "userinfo",operType = OperType.UPDATE,primaryKey = "id")
+public abstract int update(实体对象参数);
 ```
-## 在Service的父接口中添加两个注解
 
+### 三、参数校验只需一个注解
+在API接口的参数对象里的字段上加上一个注解即可（VO的字段上加注解）
 ```java
-@MarsApi
-public interface TestService {
+// 不可为空，且长度在2-3位
+@MarsDataCheck(notNull = true,maxLength = 3L,minLength = 2L, msg = "id不可为空且长度必须在2-3位之间")
+private Integer id;
 
-    @MarsReference(beanName = "testService")
-    Object/*Data type to return*/ selectList(TestDTO testDTO);
-}
+// 正则校验
+@MarsDataCheck(reg = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$",msg = "密码不可以为空且必须是6-12位数字字母组合")
+private String password;
 ```
 
-这套思路的核心是将后端视为一个单独的实体，并将其与前端完全分开。后端编写后端业务逻辑。如果前端需要数据，那么我们声明一个接口
+前端如何得到提示?
 
-## 接下来做什么
+正常请求API就好了，如果校验不通过会得到这样一个json
+```json
+{"error_code":1128,"error_info":"提示文字"}
+```
 
-看到这一点，每个人肯定会有疑问，如何在前端调用api，以及如何在后端操作数据库？这需要您动动手指并查看我的官方网站
+### 四、异常监听器
+通常我们在写代码的时候，需要给每个Controller的方法加上try{}catch(){},用来在异常的时候，能够正常的返回 json串
 
-## 我还可以做些什么
+spring是有一个叫ExecptionHandler 来解决这个问题，而Mars-java也提供了对应的解决方案
 
-首先，声明性API是对前端和后端交互方法的更改，从而消除了对Controller的需求。
+解决方案就是什么都不用管，如果出了异常，会自动给前端返回如下json串
+```json
+{"error_code":500,"error_info":"异常提示"}
+```
 
-实际上，这种样式在微服务（例如Dubbo的api）中非常普遍。由于微服务接口可以使用接口来提供外部服务，因此我们也可以在http接口上使用它。
+### 五、一行注解，解决分布式锁
+在要加锁的方法上添加RedisLock注解
+```java
+@RedisLock(key = "自己定义一个key")
+public int insert(){
+  return 1;
+}
+```
+## 其他组件
+目前本项目有自己的微服务框架：Mars-cloud，后面将会推出更多的组件，最终目的是打造一个好用的封闭式生态
 
-除了声明性API，我们还提供以下功能
-
-1. 单表操作和固定sql操作，仅需要一行注释
-2. 分页仅需调用一种方法，而无需任何第三方依赖项
-3. 分布式锁仅需要一行注释
-4. 没有像Mybatis这样的sqlMapper.xml
-5. 支持AOP，IOC，声明式交易
+注：封闭式生态不代表不开源，而是指大部分组件都是自己的，可以很好的融会贯通。
 
 ## 官方网站
 
