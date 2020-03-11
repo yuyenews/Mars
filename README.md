@@ -28,75 +28,76 @@ Declarative API programming (DAP) framework
 
 </div>
 
-## Declarative API programming (DAP)
-
-According to the traditional development method, if you want to develop a back-end interface, you need to divide into the following three steps
-
-1. Create controller
-2. Create a service
-3. Create dao (and even create xml to store sql)
-
-However, when we write an interface, the focus should be on business logic, which means that our focus should be on the second step, but usually the repeated workload of the first and third steps suffocates us, so I Arranged a bit, formulated a new development method, this new set of development methods is called a declarative API
-
-1. Write business logic
-2. Declare an API to the front end
-3. Associate API with business logic
-
-So we play like this
-
-## Write business logic
-
-interface
+## Program features
+### 1. the declarative API
+You only need to add a annotation to the parent interface of your service to provide an interface to the outside world. We also support the traditional Controller
 ```java
+@MarsApi(refBean="The name of the bean to reference")
 public interface TestService {
 
-    Object/*Data type to return*/ selectList(TestDTO testDTO);
+   `Return type` selectList(TestDTO testDTO);
 }
 ```
-Implementation class
+### 2. Single table addition, deletion, modification, and select without SQL
 ```java
-@MarsBean("testService")
-public class TestServiceImpl implements TestService{
+// Query a piece of data based on the primary key
+@MarsGet(tableName = "userinfo",primaryKey = "id")
+public abstract `Return type` selectById(int id);
 
-    Object/*Data type to return*/ selectList(TestDTO testDTO){
-        
-        // Writing business logic
-		
-        return data;//Just return directly, it will automatically become json
-    }
-}
+// Insert a piece of data
+@MarsUpdate(tableName = "userinfo",operType = OperType.INSERT)
+public abstract int insert(`Entity object parameter`);
+
+// Delete a piece of data based on the primary key
+@MarsUpdate(tableName = "userinfo",operType = OperType.DELETE,primaryKey = "id")
+public abstract int delete(int id);
+
+// Modify a piece of data based on the primary key
+@MarsUpdate(tableName = "userinfo",operType = OperType.UPDATE,primaryKey = "id")
+public abstract int update(`Entity object parameter`);
 ```
-## Add two annotations to the super interface of Service
 
+### 3. Parameter verification requires only one annotation
+Just add a annotation to the field of VO
 ```java
-@MarsApi
-public interface TestService {
+// Cannot be empty and is 2-3 digits long
+@MarsDataCheck(notNull = true,maxLength = 3L,minLength = 2L, msg = "id不可为空且长度必须在2-3位之间")
+private Integer id;
 
-    @MarsReference(beanName = "testService")
-    Object/*Data type to return*/ selectList(TestDTO testDTO);
-}
+// Regular check
+@MarsDataCheck(reg = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$",msg = "密码不可以为空且必须是6-12位数字字母组合")
+private String password;
 ```
 
-At the core of this set of ideas is to treat the back end as a separate entity and completely separate it from the front end.Back-end write back-end business logic. If the front end needs data, then we declare an interface
+How does the front end get prompted?
 
-## What to do next
+Just request the API normally. If the verification fails, you will get such a json.
+```json
+{"error_code":1128,"error_info":"提示文字"}
+```
 
-Seeing this, everyone will definitely have questions, how to call the api on the front end, and how to operate the database on the back end? This requires you to move your fingers and check out my official website
+### 4. Exception listener
+Usually when we write code, we need to add try {} catch () {} to each Controller method, which can be used to return the json string normally when the exception
 
-## What else can i do
+Spring has an ExecptionHandler to solve this problem, and Mars-java also provides a corresponding solution
 
-First, the declarative API is a change to the front-end and back-end interaction methods, eliminating the need for a Controller.
+The solution is to do nothing, and if something goes wrong, it will automatically return the following json string to the front end
+```json
+{"error_code":500,"error_info":"异常提示"}
+```
 
-In fact, this style is very common in microservices, such as Dubbo's api,
-Since the microservice interface can use interface to provide external services, we can also use it on the http interface.
+### 5. One-line annotations to resolve distributed locks
+Add RedisLock annotation on the method to be locked
+```java
+@RedisLock(key = "Define a key yourself")
+public int insert(){
+  return 1;
+}
+```
+## Other components
+At present, this project has its own microservice framework: Mars-cloud, more components will be launched later, and the ultimate goal is to create a useful closed ecosystem
 
-In addition to the declarative API, we also provide the following features
-
-1. Single table operation and fixed sql operation, only one line of annotation is required
-2. Paging only needs to call one method, without any third-party dependencies
-3. Distributed lock requires only one line of annotations
-3. No sqlMapper.xml like Mybatis
-4. Support AOP, IOC, declarative transactions
+Note: The closed ecology does not mean that it is not open source, but that most of the components are their own and can be well integrated.
 
 ## Official website
 
