@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-jdbc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-jdbc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-mvc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-mvc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-redis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-start/mars-start-base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-start/mars-start-base/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-start/mars-start-pure/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-start/mars-start-pure/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-tomcat" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mars-tomcat/src/main/java" charset="UTF-8" />
+  </component>
+</project>
