@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mars-start-pure" />
+        <module name="mars-jdbc" />
+        <module name="mars-core" />
+        <module name="mars-redis" />
+        <module name="mars-mvc" />
+        <module name="mars-start-base" />
+        <module name="mars-tomcat" />
+        <module name="mars-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Mars" target="1.8" />
+      <module name="mars-core" target="1.8" />
+      <module name="mars-jdbc" target="1.8" />
+      <module name="mars-mvc" target="1.8" />
+      <module name="mars-redis" target="1.8" />
+      <module name="mars-server" target="1.8" />
+      <module name="mars-start" target="1.8" />
+      <module name="mars-start-base" target="1.8" />
+      <module name="mars-start-pure" target="1.8" />
+      <module name="mars-tomcat" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
