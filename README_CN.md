@@ -21,13 +21,6 @@
 
 </div>
 
-<div align="center">
-
-[Mars-start Source (launcher)](https://github.com/yuyenews/Mars-start)，
-[Mars-cloud Source (distributed middleware)](https://github.com/yuyenews/Mars-cloud)
-
-</div>
-
 ## 项目特性
 ### 一、声明式API
 只需要在你的service的父接口上加上一个注解，即可对外提供一个接口，并且我们还支持传统的Controller写法
