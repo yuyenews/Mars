@@ -13,7 +13,8 @@
 		<module>mars-server</module>
 		<module>mars-jdbc</module>
         <module>mars-redis</module>
-    </modules>
+		<module>mars-start</module>
+	</modules>
 
 	<properties>
 		<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
