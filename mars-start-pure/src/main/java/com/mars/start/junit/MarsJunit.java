@@ -1,4 +1,4 @@
-package com.mars.junit;
+package com.mars.start.junit;
 
 import com.mars.jdbc.load.InitJdbc;
 import com.mars.start.base.BaseJunit;

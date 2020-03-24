@@ -13,7 +13,7 @@
 		<module>mars-server</module>
 		<module>mars-jdbc</module>
         <module>mars-redis</module>
-		<module>mars-start</module>
+		<module>mars-start-pure</module>
 	</modules>
 
 	<properties>
