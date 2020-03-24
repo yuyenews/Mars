@@ -1,6 +1,6 @@
 package com.mars.start.startmap.impl;
 
-import com.mars.core.annotation.MarsScan;
+import com.mars.core.annotation.MarsScanner;
 import com.mars.core.load.LoadClass;
 import com.mars.start.startmap.StartMap;
 import com.mars.start.startmap.StartParam;
@@ -37,9 +37,9 @@ public class StartLoadClass implements StartMap {
         Class<?> cls = startParam.getClazz();
         String[] classNameList = null;
 
-        MarsScan marsScan = cls.getAnnotation(MarsScan.class);
-        if (marsScan != null) {
-            classNameList = marsScan.packageName();
+        MarsScanner marsScanner = cls.getAnnotation(MarsScanner.class);
+        if (marsScanner != null) {
+            classNameList = marsScanner.packageName();
         } else {
             String cName = cls.getName();
             if (cName.lastIndexOf(".") > 0) {

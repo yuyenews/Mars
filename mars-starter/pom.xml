@@ -8,7 +8,7 @@
         <groupId>com.github.yuyenews</groupId>
         <version>3.0.15</version>
     </parent>
-    <artifactId>mars-start-pure</artifactId>
+    <artifactId>mars-starter</artifactId>
 
     <dependencies>
         <dependency>
