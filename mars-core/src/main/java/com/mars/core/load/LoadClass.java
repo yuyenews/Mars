@@ -1,5 +1,6 @@
 package com.mars.core.load;
 
+import com.alibaba.fastjson.JSON;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ReadClass;
@@ -23,27 +24,38 @@ public class LoadClass {
 	 *
 	 * @throws Exception 异常
 	 */
-	public static void scanClass(String packageName) throws Exception{
+	public static void scanClass(String[] packageName) throws Exception{
 		try {
-
-			Set<String> scanClassList = LoadHelper.getSacnClassList();
-
 			/* 扫描包下面的所有类 */
-			Set<String> classList = ReadClass.loadClassList(packageName);
+			Set<String> scanClassList = scanClassList(packageName);
 
 			/* 加载本地bean */
 			Set<String> navClassList = loadNativeClass();
 
 			/* 将框架自有的Bean和扫描出来的类合并到一个集合 */
-			scanClassList.addAll(classList);
 			scanClassList.addAll(navClassList);
 
 			/* 将扫描出来的类保存到内存中 */
 			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,scanClassList);
 
 		} catch (Exception e){
-			throw new Exception("扫描["+packageName+"]包下的类发生错误",e);
+			throw new Exception("扫描["+ JSON.toJSONString(packageName)+"]包下的类发生错误",e);
 		}
+	}
+
+	/**
+	 * 扫描框架的类
+	 * @param packageName 要扫描的包名
+	 * @return 扫描出来的包
+	 * @throws Exception 异常
+	 */
+	private static Set<String> scanClassList(String[] packageName) throws Exception {
+		Set<String> scanClassList = LoadHelper.getSacnClassList();
+		for(String pkName : packageName){
+			Set<String> classList = ReadClass.loadClassList(pkName);
+			scanClassList.addAll(classList);
+		}
+		return scanClassList;
 	}
 
 	/**
