@@ -44,7 +44,15 @@ public class StartLoadClass implements StartMap {
             classNameList.add(cName.substring(0, cName.lastIndexOf(".")));
         }
 
-        return getImportList(cls,classNameList);
+        classNameList = getImportList(cls,classNameList);
+
+        for (String className : classNameList) {
+            if (className.indexOf(".") < 0) {
+                throw new Exception("Mars只可以扫描多层包名,比如[com.mars,com.test]等,无法扫描此包[" + className + "]");
+            }
+        }
+
+        return classNameList;
     }
 
     /**
@@ -53,22 +61,14 @@ public class StartLoadClass implements StartMap {
      * @param cls 启动类
      * @param classNameList 包名集合
      * @return 包名集合
-     * @throws Exception 异常
      */
-    private List<String> getImportList(Class<?> cls, List<String> classNameList) throws Exception {
+    private List<String> getImportList(Class<?> cls, List<String> classNameList) {
         MarsImport marsImport = cls.getAnnotation(MarsImport.class);
         if (marsImport != null) {
             for(String packageItem : marsImport.packageName()) {
                 classNameList.add(packageItem);
             }
         }
-
-        for (String className : classNameList) {
-            if (className.indexOf(".") < 0) {
-                throw new Exception("Mars只可以扫描多层包名,比如[com.mars,com.test]等,无法扫描此包[" + className + "]");
-            }
-        }
-
         return classNameList;
     }
 }
