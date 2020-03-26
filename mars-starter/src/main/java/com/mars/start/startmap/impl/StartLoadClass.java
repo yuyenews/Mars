@@ -41,8 +41,9 @@ public class StartLoadClass implements StartMap {
         Class<?> cls = startParam.getClazz();
         String cName = cls.getName();
         if (cName.lastIndexOf(".") > 0) {
-            classNameList.add(cName.substring(0, cName.lastIndexOf(".")));
+            cName = cName.substring(0, cName.lastIndexOf("."));
         }
+        classNameList.add(cName);
 
         classNameList = getImportList(cls,classNameList);
 
