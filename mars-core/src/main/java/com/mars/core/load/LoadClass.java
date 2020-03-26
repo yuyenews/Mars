@@ -6,6 +6,7 @@ import com.mars.core.constant.MarsSpace;
 import com.mars.core.util.ReadClass;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,7 +25,7 @@ public class LoadClass {
 	 *
 	 * @throws Exception 异常
 	 */
-	public static void scanClass(String[] packageName) throws Exception{
+	public static void scanClass(List<String> packageName) throws Exception{
 		try {
 			/* 扫描包下面的所有类 */
 			Set<String> scanClassList = scanClassList(packageName);
@@ -49,7 +50,7 @@ public class LoadClass {
 	 * @return 扫描出来的包
 	 * @throws Exception 异常
 	 */
-	private static Set<String> scanClassList(String[] packageName) throws Exception {
+	private static Set<String> scanClassList(List<String> packageName) throws Exception {
 		Set<String> scanClassList = LoadHelper.getSacnClassList();
 		for(String pkName : packageName){
 			Set<String> classList = ReadClass.loadClassList(pkName);
