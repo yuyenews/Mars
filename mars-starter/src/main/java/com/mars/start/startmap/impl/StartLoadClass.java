@@ -49,7 +49,7 @@ public class StartLoadClass implements StartMap {
 
         for (String className : classNameList) {
             if (className.indexOf(".") < 0) {
-                throw new Exception("Mars只可以扫描多层包名,比如[com.mars,com.test]等,无法扫描此包[" + className + "]");
+                throw new Exception("启动类所在的包名以及MarsImport导入的包名必须是两层或两层以上，比如[com.demo,com.test]等");
             }
         }
 
