@@ -95,9 +95,3 @@ public int insert(){
 ## 官方网站
 
 [http://mars-framework.com](http://mars-framework.com)
-
-## 捐赠赞助
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G517AIY)
-
-[转到官方网站赞助](http://mars-framework.com/sponsor.html)

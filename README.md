@@ -95,9 +95,3 @@ Note: The closed ecology does not mean that it is not open source, but that most
 ## Official website
 
 [http://mars-framework.com](http://mars-framework.com)
-
-## Donation sponsorship
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G517AIY)
-
-[Go to the official website to sponsor](http://mars-framework.com/sponsor.html)
