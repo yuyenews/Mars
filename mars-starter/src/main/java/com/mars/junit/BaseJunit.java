@@ -1,9 +1,10 @@
-package com.mars.start.base;
+package com.mars.junit;
 
 import com.mars.core.annotation.MarsTest;
 import com.mars.core.base.config.MarsConfig;
 import com.mars.core.util.MarsConfiguration;
 import com.mars.jdbc.load.InitJdbc;
+import com.mars.start.base.MarsJunitStart;
 import com.mars.start.startmap.StartLoadList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

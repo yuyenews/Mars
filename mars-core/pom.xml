@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
 		<artifactId>Mars</artifactId>
-		<version>3.0.13</version>
+		<version>3.0.15</version>
 	</parent>
 	<artifactId>mars-core</artifactId>
 
@@ -22,11 +22,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.yaml</groupId>
-			<artifactId>snakeyaml</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.ow2.asm</groupId>
 			<artifactId>asm</artifactId>

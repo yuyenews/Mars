@@ -2,19 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>Mars</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>3.0.13</version>
+        <version>3.0.15</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
-    <artifactId>mars-start-pure</artifactId>
+    <artifactId>mars-starter</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-start-base</artifactId>
+            <artifactId>mars-mvc</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.yuyenews</groupId>
+            <artifactId>mars-redis</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.yuyenews</groupId>
+            <artifactId>mars-jdbc</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
