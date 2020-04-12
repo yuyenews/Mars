@@ -38,14 +38,14 @@ public class MarsServer {
 			tomcat.init();
 			tomcat.start();
 
-			log.info("启动成功");
 			/* 标识tomcat是否已经启动 */
 			constants.setAttr(MarsConstant.HAS_NETTY_START,"yes");
+			log.info("启动成功");
 
 			tomcat.getServer().await();
 
 		} catch (Exception e) {
-			log.error("启动netty报错",e);
+			log.error("启动tomcat报错",e);
 		}
 	}
 }
