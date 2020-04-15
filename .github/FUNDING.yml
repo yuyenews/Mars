@@ -1,6 +1,6 @@
 # These are supported funding model platforms
 
-github: # [yuyenews]
+github: [yuyenews]
 patreon: # yuyenews
 ko_fi: sherlockholmes
 tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
@@ -10,4 +10,4 @@ otechie: # Replace with a single Otechie username
 
 open_collective: mars-java
 liberapay: sherlockholmes
-custom: ['https://www.paypal.me/yuye666']
+custom: ['https://www.paypal.me/yuye666',https://zhuanlan.zhihu.com/p/130786686]
