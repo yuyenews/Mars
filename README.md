@@ -87,11 +87,6 @@ public int insert(){
   return 1;
 }
 ```
-## Other components
-At present, this project has its own microservice framework: Mars-cloud, more components will be launched later, and the ultimate goal is to create a useful closed ecosystem
-
-Note: The closed ecology does not mean that it is not open source, but that most of the components are their own and can be well integrated.
-
 ## Official website
 
 [http://mars-framework.com](http://mars-framework.com)
