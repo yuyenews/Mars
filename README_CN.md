@@ -87,11 +87,6 @@ public int insert(){
   return 1;
 }
 ```
-## 其他组件
-目前本项目有自己的微服务框架：Mars-cloud，后面将会推出更多的组件，最终目的是打造一个好用的封闭式生态
-
-注：封闭式生态不代表不开源，而是指大部分组件都是自己的，可以很好的融会贯通。
-
 ## 官方网站
 
 [http://mars-framework.com](http://mars-framework.com)
