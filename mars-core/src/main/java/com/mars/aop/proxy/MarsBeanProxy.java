@@ -1,6 +1,7 @@
 package com.mars.aop.proxy;
 
 import java.lang.reflect.Method;
+import java.util.UUID;
 
 import com.mars.aop.proxy.exec.ExecAop;
 import com.mars.aop.proxy.exec.ExecRedisLock;
@@ -47,6 +48,8 @@ public class MarsBeanProxy implements MethodInterceptor {
 		AopModel tractionModel = null;
 		RedisLock redisLock = null;
 		Boolean hasLock = false;
+		/* 分布式锁，解锁时的标识 */
+		String val = UUID.randomUUID().toString();
 		try {
 
 			MarsAop marsAop = method.getAnnotation(MarsAop.class);
@@ -56,9 +59,8 @@ public class MarsBeanProxy implements MethodInterceptor {
 			tractionModel = ExecTraction.getAopModel(traction);
 			aopModel = ExecAop.getAopModel(marsAop);
 
-
 			/* 加分布式锁 */
-			hasLock = ExecRedisLock.lock(redisLock);
+			hasLock = ExecRedisLock.lock(redisLock,val);
 			if(!hasLock){
 				return null;
 			}
@@ -85,10 +87,10 @@ public class MarsBeanProxy implements MethodInterceptor {
 			ExecAop.exp(aopModel, e);
 			throw e;
 		} finally {
-			/* 解分布式锁, 如果失败了就重试，十次之后还失败，就不管了，20秒后会自动解锁 */
+			/* 解分布式锁, 如果失败了就重试，十次之后还失败，就不管了，10秒后会自动解锁 */
 			if(hasLock){
 				for(int i = 0;i<10;i++){
-					Boolean hasUnlock = ExecRedisLock.unlock(redisLock);
+					Boolean hasUnlock = ExecRedisLock.unlock(redisLock,val);
 					if(hasUnlock){
 						break;
 					}
