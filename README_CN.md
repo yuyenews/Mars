@@ -1,5 +1,5 @@
 <div align=center>
-<img width="150px;" src="http://mars-framework.com/img/logo.png"/>
+<img width="100px;" src="http://mars-framework.com/img/logo.png"/>
 </div>
 
 <br/>
