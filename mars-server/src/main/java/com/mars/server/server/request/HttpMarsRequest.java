@@ -96,12 +96,23 @@ public class HttpMarsRequest {
 				if(paramsList == null || paramsList.size() < 1){
 					continue;
 				}
-				params.put(key,paramsListToArray(paramsList));
+				String[] paramsListToArray = paramsListToArray(paramsList);
+				if(paramsListToArray != null && paramsListToArray.length == 1){
+					params.put(key,paramsListToArray[0]);
+				} else {
+					params.put(key,paramsListToArray);
+				}
 			}
 		} else {
 			Map<String,String[]> parameterMap = httpRequest.getParameterMap();
 			for(String key : parameterMap.keySet()){
-				params.put(key,parameterMap.get(key));
+				String[] paramsListToArray = parameterMap.get(key);
+				if(paramsListToArray != null && paramsListToArray.length == 1){
+					params.put(key,paramsListToArray[0]);
+				} else {
+					params.put(key,paramsListToArray);
+				}
+
 			}
 		}
 		return params;

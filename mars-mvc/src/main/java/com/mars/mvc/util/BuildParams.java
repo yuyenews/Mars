@@ -32,29 +32,29 @@ public class BuildParams {
             Class responseClass = HttpMarsResponse.class;
             Class mapClass = Map.class;
             Class[] paramTypes = method.getParameterTypes();
-            if(paramTypes == null || paramTypes.length < 1){
+            if (paramTypes == null || paramTypes.length < 1) {
                 return null;
             }
             Object[] params = new Object[paramTypes.length];
-            for(int i = 0;i<paramTypes.length;i++){
+            for (int i = 0; i < paramTypes.length; i++) {
                 Class cls = paramTypes[i];
-                if(requestClass.equals(cls)){
+                if (requestClass.equals(cls)) {
                     params[i] = request;
-                } else if(responseClass.equals(cls)){
+                } else if (responseClass.equals(cls)) {
                     params[i] = response;
-                } else if(mapClass.equals(cls)) {
+                } else if (mapClass.equals(cls)) {
                     Map<String, Object> paramMap = request.getParameters();
-                    if(paramMap != null){
-                        paramMap.put(MarsConstant.REQUEST_FILE,request.getFiles());
+                    if (paramMap != null) {
+                        paramMap.put(MarsConstant.REQUEST_FILE, request.getFiles());
                     }
                     params[i] = paramMap;
                 } else {
-                    params[i] = getObject(cls,request);
+                    params[i] = getObject(cls, request);
                 }
             }
             return params;
-        } catch (Exception e){
-            throw new Exception("参数注入异常",e);
+        } catch (Exception e) {
+            throw new Exception("参数注入异常", e);
         }
     }
 
@@ -122,9 +122,11 @@ public class BuildParams {
                 field.set(obj,Byte.parseByte(valStr));
                 break;
             case DataType.STRING:
+                field.set(obj,valStr);
+                break;
             case DataType.CHAR:
             case DataType.CHARACTER:
-                field.set(obj,valStr);
+                field.set(obj,valStr.charAt(0));
                 break;
             case DataType.DOUBLE:
                 field.set(obj,Double.parseDouble(valStr));
