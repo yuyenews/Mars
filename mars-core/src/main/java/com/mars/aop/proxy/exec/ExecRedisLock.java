@@ -2,10 +2,9 @@ package com.mars.aop.proxy.exec;
 
 import com.mars.core.annotation.RedisLock;
 import com.mars.ioc.factory.BeanFactory;
+import com.mars.redis.lock.MarsRedisLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
 
 /**
  * 执行redis分布式锁
@@ -17,14 +16,9 @@ public class ExecRedisLock {
     private static Logger logger = LoggerFactory.getLogger(ExecRedisLock.class);
 
     /**
-     * 分布式锁的class对象
-     */
-    private static Class<?> redisLockClass;
-
-    /**
      * 分布式锁的实例
      */
-    private static Object redisLockObj;
+    private static MarsRedisLock redisLockObj;
 
     /**
      * 加锁
@@ -62,32 +56,19 @@ public class ExecRedisLock {
                 /* 这个true代表不需要加解锁，为了让程序继续往下走 */
                 return true;
             }
-            redisLockClass = getRedisLockClass();
             redisLockObj = getRedisLockObj();
-            Method method = redisLockClass.getMethod(methodName, new Class[]{String.class, String.class});
-            Object result = method.invoke(redisLockObj, new Object[]{redisLock.key(), value});
-            if (result == null) {
-                return false;
+
+            boolean result = false;
+            if(methodName.equals("lock")){
+                result = redisLockObj.lock(redisLock.key(),value);
+            } else if(methodName.equals("unlock")){
+                result = redisLockObj.unlock(redisLock.key(),value);
             }
-            return Boolean.parseBoolean(result.toString());
+            return result;
         } catch (Exception e) {
             logger.error("分布式锁出现异常[" + methodName + "]", e);
             return false;
         }
-    }
-
-    /**
-     * 获取分布式锁的class对象
-     *
-     * @return 分布式锁的class对象
-     * @throws Exception 异常
-     */
-    private static Class<?> getRedisLockClass() throws Exception {
-        /* 这里只是为了节约性能，在首次并发的情况下，即使执行了多次，也不会存在安全问题 */
-        if (redisLockClass == null) {
-            redisLockClass = Class.forName("com.mars.redis.lock.MarsRedisLock");
-        }
-        return redisLockClass;
     }
 
     /**
@@ -96,10 +77,10 @@ public class ExecRedisLock {
      * @return 分布式锁的实例对象
      * @throws Exception 异常
      */
-    private static Object getRedisLockObj() throws Exception {
+    private static MarsRedisLock getRedisLockObj() throws Exception {
         /* 这里只是为了节约性能，在首次并发的情况下，即使执行了多次，也不会存在安全问题 */
         if (redisLockObj == null) {
-            redisLockObj = BeanFactory.getBean("marsRedisLock", Object.class);
+            redisLockObj = BeanFactory.getBean("marsRedisLock", MarsRedisLock.class);
         }
         return redisLockObj;
     }

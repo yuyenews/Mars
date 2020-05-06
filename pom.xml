@@ -12,7 +12,6 @@
 		<module>mars-tomcat</module>
 		<module>mars-server</module>
 		<module>mars-jdbc</module>
-        <module>mars-redis</module>
 		<module>mars-starter</module>
 	</modules>
 
@@ -46,11 +45,6 @@
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-junit</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-redis</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 
@@ -104,12 +98,6 @@
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>8.0.11</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis</artifactId>
-				<version>3.4.6</version>
 			</dependency>
 
 			<dependency>
