@@ -1,13 +1,13 @@
-package com.mars.netty.execute;
+package com.mars.tomcat.execute;
 
 import com.mars.core.ncfg.mvc.CoreServletClass;
 import com.mars.core.util.MesUtil;
 import com.mars.core.util.StringUtil;
-import com.mars.netty.par.factory.ParamAndResultFactory;
-import com.mars.netty.util.FileUpLoad;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
-import com.mars.netty.util.FileItemUtil;
+import com.mars.tomcat.par.factory.ParamAndResultFactory;
+import com.mars.tomcat.util.FileItemUtil;
+import com.mars.tomcat.util.FileUpLoad;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

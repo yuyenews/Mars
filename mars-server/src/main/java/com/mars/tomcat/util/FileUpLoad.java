@@ -1,4 +1,4 @@
-package com.mars.netty.util;
+package com.mars.tomcat.util;
 
 import com.mars.core.base.config.model.FileUploadConfig;
 import com.mars.core.util.MarsConfiguration;

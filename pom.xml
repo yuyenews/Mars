@@ -9,7 +9,6 @@
 	<modules>
 		<module>mars-core</module>
 		<module>mars-mvc</module>
-		<module>mars-tomcat</module>
 		<module>mars-server</module>
 		<module>mars-jdbc</module>
 		<module>mars-starter</module>
@@ -33,18 +32,12 @@
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-tomcat</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-server</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-junit</artifactId>
+				<artifactId>mars-jdbc</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 

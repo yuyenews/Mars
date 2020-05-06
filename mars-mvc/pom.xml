@@ -12,7 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
-			<artifactId>mars-tomcat</artifactId>
+			<artifactId>mars-server</artifactId>
 		</dependency>
 	</dependencies>
 </project>

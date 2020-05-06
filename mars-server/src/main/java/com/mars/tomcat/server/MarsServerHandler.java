@@ -1,7 +1,7 @@
-package com.mars.netty.server;
+package com.mars.tomcat.server;
 
-import com.mars.netty.execute.RequestExecute;
-import com.mars.netty.util.ResponseUtil;
+import com.mars.tomcat.execute.RequestExecute;
+import com.mars.tomcat.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

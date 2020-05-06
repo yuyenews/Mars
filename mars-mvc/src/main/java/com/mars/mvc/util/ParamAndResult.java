@@ -3,9 +3,9 @@ package com.mars.mvc.util;
 import com.alibaba.fastjson.JSON;
 import com.mars.core.constant.MarsConstant;
 import com.mars.core.enums.DataType;
-import com.mars.netty.par.base.BaseParamAndResult;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.tomcat.par.base.BaseParamAndResult;
 
 import java.lang.reflect.Method;
 
