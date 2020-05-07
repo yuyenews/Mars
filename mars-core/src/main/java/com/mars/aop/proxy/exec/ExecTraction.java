@@ -62,7 +62,6 @@ public class ExecTraction {
         AopModel aopModel = new AopModel();
         aopModel.setCls(TractionClass.getCls());
         aopModel.setTractionLevel(traction.level());
-        aopModel.setExecutorType(traction.executorType());
         aopModel.setObj(TractionClass.getCls().getDeclaredConstructor().newInstance());
         return aopModel;
     }

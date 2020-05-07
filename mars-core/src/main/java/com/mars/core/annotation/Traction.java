@@ -1,6 +1,5 @@
 package com.mars.core.annotation;
 
-import com.mars.core.enums.ExecutorType;
 import com.mars.core.enums.TractionLevel;
 
 import java.lang.annotation.Documented;
@@ -16,5 +15,4 @@ public @interface Traction {
 
     TractionLevel level() default TractionLevel.READ_UNCOMMITTED;
 
-    ExecutorType executorType() default ExecutorType.SIMPLE;
 }
