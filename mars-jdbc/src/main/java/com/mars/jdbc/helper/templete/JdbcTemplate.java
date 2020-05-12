@@ -153,8 +153,8 @@ public class JdbcTemplate extends BaseJdbcTemplate {
      *
      * @param sql
      * @param param
-     * @return
-     * @throws Exception
+     * @return 结果
+     * @throws Exception 异常
      */
     public int update(String sql, Object param) throws Exception {
         return JdbcUpdate.update(sql,param,dataSourceName);
@@ -164,10 +164,29 @@ public class JdbcTemplate extends BaseJdbcTemplate {
      * 增删改
      *
      * @param sql
-     * @return
-     * @throws Exception
+     * @return 结果
+     * @throws Exception 异常
      */
     public int update(String sql) throws Exception {
        return JdbcUpdate.update(sql,dataSourceName);
+    }
+
+    /**
+     * 获取最后一次插入的ID
+     * @return
+     * @throws Exception
+     */
+    public long getLastInsertID() throws Exception {
+        Map<String,Object> result =  selectOne("select LAST_INSERT_ID()");
+        if(result == null || result.size() < 1){
+            return 0;
+        }
+        for (Map.Entry<String, Object> entry : result.entrySet()) {
+            Object obj = entry.getValue();
+            if (obj != null) {
+                return Long.parseLong(obj.toString());
+            }
+        }
+        return 0;
     }
 }
