@@ -1,6 +1,6 @@
 package com.mars.ioc.load;
 
-import com.mars.common.base.config.InitBean;
+import com.mars.common.base.InitBean;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.WriteFields;
