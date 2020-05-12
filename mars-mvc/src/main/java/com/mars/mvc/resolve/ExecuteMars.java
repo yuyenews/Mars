@@ -1,7 +1,7 @@
 package com.mars.mvc.resolve;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.constant.MarsConstant;
+import com.mars.common.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.mvc.util.ParamsCheckUtil;

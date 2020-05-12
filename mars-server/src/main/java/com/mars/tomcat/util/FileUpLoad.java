@@ -1,7 +1,7 @@
 package com.mars.tomcat.util;
 
-import com.mars.core.base.config.model.FileUploadConfig;
-import com.mars.core.util.MarsConfiguration;
+import com.mars.common.base.config.model.FileUploadConfig;
+import com.mars.common.util.MarsConfiguration;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileItemFactory;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;

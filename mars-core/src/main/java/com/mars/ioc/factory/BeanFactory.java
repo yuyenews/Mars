@@ -1,11 +1,11 @@
 package com.mars.ioc.factory;
 
 import com.mars.aop.proxy.MarsBeanProxy;
-import com.mars.core.annotation.MarsAop;
-import com.mars.core.annotation.RedisLock;
-import com.mars.core.annotation.Traction;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.common.annotation.bean.MarsAop;
+import com.mars.common.annotation.bean.RedisLock;
+import com.mars.common.annotation.jdbc.Traction;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.load.LoadHelper;
 

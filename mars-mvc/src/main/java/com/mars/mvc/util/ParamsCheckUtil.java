@@ -1,9 +1,9 @@
 package com.mars.mvc.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mars.core.annotation.MarsDataCheck;
-import com.mars.core.util.MesUtil;
-import com.mars.core.util.StringUtil;
+import com.mars.common.annotation.api.MarsDataCheck;
+import com.mars.common.util.MesUtil;
+import com.mars.common.util.StringUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import org.slf4j.Logger;

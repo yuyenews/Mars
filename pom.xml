@@ -12,6 +12,7 @@
 		<module>mars-server</module>
 		<module>mars-jdbc</module>
 		<module>mars-starter</module>
+		<module>mars-common</module>
 	</modules>
 
 	<properties>
@@ -38,6 +39,11 @@
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-jdbc</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.yuyenews</groupId>
+				<artifactId>mars-common</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 

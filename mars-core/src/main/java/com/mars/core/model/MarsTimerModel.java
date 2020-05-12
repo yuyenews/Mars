@@ -1,6 +1,6 @@
 package com.mars.core.model;
 
-import com.mars.core.annotation.MarsTimer;
+import com.mars.common.annotation.bean.MarsTimer;
 
 import java.lang.reflect.Method;
 

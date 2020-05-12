@@ -1,10 +1,10 @@
 package com.mars.core.load;
 
-import com.mars.core.annotation.MarsValue;
-import com.mars.core.annotation.MarsWrite;
-import com.mars.core.base.config.MarsConfig;
+import com.mars.common.annotation.bean.MarsValue;
+import com.mars.common.annotation.bean.MarsWrite;
+import com.mars.common.base.config.MarsConfig;
 import com.mars.core.model.MarsBeanModel;
-import com.mars.core.util.MarsConfiguration;
+import com.mars.common.util.MarsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

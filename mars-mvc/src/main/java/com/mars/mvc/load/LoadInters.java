@@ -1,8 +1,8 @@
 package com.mars.mvc.load;
 
-import com.mars.core.annotation.MarsInterceptor;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.common.annotation.api.MarsInterceptor;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.load.WriteFields;
 import com.mars.core.model.MarsBeanClassModel;

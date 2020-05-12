@@ -1,6 +1,6 @@
 package com.mars.mvc.model;
 
-import com.mars.core.annotation.enums.ReqMethod;
+import com.mars.common.annotation.enums.ReqMethod;
 
 import java.lang.reflect.Method;
 

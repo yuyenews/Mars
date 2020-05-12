@@ -1,9 +1,9 @@
 package com.mars.aop.proxy.exec;
 
 import com.mars.aop.constant.AopConstant;
-import com.mars.core.annotation.Traction;
 import com.mars.aop.model.AopModel;
-import com.mars.core.ncfg.traction.TractionClass;
+import com.mars.common.annotation.jdbc.Traction;
+import com.mars.common.ncfg.traction.TractionClass;
 
 import java.lang.reflect.Method;
 

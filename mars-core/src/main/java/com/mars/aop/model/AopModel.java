@@ -1,6 +1,6 @@
 package com.mars.aop.model;
 
-import com.mars.core.enums.TractionLevel;
+import com.mars.common.annotation.enums.TractionLevel;
 
 /**
  * Aop实体

@@ -1,9 +1,9 @@
 package com.mars.jdbc.load;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
-import com.mars.core.ncfg.traction.TractionClass;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
+import com.mars.common.ncfg.traction.TractionClass;
 import com.mars.jdbc.traction.TractionAop;
 import com.mars.jdbc.helper.base.DBHelper;
 

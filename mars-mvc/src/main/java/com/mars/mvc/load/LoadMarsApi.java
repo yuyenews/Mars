@@ -1,13 +1,13 @@
 package com.mars.mvc.load;
 
-import com.mars.core.annotation.enums.ReqMethod;
+import com.mars.common.annotation.api.RequestMethod;
+import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.load.WriteFields;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.mvc.proxy.MvcCglibProxy;
-import com.mars.core.annotation.RequestMethod;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.mvc.model.MarsMappingModel;
 import com.mars.mvc.util.ParamAndResult;

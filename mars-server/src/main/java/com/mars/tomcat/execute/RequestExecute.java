@@ -1,8 +1,8 @@
 package com.mars.tomcat.execute;
 
-import com.mars.core.ncfg.mvc.CoreServletClass;
-import com.mars.core.util.MesUtil;
-import com.mars.core.util.StringUtil;
+import com.mars.common.ncfg.mvc.CoreServletClass;
+import com.mars.common.util.MesUtil;
+import com.mars.common.util.StringUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.tomcat.par.factory.ParamAndResultFactory;

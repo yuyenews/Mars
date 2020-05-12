@@ -1,6 +1,6 @@
 package com.mars.tomcat.util;
 
-import com.mars.core.util.MesUtil;
+import com.mars.common.util.MesUtil;
 import com.mars.server.server.request.HttpMarsResponse;
 
 import javax.servlet.http.HttpServletResponse;

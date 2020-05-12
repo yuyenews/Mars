@@ -1,7 +1,7 @@
 package com.mars.mvc.proxy;
 
+import com.mars.common.annotation.api.MarsLog;
 import com.mars.mvc.logs.LogAop;
-import com.mars.core.annotation.MarsLog;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;

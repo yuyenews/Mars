@@ -1,6 +1,6 @@
 package com.mars.aop.proxy.exec;
 
-import com.mars.core.annotation.RedisLock;
+import com.mars.common.annotation.bean.RedisLock;
 import com.mars.ioc.factory.BeanFactory;
 import com.mars.redis.lock.MarsRedisLock;
 import org.slf4j.Logger;

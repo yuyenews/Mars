@@ -1,9 +1,9 @@
 package com.mars.mvc.util;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mars.core.constant.MarsConstant;
+import com.mars.common.constant.MarsConstant;
 import com.mars.core.enums.DataType;
-import com.mars.core.util.StringUtil;
+import com.mars.common.util.StringUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;

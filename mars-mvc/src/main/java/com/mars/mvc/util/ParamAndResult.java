@@ -1,7 +1,7 @@
 package com.mars.mvc.util;
 
 import com.alibaba.fastjson.JSON;
-import com.mars.core.constant.MarsConstant;
+import com.mars.common.constant.MarsConstant;
 import com.mars.core.enums.DataType;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;

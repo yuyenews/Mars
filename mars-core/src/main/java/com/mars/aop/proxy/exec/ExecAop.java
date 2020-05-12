@@ -1,8 +1,8 @@
 package com.mars.aop.proxy.exec;
 
 import com.mars.aop.constant.AopConstant;
-import com.mars.core.annotation.MarsAop;
 import com.mars.aop.model.AopModel;
+import com.mars.common.annotation.bean.MarsAop;
 
 import java.lang.reflect.Method;
 

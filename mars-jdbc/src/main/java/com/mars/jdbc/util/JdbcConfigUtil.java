@@ -1,7 +1,7 @@
 package com.mars.jdbc.util;
 
-import com.mars.core.base.config.MarsConfig;
-import com.mars.core.util.MarsConfiguration;
+import com.mars.common.base.config.MarsConfig;
+import com.mars.common.util.MarsConfiguration;
 
 import java.util.List;
 import java.util.Properties;

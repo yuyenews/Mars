@@ -1,13 +1,13 @@
 package com.mars.core.load;
 
-import com.mars.core.annotation.MarsBean;
-import com.mars.core.annotation.MarsWrite;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.common.annotation.bean.MarsBean;
+import com.mars.common.annotation.bean.MarsWrite;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.core.model.MarsTimerModel;
-import com.mars.core.util.StringUtil;
+import com.mars.common.util.StringUtil;
 
 import java.lang.reflect.Field;
 import java.util.*;

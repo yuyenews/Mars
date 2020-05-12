@@ -1,7 +1,7 @@
 package com.mars.redis.lock;
 
-import com.mars.core.annotation.MarsBean;
-import com.mars.core.annotation.MarsWrite;
+import com.mars.common.annotation.bean.MarsBean;
+import com.mars.common.annotation.bean.MarsWrite;
 import com.mars.redis.template.MarsRedisTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

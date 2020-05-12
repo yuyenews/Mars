@@ -1,9 +1,8 @@
 package com.mars.jdbc.load;
 
-
-import com.mars.core.annotation.MarsDao;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.common.annotation.jdbc.MarsDao;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.core.model.MarsBeanModel;

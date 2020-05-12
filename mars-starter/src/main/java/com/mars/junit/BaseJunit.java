@@ -1,8 +1,8 @@
 package com.mars.junit;
 
-import com.mars.core.annotation.MarsTest;
-import com.mars.core.base.config.MarsConfig;
-import com.mars.core.util.MarsConfiguration;
+import com.mars.common.annotation.junit.MarsTest;
+import com.mars.common.base.config.MarsConfig;
+import com.mars.common.util.MarsConfiguration;
 import com.mars.jdbc.load.InitJdbc;
 import com.mars.start.base.MarsJunitStart;
 import com.mars.start.startmap.StartLoadList;

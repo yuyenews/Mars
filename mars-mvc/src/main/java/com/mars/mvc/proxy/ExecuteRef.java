@@ -1,11 +1,11 @@
 package com.mars.mvc.proxy;
 
-import com.mars.core.annotation.MarsApi;
-import com.mars.core.annotation.MarsReference;
-import com.mars.core.annotation.enums.RefType;
+import com.mars.common.annotation.api.MarsApi;
+import com.mars.common.annotation.api.MarsReference;
+import com.mars.common.annotation.enums.RefType;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanModel;
-import com.mars.core.util.StringUtil;
+import com.mars.common.util.StringUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

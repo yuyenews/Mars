@@ -2,10 +2,10 @@ package com.mars.mvc.resolve;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.mvc.base.BaseInterceptor;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
-import com.mars.core.util.MatchUtil;
-import com.mars.core.util.MesUtil;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
+import com.mars.common.util.MatchUtil;
+import com.mars.common.util.MesUtil;
 import com.mars.mvc.constant.InterConstant;
 import com.mars.mvc.model.MarsInterModel;
 import com.mars.server.server.request.HttpMarsRequest;

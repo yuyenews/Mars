@@ -1,6 +1,6 @@
 package com.mars.start.startmap.impl;
 
-import com.mars.core.annotation.MarsImport;
+import com.mars.common.annotation.start.MarsImport;
 import com.mars.core.load.LoadClass;
 import com.mars.start.startmap.StartMap;
 import com.mars.start.startmap.StartParam;

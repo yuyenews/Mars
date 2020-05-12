@@ -1,8 +1,8 @@
 package com.mars.timer.load;
 
-import com.mars.core.annotation.MarsTimer;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.common.annotation.bean.MarsTimer;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
 import com.mars.core.model.MarsBeanClassModel;
 import com.mars.core.model.MarsTimerModel;
 import com.mars.core.load.LoadHelper;

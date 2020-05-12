@@ -1,9 +1,9 @@
 package com.mars.core.load;
 
 import com.alibaba.fastjson.JSON;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
-import com.mars.core.util.ReadClass;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
+import com.mars.common.util.ReadClass;
 
 import java.util.HashSet;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.mars.server.server.request;
 
-import com.mars.core.base.config.MarsConfig;
-import com.mars.core.base.config.model.CrossDomainConfig;
-import com.mars.core.util.MarsConfiguration;
+import com.mars.common.base.config.MarsConfig;
+import com.mars.common.base.config.model.CrossDomainConfig;
+import com.mars.common.util.MarsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,7 @@
 package com.mars.redis.template;
 
-import com.mars.core.base.config.MarsConfig;
-import com.mars.core.util.MarsConfiguration;
+import com.mars.common.base.config.MarsConfig;
+import com.mars.common.util.MarsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPoolConfig;
