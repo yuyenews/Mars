@@ -87,6 +87,3 @@ public int insert(){
   return 1;
 }
 ```
-## 官方网站
-
-[http://mars-framework.com](http://mars-framework.com)

@@ -87,6 +87,3 @@ public int insert(){
   return 1;
 }
 ```
-## Official website
-
-[http://mars-framework.com](http://mars-framework.com)
