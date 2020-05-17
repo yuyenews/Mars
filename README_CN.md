@@ -1,5 +1,5 @@
 <div align=center>
-<img width="100px;" src="http://mars-framework.com/img/logo-git.png"/>
+<img width="150px;" src="http://mars-framework.com/img/logo-git.png"/>
 </div>
 
 <br/>
