@@ -21,6 +21,10 @@
 
 </div>
 
+## 使用示例
+
+[https://github.com/yuyenews/Mars-Example](https://github.com/yuyenews/Mars-Example)
+
 ## 项目特性
 ### 一、声明式API
 只需要在你的service的父接口上加上一个注解，即可对外提供一个接口，并且我们还支持传统的Controller写法
