@@ -56,7 +56,7 @@
 			<dependency>
 				<groupId>org.apache.tomcat</groupId>
 				<artifactId>tomcat-servlet-api</artifactId>
-				<version>8.5.51</version>
+				<version>8.5.55</version>
 			</dependency>
 
 			<dependency>
