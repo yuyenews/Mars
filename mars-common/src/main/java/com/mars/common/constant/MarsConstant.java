@@ -10,18 +10,6 @@ public class MarsConstant {
      */
     public static final String DATA_SOURCE_MAP = "druidDataSourceMap";
     /**
-     * 配置文件中数据源节点的属性名
-     */
-    public static final String DATA_SOURCE = "dataSource";
-    /**
-     * 本地配置文件
-     */
-    public static final String CONFIG_PATH = "/mars-{suffix}.yml";
-    /**
-     * 本地配置文件
-     */
-    public static final String CONFIG_PATH_DEFAULT = "/mars.yml";
-    /**
      * 所有的easyAfter类信息
      */
     public static final String MARS_AFTERS = "marsAfters";
@@ -74,11 +62,6 @@ public class MarsConstant {
     public static final String MARS_TIMER_OBJECTS = "marsTimerObjects";
 
     /**
-     * 读取远程配置的路径
-     */
-    public static final String READ_REMOTE_CONFIG = "${0}/getConfig";
-
-    /**
      * 方法返回值为void的标记
      */
     public static final String VOID = "void405cb55d6781877e9e930aa8e046098b";
@@ -97,11 +80,6 @@ public class MarsConstant {
      * 默认数据源储存在内存中的key
      */
     public static final String DEFAULT_DATASOURCE_NAME = "defaultDataSource";
-
-    /**
-     * 所有数据源储存在内存中的key
-     */
-    public static final String DATASOURCE_NAMES = "dataSourceNames";
 
     /**
      * config存放在内存中的key
