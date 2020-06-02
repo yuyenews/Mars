@@ -20,11 +20,11 @@ public class StartAfter {
      */
     public static void after() throws Exception {
         try {
-            List<Class> easyLoads = LoadHelper.getMarsAfterList();
+            List<Class> afterList = LoadHelper.getMarsAfterList();
 
             Map<String, MarsBeanModel> beanModelMap = LoadHelper.getBeanObjectMap();
 
-            for (Class cls : easyLoads) {
+            for (Class cls : afterList) {
                 Object obj = cls.getDeclaredConstructor().newInstance();
 
                 /* 注入属性 */
