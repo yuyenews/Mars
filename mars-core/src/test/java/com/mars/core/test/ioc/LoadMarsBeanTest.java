@@ -1,6 +1,5 @@
 package com.mars.core.test.ioc;
 
-import com.mars.common.annotation.bean.MarsBean;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.LoadBeans;
@@ -10,12 +9,9 @@ import com.mars.core.model.MarsBeanModel;
 import com.mars.core.test.core.load.junitbean.JunitIocMarsBean;
 import com.mars.core.test.core.load.junitbean.JunitMarsBean;
 import com.mars.ioc.load.LoadMarsBean;
-import com.mars.redis.lock.MarsRedisLock;
-import com.mars.redis.template.MarsRedisTemplate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

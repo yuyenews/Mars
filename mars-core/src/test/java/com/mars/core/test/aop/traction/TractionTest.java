@@ -2,7 +2,6 @@ package com.mars.core.test.aop.traction;
 
 import com.alibaba.fastjson.JSON;
 import com.mars.aop.model.AopModel;
-import com.mars.core.test.aop.aop.AopTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

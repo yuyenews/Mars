@@ -1,6 +1,5 @@
 package com.mars.core.test.core.load;
 
-import com.mars.common.annotation.api.MarsApi;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.LoadBeans;
