@@ -1,6 +1,6 @@
-package com.mars.tomcat.par.factory;
+package com.mars.iserver.par.factory;
 
-import com.mars.tomcat.par.base.BaseParamAndResult;
+import com.mars.iserver.par.base.BaseParamAndResult;
 
 public class ParamAndResultFactory {
 

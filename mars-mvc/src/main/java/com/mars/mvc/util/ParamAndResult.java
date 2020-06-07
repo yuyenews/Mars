@@ -5,7 +5,7 @@ import com.mars.common.constant.MarsConstant;
 import com.mars.core.enums.DataType;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
-import com.mars.tomcat.par.base.BaseParamAndResult;
+import com.mars.iserver.par.base.BaseParamAndResult;
 
 import java.lang.reflect.Method;
 

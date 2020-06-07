@@ -1,4 +1,4 @@
-package com.mars.tomcat.server.threadpool;
+package com.mars.iserver.server.threadpool;
 
 import com.mars.common.base.config.MarsConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;

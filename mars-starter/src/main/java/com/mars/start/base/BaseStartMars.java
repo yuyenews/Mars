@@ -2,7 +2,7 @@ package com.mars.start.base;
 
 import com.mars.common.util.MarsConfiguration;
 import com.mars.jdbc.load.InitJdbc;
-import com.mars.tomcat.server.MarsServer;
+import com.mars.iserver.server.MarsServer;
 import com.mars.start.startmap.StartMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
