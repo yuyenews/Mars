@@ -38,8 +38,8 @@ public class MarsServer {
 			//设置服务器的线程池对象
 			httpServer.setExecutor(ThreadPool.getThreadPoolExecutor());
 
-			/* 标识tomcat是否已经启动 */
-			MarsSpace.getEasySpace().setAttr(MarsConstant.HAS_NETTY_START,"yes");
+			/* 标识服务是否已经启动 */
+			MarsSpace.getEasySpace().setAttr(MarsConstant.HAS_SERVER_START,"yes");
 			log.info("启动成功");
 
 			//启动服务器

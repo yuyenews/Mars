@@ -48,7 +48,7 @@ public class MarsJunitStart {
             autoWrite(obj);
 
             /* 标识是否已经启动 */
-            constants.setAttr(MarsConstant.HAS_NETTY_START,"yes");
+            constants.setAttr(MarsConstant.HAS_SERVER_START,"yes");
 
             log.info("开始执行单测......");
         } catch (Exception e) {

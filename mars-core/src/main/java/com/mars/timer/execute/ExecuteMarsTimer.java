@@ -60,7 +60,7 @@ public class ExecuteMarsTimer {
      */
     private static void executeTimer(MarsTimerModel marsTimerModel){
         try {
-            Object hasNettyStart = constants.getAttr(MarsConstant.HAS_NETTY_START);
+            Object hasNettyStart = constants.getAttr(MarsConstant.HAS_SERVER_START);
             if(hasNettyStart != null){
                 Object beanObject = marsTimerModel.getObj();
                 Method method = marsTimerModel.getMethod();
