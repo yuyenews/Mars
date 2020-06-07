@@ -1,10 +1,9 @@
 package com.mars.server.server.request;
 
 import com.mars.server.server.request.model.MarsFileUpLoad;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import com.sun.net.httpserver.HttpExchange;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.net.InetSocketAddress;
 import java.util.*;
 
 /**
@@ -15,9 +14,9 @@ import java.util.*;
 public class HttpMarsRequest {
 	
 	/**
-	 * tomcat原生request
+	 * java原生request
 	 */
-	private HttpServletRequest httpRequest;
+	private HttpExchange httpExchange;
 
 	/**
 	 * 参数
@@ -31,10 +30,10 @@ public class HttpMarsRequest {
 
 	/**
 	 * 构造函数，框架自己用的，程序员用不到，用了也没意义
-	 * @param httpRequest
+	 * @param httpExchange
 	 */
-	public HttpMarsRequest(HttpServletRequest httpRequest) {
-		this.httpRequest = httpRequest;
+	public HttpMarsRequest(HttpExchange httpExchange) {
+		this.httpExchange = httpExchange;
 	}
 
 	/**
@@ -61,7 +60,7 @@ public class HttpMarsRequest {
 	 * @return 请求方法
 	 */
 	public String getMethod() {
-		return httpRequest.getMethod();
+		return httpExchange.getRequestMethod();
 	}
 
 	/**
@@ -69,7 +68,7 @@ public class HttpMarsRequest {
 	 * @return 请求方法
 	 */
 	public String getUrl() {
-		return httpRequest.getRequestURL().toString();
+		return httpExchange.getRequestURI().toString();
 	}
 	
 	/**
@@ -77,8 +76,8 @@ public class HttpMarsRequest {
 	 * @param key 键
 	 * @return 头数据
 	 */
-	public Object getHeader(String key) {
-		return httpRequest.getHeader(key);
+	public List<String> getHeader(String key) {
+		return httpExchange.getRequestHeaders().get(key);
 	}
 
 	/**
@@ -87,32 +86,19 @@ public class HttpMarsRequest {
 	 */
 	public Map<String, Object> getParameters() {
 		Map<String, Object> params = new HashMap<>();
-		if(ServletFileUpload.isMultipartContent(httpRequest)){
-			if(marsParams == null){
-				return params;
+		if(marsParams == null){
+			return params;
+		}
+		for(String key : marsParams.keySet()){
+			List<String> paramsList = marsParams.get(key);
+			if(paramsList == null || paramsList.size() < 1){
+				continue;
 			}
-			for(String key : marsParams.keySet()){
-				List<String> paramsList = marsParams.get(key);
-				if(paramsList == null || paramsList.size() < 1){
-					continue;
-				}
-				String[] paramsListToArray = paramsListToArray(paramsList);
-				if(paramsListToArray != null && paramsListToArray.length == 1){
-					params.put(key,paramsListToArray[0]);
-				} else {
-					params.put(key,paramsListToArray);
-				}
-			}
-		} else {
-			Map<String,String[]> parameterMap = httpRequest.getParameterMap();
-			for(String key : parameterMap.keySet()){
-				String[] paramsListToArray = parameterMap.get(key);
-				if(paramsListToArray != null && paramsListToArray.length == 1){
-					params.put(key,paramsListToArray[0]);
-				} else {
-					params.put(key,paramsListToArray);
-				}
-
+			String[] paramsListToArray = paramsListToArray(paramsList);
+			if(paramsListToArray != null && paramsListToArray.length == 1){
+				params.put(key,paramsListToArray[0]);
+			} else {
+				params.put(key,paramsListToArray);
 			}
 		}
 		return params;
@@ -124,16 +110,11 @@ public class HttpMarsRequest {
 	 * @return 请求参数
 	 */
 	public String getParameter(String key) {
-		if(ServletFileUpload.isMultipartContent(httpRequest)){
-			if(marsParams != null){
-				List<String> marsParam = marsParams.get(key);
-				if(marsParam == null){
-					return null;
-				}
-				return marsParam.get(0);
+		if(marsParams != null){
+			List<String> value = marsParams.get(key);
+			if(value != null && value.size() > 0){
+				return value.get(0);
 			}
-		} else {
-			return httpRequest.getParameter(key);
 		}
 		return null;
 	}
@@ -144,13 +125,9 @@ public class HttpMarsRequest {
 	 * @return 请求参数
 	 */
 	public String[] getParameterValues(String key) {
-		if(ServletFileUpload.isMultipartContent(httpRequest)){
-			if(marsParams != null){
-				List<String> paramsList = marsParams.get(key);
-				return paramsListToArray(paramsList);
-			}
-		} else {
-			return httpRequest.getParameterValues(key);
+		if(marsParams != null) {
+			List<String> paramsList = marsParams.get(key);
+			return paramsListToArray(paramsList);
 		}
 		return null;
 	}
@@ -180,24 +157,16 @@ public class HttpMarsRequest {
 	 * 获取tomcat原生request
 	 * @return 原生请求对象
 	 */
-	public HttpServletRequest getHttpServletRequest() {
-		return httpRequest;
-	}
-
-	/**
-	 * 获取Session
-	 * @return jwt
-	 */
-	public HttpSession getSession(){
-		return httpRequest.getSession();
+	public HttpExchange getHttpExchange() {
+		return httpExchange;
 	}
 	
 	/**
-	 * 获取客户端IP
-	 * @return ip
+	 * 获取客户端InetSocketAddress
+	 * @return inetSocketAddress
 	 */
-	public String getRemoteHost() {
-        return httpRequest.getRemoteHost();
+	public InetSocketAddress getInetSocketAddress() {
+        return httpExchange.getLocalAddress();
 	}
 
 	/**

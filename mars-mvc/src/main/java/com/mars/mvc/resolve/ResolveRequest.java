@@ -2,7 +2,7 @@ package com.mars.mvc.resolve;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
-import com.mars.mvc.resolve.access.PathAccess;
+import com.mars.tomcat.execute.access.PathAccess;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
@@ -47,18 +47,14 @@ public class ResolveRequest {
 		
 		try {
 			Map<String, MarsMappingModel> maps = getMarsApis();
-			
 			String uri = getRequestPath(request);
-			if(PathAccess.hasAccess(uri)){
-				return "ok";
-			}
 			return executeMars.execute(maps.get(uri),request.getMethod(),request,response);
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
 			throw e;
 		}
 	}
-	
+
 	/**
 	 * 从uri中提取 请求连接的最末端，用来匹配控制层映射
 	 * @param request qingqiu

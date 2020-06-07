@@ -91,9 +91,6 @@ public class MarsAddressUtil {
                 }
             }
         }
-        if (candidateAddress != null) {
-            return candidateAddress;
-        }
-        return null;
+        return candidateAddress;
     }
 }

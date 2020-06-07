@@ -1,4 +1,4 @@
-package com.mars.mvc.resolve.access;
+package com.mars.tomcat.execute.access;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +17,7 @@ public class PathAccess {
         if(urls == null){
             urls = new HashMap<>();
             urls.put("favicon.ico","no");
+            urls.put("/favicon.ico","no");
         }
     }
 

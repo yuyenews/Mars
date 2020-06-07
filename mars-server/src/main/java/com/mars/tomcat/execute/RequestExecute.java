@@ -5,18 +5,15 @@ import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.server.util.RequestUtil;
+import com.mars.tomcat.execute.access.PathAccess;
 import com.mars.tomcat.par.factory.ParamAndResultFactory;
-import com.mars.tomcat.util.FileItemUtil;
-import com.mars.tomcat.util.FileUpLoad;
-import org.apache.tomcat.util.http.fileupload.FileItem;
+import com.sun.net.httpserver.HttpExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * 处理请求的线程
@@ -28,21 +25,12 @@ public class RequestExecute {
 	private Logger log = LoggerFactory.getLogger(RequestExecute.class);
 
 	/**
-	 * tomcat的request对象
+	 * 原生HttpExchange
 	 */
-	private HttpServletRequest httpRequest;
+	private HttpExchange httpExchange;
 
-	/**
-	 * tomcat的response对象
-	 */
-	private HttpServletResponse httpResponse;
-
-	public void setHttpRequest(HttpServletRequest httpRequest) {
-		this.httpRequest = httpRequest;
-	}
-
-	public void setHttpResponse(HttpServletResponse response) {
-		this.httpResponse = response;
+	public void setHttpExchange(HttpExchange httpExchange) {
+		this.httpExchange = httpExchange;
 	}
 
 	/**
@@ -51,22 +39,25 @@ public class RequestExecute {
 	public void execute() {
 
 		/* 组装httpRequest对象 */
-		HttpMarsRequest request = new HttpMarsRequest(httpRequest);
+		HttpMarsRequest request = new HttpMarsRequest(httpExchange);
 
 		/* 组装httpResponse对象 */
-		HttpMarsResponse response = new HttpMarsResponse(httpResponse);
+		HttpMarsResponse response = new HttpMarsResponse(httpExchange);
 
 		try {
-			/* 从请求中获取数据 */
-			List<FileItem> fileItemList = FileUpLoad.getFileItem(httpRequest);
-			/* 请求的数据中分出表单数据和文件流 */
-			request = FileItemUtil.getHttpMarsRequest(fileItemList, request);
+			Object result = "ok";
+			/* 如果请求路径合法，则继续往下执行 */
+			String uri = RequestUtil.getUriName(request);
+			if(!PathAccess.hasAccess(uri)){
+				/* 获取请求的数据，并填充表单 */
+				request = HttpMarsRequestFactory.getHttpMarsRequest(httpExchange, request);
 
-			/* 通过反射执行核心servlet */
-			Class<?> cls = CoreServletClass.getCls();
-			Object object = cls.getDeclaredConstructor().newInstance();
-			Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
-			Object result = helloMethod.invoke(object, new Object[]{request, response});
+				/* 通过反射执行核心servlet */
+				Class<?> cls = CoreServletClass.getCls();
+				Object object = cls.getDeclaredConstructor().newInstance();
+				Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
+				result = helloMethod.invoke(object, new Object[]{request, response});
+			}
 
 			/* 响应 */
 			ParamAndResultFactory.getBaseParamAndResult().result(response, result);

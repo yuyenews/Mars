@@ -3,6 +3,7 @@ package com.mars.common.base.config;
 import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.base.config.model.FileUploadConfig;
 import com.mars.common.base.config.model.JedisConfig;
+import com.mars.common.base.config.model.ThreadPoolConfig;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,14 @@ public abstract class MarsConfig {
      */
     public int jwtTime(){
         return 86400;
+    }
+
+    /**
+     * 线程池配置
+     * @return 线程池配置
+     */
+    public ThreadPoolConfig getThreadPoolConfig(){
+        return new ThreadPoolConfig();
     }
 
     /**

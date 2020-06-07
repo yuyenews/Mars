@@ -3,13 +3,11 @@ package com.mars.server.server.request;
 import com.mars.common.base.config.MarsConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.util.MarsConfiguration;
+import com.sun.net.httpserver.HttpExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +24,9 @@ public class HttpMarsResponse {
     private Logger logger = LoggerFactory.getLogger(HttpMarsResponse.class);
 
     /**
-     * netty原生通道
+     * java原生通道
      */
-    private HttpServletResponse response;
+    private HttpExchange httpExchange;
 
     /**
      * 响应头
@@ -39,19 +37,19 @@ public class HttpMarsResponse {
     /**
      * 构造函数，框架自己用的，程序员用不到，用了也没意义
      *
-     * @param response netty原生通道
+     * @param httpExchange java原生通道
      */
-    public HttpMarsResponse(HttpServletResponse response) {
-        this.response = response;
+    public HttpMarsResponse(HttpExchange httpExchange) {
+        this.httpExchange = httpExchange;
         this.header = new HashMap<>();
     }
 
     /**
-     * 获取tomcat原生response
-     * @return netty原生通道
+     * 获取java原生httpExchange
+     * @return java原生通道
      */
-    public HttpServletResponse geHttpServletResponse() {
-        return response;
+    public HttpExchange geHttpServletResponse() {
+        return httpExchange;
     }
 
     /**
@@ -70,21 +68,29 @@ public class HttpMarsResponse {
      * @param context 消息
      */
     public void send(String context) {
-        PrintWriter out = null;
+        OutputStream out = null;
         try {
             crossDomain();
             loadHeader();
 
-            response.setContentType("text/json;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            out = response.getWriter();
-            out.println(context);
+            /* 设置响应头，必须在sendResponseHeaders方法之前设置 */
+            httpExchange.getResponseHeaders().add("Content-Type:", "text/json;charset=utf-8");
+
+            /* 设置响应码和响应体长度，必须在getResponseBody方法之前调用 */
+            byte[] responseContentByte = context.getBytes("utf-8");
+            httpExchange.sendResponseHeaders(200, responseContentByte.length);
+
+            out = httpExchange.getResponseBody();
+            out.write(responseContentByte);
         } catch (Exception e){
             logger.error("响应数据异常",e);
         } finally {
             if (out != null){
-                out.flush();
-                out.close();
+                try{
+                    out.flush();
+                    out.close();
+                } catch (Exception e){
+                }
             }
         }
     }
@@ -95,17 +101,22 @@ public class HttpMarsResponse {
      * @param inputStream
      */
     public void downLoad(String fileName, InputStream inputStream) {
+        OutputStream out = null;
         try {
             if(fileName == null || inputStream == null){
                 logger.error("downLoad方法的传参不可以为空");
                 return;
             }
             crossDomain();
-            response.setHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,"UTF-8"));
+            httpExchange.getResponseHeaders().add("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,"UTF-8"));
 
             int len=0;
             byte[] buffer = new byte[1024];
-            ServletOutputStream out = response.getOutputStream();
+
+            //设置响应码和响应体长度，必须在getResponseBody方法之前调用！
+            httpExchange.sendResponseHeaders(200, inputStream.available());
+
+            out = httpExchange.getResponseBody();
             while((len=inputStream.read(buffer))!=-1){
                 out.write(buffer, 0, len);
             }
@@ -115,6 +126,10 @@ public class HttpMarsResponse {
             try{
                 if(inputStream != null){
                     inputStream.close();
+                }
+                if(out != null){
+                    out.flush();
+                    out.close();
                 }
             } catch (Exception e){
             }
@@ -127,7 +142,7 @@ public class HttpMarsResponse {
     private void loadHeader(){
         if (header != null && !header.isEmpty()) {
             for (String key : header.keySet()) {
-                response.setHeader(key, header.get(key));
+                httpExchange.getResponseHeaders().set(key, header.get(key));
             }
         }
     }
@@ -138,10 +153,10 @@ public class HttpMarsResponse {
     private void crossDomain() {
         MarsConfig marsConfig = MarsConfiguration.getConfig();
         CrossDomainConfig crossDomainConfig = marsConfig.crossDomainConfig();
-        response.setHeader("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
-        response.setHeader("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
-        response.setHeader("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
-        response.setHeader("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
-        response.setHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
+        httpExchange.getResponseHeaders().set("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
+        httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
+        httpExchange.getResponseHeaders().set("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
+        httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
+        httpExchange.getResponseHeaders().set("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
     }
 }
