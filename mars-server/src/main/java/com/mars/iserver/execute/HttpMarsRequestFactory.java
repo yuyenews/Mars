@@ -114,8 +114,9 @@ public class HttpMarsRequestFactory {
                 if(param == null || param.length < 2){
                     continue;
                 }
+                String key = param[0];
 
-                values = marsParams.get(param[0]);
+                values = marsParams.get(key);
                 if(values == null){
                     values = new ArrayList<>();
                 }
@@ -125,7 +126,7 @@ public class HttpMarsRequestFactory {
                     value = URLDecoder.decode(value, "UTF-8");
                 }
                 values.add(value);
-                marsParams.put(param[0],values);
+                marsParams.put(key,values);
             }
         }
         return marsParams;
