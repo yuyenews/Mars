@@ -1,7 +1,8 @@
-package com.mars.iserver.execute;
+package com.mars.iserver.par;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mars.iserver.par.formdata.ParsingFormData;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 import com.sun.net.httpserver.HttpExchange;
@@ -20,6 +21,8 @@ import java.util.Map;
  */
 public class HttpMarsRequestFactory {
 
+
+
     /**
      * 从httpExchange中提取出所有的参数，并放置到HttpMarsRequest中
      * @param httpExchange 请求
@@ -31,7 +34,7 @@ public class HttpMarsRequestFactory {
         Map<String, MarsFileUpLoad> files = new HashMap<>();
         Map<String, List<String>> marsParams = new HashMap<>();
 
-        if (httpExchange.getRequestMethod().equals("GET")) {
+        if (httpExchange.getRequestMethod().toUpperCase().equals("GET")) {
             /* 从get请求中获取参数 */
             String paramStr = httpExchange.getRequestURI().getQuery();
             marsParams = urlencoded(paramStr, marsParams, false);
@@ -50,9 +53,9 @@ public class HttpMarsRequestFactory {
                 marsParams = urlencoded(paramStr, marsParams, true);
             } else if (contentType.startsWith("multipart/form-data")) {
                 /* formData提交，可以用于文件上传 */
-                Map<String, Object> result = formData(inputStream, marsParams, files);
-                files = (Map<String, MarsFileUpLoad>) result.get("files");
-                marsParams = (Map<String, List<String>>) result.get("marsParams");
+                Map<String, Object> result = formData(inputStream, marsParams, files, contentType);
+                files = (Map<String, MarsFileUpLoad>) result.get(ParsingFormData.FILES_KEY);
+                marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
             } else if (contentType.startsWith("application/json")) {
                 /* RAW提交（json） */
                 marsParams = raw(inputStream, marsParams);
@@ -75,7 +78,7 @@ public class HttpMarsRequestFactory {
         if(ctList == null || ctList.size() < 1){
             return null;
         }
-        return ctList.get(0).toLowerCase();
+        return ctList.get(0).trim().toLowerCase();
     }
 
     /**
@@ -173,10 +176,11 @@ public class HttpMarsRequestFactory {
      * @param inputStream 输入流
      * @param marsParams httpMarsRequest的参数对象
      * @param files httpMarsRequest的文件参数对象
+     * @param contentType 内容类型
      * @return httpMarsRequest的参数对象 和 httpMarsRequest的文件参数对象
      * @throws Exception 异常
      */
-    private static Map<String,Object> formData(InputStream inputStream, Map<String,List<String>> marsParams, Map<String, MarsFileUpLoad> files) throws Exception {
-        return null;
+    private static Map<String,Object> formData(InputStream inputStream, Map<String,List<String>> marsParams, Map<String, MarsFileUpLoad> files, String contentType) throws Exception {
+        return ParsingFormData.parsing(inputStream,marsParams,files,contentType);
     }
 }

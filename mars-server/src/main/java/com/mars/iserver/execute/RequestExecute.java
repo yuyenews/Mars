@@ -3,6 +3,7 @@ package com.mars.iserver.execute;
 import com.mars.common.ncfg.mvc.CoreServletClass;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
+import com.mars.iserver.par.HttpMarsRequestFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
@@ -52,7 +53,7 @@ public class RequestExecute {
 				/* 获取请求的数据，并填充表单 */
 				request = HttpMarsRequestFactory.getHttpMarsRequest(httpExchange, request);
 
-				/* 通过反射执行核心servlet */
+				/* 通过反射执行核心控制器 */
 				Class<?> cls = CoreServletClass.getCls();
 				Object object = cls.getDeclaredConstructor().newInstance();
 				Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
