@@ -7,7 +7,7 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 /**
- * 请求对象，对原生tomcat的request的补充
+ * 请求对象
  * @author yuye
  *
  */
@@ -45,7 +45,7 @@ public class HttpMarsRequest {
 	}
 
 	/**
-	 * 上传文件时添加参数
+	 * 设置参数
 	 * @param params
 	 */
 	public void setParams(Map<String, List<String>> params) {
@@ -154,7 +154,7 @@ public class HttpMarsRequest {
 	}
 	
 	/**
-	 * 获取tomcat原生request
+	 * 获取java原生request
 	 * @return 原生请求对象
 	 */
 	public HttpExchange getHttpExchange() {

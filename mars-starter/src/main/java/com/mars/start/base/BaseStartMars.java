@@ -36,7 +36,7 @@ public class BaseStartMars {
 			/* 加载框架数据 */
 			StartLoad.load(initJdbc,clazz,startList);
 
-			/* 启动tomcat */
+			/* 启动iServer */
 			MarsServer.start(getPort());
 
 		} catch (Exception e) {

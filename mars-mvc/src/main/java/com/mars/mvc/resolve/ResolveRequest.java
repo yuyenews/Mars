@@ -2,7 +2,6 @@ package com.mars.mvc.resolve;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
-import com.mars.tomcat.execute.access.PathAccess;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;

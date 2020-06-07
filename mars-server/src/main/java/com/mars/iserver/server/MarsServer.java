@@ -45,7 +45,7 @@ public class MarsServer {
 			//启动服务器
 			httpServer.start();
 		} catch (Exception e) {
-			log.error("启动tomcat报错",e);
+			log.error("启动iServer报错",e);
 		}
 	}
 }
