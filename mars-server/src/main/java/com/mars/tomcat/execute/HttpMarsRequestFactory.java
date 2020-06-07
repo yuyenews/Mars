@@ -27,42 +27,41 @@ public class HttpMarsRequestFactory {
      * @return 加工后的mars请求
      * @throws Exception 异常
      */
-    public static HttpMarsRequest getHttpMarsRequest(HttpExchange httpExchange, HttpMarsRequest marsRequest) throws Exception{
-        if(httpExchange != null){
-            Map<String, MarsFileUpLoad> files = new HashMap<>();
-            Map<String,List<String>> marsParams = new HashMap<>();
+    public static HttpMarsRequest getHttpMarsRequest(HttpExchange httpExchange, HttpMarsRequest marsRequest) throws Exception {
+        Map<String, MarsFileUpLoad> files = new HashMap<>();
+        Map<String, List<String>> marsParams = new HashMap<>();
 
-            if (httpExchange.getRequestMethod().equals("GET")) {
-                /* 从get请求中获取参数 */
-                String paramStr = httpExchange.getRequestURI().getQuery();
-                marsParams = urlencoded(paramStr,marsParams,false);
-            } else {
-                /* 非GET请求读请求体 */
-                InputStream inputStream = httpExchange.getRequestBody();
-                if(inputStream == null){
-                    return marsRequest;
-                }
-
-                /* 根据提交方式，分别处理参数 */
-                String contentType = getContentType(httpExchange);
-                if(contentType.startsWith("application/x-www-form-urlencoded")){
-                    /* 正常的表单提交 */
-                    String paramStr = getParamStr(inputStream);
-                    marsParams = urlencoded(paramStr,marsParams,true);
-                } else if(contentType.startsWith("multipart/form-data")){
-                    /* formData提交，可以用于文件上传 */
-                    Map<String,Object> result = formData(inputStream,marsParams,files);
-                    files = (Map<String, MarsFileUpLoad>)result.get("files");
-                    marsParams = (Map<String,List<String>>)result.get("marsParams");
-                } else if(contentType.startsWith("application/json")){
-                    /* RAW提交（json） */
-                    marsParams = raw(inputStream,marsParams);
-                }
+        if (httpExchange.getRequestMethod().equals("GET")) {
+            /* 从get请求中获取参数 */
+            String paramStr = httpExchange.getRequestURI().getQuery();
+            marsParams = urlencoded(paramStr, marsParams, false);
+        } else {
+            /* 从非GET请求中获取参数 */
+            InputStream inputStream = httpExchange.getRequestBody();
+            if (inputStream == null) {
+                return marsRequest;
             }
-            /* 将提取出来的参数，放置到HttpMarsRequest中 */
-            marsRequest.setFiles(files);
-            marsRequest.setParams(marsParams);
+
+            /* 根据提交方式，分别处理参数 */
+            String contentType = getContentType(httpExchange);
+            if (contentType.startsWith("application/x-www-form-urlencoded")) {
+                /* 正常的表单提交 */
+                String paramStr = getParamStr(inputStream);
+                marsParams = urlencoded(paramStr, marsParams, true);
+            } else if (contentType.startsWith("multipart/form-data")) {
+                /* formData提交，可以用于文件上传 */
+                Map<String, Object> result = formData(inputStream, marsParams, files);
+                files = (Map<String, MarsFileUpLoad>) result.get("files");
+                marsParams = (Map<String, List<String>>) result.get("marsParams");
+            } else if (contentType.startsWith("application/json")) {
+                /* RAW提交（json） */
+                marsParams = raw(inputStream, marsParams);
+            }
         }
+        /* 将提取出来的参数，放置到HttpMarsRequest中 */
+        marsRequest.setFiles(files);
+        marsRequest.setParams(marsParams);
+
         return marsRequest;
     }
 
