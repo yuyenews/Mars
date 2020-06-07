@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 
 /**
- * tomcat服务
+ * iServer服务
  * @author yuye
  *
  */
@@ -21,7 +21,7 @@ public class MarsServer {
 	private static Logger log = LoggerFactory.getLogger(MarsServer.class);
 	
 	/**
-	 * 启动tomcat服务
+	 * 启动iServer服务
 	 * @param portNumber
 	 */
 	public static void start(int portNumber) {
