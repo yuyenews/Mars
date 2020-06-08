@@ -1,5 +1,6 @@
 package com.mars.common.util;
 
+import com.mars.common.constant.MarsConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +71,7 @@ public class ReadClass {
 				// 如果是以文件的形式保存在服务器上
 				if ("file".equals(protocol)) {
 					// 获取包的物理路径
-					String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
+					String filePath = URLDecoder.decode(url.getFile(), MarsConstant.ENCODING);
 					// 以文件的方式扫描整个包下的文件 并添加到集合中
 					findAndAddClassesInPackageByFile(packageName, filePath, recursive, classes);
 				} else if ("jar".equals(protocol)) {

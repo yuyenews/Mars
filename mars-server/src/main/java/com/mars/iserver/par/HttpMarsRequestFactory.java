@@ -2,6 +2,7 @@ package com.mars.iserver.par;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mars.common.constant.MarsConstant;
 import com.mars.iserver.par.formdata.ParsingFormData;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
@@ -53,7 +54,7 @@ public class HttpMarsRequestFactory {
                 marsParams = urlencoded(paramStr, marsParams, true);
             } else if (contentType.startsWith("multipart/form-data")) {
                 /* formData提交，可以用于文件上传 */
-                Map<String, Object> result = formData(inputStream, marsParams, files, contentType);
+                Map<String, Object> result = formData(httpExchange, marsParams, files, contentType);
                 files = (Map<String, MarsFileUpLoad>) result.get(ParsingFormData.FILES_KEY);
                 marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
             } else if (contentType.startsWith("application/json")) {
@@ -88,7 +89,7 @@ public class HttpMarsRequestFactory {
      * @throws Exception 异常
      */
     private static String getParamStr(InputStream inputStream) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, MarsConstant.ENCODING));
         String line = null;
         StringBuffer paramsStr = new StringBuffer();
         while ((line = br.readLine()) != null) {
@@ -126,7 +127,7 @@ public class HttpMarsRequestFactory {
 
                 String value = param[1];
                 if(hasDecode){
-                    value = URLDecoder.decode(value, "UTF-8");
+                    value = URLDecoder.decode(value, MarsConstant.ENCODING);
                 }
                 values.add(value);
                 marsParams.put(key,values);
@@ -173,14 +174,14 @@ public class HttpMarsRequestFactory {
 
     /**
      * formData提交处理
-     * @param inputStream 输入流
+     * @param exchange 请求对象
      * @param marsParams httpMarsRequest的参数对象
      * @param files httpMarsRequest的文件参数对象
      * @param contentType 内容类型
      * @return httpMarsRequest的参数对象 和 httpMarsRequest的文件参数对象
      * @throws Exception 异常
      */
-    private static Map<String,Object> formData(InputStream inputStream, Map<String,List<String>> marsParams, Map<String, MarsFileUpLoad> files, String contentType) throws Exception {
-        return ParsingFormData.parsing(inputStream,marsParams,files,contentType);
+    private static Map<String,Object> formData(HttpExchange exchange, Map<String,List<String>> marsParams, Map<String, MarsFileUpLoad> files, String contentType) throws Exception {
+        return ParsingFormData.parsing(exchange,marsParams,files,contentType);
     }
 }

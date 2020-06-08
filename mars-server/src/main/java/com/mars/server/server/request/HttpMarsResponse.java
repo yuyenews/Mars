@@ -2,6 +2,7 @@ package com.mars.server.server.request;
 
 import com.mars.common.base.config.MarsConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
+import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
 import com.sun.net.httpserver.HttpExchange;
 import org.slf4j.Logger;
@@ -74,10 +75,10 @@ public class HttpMarsResponse {
             loadHeader();
 
             /* 设置响应头，必须在sendResponseHeaders方法之前设置 */
-            httpExchange.getResponseHeaders().add("Content-Type:", "text/json;charset=utf-8");
+            httpExchange.getResponseHeaders().add("Content-Type:", "text/json;charset="+MarsConstant.ENCODING);
 
             /* 设置响应码和响应体长度，必须在getResponseBody方法之前调用 */
-            byte[] responseContentByte = context.getBytes("utf-8");
+            byte[] responseContentByte = context.getBytes(MarsConstant.ENCODING);
             httpExchange.sendResponseHeaders(200, responseContentByte.length);
 
             out = httpExchange.getResponseBody();
@@ -108,7 +109,7 @@ public class HttpMarsResponse {
                 return;
             }
             crossDomain();
-            httpExchange.getResponseHeaders().add("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,"UTF-8"));
+            httpExchange.getResponseHeaders().add("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
 
             int len=0;
             byte[] buffer = new byte[1024];

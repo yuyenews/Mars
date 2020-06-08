@@ -85,4 +85,9 @@ public class MarsConstant {
      * config存放在内存中的key
      */
     public static final String CONFIG_CACHE_KEY = "config";
+
+    /**
+     * 参数字符编码
+     */
+    public static final String ENCODING = "UTF-8";
 }
