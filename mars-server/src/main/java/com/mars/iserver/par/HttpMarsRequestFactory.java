@@ -19,6 +19,8 @@ import java.util.Map;
 
 /**
  * HttpMarsRequest工厂
+ *
+ * @author yuye
  */
 public class HttpMarsRequestFactory {
 
@@ -58,7 +60,7 @@ public class HttpMarsRequestFactory {
                 files = (Map<String, MarsFileUpLoad>) result.get(ParsingFormData.FILES_KEY);
                 marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
             } else if (contentType.startsWith("application/json")) {
-                /* RAW提交（json） */
+                /* RAW提交(json) */
                 marsParams = raw(inputStream, marsParams);
             }
         }

@@ -30,6 +30,7 @@ import static java.lang.String.format;
 /**
  * 这个类拷贝自apache的common-fileupload项目
  * 做了少量的修改，将servletRequest换成了HttpExchange，同时修改了多个方法的实现
+ * 类名也做了更改
  *
  * <p>Provides access to the request information needed for a request made to
  * an HTTP servlet.</p>
