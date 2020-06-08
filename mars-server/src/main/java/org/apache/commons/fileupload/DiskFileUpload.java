@@ -17,14 +17,12 @@
 package org.apache.commons.fileupload;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * <p>High level API for processing file uploads.</p>
  *
  * <p>This class handles multiple files per single HTML widget, sent using
  * <code>multipart/mixed</code> encoding type, as specified by
- * <a href="http://www.ietf.org/rfc/rfc1867.txt">RFC 1867</a>.  Use {@link
  *
  * <p>Individual parts will be stored in temporary disk storage or in memory,
  * depending on their size, and will be available as {@link

@@ -27,9 +27,6 @@
  * these classes are not typically used directly. Instead, normal usage
  * involves one of the provided extensions of
  * {@link org.apache.commons.fileupload.FileUpload FileUpload} such as
- * {@link org.apache.commons.fileupload.servlet.ServletFileUpload ServletFileUpload}
- * or
- * {@link org.apache.commons.fileupload.portlet.PortletFileUpload PortletFileUpload},
  * together with a factory for
  * {@link org.apache.commons.fileupload.FileItem FileItem} instances,
  * such as
