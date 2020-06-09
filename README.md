@@ -21,6 +21,12 @@ Declarative API programming (DAP) framework
 
 </div>
 
+## Project Description
+
+Mars-Java is a Java development framework that does not require containers
+
+No need for Tomcat, no Jboss, no Netty, or even Servlet. Based entirely on the JRE class library. The project lost weight again
+
 ## Usage example
 
 [https://github.com/yuyenews/Mars-Example](https://github.com/yuyenews/Mars-Example)
