@@ -5,6 +5,7 @@ import com.mars.common.base.config.model.FileUploadConfig;
 import com.mars.common.base.config.model.JedisConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -58,7 +59,13 @@ public abstract class MarsConfig {
      * 连接池配置
      * @return 连接池配置
      */
-    public abstract List<Properties> jdbcProperties();
+    public List<Properties> jdbcProperties(){
+        List<Properties> propertiesList = new ArrayList<Properties>();
+        Properties properties = new Properties();
+        properties.setProperty("name","default");
+        propertiesList.add(properties);
+        return propertiesList;
+    }
 
     /**
      * jedis配置

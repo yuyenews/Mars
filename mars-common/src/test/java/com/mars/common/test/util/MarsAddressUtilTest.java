@@ -18,7 +18,7 @@ public class MarsAddressUtilTest {
     public void testGetLocalIp(){
         try {
             String ipStr = MarsAddressUtil.getLocalIp();
-            Assert.assertEquals("192.168.0.104",ipStr);
+            Assert.assertEquals("172.20.10.5",ipStr);
         } catch (Exception e){
             Assert.fail();
         }
