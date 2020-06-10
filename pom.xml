@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars-Java</artifactId>
-	<version>3.0.20</version>
+	<version>3.0.21</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-core</module>
@@ -65,11 +65,6 @@
 				<artifactId>slf4j-api</artifactId>
 				<version>1.7.30</version>
 			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-jdk14</artifactId>
-				<version>1.7.30</version>
-			</dependency>
 
 			<dependency>
 				<groupId>org.ow2.asm</groupId>
@@ -98,12 +93,6 @@
 				<groupId>com.auth0</groupId>
 				<artifactId>java-jwt</artifactId>
 				<version>3.10.3</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.squareup.okhttp3</groupId>
-				<artifactId>okhttp</artifactId>
-				<version>4.7.2</version>
 			</dependency>
 
 			<dependency>

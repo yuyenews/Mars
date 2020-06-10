@@ -6,7 +6,7 @@
     <parent>
         <artifactId>Mars-Java</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>3.0.20</version>
+        <version>3.0.21</version>
     </parent>
     <artifactId>mars-common</artifactId>
 
@@ -20,20 +20,12 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
