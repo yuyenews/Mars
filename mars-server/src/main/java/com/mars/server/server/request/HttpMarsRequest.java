@@ -76,7 +76,20 @@ public class HttpMarsRequest {
 	 * @param key 键
 	 * @return 头数据
 	 */
-	public List<String> getHeader(String key) {
+	public String getHeader(String key) {
+		List<String> headers = getHeaders(key);
+		if(headers == null || headers.size() < 1){
+			return null;
+		}
+		return headers.get(0);
+	}
+
+	/**
+	 * 获取请求头数据
+	 * @param key 键
+	 * @return 头数据
+	 */
+	public List<String> getHeaders(String key) {
 		return httpExchange.getRequestHeaders().get(key);
 	}
 
