@@ -27,22 +27,22 @@ public class MarsServer {
 	public static void start(int portNumber) {
 		try {
 
-			// 获取最大并发数
+			/* 获取最大并发数 */
 			MarsConfig marsConfig = MarsConfiguration.getConfig();
 			int backLog = marsConfig.getThreadPoolConfig().getBackLog();
 
-			// 创建服务
+			/* 创建服务 */
 			HttpServer httpServer = HttpServer.create(new InetSocketAddress(portNumber),backLog);
 			httpServer.createContext("/", new MarsServerHandler());
 
-			//设置服务器的线程池对象
+			/* 设置服务器的线程池对象 */
 			httpServer.setExecutor(ThreadPool.getThreadPoolExecutor());
 
 			/* 标识服务是否已经启动 */
 			MarsSpace.getEasySpace().setAttr(MarsConstant.HAS_SERVER_START,"yes");
 			log.info("启动成功");
 
-			//启动服务器
+			/* 启动服务器 */
 			httpServer.start();
 		} catch (Exception e) {
 			log.error("启动iServer报错",e);
