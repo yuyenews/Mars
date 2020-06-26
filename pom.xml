@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Mars-Java</artifactId>
-	<version>3.0.21</version>
+	<version>3.0.22</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>mars-core</module>
@@ -111,6 +111,7 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.13</version>
+				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
