@@ -30,19 +30,11 @@ public class JwtManager {
     private int calendarInterval = 86400;
 
     private static JwtManager jwtManager = new JwtManager();
-    private JwtManager(){
-        loadCalendarInterval();
-    }
+    private JwtManager(){}
 
     public static JwtManager getJwtManager(){
+        jwtManager.calendarInterval =  MarsConfiguration.getConfig().jwtTime();
         return jwtManager;
-    }
-
-    /**
-     * 加载配置文件中的jwt失效时间
-     */
-    private void loadCalendarInterval(){
-        calendarInterval =  MarsConfiguration.getConfig().jwtTime();
     }
 
     /**
