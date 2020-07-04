@@ -1,5 +1,6 @@
 package com.mars.server.server.request;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -24,6 +25,11 @@ public class HttpMarsRequest {
 	private Map<String,List<String>> marsParams;
 
 	/**
+	 * json参数
+	 */
+	private JSONObject jsonObject;
+
+	/**
 	 * 上传的文件
 	 */
 	private Map<String, MarsFileUpLoad> files;
@@ -42,6 +48,37 @@ public class HttpMarsRequest {
 	 */
 	public void setFiles(Map<String,MarsFileUpLoad> files){
 		this.files = files;
+	}
+
+	/**
+	 * 获取json传参
+	 * @return json参数
+	 */
+	public JSONObject getJsonObject() {
+		return jsonObject;
+	}
+
+	/**
+	 * 设置json传参
+	 * @param jsonObject
+	 */
+	public void setJsonObject(JSONObject jsonObject) {
+		this.jsonObject = jsonObject;
+	}
+
+	/**
+	 * 获取参数类型
+	 * @return 参数类型
+	 */
+	public String getContentType(){
+		if(getMethod().toUpperCase().equals("GET")){
+			return "N";
+		}
+		List<String> ctList = httpExchange.getRequestHeaders().get("Content-type");
+		if(ctList == null || ctList.size() < 1){
+			return null;
+		}
+		return ctList.get(0).trim().toLowerCase();
 	}
 
 	/**

@@ -1,8 +1,8 @@
 package com.mars.iserver.par;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.common.constant.MarsConstant;
+import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.iserver.par.formdata.ParsingFormData;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
@@ -28,15 +28,15 @@ public class HttpMarsRequestFactory {
 
     /**
      * 从httpExchange中提取出所有的参数，并放置到HttpMarsRequest中
-     * @param httpExchange 请求
      * @param marsRequest mars请求
      * @return 加工后的mars请求
      * @throws Exception 异常
      */
-    public static HttpMarsRequest getHttpMarsRequest(HttpExchange httpExchange, HttpMarsRequest marsRequest) throws Exception {
+    public static HttpMarsRequest getHttpMarsRequest(HttpMarsRequest marsRequest) throws Exception {
         Map<String, MarsFileUpLoad> files = new HashMap<>();
         Map<String, List<String>> marsParams = new HashMap<>();
 
+        HttpExchange httpExchange = marsRequest.getHttpExchange();
         if (httpExchange.getRequestMethod().toUpperCase().equals("GET")) {
             /* 从get请求中获取参数 */
             String paramStr = httpExchange.getRequestURI().getQuery();
@@ -49,19 +49,20 @@ public class HttpMarsRequestFactory {
             }
 
             /* 根据提交方式，分别处理参数 */
-            String contentType = getContentType(httpExchange);
-            if (contentType.startsWith("application/x-www-form-urlencoded")) {
+            String contentType = marsRequest.getContentType();
+            if (contentType.startsWith(ParamTypeConstant.URL_ENCODED)) {
                 /* 正常的表单提交 */
                 String paramStr = getParamStr(inputStream);
                 marsParams = urlencoded(paramStr, marsParams, true);
-            } else if (contentType.startsWith("multipart/form-data")) {
+            } else if (contentType.startsWith(ParamTypeConstant.FORM_DATA)) {
                 /* formData提交，可以用于文件上传 */
                 Map<String, Object> result = formData(httpExchange, marsParams, files, contentType);
                 files = (Map<String, MarsFileUpLoad>) result.get(ParsingFormData.FILES_KEY);
                 marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
-            } else if (contentType.startsWith("application/json")) {
+            } else if (contentType.startsWith(ParamTypeConstant.JSON)) {
                 /* RAW提交(json) */
-                marsParams = raw(inputStream, marsParams);
+                JSONObject jsonParams = raw(inputStream);
+                marsRequest.setJsonObject(jsonParams);
             }
         }
         /* 将提取出来的参数，放置到HttpMarsRequest中 */
@@ -71,18 +72,7 @@ public class HttpMarsRequestFactory {
         return marsRequest;
     }
 
-    /**
-     * 获取提交方式
-     * @param httpExchange 请求对象
-     * @return 提交方式
-     */
-    private static String getContentType(HttpExchange httpExchange){
-        List<String> ctList = httpExchange.getRequestHeaders().get("Content-type");
-        if(ctList == null || ctList.size() < 1){
-            return null;
-        }
-        return ctList.get(0).trim().toLowerCase();
-    }
+
 
     /**
      * 从输入流里面读取所有的数据
@@ -141,37 +131,17 @@ public class HttpMarsRequestFactory {
     /**
      * RAW提交处理
      * @param inputStream 输入流
-     * @param marsParams httpMarsRequest的参数对象
      * @return httpMarsRequest的参数对象
      * @throws Exception 异常
      */
-    private static Map<String,List<String>> raw(InputStream inputStream,Map<String,List<String>> marsParams) throws Exception {
+    private static JSONObject raw(InputStream inputStream) throws Exception {
         String paramStr = getParamStr(inputStream);
         if(paramStr == null || paramStr.trim().equals("")){
-            return marsParams;
+            return null;
         }
 
         JSONObject jsonObject = JSONObject.parseObject(paramStr);
-        List<String> values = null;
-        for(String key : jsonObject.keySet()){
-            values = marsParams.get(key);
-            if(values == null){
-                values = new ArrayList<>();
-            }
-            Object val = jsonObject.get(key);
-            if(val != null){
-                if(val instanceof JSONArray) {
-                    JSONArray jsonArray = (JSONArray)val;
-                    for(int i = 0; i<jsonArray.size(); i++){
-                        values.add(jsonArray.getString(i));
-                    }
-                } else {
-                    values.add(val.toString());
-                }
-            }
-            marsParams.put(key,values);
-        }
-        return marsParams;
+        return jsonObject;
     }
 
     /**

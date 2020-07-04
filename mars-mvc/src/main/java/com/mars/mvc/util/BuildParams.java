@@ -1,9 +1,11 @@
 package com.mars.mvc.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.mars.common.constant.MarsConstant;
 import com.mars.core.enums.DataType;
 import com.mars.common.util.StringUtil;
+import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;
@@ -66,7 +68,16 @@ public class BuildParams {
      * @throws Exception
      */
     private static Object getObject(Class cls, HttpMarsRequest request) throws Exception {
-        /* 如果参数类型既不是request，也不是response，那么就当做一个对象来处理 */
+        /* 如果是Json传参，那就直接转成Java对象返回 */
+        if(request.getContentType().startsWith(ParamTypeConstant.JSON)){
+            JSONObject paramJson = request.getJsonObject();
+            if(paramJson == null){
+                return null;
+            }
+            return paramJson.toJavaObject(cls);
+        }
+
+        /* 如果不是Json传参，那就用反射来处理 */
         Object obj = cls.getDeclaredConstructor().newInstance();
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){

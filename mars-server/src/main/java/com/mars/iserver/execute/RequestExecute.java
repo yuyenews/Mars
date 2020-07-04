@@ -51,7 +51,7 @@ public class RequestExecute {
 			String uri = RequestUtil.getUriName(request);
 			if(!PathAccess.hasAccess(uri)){
 				/* 获取请求的数据，并填充表单 */
-				request = HttpMarsRequestFactory.getHttpMarsRequest(httpExchange, request);
+				request = HttpMarsRequestFactory.getHttpMarsRequest(request);
 
 				/* 通过反射执行核心控制器 */
 				Class<?> cls = CoreServletClass.getCls();
