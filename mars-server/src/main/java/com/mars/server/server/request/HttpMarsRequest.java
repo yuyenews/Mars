@@ -76,7 +76,7 @@ public class HttpMarsRequest {
 		}
 		List<String> ctList = httpExchange.getRequestHeaders().get("Content-type");
 		if(ctList == null || ctList.size() < 1){
-			return null;
+			return "N";
 		}
 		return ctList.get(0).trim().toLowerCase();
 	}
