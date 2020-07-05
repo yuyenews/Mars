@@ -27,7 +27,7 @@ public class HttpMarsRequest {
 	/**
 	 * json参数
 	 */
-	private JSONObject jsonObject;
+	private JSONObject jsonParam;
 
 	/**
 	 * 上传的文件
@@ -54,16 +54,16 @@ public class HttpMarsRequest {
 	 * 获取json传参
 	 * @return json参数
 	 */
-	public JSONObject getJsonObject() {
-		return jsonObject;
+	public JSONObject getJsonParam() {
+		return jsonParam;
 	}
 
 	/**
 	 * 设置json传参
-	 * @param jsonObject
+	 * @param jsonParam
 	 */
-	public void setJsonObject(JSONObject jsonObject) {
-		this.jsonObject = jsonObject;
+	public void setJsonParam(JSONObject jsonParam) {
+		this.jsonParam = jsonParam;
 	}
 
 	/**
@@ -71,14 +71,18 @@ public class HttpMarsRequest {
 	 * @return 参数类型
 	 */
 	public String getContentType(){
-		if(getMethod().toUpperCase().equals("GET")){
+		try {
+			if(getMethod().toUpperCase().equals("GET")){
+				return "N";
+			}
+			List<String> ctList = httpExchange.getRequestHeaders().get("Content-type");
+			if(ctList == null || ctList.size() < 1){
+				return "N";
+			}
+			return ctList.get(0).trim().toLowerCase();
+		} catch (Exception e){
 			return "N";
 		}
-		List<String> ctList = httpExchange.getRequestHeaders().get("Content-type");
-		if(ctList == null || ctList.size() < 1){
-			return "N";
-		}
-		return ctList.get(0).trim().toLowerCase();
 	}
 
 	/**

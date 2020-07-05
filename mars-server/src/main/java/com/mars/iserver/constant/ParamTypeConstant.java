@@ -19,4 +19,31 @@ public class ParamTypeConstant {
      * formData提交
      */
     public static final String FORM_DATA = "multipart/form-data";
+
+    /**
+     * 是否是json格式
+     * @param contentType 内容类型
+     * @return
+     */
+    public static boolean isJSON(String contentType){
+        return contentType.startsWith(JSON) || contentType.equals(JSON);
+    }
+
+    /**
+     * 是否是formData格式
+     * @param contentType 内容类型
+     * @return
+     */
+    public static boolean isFormData(String contentType){
+        return contentType.startsWith(FORM_DATA) || contentType.equals(FORM_DATA);
+    }
+
+    /**
+     * 是否是表单格式
+     * @param contentType 内容类型
+     * @return
+     */
+    public static boolean isUrlEncoded(String contentType){
+        return contentType.startsWith(URL_ENCODED) || contentType.equals(URL_ENCODED);
+    }
 }

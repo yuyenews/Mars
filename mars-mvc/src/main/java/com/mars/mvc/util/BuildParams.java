@@ -69,8 +69,8 @@ public class BuildParams {
      */
     private static Object getObject(Class cls, HttpMarsRequest request) throws Exception {
         /* 如果是Json传参，那就直接转成Java对象返回 */
-        if(request.getContentType().startsWith(ParamTypeConstant.JSON)){
-            JSONObject paramJson = request.getJsonObject();
+        if(ParamTypeConstant.isJSON(request.getContentType())){
+            JSONObject paramJson = request.getJsonParam();
             if(paramJson == null){
                 return null;
             }

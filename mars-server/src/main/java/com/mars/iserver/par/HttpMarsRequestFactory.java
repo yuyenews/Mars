@@ -50,19 +50,19 @@ public class HttpMarsRequestFactory {
 
             /* 根据提交方式，分别处理参数 */
             String contentType = marsRequest.getContentType();
-            if (contentType.startsWith(ParamTypeConstant.URL_ENCODED)) {
+            if (ParamTypeConstant.isUrlEncoded(contentType)) {
                 /* 正常的表单提交 */
                 String paramStr = getParamStr(inputStream);
                 marsParams = urlencoded(paramStr, marsParams, true);
-            } else if (contentType.startsWith(ParamTypeConstant.FORM_DATA)) {
+            } else if (ParamTypeConstant.isFormData(contentType)) {
                 /* formData提交，可以用于文件上传 */
                 Map<String, Object> result = formData(httpExchange, marsParams, files, contentType);
                 files = (Map<String, MarsFileUpLoad>) result.get(ParsingFormData.FILES_KEY);
                 marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
-            } else if (contentType.startsWith(ParamTypeConstant.JSON)) {
+            } else if (ParamTypeConstant.isJSON(contentType)) {
                 /* RAW提交(json) */
                 JSONObject jsonParams = raw(inputStream);
-                marsRequest.setJsonObject(jsonParams);
+                marsRequest.setJsonParam(jsonParams);
             }
         }
         /* 将提取出来的参数，放置到HttpMarsRequest中 */
