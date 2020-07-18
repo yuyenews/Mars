@@ -1,6 +1,6 @@
 # These are supported funding model platforms
 
-github: # [yuyenews]
+github: [yuyenews]
 patreon: # yuyenews
 ko_fi: sherlockholmes
 tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
