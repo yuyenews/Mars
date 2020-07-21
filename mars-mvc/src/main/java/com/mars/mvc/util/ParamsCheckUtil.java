@@ -2,6 +2,7 @@ package com.mars.mvc.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.common.annotation.api.MarsDataCheck;
+import com.mars.common.util.MatchUtil;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.server.server.request.HttpMarsRequest;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,9 +26,10 @@ public class ParamsCheckUtil {
     /**
      * 校验参数
      * @param params 参数集合
+     * @param method 要执行的方法
      * @return 校验结果
      */
-    public static JSONObject checkParam(Object[] params){
+    public static JSONObject checkParam(Object[] params, Method method){
         if(params == null){
             return null;
         }
@@ -42,7 +45,7 @@ public class ParamsCheckUtil {
             if(requestClass.equals(cls) || responseClass.equals(cls) || mapClass.equals(cls)){
                 continue;
             }
-            JSONObject result = checkParam(cls,obj);
+            JSONObject result = checkParam(cls,obj,method);
             if(result != null){
                 return result;
             }
@@ -56,19 +59,26 @@ public class ParamsCheckUtil {
      * @param obj 参数对象
      * @return 校验结果
      */
-    private static JSONObject checkParam(Class<?> cls, Object obj) {
+    private static JSONObject checkParam(Class<?> cls, Object obj, Method method) {
         try {
             Field[] fields = cls.getDeclaredFields();
             for(Field field : fields){
                 field.setAccessible(true);
+                /* 获取校验的注解 */
                 MarsDataCheck marsDataCheck = field.getAnnotation(MarsDataCheck.class);
                 if(marsDataCheck == null){
                     continue;
                 }
+
+                /* 判断此注解是否生效与当前api，如果不生效那就直接跳入下一次循环 */
+                String[] apis = marsDataCheck.apis();
+                if(apis != null && !isThisApi(apis,method)){
+                    continue;
+                }
+
+                /* 校验参数是否符合规则 */
                 Object val = field.get(obj);
-
                 int errorCode = 1128;
-
                 if(!reg(val,marsDataCheck.reg())){
                     return MesUtil.getMes(errorCode,marsDataCheck.msg());
                 }
@@ -130,5 +140,20 @@ public class ParamsCheckUtil {
             return false;
         }
         return length(marsDataCheck, val);
+    }
+
+    /**
+     * 校验apis列表里是否包含此api
+     * @param method 此api
+     * @param apis api列表
+     * @return
+     */
+    private static boolean isThisApi(String[] apis, Method method){
+        for(String api : apis){
+            if(MatchUtil.isMatch(api,method.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -90,7 +90,7 @@ public class ExecuteMars {
 		Object[] params = ParamAndResultFactory.getBaseParamAndResult().getParam(method,request,response);
 
 		/* 校验传参 */
-		JSONObject checkResult = ParamsCheckUtil.checkParam(params);
+		JSONObject checkResult = ParamsCheckUtil.checkParam(params,method);
 		if(checkResult != null){
 			return checkResult;
 		}

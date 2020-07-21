@@ -6,7 +6,7 @@
     <parent>
         <artifactId>Mars-Java</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>3.0.25</version>
+        <version>3.0.26</version>
     </parent>
     <artifactId>mars-starter</artifactId>
 

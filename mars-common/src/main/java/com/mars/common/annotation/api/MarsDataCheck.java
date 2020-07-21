@@ -35,4 +35,10 @@ public @interface MarsDataCheck {
      * @return
      */
     String msg() default "请填写正确的数据";
+
+    /**
+     * 作用域
+     * @return
+     */
+    String[] apis();
 }
