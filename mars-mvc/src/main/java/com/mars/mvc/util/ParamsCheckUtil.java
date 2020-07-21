@@ -72,7 +72,7 @@ public class ParamsCheckUtil {
 
                 /* 判断此注解是否生效与当前api，如果不生效那就直接跳入下一次循环 */
                 String[] apis = marsDataCheck.apis();
-                if(apis != null && !isThisApi(apis,method)){
+                if(!isThisApi(apis,method)){
                     continue;
                 }
 
@@ -149,6 +149,9 @@ public class ParamsCheckUtil {
      * @return
      */
     private static boolean isThisApi(String[] apis, Method method){
+        if(apis == null || apis.length < 1){
+            return true;
+        }
         for(String api : apis){
             if(MatchUtil.isMatch(api,method.getName())){
                 return true;

@@ -40,5 +40,5 @@ public @interface MarsDataCheck {
      * 作用域
      * @return
      */
-    String[] apis();
+    String[] apis() default {};
 }
