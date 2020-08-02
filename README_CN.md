@@ -23,7 +23,7 @@
 
 ## 项目简介
 
-Mars-Java 是一个不需要容器的Java开发框架
+Martian 是一个不需要容器的Java开发框架
 
 不需要Tomcat，不需要Jboss，不需要Netty，甚至不需要Servlet，完全基于JRE类库，将瘦身进行到底
 

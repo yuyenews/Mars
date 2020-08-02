@@ -23,7 +23,7 @@ Declarative API programming (DAP) framework
 
 ## Project Description
 
-Mars-Java is a Java development framework that does not require containers
+Martian is a Java development framework that does not require containers
 
 No need for Tomcat, no Jboss, no Netty, or even Servlet. Based entirely on the JRE class library. The project lost weight again
 
