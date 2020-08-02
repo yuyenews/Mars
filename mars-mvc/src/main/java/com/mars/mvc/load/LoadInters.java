@@ -43,7 +43,7 @@ public class LoadInters {
                 MarsInterModel marsInterModel = new MarsInterModel();
                 marsInterModel.setCls(cls);
                 marsInterModel.setObj(cls.getDeclaredConstructor().newInstance());
-                marsInterModel.setPattern(pattern);
+                marsInterModel.setPattern(pattern.toUpperCase());
 
                 /* 给拦截器注入属性 */
                 WriteFields.writeFields(cls, marsInterModel.getObj(), LoadHelper.getBeanObjectMap());

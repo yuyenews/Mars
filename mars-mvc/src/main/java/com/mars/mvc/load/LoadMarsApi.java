@@ -74,7 +74,7 @@ public class LoadMarsApi {
 						marsMappingModel.setReqMethod(getReqMethod(method));
 
 						/* 保存映射对象 */
-						marsApiObjects.put(method.getName(), marsMappingModel);
+						marsApiObjects.put(method.getName().toUpperCase(), marsMappingModel);
 					}
 				}
 			}
@@ -128,7 +128,7 @@ public class LoadMarsApi {
 	 * @throws Exception 异常
 	 */
 	private static void checkMethodName(Map<String, MarsMappingModel> controlObjects, Class<?> cls, Method method) throws Exception {
-		MarsMappingModel marsMappingModel = controlObjects.get(method.getName());
+		MarsMappingModel marsMappingModel = controlObjects.get(method.getName().toUpperCase());
 		if (marsMappingModel != null) {
 			String yName = marsMappingModel.getCls().getName();
 			String xName = cls.getName();

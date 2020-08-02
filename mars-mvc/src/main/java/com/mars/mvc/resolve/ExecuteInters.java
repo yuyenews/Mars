@@ -97,7 +97,7 @@ public class ExecuteInters {
 
 			List<MarsInterModel> interceptors = (List<MarsInterModel>)interceptorsObj;
 			for(MarsInterModel marsInterModel : interceptors) {
-				if(MatchUtil.isMatch(marsInterModel.getPattern(), uriEnd)){
+				if(MatchUtil.isMatch(marsInterModel.getPattern(), uriEnd.toUpperCase())){
 					if(hasExclude(marsInterModel,uriEnd)){
 						/* 如果此url在此拦截器的排除名单中，则不进行拦截 */
 						continue;

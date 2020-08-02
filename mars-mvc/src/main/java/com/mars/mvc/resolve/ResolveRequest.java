@@ -46,7 +46,7 @@ public class ResolveRequest {
 		
 		try {
 			Map<String, MarsMappingModel> maps = getMarsApis();
-			String uri = getRequestPath(request);
+			String uri = getRequestPath(request).toUpperCase();
 			return executeMars.execute(maps.get(uri),request.getMethod(),request,response);
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
