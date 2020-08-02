@@ -82,7 +82,7 @@ private String password;
 ### 四、异常监听器
 通常我们在写代码的时候，需要给每个Controller的方法加上try{}catch(){},用来在异常的时候，能够正常的返回 json串
 
-spring是有一个叫ExecptionHandler 来解决这个问题，而Mars-java也提供了对应的解决方案
+spring是有一个叫ExecptionHandler 来解决这个问题，而Martion也提供了对应的解决方案
 
 解决方案就是什么都不用管，如果出了异常，会自动给前端返回如下json串
 ```json

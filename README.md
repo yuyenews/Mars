@@ -82,7 +82,7 @@ Just request the API normally. If the verification fails, you will get such a js
 ### 4. Exception listener
 Usually when we write code, we need to add try {} catch () {} to each Controller method, which can be used to return the json string normally when the exception
 
-Spring has an ExecptionHandler to solve this problem, and Mars-java also provides a corresponding solution
+Spring has an ExecptionHandler to solve this problem, and Martion also provides a corresponding solution
 
 The solution is to do nothing, and if something goes wrong, it will automatically return the following json string to the front end
 ```json
