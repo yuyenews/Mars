@@ -62,11 +62,10 @@ public class DBHelper {
         List<JSONObject> list = new ArrayList<>();
 
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-        int count = resultSetMetaData.getColumnCount();
 
         while (resultSet.next()) {
             JSONObject rows = new JSONObject();
-            for (int i = 1; i <= count; i++) {
+            for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
                 String key = resultSetMetaData.getColumnLabel(i);
                 Object value = resultSet.getObject(i);
                 rows.put(key, value);
