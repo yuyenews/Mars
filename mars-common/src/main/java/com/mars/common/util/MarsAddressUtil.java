@@ -21,10 +21,7 @@ public class MarsAddressUtil {
      * @throws Exception 异常
      */
     public static String getLocalIp() throws Exception {
-        if(ip == null){
-            ip = MarsAddressUtil.getLocalHostLANAddress().getHostAddress();
-        }
-        return ip;
+        return ip==null?MarsAddressUtil.getLocalHostLANAddress().getHostAddress():ip;
     }
 
     /**
