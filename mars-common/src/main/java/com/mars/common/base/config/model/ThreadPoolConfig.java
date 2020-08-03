@@ -26,10 +26,7 @@ public class ThreadPoolConfig {
     private int keepAliveTime = 20;
 
     public int getBackLog() {
-        if(backLog < 1){
-            return 50;
-        }
-        return backLog;
+        return backLog<1 ? 50:backLog;
     }
 
     public void setBackLog(int backLog) {
@@ -37,10 +34,7 @@ public class ThreadPoolConfig {
     }
 
     public int getMaxPoolSize() {
-        if(maxPoolSize < 10){
-            return 10;
-        }
-        return maxPoolSize;
+        return Math.max(maxPoolSize, 10);
     }
 
     public void setMaxPoolSize(int maxPoolSize) {
@@ -48,10 +42,7 @@ public class ThreadPoolConfig {
     }
 
     public int getCorePoolSize() {
-        if(corePoolSize < 1){
-            return 1;
-        }
-        return corePoolSize;
+        return Math.max(corePoolSize, 1);
     }
 
     public void setCorePoolSize(int corePoolSize) {
@@ -59,10 +50,7 @@ public class ThreadPoolConfig {
     }
 
     public int getKeepAliveTime() {
-        if (keepAliveTime < 1) {
-            return 10;
-        }
-        return keepAliveTime;
+        return keepAliveTime<1?10:keepAliveTime;
     }
 
     public void setKeepAliveTime(int keepAliveTime) {
