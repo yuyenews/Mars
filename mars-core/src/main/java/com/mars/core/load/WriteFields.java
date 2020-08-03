@@ -101,9 +101,6 @@ public class WriteFields {
      */
     private static Object getValue(String value,MarsConfig config) throws Exception {
         Map<String,String> marsValues = config.marsValues();
-        if(marsValues == null){
-            return null;
-        }
-        return marsValues.get(value);
+        return marsValues == null?null:marsValues.get(value);
     }
 }
