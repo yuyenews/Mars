@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  */
 public class BaseJdbcTemplate {
 
-    private static MarsSpace marsSpace = MarsSpace.getEasySpace();
+    private static final MarsSpace marsSpace = MarsSpace.getEasySpace();
 
     /**
      * 获取数据库连接
@@ -55,10 +55,7 @@ public class BaseJdbcTemplate {
      * @return str
      */
     public static String getDataSourceName(String dataSourceName) {
-        if (dataSourceName == null) {
-            dataSourceName = marsSpace.getAttr(MarsConstant.DEFAULT_DATASOURCE_NAME).toString();
-        }
-        return dataSourceName;
+        return dataSourceName == null ? dataSourceName = marsSpace.getAttr(MarsConstant.DEFAULT_DATASOURCE_NAME).toString() : dataSourceName;
     }
 
     /**
@@ -77,8 +74,8 @@ public class BaseJdbcTemplate {
 
         List<Object> params = new ArrayList<>();
 
-        sql = replaceMatcher(sql,params,jsonObject);
-        sql = formatMatcher(sql,params,jsonObject);
+        sql = replaceMatcher(sql, params, jsonObject);
+        sql = formatMatcher(sql, params, jsonObject);
 
         sqlBuilderModel.setSql(sql);
         sqlBuilderModel.setParams(params.toArray());
@@ -88,18 +85,19 @@ public class BaseJdbcTemplate {
 
     /**
      * 替换占位符为问号
+     *
      * @param sql
      * @param params
      * @param jsonObject
      * @return
      */
-    private static String formatMatcher(String sql,List<Object> params,JSONObject jsonObject){
+    private static String formatMatcher(String sql, List<Object> params, JSONObject jsonObject) {
         Pattern pattern = Pattern.compile("(#\\{((?!}).)*\\})");
         Matcher matcher = pattern.matcher(sql);
         while (matcher.find()) {
             String matcherName = matcher.group();
-            sql = sql.replace(matcherName,"?");
-            String filedName = getFiledName(matcherName,"#");
+            sql = sql.replace(matcherName, "?");
+            String filedName = getFiledName(matcherName, "#");
             params.add(jsonObject.get(filedName));
         }
         return sql;
@@ -107,30 +105,32 @@ public class BaseJdbcTemplate {
 
     /**
      * 替换占位符为具体的值
+     *
      * @param sql
      * @param params
      * @param jsonObject
      * @return
      */
-    private static String replaceMatcher(String sql,List<Object> params,JSONObject jsonObject){
+    private static String replaceMatcher(String sql, List<Object> params, JSONObject jsonObject) {
         Pattern pattern = Pattern.compile("(\\$\\{((?!}).)*\\})");
         Matcher matcher = pattern.matcher(sql);
         while (matcher.find()) {
             String matcherName = matcher.group();
-            String filedName = getFiledName(matcherName,"$");
-            sql = sql.replace(matcherName,jsonObject.getString(filedName));
+            String filedName = getFiledName(matcherName, "$");
+            sql = sql.replace(matcherName, jsonObject.getString(filedName));
         }
         return sql;
     }
 
     /**
      * 获取参数中的name
+     *
      * @param matcherStr
      * @param startStr
      * @return
      */
-    private static String getFiledName(String matcherStr,String startStr){
-        return matcherStr.replace(startStr+"{","").replace("}","");
+    private static String getFiledName(String matcherStr, String startStr) {
+        return matcherStr.replace(startStr + "{", "").replace("}", "");
     }
 }
 
