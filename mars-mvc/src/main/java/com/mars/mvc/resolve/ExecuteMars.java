@@ -47,7 +47,10 @@ public class ExecuteMars {
 		try {
 
 			/* 校验请求方式 */
-			checkRequestMethod(method, marsMappingModel);
+			String isSuccess = checkRequestMethod(method, marsMappingModel);
+			if(isSuccess != null){
+				return isSuccess;
+			}
 
 			/* 获取拦截器 */
 			String uriEnd = RequestUtil.getUriName(request);
@@ -145,16 +148,24 @@ public class ExecuteMars {
 	 * @param marsMappingModel
 	 * @throws Exception
 	 */
-	private void checkRequestMethod(String method,MarsMappingModel marsMappingModel) throws Exception {
+	private String checkRequestMethod(String method,MarsMappingModel marsMappingModel) throws Exception {
 		if(marsMappingModel == null){
 			throw new Exception("服务器上没有相应的接口");
 		}
 
 		String strMethod = method.toLowerCase();
 		String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
+
+		/* 如果请求方式是options，那就说明这是一个试探性的请求，直接响应即可 */
+		if(strMethod.equals(MarsConstant.OPTIONS.toLowerCase())){
+			return MarsConstant.OPTIONS;
+		}
+
 		if (!strMethod.equals(requestMethod)) {
 			/* 如果请求方式和MarsApi的映射不一致，则提示客户端 */
 			throw new Exception("此接口的请求方式为[" + requestMethod + "]");
 		}
+
+		return null;
 	}
 }
