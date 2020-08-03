@@ -44,8 +44,7 @@ public class JdbcUpdate {
     public static int update(String sql, String dataSourceName) throws Exception {
         ConnectionManager connectionManager = BaseJdbcTemplate.getConnection(dataSourceName);
         try {
-            int result = DBHelper.update(sql, connectionManager.getConnection());
-            return result;
+            return DBHelper.update(sql, connectionManager.getConnection());
         } catch (Exception e) {
             throw e;
         } finally {
