@@ -37,10 +37,7 @@ public class ReadClass {
 	 * @throws UnsupportedEncodingException 异常
 	 */
 	public static Set<String> loadClassList(String packageName) throws IOException {
-		if(packageName == null) {
-			return new LinkedHashSet<>();
-		}
-		return getClasses(packageName);
+		return packageName == null?new LinkedHashSet<>():getClasses(packageName);
 	}
 
 	/**
