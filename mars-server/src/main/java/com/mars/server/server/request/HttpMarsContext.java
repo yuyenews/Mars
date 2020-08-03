@@ -19,11 +19,7 @@ public class HttpMarsContext {
 	}
 
 	public static HttpMarsContext getHttpContext() {
-		if (context == null) {
-			context = new HttpMarsContext();
-		}
-
-		return context;
+		return context == null?new HttpMarsContext():context;
 	}
 
 	/**
