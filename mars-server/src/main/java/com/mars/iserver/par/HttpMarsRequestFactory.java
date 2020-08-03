@@ -136,12 +136,11 @@ public class HttpMarsRequestFactory {
      */
     private static JSONObject raw(InputStream inputStream) throws Exception {
         String paramStr = getParamStr(inputStream);
-        if(paramStr == null || paramStr.trim().equals("")){
+        if(paramStr.trim().equals("")){
             return null;
         }
 
-        JSONObject jsonObject = JSONObject.parseObject(paramStr);
-        return jsonObject;
+        return JSONObject.parseObject(paramStr);
     }
 
     /**
