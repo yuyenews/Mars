@@ -36,7 +36,7 @@ public class BeanFactory {
 				throw new Exception("只有Mars才可以调用此方法，不可以手动显式调用");
 			}
 			Method[] methods = className.getDeclaredMethods();
-			if(methods != null && methods.length > 0){
+			if(methods.length > 0){
 				for(Method method : methods){
 					MarsAop marsAop = method.getAnnotation(MarsAop.class);
 					Traction traction = method.getAnnotation(Traction.class);
