@@ -26,7 +26,7 @@ public class BaseSelect {
         ConnectionManager connectionManager = BaseJdbcTemplate.getConnection(dataSourceName);
         try {
             List<JSONObject> result = select(sql, param, connectionManager.getConnection());
-            if (result != null && result.size() > 0) {
+            if (result.size() > 0) {
                 List<T> resultList = new ArrayList<>();
                 for (JSONObject item : result) {
                     resultList.add(item.toJavaObject(cls));
