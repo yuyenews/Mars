@@ -18,11 +18,7 @@ public class MarsSpace {
 	}
 
 	public static MarsSpace getEasySpace() {
-		if (constants == null) {
-			constants = new MarsSpace();
-		}
-
-		return constants;
+		return constants==null?new MarsSpace():constants;
 	}
 	
 	/**
