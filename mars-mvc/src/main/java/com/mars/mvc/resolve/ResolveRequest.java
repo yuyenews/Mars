@@ -9,6 +9,7 @@ import com.mars.mvc.model.MarsMappingModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,13 +74,7 @@ public class ResolveRequest {
 	 * @return duix
 	 */
 	private Map<String, MarsMappingModel> getMarsApis() {
-		
-		Map<String, MarsMappingModel> controlObjects = new HashMap<>();
 		Object obj = constants.getAttr(MarsConstant.CONTROLLER_OBJECTS);
-		if(obj != null) {
-			controlObjects = (Map<String, MarsMappingModel>)obj;
-		}
-		
-		return controlObjects;
+		return obj != null ? (Map<String, MarsMappingModel>) obj : Collections.emptyMap();
 	}
 }
