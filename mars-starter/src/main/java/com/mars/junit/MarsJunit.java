@@ -1,6 +1,6 @@
 package com.mars.junit;
 
-import com.mars.jdbc.load.InitJdbc;
+import com.mars.jdbc.core.load.InitJdbc;
 
 /**
  * junit

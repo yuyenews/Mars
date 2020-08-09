@@ -4,7 +4,7 @@ import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.load.WriteFields;
-import com.mars.jdbc.load.InitJdbc;
+import com.mars.jdbc.core.load.InitJdbc;
 import com.mars.start.startmap.StartMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

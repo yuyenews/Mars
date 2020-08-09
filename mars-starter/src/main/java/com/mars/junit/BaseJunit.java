@@ -3,7 +3,7 @@ package com.mars.junit;
 import com.mars.common.annotation.junit.MarsTest;
 import com.mars.common.base.config.MarsConfig;
 import com.mars.common.util.MarsConfiguration;
-import com.mars.jdbc.load.InitJdbc;
+import com.mars.jdbc.core.load.InitJdbc;
 import com.mars.start.base.MarsJunitStart;
 import com.mars.start.startmap.StartLoadList;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.mars.start.startmap;
 
-import com.mars.jdbc.load.InitJdbc;
+import com.mars.jdbc.core.load.InitJdbc;
 
 /**
  * 启动框架的参数

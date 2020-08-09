@@ -2,7 +2,7 @@ package com.mars.start;
 
 import com.mars.common.base.config.MarsConfig;
 import com.mars.common.util.MarsConfiguration;
-import com.mars.jdbc.load.InitJdbc;
+import com.mars.jdbc.core.load.InitJdbc;
 import com.mars.start.base.BaseStartMars;
 import com.mars.start.startmap.StartLoadList;
 
