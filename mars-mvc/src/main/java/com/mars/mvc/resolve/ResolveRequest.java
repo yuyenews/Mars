@@ -2,6 +2,7 @@ package com.mars.mvc.resolve;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
+import com.mars.mvc.constant.MvcConstant;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
@@ -47,6 +48,11 @@ public class ResolveRequest {
 		try {
 			Map<String, MarsMappingModel> maps = getMarsApis();
 			String uri = getRequestPath(request).toUpperCase();
+			if(uri.equals("/")){
+				/* 如果请求的是根目录，则返回欢迎语 */
+				return MvcConstant.WELCOME;
+			}
+
 			return executeMars.execute(maps.get(uri),request.getMethod(),request,response);
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
@@ -62,7 +68,7 @@ public class ResolveRequest {
 	private String getRequestPath(HttpMarsRequest request) {
 		/* 获取路径 */
 		String uri = RequestUtil.getUriName(request);
-		if(uri.startsWith("/")) {
+		if(uri.startsWith("/") && !uri.equals("/")) {
 			uri = uri.substring(1);
 		}
 		return uri;
