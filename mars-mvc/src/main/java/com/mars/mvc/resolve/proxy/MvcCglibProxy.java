@@ -1,4 +1,4 @@
-package com.mars.mvc.proxy;
+package com.mars.mvc.resolve.proxy;
 
 import com.mars.common.annotation.api.MarsLog;
 import com.mars.mvc.logs.LogAop;

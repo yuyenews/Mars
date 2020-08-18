@@ -3,13 +3,13 @@ package com.mars.mvc.resolve;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.common.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
-import com.mars.mvc.model.MarsInterModel;
+import com.mars.mvc.load.model.MarsInterModel;
 import com.mars.mvc.util.ParamsCheckUtil;
 import com.mars.iserver.par.factory.ParamAndResultFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
-import com.mars.mvc.model.MarsMappingModel;
+import com.mars.mvc.load.model.MarsMappingModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

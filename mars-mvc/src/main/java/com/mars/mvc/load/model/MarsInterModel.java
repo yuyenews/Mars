@@ -1,4 +1,4 @@
-package com.mars.mvc.model;
+package com.mars.mvc.load.model;
 
 /**
  * 存储拦截器对象的实体类

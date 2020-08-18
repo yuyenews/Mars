@@ -6,7 +6,7 @@ import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.load.WriteFields;
 import com.mars.core.model.MarsBeanClassModel;
-import com.mars.mvc.model.MarsInterModel;
+import com.mars.mvc.load.model.MarsInterModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -6,7 +6,7 @@ import com.mars.mvc.constant.MvcConstant;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
-import com.mars.mvc.model.MarsMappingModel;
+import com.mars.mvc.load.model.MarsMappingModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

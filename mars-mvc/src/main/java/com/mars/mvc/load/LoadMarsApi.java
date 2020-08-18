@@ -5,11 +5,11 @@ import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.load.WriteFields;
 import com.mars.core.model.MarsBeanClassModel;
-import com.mars.mvc.proxy.MvcCglibProxy;
+import com.mars.mvc.resolve.proxy.MvcCglibProxy;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.core.model.MarsBeanModel;
-import com.mars.mvc.model.MarsMappingModel;
+import com.mars.mvc.load.model.MarsMappingModel;
 import com.mars.mvc.util.ParamAndResult;
 import com.mars.iserver.par.factory.ParamAndResultFactory;
 

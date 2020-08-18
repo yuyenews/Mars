@@ -1,4 +1,4 @@
-package com.mars.mvc.model;
+package com.mars.mvc.load.model;
 
 import com.mars.common.annotation.enums.ReqMethod;
 
