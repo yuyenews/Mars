@@ -33,10 +33,10 @@ Martian 是一个不需要容器的Java开发框架
 
 ## 项目特性
 ### 一、声明式API
-只需要在你的service的父接口上加上一个注解，即可对外提供一个接口，并且我们还支持传统的Controller写法
+只需要在你的interface上加上一个注解，即可对外提供一个接口，并且我们还支持传统的Controller写法
 ```java
-@MarsApi(refBean="要引用的bean的name")// 这是应对多个实现类的情况
-public interface TestService {
+@MarsApi(refBean="要引用的bean的name")
+public interface TestApi {
 
    返回类型 selectList(TestDTO testDTO);
 }

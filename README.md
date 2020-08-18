@@ -33,10 +33,10 @@ No need for Tomcat, no Jboss, no Netty, or even Servlet. Based entirely on the J
 
 ## Program features
 ### 1. the declarative API
-You only need to add a annotation to the parent interface of your service to provide an interface to the outside world. We also support the traditional Controller
+You only need to add an annotation to an interface to provide an external interface. We also support the traditional Controller
 ```java
 @MarsApi(refBean="The name of the bean to reference")
-public interface TestService {
+public interface TestApi {
 
    `Return type` selectList(TestDTO testDTO);
 }
