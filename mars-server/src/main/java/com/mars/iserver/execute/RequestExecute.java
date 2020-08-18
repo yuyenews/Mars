@@ -3,6 +3,7 @@ package com.mars.iserver.execute;
 import com.mars.common.ncfg.mvc.CoreServletClass;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
+import com.mars.iserver.constant.ExecConstant;
 import com.mars.iserver.par.HttpMarsRequestFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
@@ -56,7 +57,7 @@ public class RequestExecute {
 				/* 通过反射执行核心控制器 */
 				Class<?> cls = CoreServletClass.getCls();
 				Object object = cls.getDeclaredConstructor().newInstance();
-				Method helloMethod = cls.getDeclaredMethod("doRequest", new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
+				Method helloMethod = cls.getDeclaredMethod(ExecConstant.DO_REQUEST, new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
 				result = helloMethod.invoke(object, new Object[]{request, response});
 			}
 

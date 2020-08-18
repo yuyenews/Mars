@@ -22,7 +22,7 @@ public class JwtManager {
     /**
      * token秘钥
      */
-    private final String SECRET = "Mars-java-cloud-config-no1";
+    private final String SECRET = "MartianCloudConfigNo1";
     /**
      * token 过期时间: 1天
      */
