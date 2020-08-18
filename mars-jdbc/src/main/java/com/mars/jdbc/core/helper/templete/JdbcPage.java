@@ -1,5 +1,6 @@
 package com.mars.jdbc.core.helper.templete;
 
+import com.mars.common.util.StringUtil;
 import com.mars.jdbc.core.helper.templete.model.PageModel;
 import com.mars.jdbc.core.helper.templete.model.PageParamModel;
 import com.mars.jdbc.core.helper.templete.base.BaseSelect;
@@ -86,7 +87,7 @@ public class JdbcPage {
         }
 
         Object countNum = countItem.get("countNum");
-        if (countNum == null || countNum.toString().equals("")) {
+        if (StringUtil.isNull(countNum)) {
             return null;
         }
 
