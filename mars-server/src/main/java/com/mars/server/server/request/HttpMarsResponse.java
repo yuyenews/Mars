@@ -114,7 +114,7 @@ public class HttpMarsResponse {
             int len=0;
             byte[] buffer = new byte[1024];
 
-            //设置响应码和响应体长度，必须在getResponseBody方法之前调用！
+            //设置响应码和响应体长度
             httpExchange.sendResponseHeaders(200, inputStream.available());
 
             out = httpExchange.getResponseBody();

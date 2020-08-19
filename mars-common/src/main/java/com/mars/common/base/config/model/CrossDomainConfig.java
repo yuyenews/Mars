@@ -7,7 +7,7 @@ package com.mars.common.base.config.model;
 public class CrossDomainConfig {
 
     private String origin = "*";
-    private String methods = "GET,POST";
+    private String methods = "GET,POST,PUT,DELETE,OPTIONS";
     private String maxAge = "9";
     private String headers = "x-requested-with,Cache-Control,Pragma,Content-Type,Token";
     private String credentials = "true";
