@@ -20,7 +20,7 @@ public class MarsConstant {
     /**
      * 记录服务是否已经启动了
      */
-    public static final String HAS_SERVER_START ="hasNettyStart";
+    public static final String HAS_SERVER_START ="hasServerStart";
     /**
      * 记录是否已经启动过单测了
      */
