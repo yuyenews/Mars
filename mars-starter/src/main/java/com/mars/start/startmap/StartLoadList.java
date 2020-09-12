@@ -22,13 +22,14 @@ public class StartLoadList {
         startList.put(1, new StartLoadClass());
         startList.put(2, new StartBeans());
         startList.put(3, new StartJDBC());
-        startList.put(4, new StartBeanObject());
-        startList.put(5, new StartMarsApi());
-        startList.put(6, new StartInter());
-        startList.put(7, new HasStart());
-        startList.put(8, new StartMarsTimer());
-        startList.put(9, new StartLoadAfter());
-        startList.put(10, new StartExecuteTimer());
+        startList.put(4, new StartExecBefore());
+        startList.put(5, new StartBeanObject());
+        startList.put(6, new StartMarsApi());
+        startList.put(7, new StartInter());
+        startList.put(8, new HasStart());
+        startList.put(9, new StartMarsTimer());
+        startList.put(10, new StartExecAfter());
+        startList.put(11, new StartExecuteTimer());
         return startList;
     }
 
@@ -43,11 +44,12 @@ public class StartLoadList {
         startList.put(0, new StartLoadClass());
         startList.put(1, new StartBeans());
         startList.put(2, new StartJDBC());
-        startList.put(3, new StartBeanObject());
-        startList.put(4, new HasStart());
-        startList.put(5, new StartMarsTimer());
-        startList.put(6, new StartLoadAfter());
-        startList.put(7, new StartExecuteTimer());
+        startList.put(3, new StartExecBefore());
+        startList.put(4, new StartBeanObject());
+        startList.put(5, new HasStart());
+        startList.put(6, new StartMarsTimer());
+        startList.put(7, new StartExecAfter());
+        startList.put(8, new StartExecuteTimer());
         return startList;
 
     }

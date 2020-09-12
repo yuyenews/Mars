@@ -1,14 +1,14 @@
 package com.mars.core.test.core.after;
 
 import com.mars.common.annotation.bean.MarsWrite;
-import com.mars.common.base.BaseAfter;
+import com.mars.common.base.BaseOnLoad;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JunitAfter implements BaseAfter {
+public class JunitOnLoad implements BaseOnLoad {
 
-    private Logger logger = LoggerFactory.getLogger(JunitAfter.class);
+    private Logger logger = LoggerFactory.getLogger(JunitOnLoad.class);
 
     @MarsWrite("junitTestBean")
     private TestBean testBean;

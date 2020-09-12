@@ -2,7 +2,7 @@ package com.mars.core.test.core.after;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
-import com.mars.core.after.StartAfter;
+import com.mars.core.after.StartOnLoad;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.ioc.factory.BeanFactory;
@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * 测试after
  */
-public class StartAfterTest {
+public class StartOnLoadTest {
 
     @Test
     public void testAfter(){
@@ -35,10 +35,10 @@ public class StartAfterTest {
 
 
             List<Class> afterList = LoadHelper.getMarsAfterList();
-            afterList.add(JunitAfter.class);
+            afterList.add(JunitOnLoad.class);
             marsSpace.setAttr(MarsConstant.MARS_AFTERS,afterList);
 
-            StartAfter.after();
+            StartOnLoad.after();
 
             marsSpace.remove(MarsConstant.MARS_AFTERS);
             marsSpace.remove(MarsConstant.MARS_BEAN_OBJECTS);

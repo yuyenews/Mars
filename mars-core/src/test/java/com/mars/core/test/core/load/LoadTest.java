@@ -41,7 +41,7 @@ public class LoadTest {
 
             List<Class> afterList = LoadHelper.getMarsAfterList();
             for(Class afterCls : afterList){
-                Assert.assertEquals(afterCls, JunitMarsAfter.class);
+                Assert.assertEquals(afterCls, JunitMarsOnLoad.class);
             }
             marsSpace.remove(MarsConstant.MARS_AFTERS);
 

@@ -2,7 +2,7 @@ package com.mars.core.load;
 
 import com.mars.common.annotation.api.MarsApi;
 import com.mars.common.annotation.api.MarsInterceptor;
-import com.mars.common.annotation.bean.MarsAfter;
+import com.mars.common.annotation.bean.MarsOnLoad;
 import com.mars.common.annotation.bean.MarsBean;
 import com.mars.common.annotation.jdbc.MarsDao;
 import com.mars.common.constant.MarsConstant;
@@ -35,7 +35,7 @@ public class LoadBeans {
                 MarsBean marsBean = cls.getAnnotation(MarsBean.class);
                 MarsInterceptor marsInterceptor = cls.getAnnotation(MarsInterceptor.class);
                 MarsDao marsDao = cls.getAnnotation(MarsDao.class);
-                MarsAfter marsAfter = cls.getAnnotation(MarsAfter.class);
+                MarsOnLoad marsOnLoad = cls.getAnnotation(MarsOnLoad.class);
 
                 int count = 0;
 
@@ -55,7 +55,7 @@ public class LoadBeans {
                     LoadBeans.loadDao(cls, marsDao);
                     count++;
                 }
-                if(marsAfter != null){
+                if(marsOnLoad != null){
                     LoadBeans.loadMarsAfter(cls);
                     count++;
                 }
