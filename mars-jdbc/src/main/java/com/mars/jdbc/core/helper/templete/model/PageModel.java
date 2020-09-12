@@ -1,8 +1,11 @@
 package com.mars.jdbc.core.helper.templete.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageModel<T> {
+public class PageModel<T> implements Serializable {
+
+    private static final long serialVersionUID = -5979851513918558698L;
 
     /**
      * 当前页
