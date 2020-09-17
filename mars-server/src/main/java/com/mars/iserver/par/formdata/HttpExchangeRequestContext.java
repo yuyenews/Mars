@@ -109,7 +109,7 @@ public class HttpExchangeRequestContext implements UploadContext {
         long size = 0;
         try {
             List<String> ctList = request.getRequestHeaders().get(FileUploadBase.CONTENT_LENGTH);
-            if(ctList != null || ctList.size() > 0){
+            if(ctList != null && ctList.size() > 0){
                 size = Long.parseLong(ctList.get(0));
             }
         } catch (NumberFormatException e) {
