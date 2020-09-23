@@ -125,12 +125,12 @@ public class HttpMarsResponse {
             logger.error("响应数据异常",e);
         } finally {
             try{
-                if(inputStream != null){
-                    inputStream.close();
-                }
                 if(out != null){
                     out.flush();
                     out.close();
+                }
+                if(inputStream != null){
+                    inputStream.close();
                 }
             } catch (Exception e){
             }

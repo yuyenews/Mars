@@ -40,7 +40,7 @@ public class HttpMarsRequestFactory {
         if (httpExchange.getRequestMethod().toUpperCase().equals("GET")) {
             /* 从get请求中获取参数 */
             String paramStr = httpExchange.getRequestURI().getQuery();
-            marsParams = urlencoded(paramStr, marsParams, false);
+            marsParams = urlencoded(paramStr, marsParams, true);
         } else {
             /* 从非GET请求中获取参数 */
             InputStream inputStream = httpExchange.getRequestBody();

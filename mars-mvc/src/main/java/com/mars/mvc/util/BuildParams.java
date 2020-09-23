@@ -12,6 +12,7 @@ import com.mars.server.server.request.model.MarsFileUpLoad;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
@@ -81,6 +82,11 @@ public class BuildParams {
         Object obj = cls.getDeclaredConstructor().newInstance();
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){
+            boolean isFinal = Modifier.isFinal(f.getModifiers());
+            if(isFinal){
+                continue;
+            }
+
             f.setAccessible(true);
 
             String[] valList = request.getParameterValues(f.getName());
@@ -124,7 +130,7 @@ public class BuildParams {
     private static void putAttr(Field field, Object obj, String[] valList) throws Exception{
         String fieldTypeName = field.getType().getSimpleName().toUpperCase();
         String valStr = valList[0];
-        if(valList == null || StringUtil.isNull(valStr)){
+        if(StringUtil.isNull(valStr)){
             return;
         }
         switch (fieldTypeName){
