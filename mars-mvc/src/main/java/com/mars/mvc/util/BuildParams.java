@@ -124,6 +124,9 @@ public class BuildParams {
     private static void putAttr(Field field, Object obj, String[] valList) throws Exception{
         String fieldTypeName = field.getType().getSimpleName().toUpperCase();
         String valStr = valList[0];
+        if(valList == null || StringUtil.isNull(valStr)){
+            return;
+        }
         switch (fieldTypeName){
             case DataType.INT:
             case DataType.INTEGER:
