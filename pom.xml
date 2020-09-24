@@ -25,27 +25,27 @@
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-mvc</artifactId>
-				<version>${project.parent.version}</version>
+				<version>${version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-core</artifactId>
-				<version>${project.parent.version}</version>
+				<version>${version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-server</artifactId>
-				<version>${project.parent.version}</version>
+				<version>${version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-jdbc</artifactId>
-				<version>${project.parent.version}</version>
+				<version>${version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.yuyenews</groupId>
 				<artifactId>mars-common</artifactId>
-				<version>${project.parent.version}</version>
+				<version>${version}</version>
 			</dependency>
 
 			<dependency>
