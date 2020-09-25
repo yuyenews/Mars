@@ -1,6 +1,5 @@
 package com.mars.server.server.jwt;
 
-import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
