@@ -56,6 +56,9 @@ public class SerializableUtil {
      */
     public static <T> T deSerialization(InputStream inputStream,Class<T> cls) throws Exception {
         try {
+            if(cls.equals(InputStream.class)){
+                return (T)inputStream;
+            }
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             return (T)objectInputStream.readObject();
         } catch (Exception e){
