@@ -16,13 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 响应对象，对netty原生response的扩展
+ * 响应对象，对原生response的扩展
  * <p>
  * 暂时没有提供response的支持
  *
  * @author yuye
  */
-public class HttpMarsDefaultResponse implements HttpMarsResponse {
+public class HttpMarsDefaultResponse extends HttpMarsResponse {
 
     private Logger logger = LoggerFactory.getLogger(HttpMarsDefaultResponse.class);
 
