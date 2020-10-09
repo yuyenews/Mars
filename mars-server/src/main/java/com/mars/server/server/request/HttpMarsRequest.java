@@ -2,9 +2,6 @@ package com.mars.server.server.request;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.server.server.request.model.MarsFileUpLoad;
-import com.sun.net.httpserver.HttpExchange;
-
-import java.net.InetSocketAddress;
 import java.util.*;
 
 /**
@@ -12,187 +9,95 @@ import java.util.*;
  * @author yuye
  *
  */
-public class HttpMarsRequest {
-	
-	/**
-	 * java原生request
-	 */
-	private HttpExchange httpExchange;
+public interface HttpMarsRequest {
 
 	/**
-	 * 参数
+	 * 获取java原生request
+	 * @return 原生请求对象
 	 */
-	private Map<String,List<String>> marsParams;
-
-	/**
-	 * json参数
-	 */
-	private JSONObject jsonParam;
-
-	/**
-	 * 上传的文件
-	 */
-	private Map<String, MarsFileUpLoad> files;
-
-	/**
-	 * 构造函数，框架自己用的，程序员用不到，用了也没意义
-	 * @param httpExchange
-	 */
-	public HttpMarsRequest(HttpExchange httpExchange) {
-		this.httpExchange = httpExchange;
-	}
+	<T> T getNativeRequest(Class<T> cls);
 
 	/**
 	 * 添加上传的文件
 	 * @param files
 	 */
-	public void setFiles(Map<String,MarsFileUpLoad> files){
-		this.files = files;
-	}
+	void setFiles(Map<String,MarsFileUpLoad> files);
 
 	/**
 	 * 获取json传参
 	 * @return json参数
 	 */
-	public JSONObject getJsonParam() {
-		return jsonParam;
-	}
+	JSONObject getJsonParam();
 
 	/**
 	 * 设置json传参
 	 * @param jsonParam
 	 */
-	public void setJsonParam(JSONObject jsonParam) {
-		this.jsonParam = jsonParam;
-	}
+	void setJsonParam(JSONObject jsonParam);
 
 	/**
 	 * 获取参数类型
 	 * @return 参数类型
 	 */
-	public String getContentType(){
-		try {
-			if(getMethod().toUpperCase().equals("GET")){
-				return "N";
-			}
-			List<String> ctList = httpExchange.getRequestHeaders().get("Content-type");
-			if(ctList == null || ctList.size() < 1){
-				return "N";
-			}
-			return ctList.get(0).trim().toLowerCase();
-		} catch (Exception e){
-			return "N";
-		}
-	}
+	String getContentType();
 
 	/**
 	 * 设置参数
 	 * @param params
 	 */
-	public void setParams(Map<String, List<String>> params) {
-		if(params == null || params.size() < 1){
-			return;
-		}
-		this.marsParams = params;
-	}
+	void setParams(Map<String, List<String>> params);
 
 	/**
 	 * 获取请求方法
 	 * @return 请求方法
 	 */
-	public String getMethod() {
-		return httpExchange.getRequestMethod();
-	}
+	String getMethod();
 
 	/**
 	 * 获取要请求的uri
 	 * @return 请求方法
 	 */
-	public String getUrl() {
-		return httpExchange.getRequestURI().toString();
-	}
+	String getUrl();
 	
 	/**
 	 * 获取请求头数据
 	 * @param key 键
 	 * @return 头数据
 	 */
-	public String getHeader(String key) {
-		List<String> headers = getHeaders(key);
-		if(headers == null || headers.size() < 1){
-			return null;
-		}
-		return headers.get(0);
-	}
+	String getHeader(String key);
 
 	/**
 	 * 获取请求头数据
 	 * @param key 键
 	 * @return 头数据
 	 */
-	public List<String> getHeaders(String key) {
-		return httpExchange.getRequestHeaders().get(key);
-	}
+	List<String> getHeaders(String key);
 
 	/**
 	 * 获取请求的参数集
 	 * @return 请求参数
 	 */
-	public Map<String, Object> getParameters() {
-		Map<String, Object> params = new HashMap<>();
-		if(marsParams == null){
-			return params;
-		}
-		for(String key : marsParams.keySet()){
-			List<String> paramsList = marsParams.get(key);
-			if(paramsList == null || paramsList.size() < 1){
-				continue;
-			}
-			String[] paramsListToArray = paramsListToArray(paramsList);
-			if(paramsListToArray != null && paramsListToArray.length == 1){
-				params.put(key,paramsListToArray[0]);
-			} else {
-				params.put(key,paramsListToArray);
-			}
-		}
-		return params;
-	}
+	Map<String, Object> getParameters();
 
 	/**
 	 * 获取单个请求的参数
 	 * @param key 键
 	 * @return 请求参数
 	 */
-	public String getParameter(String key) {
-		if(marsParams != null){
-			List<String> value = marsParams.get(key);
-			if(value != null && value.size() > 0){
-				return value.get(0);
-			}
-		}
-		return null;
-	}
+	String getParameter(String key);
 	
 	/**
 	 * 获取单个请求的参数
 	 * @param key 键
 	 * @return 请求参数
 	 */
-	public String[] getParameterValues(String key) {
-		if(marsParams != null) {
-			List<String> paramsList = marsParams.get(key);
-			return paramsListToArray(paramsList);
-		}
-		return null;
-	}
+	String[] getParameterValues(String key);
 
 	/**
 	 * 获取请求的文件
 	 * @return 文件列表
 	 */
-	public Map<String, MarsFileUpLoad> getFiles() throws Exception {
-		return files;
-	}
+	Map<String, MarsFileUpLoad> getFiles() throws Exception;
 
 	/**
 	 * 获取单个请求的文件
@@ -200,39 +105,11 @@ public class HttpMarsRequest {
 	 * @param name 名称
 	 * @return 单个文件
 	 */
-	public MarsFileUpLoad getFile(String name) throws Exception {
-		if (files != null){
-			return files.get(name);
-		}
-		return null;
-	}
-	
-	/**
-	 * 获取java原生request
-	 * @return 原生请求对象
-	 */
-	public HttpExchange getHttpExchange() {
-		return httpExchange;
-	}
+	MarsFileUpLoad getFile(String name) throws Exception;
 	
 	/**
 	 * 获取客户端InetSocketAddress
 	 * @return inetSocketAddress
 	 */
-	public InetSocketAddress getInetSocketAddress() {
-        return httpExchange.getLocalAddress();
-	}
-
-	/**
-	 * 参数集合转String[]
-	 * @param paramsList
-	 * @return
-	 */
-	private String[] paramsListToArray(List<String> paramsList){
-		if(paramsList == null || paramsList.size() < 1){
-			return null;
-		}
-		String[] paramsArray = new String[paramsList.size()];
-		return paramsList.toArray(paramsArray);
-	}
+	String getInetSocketAddress();
 }

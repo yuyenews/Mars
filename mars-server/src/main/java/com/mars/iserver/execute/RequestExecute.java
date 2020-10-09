@@ -4,13 +4,12 @@ import com.mars.common.ncfg.mvc.CoreServletClass;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.iserver.constant.ExecConstant;
-import com.mars.iserver.par.HttpMarsRequestFactory;
+import com.mars.iserver.par.factory.InitRequestFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
 import com.mars.iserver.execute.access.PathAccess;
 import com.mars.iserver.par.factory.ParamAndResultFactory;
-import com.sun.net.httpserver.HttpExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,32 +26,16 @@ public class RequestExecute {
 	private Logger log = LoggerFactory.getLogger(RequestExecute.class);
 
 	/**
-	 * 原生HttpExchange
-	 */
-	private HttpExchange httpExchange;
-
-	public void setHttpExchange(HttpExchange httpExchange) {
-		this.httpExchange = httpExchange;
-	}
-
-	/**
 	 * 执行请求
 	 */
-	public void execute() {
-
-		/* 组装httpRequest对象 */
-		HttpMarsRequest request = new HttpMarsRequest(httpExchange);
-
-		/* 组装httpResponse对象 */
-		HttpMarsResponse response = new HttpMarsResponse(httpExchange);
-
+	public void execute(HttpMarsRequest request, HttpMarsResponse response) {
 		try {
 			Object result = "ok";
 			/* 如果请求路径合法，则继续往下执行 */
 			String uri = RequestUtil.getUriName(request);
 			if(!PathAccess.hasAccess(uri)){
-				/* 获取请求的数据，并填充表单 */
-				request = HttpMarsRequestFactory.getHttpMarsRequest(request);
+				/* 如果是合法请求，那就获取请求的参数数据，并填充request对象 */
+				request = InitRequestFactory.getInitRequest().getHttpMarsRequest(request);
 
 				/* 通过反射执行核心控制器 */
 				Class<?> cls = CoreServletClass.getCls();

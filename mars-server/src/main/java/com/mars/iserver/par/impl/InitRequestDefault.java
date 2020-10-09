@@ -1,8 +1,9 @@
-package com.mars.iserver.par;
+package com.mars.iserver.par.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mars.common.constant.MarsConstant;
 import com.mars.iserver.constant.ParamTypeConstant;
+import com.mars.iserver.par.InitRequest;
 import com.mars.iserver.par.formdata.ParsingFormData;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
@@ -18,13 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * HttpMarsRequest工厂
+ * 初始化request对象
  *
  * @author yuye
  */
-public class HttpMarsRequestFactory {
-
-
+public class InitRequestDefault implements InitRequest {
 
     /**
      * 从httpExchange中提取出所有的参数，并放置到HttpMarsRequest中
@@ -32,11 +31,11 @@ public class HttpMarsRequestFactory {
      * @return 加工后的mars请求
      * @throws Exception 异常
      */
-    public static HttpMarsRequest getHttpMarsRequest(HttpMarsRequest marsRequest) throws Exception {
+    public HttpMarsRequest getHttpMarsRequest(HttpMarsRequest marsRequest) throws Exception {
         Map<String, MarsFileUpLoad> files = new HashMap<>();
         Map<String, List<String>> marsParams = new HashMap<>();
 
-        HttpExchange httpExchange = marsRequest.getHttpExchange();
+        HttpExchange httpExchange = marsRequest.getNativeRequest(HttpExchange.class);
         if (httpExchange.getRequestMethod().toUpperCase().equals("GET")) {
             /* 从get请求中获取参数 */
             String paramStr = httpExchange.getRequestURI().getQuery();
@@ -80,7 +79,7 @@ public class HttpMarsRequestFactory {
      * @return 数据
      * @throws Exception 异常
      */
-    private static String getParamStr(InputStream inputStream) throws Exception {
+    private String getParamStr(InputStream inputStream) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, MarsConstant.ENCODING));
         String line = null;
         StringBuffer paramsStr = new StringBuffer();
@@ -98,7 +97,7 @@ public class HttpMarsRequestFactory {
      * @return httpMarsRequest的参数对象
      * @throws Exception 异常
      */
-    private static Map<String,List<String>> urlencoded(String paramStr,Map<String,List<String>> marsParams, boolean hasDecode) throws Exception {
+    private Map<String,List<String>> urlencoded(String paramStr,Map<String,List<String>> marsParams, boolean hasDecode) throws Exception {
         if(paramStr != null){
             String[] paramsArray = paramStr.split("&");
             if(paramsArray == null || paramsArray.length < 1){
@@ -134,7 +133,7 @@ public class HttpMarsRequestFactory {
      * @return httpMarsRequest的参数对象
      * @throws Exception 异常
      */
-    private static JSONObject raw(InputStream inputStream) throws Exception {
+    private JSONObject raw(InputStream inputStream) throws Exception {
         String paramStr = getParamStr(inputStream);
         if(paramStr == null || paramStr.trim().equals("")){
             return null;
@@ -153,7 +152,7 @@ public class HttpMarsRequestFactory {
      * @return httpMarsRequest的参数对象 和 httpMarsRequest的文件参数对象
      * @throws Exception 异常
      */
-    private static Map<String,Object> formData(HttpExchange exchange, Map<String,List<String>> marsParams, Map<String, MarsFileUpLoad> files, String contentType) throws Exception {
+    private Map<String,Object> formData(HttpExchange exchange, Map<String,List<String>> marsParams, Map<String, MarsFileUpLoad> files, String contentType) throws Exception {
         return ParsingFormData.parsing(exchange,marsParams,files,contentType);
     }
 }

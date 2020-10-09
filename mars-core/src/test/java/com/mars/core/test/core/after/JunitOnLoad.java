@@ -14,8 +14,13 @@ public class JunitOnLoad implements BaseOnLoad {
     private TestBean testBean;
 
     @Override
+    public void before() throws Exception {
+        logger.info("执行了before方法，testBean的值:{}",testBean);
+    }
+
+    @Override
     public void after() throws Exception {
-        logger.info("执行了After方法，testBean的值:{}",testBean);
+        logger.info("执行了after方法，testBean的值:{}",testBean);
         Assert.assertNotNull(testBean);
     }
 }

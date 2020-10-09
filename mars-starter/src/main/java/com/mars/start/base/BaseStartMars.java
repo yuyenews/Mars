@@ -1,8 +1,8 @@
 package com.mars.start.base;
 
 import com.mars.common.util.MarsConfiguration;
+import com.mars.iserver.server.factory.MarsServerFactory;
 import com.mars.jdbc.core.load.InitJdbc;
-import com.mars.iserver.server.MarsServer;
 import com.mars.start.startmap.StartMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class BaseStartMars {
 			StartLoad.load(initJdbc,clazz,startList);
 
 			/* 启动iServer */
-			MarsServer.start(getPort());
+			MarsServerFactory.getMarsServer().start(getPort());
 
 		} catch (Exception e) {
 			log.error("启动失败",e);
