@@ -26,6 +26,9 @@ public class ParamTypeConstant {
      * @return
      */
     public static boolean isJSON(String contentType){
+        if(contentType == null){
+            return false;
+        }
         return contentType.startsWith(JSON) || contentType.equals(JSON);
     }
 
@@ -35,6 +38,9 @@ public class ParamTypeConstant {
      * @return
      */
     public static boolean isFormData(String contentType){
+        if(contentType == null){
+            return false;
+        }
         return contentType.startsWith(FORM_DATA) || contentType.equals(FORM_DATA);
     }
 
@@ -44,6 +50,9 @@ public class ParamTypeConstant {
      * @return
      */
     public static boolean isUrlEncoded(String contentType){
+        if(contentType == null){
+            return false;
+        }
         return contentType.startsWith(URL_ENCODED) || contentType.equals(URL_ENCODED);
     }
 }

@@ -4,10 +4,10 @@ import com.mars.common.base.config.model.FileUploadConfig;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.server.server.request.model.MarsFileUpLoad;
-import com.sun.net.httpserver.HttpExchange;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.UploadContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 
 import java.util.ArrayList;
@@ -31,16 +31,15 @@ public class ParsingFormData {
 
     /**
      * 解析
-     * @param exchange 请求对象
-     * @param marsParams 参数
-     * @param files 文件
-     * @param contentType 内容类型
+     * @param uploadContext 请求对象
      * @return 参数和文件
      */
-    public static Map<String,Object> parsing(HttpExchange exchange, Map<String, List<String>> marsParams, Map<String, MarsFileUpLoad> files, String contentType) throws Exception {
+    public static Map<String,Object> parsing(UploadContext uploadContext) throws Exception {
         Map<String,Object> result = new HashMap<>();
+        Map<String,List<String>> marsParams = new HashMap<>();
+        Map<String, MarsFileUpLoad> files = new HashMap<>();
 
-        List<FileItem> fileItemList = getFileItem(exchange,contentType);
+        List<FileItem> fileItemList = getFileItem(uploadContext);
 
         for(FileItem item : fileItemList){
             if(item.isFormField()){
@@ -68,12 +67,11 @@ public class ParsingFormData {
 
     /**
      * 获取文件列表
-     * @param request 请求
-     * @param contentType 请求类型
+     * @param uploadContext 请求
      * @return 返回
      * @throws Exception 异常
      */
-    public static List<FileItem> getFileItem(HttpExchange request, String contentType) throws Exception {
+    public static List<FileItem> getFileItem(UploadContext uploadContext) throws Exception {
 
         FileItemFactory factory = new DiskFileItemFactory();
 
@@ -85,7 +83,7 @@ public class ParsingFormData {
         fileUploadBase.setFileSizeMax(fileUploadConfig.getFileSizeMax());
         fileUploadBase.setSizeMax(fileUploadConfig.getSizeMax());
 
-        List<FileItem> fileItemList = fileUploadBase.parseRequest(new HttpExchangeRequestContext(request,contentType));
+        List<FileItem> fileItemList = fileUploadBase.parseRequest(uploadContext);
 
         return fileItemList;
     }

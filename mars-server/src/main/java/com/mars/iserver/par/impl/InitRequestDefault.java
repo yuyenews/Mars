@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.mars.common.constant.MarsConstant;
 import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.iserver.par.InitRequest;
+import com.mars.iserver.par.formdata.HttpExchangeRequestContext;
 import com.mars.iserver.par.formdata.ParsingFormData;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 import com.sun.net.httpserver.HttpExchange;
+import org.apache.commons.fileupload.UploadContext;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -55,7 +57,7 @@ public class InitRequestDefault implements InitRequest {
                 marsParams = urlencoded(paramStr, marsParams, true);
             } else if (ParamTypeConstant.isFormData(contentType)) {
                 /* formData提交，可以用于文件上传 */
-                Map<String, Object> result = formData(httpExchange, marsParams, files, contentType);
+                Map<String, Object> result = formData(httpExchange, contentType);
                 files = (Map<String, MarsFileUpLoad>) result.get(ParsingFormData.FILES_KEY);
                 marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
             } else if (ParamTypeConstant.isJSON(contentType)) {
@@ -70,8 +72,6 @@ public class InitRequestDefault implements InitRequest {
 
         return marsRequest;
     }
-
-
 
     /**
      * 从输入流里面读取所有的数据
@@ -146,13 +146,12 @@ public class InitRequestDefault implements InitRequest {
     /**
      * formData提交处理
      * @param exchange 请求对象
-     * @param marsParams httpMarsRequest的参数对象
-     * @param files httpMarsRequest的文件参数对象
      * @param contentType 内容类型
      * @return httpMarsRequest的参数对象 和 httpMarsRequest的文件参数对象
      * @throws Exception 异常
      */
-    private Map<String,Object> formData(HttpExchange exchange, Map<String,List<String>> marsParams, Map<String, MarsFileUpLoad> files, String contentType) throws Exception {
-        return ParsingFormData.parsing(exchange,marsParams,files,contentType);
+    private Map<String,Object> formData(HttpExchange exchange, String contentType) throws Exception {
+        UploadContext uploadContext = new HttpExchangeRequestContext(exchange,contentType);
+        return ParsingFormData.parsing(uploadContext);
     }
 }
