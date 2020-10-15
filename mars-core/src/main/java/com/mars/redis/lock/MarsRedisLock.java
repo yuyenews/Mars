@@ -68,6 +68,7 @@ public class MarsRedisLock {
                 return false;
             }
 
+            /* 如果加锁失败，并且设置了要重试，则进入重试流程 */
             while (true) {
                 /* 如果设置失败，代表这个key已经存在了,也就说明锁被占用了，则进入等待 */
                 Thread.sleep(lockModel.getRetryRate());
