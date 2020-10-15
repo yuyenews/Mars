@@ -38,7 +38,6 @@ public class MarsBeanProxy implements MethodInterceptor {
 		return enhancer.create();
 	}
 
-
 	/**
 	 * 绑定代理
 	 */
@@ -60,9 +59,9 @@ public class MarsBeanProxy implements MethodInterceptor {
 			aopModel = ExecAop.getAopModel(marsAop);
 
 			/* 加分布式锁 */
-			hasLock = ExecRedisLock.lock(redisLock,val);
-			if(!hasLock){
-				return null;
+			hasLock = ExecRedisLock.lock(redisLock, val);
+			if (!hasLock) {
+				throw new Exception("获取分布式锁失败，类名[" + o.getClass().getName() + "], 方法名[" + method.getName() + "]");
 			}
 
 			/* 开启事务 */
@@ -75,23 +74,23 @@ public class MarsBeanProxy implements MethodInterceptor {
 			Object o1 = methodProxy.invokeSuper(o, args);
 
 			/* 执行aop的结束方法 */
-			ExecAop.endMethod(args,o1,aopModel);
+			ExecAop.endMethod(args, o1, aopModel);
 
 			/* 提交事务 */
 			ExecTraction.commit(tractionModel);
 			return o1;
 		} catch (Throwable e) {
 			/* 回滚事务 */
-			ExecTraction.rollback(tractionModel,e);
+			ExecTraction.rollback(tractionModel, e);
 			/* AOP处理异常 */
 			ExecAop.exp(aopModel, e);
 			throw e;
 		} finally {
 			/* 解分布式锁, 如果失败了就重试，十次之后还失败，就不管了，10秒后会自动解锁 */
-			if(hasLock){
-				for(int i = 0;i<10;i++){
-					Boolean hasUnlock = ExecRedisLock.unlock(redisLock,val);
-					if(hasUnlock){
+			if (hasLock) {
+				for (int i = 0; i < 10; i++) {
+					Boolean hasUnlock = ExecRedisLock.unlock(redisLock, val);
+					if (hasUnlock) {
 						break;
 					}
 				}

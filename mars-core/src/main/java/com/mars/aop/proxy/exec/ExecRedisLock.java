@@ -1,8 +1,10 @@
 package com.mars.aop.proxy.exec;
 
 import com.mars.common.annotation.bean.RedisLock;
+import com.mars.common.util.StringUtil;
 import com.mars.ioc.factory.BeanFactory;
 import com.mars.redis.lock.MarsRedisLock;
+import com.mars.redis.lock.model.LockModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,10 @@ public class ExecRedisLock {
 
     private static Logger logger = LoggerFactory.getLogger(ExecRedisLock.class);
 
+    private static final String LOCK = "lock";
+
+    private static final String UN_LOCK = "unlock";
+
     /**
      * 分布式锁的实例
      */
@@ -22,33 +28,30 @@ public class ExecRedisLock {
 
     /**
      * 加锁
-     *
-     * @param redisLock 注解
-     * @param value     值
-     * @return 加锁结果
+     * @param redisLock
+     * @param value
+     * @return
      */
     public static Boolean lock(RedisLock redisLock, String value) {
-        return exec(redisLock, value, "lock");
+        return exec(redisLock, value, LOCK);
     }
 
     /**
      * 解锁
-     *
-     * @param redisLock 注解
-     * @param value     值
-     * @return 解锁结果
+     * @param redisLock
+     * @param value
+     * @return
      */
     public static Boolean unlock(RedisLock redisLock, String value) {
-        return exec(redisLock, value, "unlock");
+        return exec(redisLock, value, UN_LOCK);
     }
 
     /**
      * 执行加解锁操作
-     *
-     * @param redisLock  注解
-     * @param value      值
-     * @param methodName 执行的方法
-     * @return 结果
+     * @param redisLock
+     * @param value
+     * @param methodName
+     * @return
      */
     private static Boolean exec(RedisLock redisLock, String value, String methodName) {
         try {
@@ -56,13 +59,22 @@ public class ExecRedisLock {
                 /* 这个true代表不需要加解锁，为了让程序继续往下走 */
                 return true;
             }
+
+            LockModel lockModel = new LockModel();
+            lockModel.setKey(redisLock.key());
+            lockModel.setValue(value);
+            lockModel.setMaxWait(redisLock.maxWait());
+            lockModel.setRetry(redisLock.retry());
+            lockModel.setRetryRate(redisLock.retryRate());
+            lockModel.setTimeOut(redisLock.timeOut());
+
             redisLockObj = getRedisLockObj();
 
             boolean result = false;
-            if(methodName.equals("lock")){
-                result = redisLockObj.lock(redisLock.key(),value);
-            } else if(methodName.equals("unlock")){
-                result = redisLockObj.unlock(redisLock.key(),value);
+            if (methodName.equals(LOCK)) {
+                result = redisLockObj.lock(lockModel);
+            } else if (methodName.equals(UN_LOCK)) {
+                result = redisLockObj.unlock(lockModel.getKey(), lockModel.getValue());
             }
             return result;
         } catch (Exception e) {
@@ -80,7 +92,8 @@ public class ExecRedisLock {
     private static MarsRedisLock getRedisLockObj() throws Exception {
         /* 这里只是为了节约性能，在首次并发的情况下，即使执行了多次，也不会存在安全问题 */
         if (redisLockObj == null) {
-            redisLockObj = BeanFactory.getBean("marsRedisLock", MarsRedisLock.class);
+            String beanName = StringUtil.getFirstLowerCase(MarsRedisLock.class.getSimpleName());
+            redisLockObj = BeanFactory.getBean(beanName, MarsRedisLock.class);
         }
         return redisLockObj;
     }
