@@ -52,9 +52,6 @@ public class MarsRedisLock {
                 return false;
             }
 
-            /* 这个时间，用来给后面计算等待了多少时间的 */
-            Date nowDate = new Date();
-
             SetParams params = SetParams.setParams().nx().px(lockModel.getTimeOut());
             String result = shardedJedis.set(lockModel.getKey(), lockModel.getValue(), params);
 
@@ -67,6 +64,9 @@ public class MarsRedisLock {
             if(!lockModel.isRetry()){
                 return false;
             }
+
+            /* 这个时间，用来给后面计算等待了多少时间的 */
+            Date nowDate = new Date();
 
             /* 如果加锁失败，并且设置了要重试，则进入重试流程 */
             while (true) {
