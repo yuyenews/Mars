@@ -23,7 +23,7 @@
 
 ## 项目简介
 
-Martian 是一个不需要容器的Java开发框架
+Martian 是一个声明式API编程 (DAP) 的Java开发框架
 
 - 以HttpServer作为 http服务，彻底脱离Tomcat这一类的Web容器和Servlet，同时也让项目减少了几个依赖
 - 声明式API，让Controller变成了一个interface，降低了开发的工作量
