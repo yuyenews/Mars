@@ -31,7 +31,6 @@ public class JedisPoolFactory {
                 initJedisPoolConfig();
                 shardedJedisPool = new ShardedJedisPool(jedisPoolConfig,getJedisShardInfoList());
             }
-
             return shardedJedisPool;
         } catch (Exception e) {
             logger.error("获取JedisPool对象出错",e);

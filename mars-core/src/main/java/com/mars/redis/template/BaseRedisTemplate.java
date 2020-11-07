@@ -5,6 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.ShardedJedis;
 
+/**
+ * redis模板基类
+ * @param <K>
+ * @param <V>
+ */
 public class BaseRedisTemplate<K, V> {
 
     private Logger logger = LoggerFactory.getLogger(BaseRedisTemplate.class);
@@ -33,7 +38,7 @@ public class BaseRedisTemplate<K, V> {
             try {
                 jedis.close();
             } catch (Exception e) {
-                logger.error("recycleJedis error" + jedis, e);
+                logger.error("回收Jedis连接异常" + jedis, e);
             }
         }
     }
@@ -44,7 +49,7 @@ public class BaseRedisTemplate<K, V> {
      * @return
      * @throws Exception
      */
-    public byte[] getSerKey(K key) throws Exception {
+    protected byte[] getSerKey(K key) throws Exception {
         return SerializableUtil.serialization(key);
     }
 
@@ -54,18 +59,21 @@ public class BaseRedisTemplate<K, V> {
      * @return
      * @throws Exception
      */
-    public byte[] getSerValue(V value) throws Exception {
+    protected byte[] getSerValue(V value) throws Exception {
         return SerializableUtil.serialization(value);
     }
 
     /**
      * 反序列化key
-     * @param value
+     * @param key
      * @return
      * @throws Exception
      */
-    public K getDeKey(byte[] value) throws Exception {
-        return (K)SerializableUtil.deSerialization(value, Object.class);
+    protected K getDeKey(byte[] key) throws Exception {
+        if(key == null){
+            return null;
+        }
+        return (K)SerializableUtil.deSerialization(key, Object.class);
     }
 
     /**
@@ -74,7 +82,10 @@ public class BaseRedisTemplate<K, V> {
      * @return
      * @throws Exception
      */
-    public V getDeValue(byte[] value) throws Exception {
+    protected V getDeValue(byte[] value) throws Exception {
+        if(value == null){
+            return null;
+        }
         return (V)SerializableUtil.deSerialization(value, Object.class);
     }
 }

@@ -66,7 +66,7 @@ public class MarsRedisLock {
             }
 
             /* 这个时间，用来给后面计算等待了多少时间的 */
-            Date nowDate = new Date();
+            long nowDate = new Date().getTime();
 
             /* 如果加锁失败，并且设置了要重试，则进入重试流程 */
             while (true) {
@@ -81,7 +81,7 @@ public class MarsRedisLock {
                 }
 
                 /* 判断等待时间是否超过 最大等待时间了，如果超过了，就直接返回失败 */
-                long waitTime = new Date().getTime() - nowDate.getTime();
+                long waitTime = new Date().getTime() - nowDate;
                 if (waitTime >= lockModel.getMaxWait()) {
                     /* 停止等待 */
                     return false;

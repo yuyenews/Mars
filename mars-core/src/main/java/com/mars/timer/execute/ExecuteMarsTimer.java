@@ -60,14 +60,14 @@ public class ExecuteMarsTimer {
      */
     private static void executeTimer(MarsTimerModel marsTimerModel){
         try {
-            Object hasNettyStart = constants.getAttr(MarsConstant.HAS_SERVER_START);
-            if(hasNettyStart != null){
+            Object hasServerStart = constants.getAttr(MarsConstant.HAS_SERVER_START);
+            if(hasServerStart != null){
                 Object beanObject = marsTimerModel.getObj();
                 Method method = marsTimerModel.getMethod();
                 method.invoke(beanObject);
             }
         } catch (Exception e){
-            marsLogger.error("执行定时任务出错,方法名:"+marsTimerModel.getCls().getName()+"."+marsTimerModel.getMethod().getName(),e);
+            marsLogger.error("执行定时任务出错,方法名:{}.{}", marsTimerModel.getCls().getName(), marsTimerModel.getMethod().getName(), e);
         }
     }
 }

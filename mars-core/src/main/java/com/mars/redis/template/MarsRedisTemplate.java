@@ -2,7 +2,6 @@ package com.mars.redis.template;
 
 import com.mars.common.annotation.bean.MarsBean;
 import com.mars.redis.template.ops.Hash;
-import com.mars.redis.template.ops.List;
 import com.mars.redis.template.ops.Values;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +16,21 @@ public class MarsRedisTemplate<K, V> extends BaseRedisTemplate<K, V> {
     private Logger logger = LoggerFactory.getLogger(MarsRedisTemplate.class);
 
     /**
+     * 普通的key-value操作
+     */
+    private Values<K, V> values = new Values<>();
+
+    /**
+     * hash操作
+     */
+    private Hash<K, V> hash = new Hash<>();
+
+    /**
      * 获取值操作
      *
      * @return
      */
     public Values<K, V> values() {
-        Values<K, V> values = new Values<>();
         return values;
     }
 
@@ -32,18 +40,7 @@ public class MarsRedisTemplate<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public Hash<K, V> hash() {
-        Hash<K, V> hash = new Hash<>();
         return hash;
-    }
-
-    /**
-     * 获取hash操作
-     *
-     * @return
-     */
-    public List<K, V> list() {
-        List<K, V> list = new List<>();
-        return list;
     }
 
     /**
