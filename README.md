@@ -30,12 +30,15 @@ Martian 是一个声明式API编程 (DAP) 的Java开发框架
 - 拥有其他web框架 拥有的大部分功能，比如AOP,IOC,声明式事务,异常监听等
 - 拥有自主开发的 半ORM持久层框架，并天然的集成到了Martian中
 - 如果你不喜欢HttpServer，我们也提供了Tomcat启动器
-- 支持分布式开发
 
 ## 项目生态
 - 【分布式组件】[Martian-cloud](https://github.com/yuyenews/Martian-Cloud)
 - 【网关及其他组件】[Martian-gateway](https://github.com/yuyenews/Martian-Component)
 - 【更多组件】筹划中
+
+## 官方文档
+
+[http://mars-framework.com/doc.html?tag=martian](http://mars-framework.com/doc.html?tag=martian)
 
 ## 使用示例
 
