@@ -12,19 +12,6 @@ import org.junit.Test;
 public class MarsAddressUtilTest {
 
     /**
-     * 测试获取本机ip
-     */
-    @Test
-    public void testGetLocalIp(){
-        try {
-            String ipStr = MarsAddressUtil.getLocalIp();
-            Assert.assertEquals("172.20.10.5",ipStr);
-        } catch (Exception e){
-            Assert.fail();
-        }
-    }
-
-    /**
      * 测试获取配置的端口号
      */
     @Test
