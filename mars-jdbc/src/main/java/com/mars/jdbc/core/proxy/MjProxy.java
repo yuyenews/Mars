@@ -50,7 +50,7 @@ public class MjProxy implements MethodInterceptor {
         MarsSelect marsSelect = method.getAnnotation(MarsSelect.class);
         MarsUpdate marsUpdate = method.getAnnotation(MarsUpdate.class);
 
-        int count = checkAnnot(marsGet, marsSelect, marsUpdate);
+        int count = checkAnnotation(marsGet, marsSelect, marsUpdate);
 
         if (count == 0) {
             return methodProxy.invokeSuper(o, args);
@@ -97,7 +97,7 @@ public class MjProxy implements MethodInterceptor {
      */
     private Object checkArgs(Object[] args) throws Exception {
         if (args != null && args.length > 1) {
-            throw new Exception("MarsDAO的方法只允许有一个参数");
+            throw new Exception("MarsDAO的方法只允许有一个参数列表");
         } else if (args == null || args.length < 1) {
             return null;
         }
@@ -112,7 +112,7 @@ public class MjProxy implements MethodInterceptor {
      * @param marsUpdate 注解
      * @return
      */
-    private int checkAnnot(MarsGet marsGet, MarsSelect marsSelect, MarsUpdate marsUpdate) {
+    private int checkAnnotation(MarsGet marsGet, MarsSelect marsSelect, MarsUpdate marsUpdate) {
         int count = 0;
         if (marsGet != null) {
             count++;
