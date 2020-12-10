@@ -2,6 +2,7 @@ package com.mars.jdbc.core.proxy.oper;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mars.common.util.StringUtil;
 import com.mars.jdbc.core.annotation.MarsGet;
 import com.mars.jdbc.core.annotation.MarsSelect;
 import com.mars.jdbc.core.annotation.MarsUpdate;
@@ -98,9 +99,15 @@ public class ProxyOpertion {
         StringBuffer sql = new StringBuffer();
         sql.append("delete from ");
         sql.append(marsUpdate.tableName());
-        sql.append(" where ");
-        sql.append(marsUpdate.primaryKey());
-        sql.append(" = ?");
+        if(StringUtil.isNull(marsUpdate.where())){
+            sql.append(" where ");
+            sql.append(marsUpdate.primaryKey());
+            sql.append(" = ?");
+        } else {
+            sql.append(" where ");
+            sql.append(marsUpdate.where());
+        }
+
 
         return JdbcTemplate.get(dataSourceName).update(sql.toString(),new Object[]{param});
     }
@@ -178,23 +185,18 @@ public class ProxyOpertion {
                 isFirst = false;
             }
         }
-        sql.append(builderWhere(marsUpdate));
+
+        if(StringUtil.isNull(marsUpdate.where())){
+            sql.append(" where ");
+            sql.append(marsUpdate.primaryKey());
+            sql.append(" = #{");
+            sql.append(marsUpdate.primaryKey());
+            sql.append("}");
+        } else {
+            sql.append(" where ");
+            sql.append(marsUpdate.where());
+        }
 
         return JdbcTemplate.get(dataSourceName).update(sql.toString(),param);
-    }
-
-    /**
-     * 构建条件
-     * @param marsUpdate 注解
-     * @return 条件
-     */
-    private static StringBuffer builderWhere(MarsUpdate marsUpdate){
-        StringBuffer sql = new StringBuffer();
-        sql.append(" where ");
-        sql.append(marsUpdate.primaryKey());
-        sql.append(" = #{");
-        sql.append(marsUpdate.primaryKey());
-        sql.append("}");
-        return sql;
     }
 }

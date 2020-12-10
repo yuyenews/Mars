@@ -26,4 +26,10 @@ public @interface MarsUpdate {
      * @return
      */
     OperType operType();
+
+    /**
+     * 条件
+     * @return
+     */
+    String where() default "";
 }
