@@ -1,9 +1,8 @@
 package com.mars.server.server.request.impl;
 
+import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsRequest;
-import com.sun.net.httpserver.HttpExchange;
 
-import java.net.InetSocketAddress;
 import java.util.List;
 
 /**
@@ -16,13 +15,13 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	/**
 	 * java原生request
 	 */
-	private HttpExchange httpExchange;
+	private MarsHttpExchange httpExchange;
 
 	/**
 	 * 构造函数，框架自己用的，程序员用不到，用了也没意义
 	 * @param httpExchange
 	 */
-	public HttpMarsDefaultRequest(HttpExchange httpExchange) {
+	public HttpMarsDefaultRequest(MarsHttpExchange httpExchange) {
 		this.httpExchange = httpExchange;
 	}
 
@@ -43,7 +42,7 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 			if(getMethod().toUpperCase().equals("GET")){
 				return "N";
 			}
-			List<String> ctList = httpExchange.getRequestHeaders().get("Content-type");
+			List<String> ctList = httpExchange.getResponseHeaders().get("Content-type");
 			if(ctList == null || ctList.size() < 1){
 				return "N";
 			}
@@ -88,20 +87,11 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	 * @return 头数据
 	 */
 	public List<String> getHeaders(String key) {
-		return httpExchange.getRequestHeaders().get(key);
+		return httpExchange.getResponseHeaders().get(key);
 	}
 
-	/**
-	 * 获取客户端InetSocketAddress
-	 * @return inetSocketAddress
-	 */
+	@Override
 	public String getInetSocketAddress() {
-		InetSocketAddress inetSocketAddress = httpExchange.getLocalAddress();
-		StringBuffer result = new StringBuffer();
-		result.append(inetSocketAddress.getHostString());
-		result.append(":");
-		result.append(inetSocketAddress.getPort());
-
-        return result.toString();
+		return null;
 	}
 }

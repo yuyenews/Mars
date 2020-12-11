@@ -4,8 +4,8 @@ import com.mars.common.base.config.MarsConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
+import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsResponse;
-import com.sun.net.httpserver.HttpExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
     /**
      * java原生通道
      */
-    private HttpExchange httpExchange;
+    private MarsHttpExchange httpExchange;
 
     /**
      * 响应头
@@ -42,7 +42,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
      *
      * @param httpExchange java原生通道
      */
-    public HttpMarsDefaultResponse(HttpExchange httpExchange) {
+    public HttpMarsDefaultResponse(MarsHttpExchange httpExchange) {
         this.httpExchange = httpExchange;
         this.header = new HashMap<>();
     }
@@ -71,30 +71,17 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
      * @param context 消息
      */
     public void send(String context) {
-        OutputStream out = null;
         try {
             crossDomain();
             loadHeader();
 
             /* 设置响应头，必须在sendResponseHeaders方法之前设置 */
-            httpExchange.getResponseHeaders().add("Content-Type:", "text/json;charset="+MarsConstant.ENCODING);
+            httpExchange.setResponseHeader("Content-Type", "text/json;charset="+MarsConstant.ENCODING);
 
             /* 设置响应码和响应体长度，必须在getResponseBody方法之前调用 */
-            byte[] responseContentByte = context.getBytes(MarsConstant.ENCODING);
-            httpExchange.sendResponseHeaders(200, responseContentByte.length);
-
-            out = httpExchange.getResponseBody();
-            out.write(responseContentByte);
+            httpExchange.sendText(200, context);
         } catch (Exception e){
             logger.error("响应数据异常",e);
-        } finally {
-            if (out != null){
-                try{
-                    out.flush();
-                    out.close();
-                } catch (Exception e){
-                }
-            }
         }
     }
 
@@ -111,14 +98,12 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
                 return;
             }
             crossDomain();
-            httpExchange.getResponseHeaders().add("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
+            httpExchange.setResponseHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
 
             int len=0;
             byte[] buffer = new byte[1024];
 
             //设置响应码和响应体长度
-            httpExchange.sendResponseHeaders(200, inputStream.available());
-
             out = httpExchange.getResponseBody();
             while((len=inputStream.read(buffer))!=-1){
                 out.write(buffer, 0, len);
@@ -145,7 +130,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
     private void loadHeader(){
         if (header != null && !header.isEmpty()) {
             for (String key : header.keySet()) {
-                httpExchange.getResponseHeaders().set(key, header.get(key));
+                httpExchange.setResponseHeader(key, header.get(key));
             }
         }
     }
@@ -156,10 +141,10 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
     private void crossDomain() {
         MarsConfig marsConfig = MarsConfiguration.getConfig();
         CrossDomainConfig crossDomainConfig = marsConfig.crossDomainConfig();
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
-        httpExchange.getResponseHeaders().set("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
+        httpExchange.setResponseHeader("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
+        httpExchange.setResponseHeader("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
+        httpExchange.setResponseHeader("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
+        httpExchange.setResponseHeader("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
+        httpExchange.setResponseHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
     }
 }

@@ -6,6 +6,7 @@ import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.iserver.par.InitRequest;
 import com.mars.iserver.par.formdata.HttpExchangeRequestContext;
 import com.mars.iserver.par.formdata.ParsingFormData;
+import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 import com.sun.net.httpserver.HttpExchange;
@@ -37,7 +38,7 @@ public class InitRequestDefault implements InitRequest {
         Map<String, MarsFileUpLoad> files = new HashMap<>();
         Map<String, List<String>> marsParams = new HashMap<>();
 
-        HttpExchange httpExchange = marsRequest.getNativeRequest(HttpExchange.class);
+        MarsHttpExchange httpExchange = marsRequest.getNativeRequest(MarsHttpExchange.class);
         if (httpExchange.getRequestMethod().toUpperCase().equals("GET")) {
             /* 从get请求中获取参数 */
             String paramStr = httpExchange.getRequestURI().getQuery();
@@ -150,7 +151,7 @@ public class InitRequestDefault implements InitRequest {
      * @return httpMarsRequest的参数对象 和 httpMarsRequest的文件参数对象
      * @throws Exception 异常
      */
-    private Map<String,Object> formData(HttpExchange exchange, String contentType) throws Exception {
+    private Map<String,Object> formData(MarsHttpExchange exchange, String contentType) throws Exception {
         UploadContext uploadContext = new HttpExchangeRequestContext(exchange,contentType);
         return ParsingFormData.parsing(uploadContext);
     }

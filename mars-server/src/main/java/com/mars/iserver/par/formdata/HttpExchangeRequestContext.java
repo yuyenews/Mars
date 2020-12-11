@@ -17,7 +17,7 @@
 package com.mars.iserver.par.formdata;
 
 import com.mars.common.constant.MarsConstant;
-import com.sun.net.httpserver.HttpExchange;
+import com.mars.iserver.server.impl.MarsHttpExchange;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.UploadContext;
 
@@ -44,7 +44,7 @@ public class HttpExchangeRequestContext implements UploadContext {
     /**
      * The request for which the context is being provided.
      */
-    private final HttpExchange request;
+    private final MarsHttpExchange request;
 
     /**
      * 请求类型
@@ -59,7 +59,7 @@ public class HttpExchangeRequestContext implements UploadContext {
      * @param request The request to which this context applies.
      * @param contentType 请求类型
      */
-    public HttpExchangeRequestContext(HttpExchange request, String contentType) {
+    public HttpExchangeRequestContext(MarsHttpExchange request, String contentType) {
         this.request = request;
         this.contentType = contentType;
     }
@@ -108,7 +108,7 @@ public class HttpExchangeRequestContext implements UploadContext {
     public long contentLength() {
         long size = 0;
         try {
-            List<String> ctList = request.getRequestHeaders().get(FileUploadBase.CONTENT_LENGTH);
+            List<String> ctList = request.getHttpHeaders().get(FileUploadBase.CONTENT_LENGTH);
             if(ctList != null && ctList.size() > 0){
                 size = Long.parseLong(ctList.get(0));
             }
