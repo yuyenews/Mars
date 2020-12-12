@@ -76,7 +76,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
             loadHeader();
 
             /* 设置响应头，必须在sendResponseHeaders方法之前设置 */
-            httpExchange.setResponseHeader("Content-Type", "text/json;charset="+MarsConstant.ENCODING);
+            httpExchange.setResponseHeader(MarsConstant.CONTENT_TYPE, "text/json;charset="+MarsConstant.ENCODING);
 
             /* 设置响应码和响应体长度，必须在getResponseBody方法之前调用 */
             httpExchange.sendText(200, context);
@@ -98,7 +98,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
                 return;
             }
             crossDomain();
-            httpExchange.setResponseHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
+            httpExchange.setResponseHeader(MarsConstant.CONTENT_DISPOSITION, "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
 
             int len=0;
             byte[] buffer = new byte[1024];

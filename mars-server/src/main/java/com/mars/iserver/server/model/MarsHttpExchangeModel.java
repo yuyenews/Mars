@@ -2,8 +2,7 @@ package com.mars.iserver.server.model;
 
 import com.mars.common.constant.MarsConstant;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -32,7 +31,9 @@ public class MarsHttpExchangeModel {
 
     protected String requestMethod;
 
-    protected int statusCode = 200;
+    protected String httpVersion;
+
+    protected int statusCode;
 
     public MarsHttpExchangeModel(){
         requestHeaders = new HttpHeaders();
@@ -40,6 +41,10 @@ public class MarsHttpExchangeModel {
         List<String> values = new ArrayList<>();
         values.add("text/json;charset="+ MarsConstant.ENCODING);
         responseHeaders.put("Content-Type", values);
+
+        responseBody = new ByteArrayOutputStream();
+        sendText = "没有响应任何数据";
+        statusCode = 200;
     }
 
     public void setSelectionKey(SelectionKey selectionKey) {
@@ -100,6 +105,10 @@ public class MarsHttpExchangeModel {
 
     public HttpHeaders getResponseHeaders() {
         return responseHeaders;
+    }
+
+    public String getHttpVersion() {
+        return httpVersion;
     }
 
     public String getRequestMethod() {

@@ -18,7 +18,6 @@ package com.mars.iserver.par.formdata;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.iserver.server.impl.MarsHttpExchange;
-import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.UploadContext;
 
 import java.io.IOException;
@@ -92,11 +91,20 @@ public class HttpExchangeRequestContext implements UploadContext {
      */
     @Deprecated
     public int getContentLength() {
+        int size = 0;
         try {
-            return request.getRequestBody().available();
-        } catch (Exception e2){
-            return 0;
+            long length = contentLength();
+            size = (int)length;
+            if(size < 0){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            try {
+                size = request.getRequestBody().available();
+            } catch (Exception e2){
+            }
         }
+        return size;
     }
 
     /**
@@ -108,7 +116,10 @@ public class HttpExchangeRequestContext implements UploadContext {
     public long contentLength() {
         long size = 0;
         try {
-            List<String> ctList = request.getHttpHeaders().get(FileUploadBase.CONTENT_LENGTH);
+            List<String> ctList = request.getRequestHeaders().get(MarsConstant.CONTENT_LENGTH);
+            if(ctList == null || ctList.size() < 1){
+                ctList = request.getRequestHeaders().get(MarsConstant.CONTENT_LENGTH_LOW);
+            }
             if(ctList != null && ctList.size() > 0){
                 size = Long.parseLong(ctList.get(0));
             }

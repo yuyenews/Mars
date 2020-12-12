@@ -1,73 +1,87 @@
 package com.mars.iserver.server.impl;
 
 import com.mars.common.constant.MarsConstant;
+import com.mars.common.util.MarsConfiguration;
 import com.mars.common.util.StringUtil;
+import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.iserver.server.MarsServerHandler;
-import com.mars.iserver.server.model.HttpHeaders;
 import com.mars.iserver.server.model.MarsHttpExchangeModel;
 import com.mars.iserver.server.model.RequestURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 请求解析器
+ */
 public class MarsHttpExchange extends MarsHttpExchangeModel  {
 
     private Logger log = LoggerFactory.getLogger(MarsHttpExchange.class);
 
     /**
-     * 每次读取大小
+     * 请求数据大小
      */
-    private static final ByteBuffer READ_BUFFER = ByteBuffer.allocate(1024 * 4);
+    private static int requestSize;
 
     /**
      * 回车换行符
      */
-    private static final String CARRIAGE_RETURN = "\r\n";
+    private static String carriageReturn = "\r\n";
 
-    private static final String KEY_VALUE_SEPARATOR = ":";
+    /**
+     * 冒号分割符
+     */
+    private static String separator = ":";
 
     /**
      * 响应的基础信息
      */
-    public static final String BASIC_RESPONSE = "HTTP/1.1 {statusCode} OK" + CARRIAGE_RETURN +
+    public static final String BASIC_RESPONSE = "HTTP/1.1 {statusCode} OK" + carriageReturn +
             "Vary: Accept-Encoding";
 
+    /**
+     * 初始化
+     */
+    public MarsHttpExchange(){
+        super();
+        requestSize = MarsConfiguration.getConfig().readSize();
+    }
+
+    /**
+     * 解析与处理请求
+     */
     public void handleSelectKey() {
-        READ_BUFFER.clear();
+        ByteBuffer readBuffer = ByteBuffer.allocate(requestSize);
+        readBuffer.clear();
+
         socketChannel = (SocketChannel) selectionKey.channel();
         try {
-            while (socketChannel.read(READ_BUFFER) > 0) {
+            while (socketChannel.read(readBuffer) > 0) {
             }
 
-            READ_BUFFER.flip();
+            /* 获取请求报文 */
+            readBuffer.flip();
+            byte[] bytes = new byte[readBuffer.limit()];
+            readBuffer.get(bytes);
 
-            byte[] bytes = new byte[READ_BUFFER.limit()];
-            READ_BUFFER.get(bytes);
+            /* 解析请求 */
+            parseRequest(bytes);
 
-            String requestMessage = new String(bytes,MarsConstant.ENCODING);
-            log.info(requestMessage);
-            // TODO
-            requestURI = new RequestURI(getUri(requestMessage));
-            requestMethod = requestMessage.substring(0, requestMessage.indexOf(" "));
-            parseHeader(requestMessage);
-
-            if(!requestMethod.toUpperCase().equals("GET")){
-                requestBody = new ByteArrayInputStream(bytes);
-            }
-
+            /* 执行handler */
             MarsServerHandler marsServerHandler = new MarsServerHandler();
             marsServerHandler.request(this);
 
-            staticHandler();
+            /* 响应数据 */
+            responseData();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("处理请求异常异常", e);
+            errorResponseText(e);
         } finally {
             try {
                 selectionKey.cancel();
@@ -79,85 +93,144 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     }
 
     /**
-     * 获取请求的资源地址
-     *
-     * @param request
-     * @return
+     * 解析请求
+     * @param bytes
+     * @throws Exception
      */
-    private static String getUri(String request) {
-        //GET /index.html HTTP/1.1
-        int firstBlank = request.indexOf(" ");
-        String excludeMethod = request.substring(firstBlank + 1);
-        return excludeMethod.substring(0, excludeMethod.indexOf(" "));
-    }
-
-    public void sendText(int statusCode, String text){
-        this.statusCode = statusCode;
-        this.sendText = text;
-    }
-
-    private void parseHeader(String headerStr) {
-        if (StringUtil.isNull(headerStr)) {
+    private void parseRequest(byte[] bytes) throws Exception {
+        if (bytes == null || bytes.length < 1) {
             return;
         }
 
-        // 解析请求头第一行
-        int index = headerStr.indexOf(CARRIAGE_RETURN);
-        if (index == -1) {
-            return;
+        InputStream body = new ByteArrayInputStream(bytes);
+        BufferedReader br = new BufferedReader(new InputStreamReader(body, MarsConstant.ENCODING));
+
+        boolean isFirst = true;
+        boolean isFirstContent = true;
+        StringBuffer buffer = null;
+
+        String line = null;
+        while ((line = br.readLine()) != null) {
+            if(isFirst){
+                /* 读取第一行 */
+                readFirstLine(line);
+                isFirst = false;
+                continue;
+            }
+
+            /* 判断头读完了没 */
+            if (StringUtil.isNull(line) && buffer == null){
+                /* 遇到空行就说明接下来是内容 */
+                buffer = new StringBuffer();
+
+                boolean isContinue = isFormData();
+                if(isContinue){
+                    /* 如果formData就不需要读内容了，直接将整个请求体返回即可 */
+                    break;
+                } else {
+                    continue;
+                }
+            }
+
+            if(buffer != null){
+                /* 读取内容 */
+                if(!isFirstContent){
+                    buffer.append(carriageReturn);
+                }
+                buffer.append(line);
+                isFirstContent = false;
+            } else {
+                /* 读取头信息 */
+                String[] header = line.split(separator);
+                if (header.length < 2) {
+                    continue;
+                }
+                setRequestHeader(header[0].trim(), header[1].trim());
+            }
         }
 
-        String firstLine = headerStr.substring(0, index);
+        /* 保存本次的请求体 */
+        if(isFormData()){
+            requestBody = new ByteArrayInputStream(bytes);
+        } else if(buffer != null){
+            requestBody = new ByteArrayInputStream(buffer.toString().getBytes(MarsConstant.ENCODING));
+        }
+    }
+
+    /**
+     * 解析第一行
+     * @param firstLine
+     */
+    private void readFirstLine(String firstLine){
         String[] parts = firstLine.split(" ");
 
         /*
          * 请求头的第一行必须由三部分构成，分别为 METHOD PATH VERSION
-         * 比如：
-         *     GET /index.html HTTP/1.1
+         * 比如：GET /index.html HTTP/1.1
          */
         if (parts.length < 3) {
             return;
         }
 
-//        headers.setMethod(parts[0]);
-//        headers.setPath(parts[1]);
-//        headers.setVersion(parts[2]);
+        /* 解析开头的三个信息(METHOD PATH VERSION) */
+        requestMethod = parts[0];
+        requestURI = new RequestURI(parts[1]);
+        httpVersion = parts[2];
+    }
 
-        // 解析请求头属于部分
-        parts = headerStr.split(CARRIAGE_RETURN);
-        for (String part : parts) {
-            index = part.indexOf(KEY_VALUE_SEPARATOR);
-            if (index == -1) {
-                continue;
-            }
-            String key = part.substring(0, index);
-            if (index == -1 || index + 1 >= part.length()) {
-                continue;
-            }
-            String value = part.substring(index + 1);
-            setRequestHeader(key, value);
+    /**
+     * 执行响应操作
+     * @throws IOException
+     */
+    private void responseData() throws IOException {
+        responseText(null);
+    }
+
+    /**
+     * 响应字符串
+     *
+     * @return
+     */
+    private void responseText(String text) throws IOException {
+        if(text == null){
+            text = sendText;
+        }
+        /* 加载响应头 */
+        StringBuffer buffer = getCommonResponse(text.getBytes().length);
+
+        /* 加载要响应的数据 */
+        buffer.append(carriageReturn);
+        buffer.append(text);
+
+        /* 开始响应 */
+        ByteBuffer byteBuffer = ByteBuffer.wrap(buffer.toString().getBytes());
+        socketChannel.write(byteBuffer);
+    }
+
+    /**
+     * 异常的时候给前端一个响应
+     * @param e
+     */
+    private void errorResponseText(Exception e){
+        try {
+            setResponseHeader(MarsConstant.CONTENT_TYPE, "text/json;charset="+MarsConstant.ENCODING);
+            responseText("处理请求异常异常" + e.getMessage());
+        } catch (Exception ex){
         }
     }
 
     /**
-     * 静态资源处理器
-     *
+     * 获取公共的返回信息
      * @return
      */
-    private void staticHandler() throws IOException {
-        if(StringUtil.isNull(sendText)){
-            return;
-        }
-
-        byte[] bytes = sendText.getBytes();
-
-        ByteBuffer buffer = ByteBuffer.allocate(4 * 1024);
+    private StringBuffer getCommonResponse(int length){
+        StringBuffer buffer = new StringBuffer();
 
         /* 加载初始化头 */
-        buffer.put(BASIC_RESPONSE.replace("{statusCode}", String.valueOf(statusCode)).getBytes(MarsConstant.ENCODING));
-        buffer.put(CARRIAGE_RETURN.getBytes(MarsConstant.ENCODING));
-        buffer.put(("content-length: " + bytes.length).getBytes(MarsConstant.ENCODING));
-        buffer.put(CARRIAGE_RETURN.getBytes(MarsConstant.ENCODING));
+        buffer.append(BASIC_RESPONSE.replace("{statusCode}", String.valueOf(statusCode)));
+        buffer.append(carriageReturn);
+        buffer.append(MarsConstant.CONTENT_LENGTH + ": " + length);
+        buffer.append(carriageReturn);
 
         /* 加载自定义头 */
         for(Map.Entry<String, List<String>> entry : responseHeaders.entrySet()){
@@ -174,17 +247,48 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                 valueStr.append(value);
             }
 
-            buffer.put((entry.getKey() + ":" + valueStr.toString()).getBytes(MarsConstant.ENCODING));
-            buffer.put(CARRIAGE_RETURN.getBytes(MarsConstant.ENCODING));
+            buffer.append(entry.getKey() + ":" + valueStr.toString());
+            buffer.append(carriageReturn);
         }
 
-        /* 加载要响应的数据 */
-        buffer.put(bytes);
-        buffer.flip();
+        return buffer;
+    }
 
-        /* 开始响应 */
-        while (buffer.hasRemaining()) {
-            socketChannel.write(buffer);
+    /**
+     * 设置响应数据
+     * @param statusCode
+     * @param text
+     */
+    public void sendText(int statusCode, String text){
+        this.statusCode = statusCode;
+        this.sendText = text;
+    }
+
+    /**
+     * 是否是formData
+     * @return
+     */
+    private boolean isFormData(){
+        String contentType = getContentType();
+        if(ParamTypeConstant.isFormData(contentType)){
+            return true;
         }
+        return false;
+    }
+
+    /**
+     * 获取本次的请求类型
+     * @return
+     */
+    public String getContentType(){
+        List<String> headList = requestHeaders.get(MarsConstant.CONTENT_TYPE);
+        if(headList == null || headList.size() < 1){
+            headList = requestHeaders.get(MarsConstant.CONTENT_TYPE_LOW);
+        }
+
+        if(headList == null || headList.size() < 1){
+            return null;
+        }
+        return headList.get(0);
     }
 }

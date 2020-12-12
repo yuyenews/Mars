@@ -33,10 +33,21 @@ public abstract class MarsConfig {
 
     /**
      * 线程池配置
+     * 3.1.1版本开始废弃了，暂时用不到了，未来不确定用不用
      * @return 线程池配置
      */
-    public ThreadPoolConfig getThreadPoolConfig(){
+    @Deprecated
+    public ThreadPoolConfig threadPoolConfig(){
         return new ThreadPoolConfig();
+    }
+
+    /**
+     * 读取请求报文的缓冲区大小
+     * 默认 5M
+     * @return
+     */
+    public int readSize(){
+        return 5 * 1024 * 1024;
     }
 
     /**

@@ -10,7 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 执行请求的线程池
+ * 3.1.1版本开始废弃了，暂时用不到了，未来不确定用不用
  */
+@Deprecated
 public class ThreadPool {
 
     /**
@@ -20,13 +22,15 @@ public class ThreadPool {
 
     /**
      * 获取线程池
+     * 3.1.1版本开始废弃了，暂时用不到了，未来不确定用不用
      * @return
      */
+    @Deprecated
     public static ThreadPoolExecutor getThreadPoolExecutor(){
         if(threadPoolExecutor == null){
             /* 获取线程池的配置 */
             MarsConfig marsConfig = MarsConfiguration.getConfig();
-            ThreadPoolConfig threadPoolConfig = marsConfig.getThreadPoolConfig();
+            ThreadPoolConfig threadPoolConfig = marsConfig.threadPoolConfig();
             int maxPoolSize = threadPoolConfig.getMaxPoolSize();
             int corePoolSize = threadPoolConfig.getCorePoolSize();
             int keepAliveTime = threadPoolConfig.getKeepAliveTime();

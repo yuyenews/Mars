@@ -1,5 +1,6 @@
 package com.mars.server.server.request.impl;
 
+import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsRequest;
 
@@ -39,14 +40,14 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	 */
 	public String getContentType(){
 		try {
-			if(getMethod().toUpperCase().equals("GET")){
+			if(getMethod().toUpperCase().equals(ReqMethod.GET.toString())){
 				return "N";
 			}
-			List<String> ctList = httpExchange.getResponseHeaders().get("Content-type");
-			if(ctList == null || ctList.size() < 1){
+			String contentType = httpExchange.getContentType();
+			if(contentType == null){
 				return "N";
 			}
-			return ctList.get(0).trim().toLowerCase();
+			return contentType;
 		} catch (Exception e){
 			return "N";
 		}
@@ -92,6 +93,7 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 
 	@Override
 	public String getInetSocketAddress() {
+		httpExchange.getRequestHeaders().get("Host-Name");
 		return null;
 	}
 }

@@ -1,6 +1,7 @@
 package com.mars.iserver.par.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.iserver.par.InitRequest;
@@ -39,7 +40,7 @@ public class InitRequestDefault implements InitRequest {
         Map<String, List<String>> marsParams = new HashMap<>();
 
         MarsHttpExchange httpExchange = marsRequest.getNativeRequest(MarsHttpExchange.class);
-        if (httpExchange.getRequestMethod().toUpperCase().equals("GET")) {
+        if (httpExchange.getRequestMethod().toUpperCase().equals(ReqMethod.GET.toString())) {
             /* 从get请求中获取参数 */
             String paramStr = httpExchange.getRequestURI().getQuery();
             marsParams = urlencoded(paramStr, marsParams, true);

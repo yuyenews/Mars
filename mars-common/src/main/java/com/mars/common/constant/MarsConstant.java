@@ -95,4 +95,29 @@ public class MarsConstant {
      * 用来判断当前请求是否是一次预判
      */
     public static final String OPTIONS = "OPTIONS";
+
+    /**
+     * 请求内容类型
+     */
+    public static final String CONTENT_TYPE  = "Content-Type";
+
+    /**
+     * 请求内容类型
+     */
+    public static final String CONTENT_TYPE_LOW  = "Content-type";
+
+    /**
+     * 内容长度
+     */
+    public static final String CONTENT_LENGTH = "Content-Length";
+
+    /**
+     * 内容长度
+     */
+    public static final String CONTENT_LENGTH_LOW = "Content-length";
+
+    /**
+     * 内容描述
+     */
+    public static final String CONTENT_DISPOSITION = "Content-Disposition";
 }
