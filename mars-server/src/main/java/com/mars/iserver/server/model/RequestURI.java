@@ -1,7 +1,13 @@
 package com.mars.iserver.server.model;
 
+/**
+ * 请求地址
+ */
 public class RequestURI {
 
+    /**
+     * 请求地址
+     */
     private String uri;
 
     public RequestURI(String uri){
@@ -13,6 +19,10 @@ public class RequestURI {
         return this.uri;
     }
 
+    /**
+     * 返回地址栏的参数
+     * @return
+     */
     public String getQuery(){
         if(this.uri.indexOf("?") < 0){
             return null;

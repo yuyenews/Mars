@@ -70,9 +70,9 @@ public class MarsHttpExchangeModel {
         responseHeaders = new HttpHeaders();
         List<String> values = new ArrayList<>();
         values.add("text/json;charset="+ MarsConstant.ENCODING);
-        responseHeaders.put("Content-Type", values);
+        responseHeaders.put(MarsConstant.CONTENT_TYPE, values);
 
-        sendText = "没有响应任何数据";
+        sendText = MarsConstant.VOID;
         statusCode = 200;
     }
 

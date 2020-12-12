@@ -6,11 +6,6 @@ package com.mars.common.base.config.model;
 public class ThreadPoolConfig {
 
     /**
-     * TCP最大连接池
-     */
-    private int backLog = 50;
-
-    /**
      * 最大线程数
      */
     private int maxPoolSize = 2000;
@@ -24,17 +19,6 @@ public class ThreadPoolConfig {
      * 最大等待时长，默认20秒
      */
     private int keepAliveTime = 20;
-
-    public int getBackLog() {
-        if(backLog < 1){
-            return 50;
-        }
-        return backLog;
-    }
-
-    public void setBackLog(int backLog) {
-        this.backLog = backLog;
-    }
 
     public int getMaxPoolSize() {
         if(maxPoolSize < 10){

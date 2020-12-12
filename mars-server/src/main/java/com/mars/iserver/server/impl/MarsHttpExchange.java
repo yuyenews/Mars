@@ -56,11 +56,12 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * 解析与处理请求
      */
     public void handleSelectKey() {
-        ByteBuffer readBuffer = ByteBuffer.allocate(requestSize);// 这里是1024*1024*1024 = 1G
+        ByteBuffer readBuffer = ByteBuffer.allocate(requestSize);
         readBuffer.clear();
 
         socketChannel = (SocketChannel) selectionKey.channel();
         try {
+            // TODO
             while (socketChannel.read(readBuffer) > 0) {}
 
             /* 获取请求报文 */
@@ -224,6 +225,9 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     private void responseText(String text) throws IOException {
         if(text == null){
             text = sendText;
+        }
+        if(text.equals(MarsConstant.VOID)){
+            return;
         }
         /* 加载响应头 */
         StringBuffer buffer = getCommonResponse(text.getBytes().length);
