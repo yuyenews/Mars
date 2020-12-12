@@ -56,13 +56,12 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * 解析与处理请求
      */
     public void handleSelectKey() {
-        ByteBuffer readBuffer = ByteBuffer.allocate(requestSize);
+        ByteBuffer readBuffer = ByteBuffer.allocate(requestSize);// 这里是1024*1024*1024 = 1G
         readBuffer.clear();
 
         socketChannel = (SocketChannel) selectionKey.channel();
         try {
-            while (socketChannel.read(readBuffer) > 0) {
-            }
+            while (socketChannel.read(readBuffer) > 0) {}
 
             /* 获取请求报文 */
             readBuffer.flip();
@@ -120,7 +119,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
 
             /* 判断头读完了没 */
             if (StringUtil.isNull(line) && buffer == null){
-                /* 遇到空行就说明接下来是内容 */
+                /* 遇到空行就说明从下一行开始是内容了 */
                 buffer = new StringBuffer();
 
                 boolean isContinue = isFormData();
@@ -183,7 +182,38 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * @throws IOException
      */
     private void responseData() throws IOException {
-        responseText(null);
+        if(responseBody == null){
+            responseText(null);
+        } else {
+            responseFile();
+        }
+    }
+
+    /**
+     * 响应文件流
+     */
+    private void responseFile() throws IOException {
+        /* 加载响应头 */
+        setResponseHeader(MarsConstant.CONTENT_TYPE, "application/octet-stream");
+
+        /* 加载响应头 */
+        StringBuffer buffer = getCommonResponse(responseBody.length);
+        buffer.append(carriageReturn);
+
+        /* 转成ByteBuffer */
+        byte[] bytes = buffer.toString().getBytes(MarsConstant.ENCODING);
+
+        /* 加载要响应的数据 */
+        ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length + responseBody.length);
+        byteBuffer.put(bytes);
+        byteBuffer.put(responseBody);
+
+        byteBuffer.flip();
+
+        /* 开始响应 */
+        while (byteBuffer.hasRemaining()){
+            socketChannel.write(byteBuffer);
+        }
     }
 
     /**
@@ -202,9 +232,17 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
         buffer.append(carriageReturn);
         buffer.append(text);
 
+        /* 转成ByteBuffer */
+        byte[] bytes = buffer.toString().getBytes(MarsConstant.ENCODING);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length);
+        byteBuffer.put(bytes);
+
+        byteBuffer.flip();
+
         /* 开始响应 */
-        ByteBuffer byteBuffer = ByteBuffer.wrap(buffer.toString().getBytes());
-        socketChannel.write(byteBuffer);
+        while (byteBuffer.hasRemaining()){
+            socketChannel.write(byteBuffer);
+        }
     }
 
     /**
@@ -252,16 +290,6 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
         }
 
         return buffer;
-    }
-
-    /**
-     * 设置响应数据
-     * @param statusCode
-     * @param text
-     */
-    public void sendText(int statusCode, String text){
-        this.statusCode = statusCode;
-        this.sendText = text;
     }
 
     /**

@@ -31,6 +31,7 @@ public class InitRequestDefault implements InitRequest {
 
     /**
      * 从httpExchange中提取出所有的参数，并放置到HttpMarsRequest中
+     *
      * @param marsRequest mars请求
      * @return 加工后的mars请求
      * @throws Exception 异常
@@ -77,6 +78,7 @@ public class InitRequestDefault implements InitRequest {
 
     /**
      * 从输入流里面读取所有的数据
+     *
      * @param inputStream 输入流
      * @return 数据
      * @throws Exception 异常
@@ -93,37 +95,38 @@ public class InitRequestDefault implements InitRequest {
 
     /**
      * 表单提交处理
-     * @param paramStr 数据
+     *
+     * @param paramStr   数据
      * @param marsParams httpMarsRequest的参数对象
-     * @param hasDecode 是否需要解码 true是，false不是
+     * @param hasDecode  是否需要解码 true是，false不是
      * @return httpMarsRequest的参数对象
      * @throws Exception 异常
      */
-    private Map<String,List<String>> urlencoded(String paramStr,Map<String,List<String>> marsParams, boolean hasDecode) throws Exception {
-        if(paramStr != null){
+    private Map<String, List<String>> urlencoded(String paramStr, Map<String, List<String>> marsParams, boolean hasDecode) throws Exception {
+        if (paramStr != null) {
             String[] paramsArray = paramStr.split("&");
-            if(paramsArray == null || paramsArray.length < 1){
+            if (paramsArray == null || paramsArray.length < 1) {
                 return marsParams;
             }
             List<String> values = null;
-            for(String paramItem : paramsArray){
+            for (String paramItem : paramsArray) {
                 String[] param = paramItem.split("=");
-                if(param == null || param.length < 2){
+                if (param == null || param.length < 2) {
                     continue;
                 }
                 String key = param[0];
 
                 values = marsParams.get(key);
-                if(values == null){
+                if (values == null) {
                     values = new ArrayList<>();
                 }
 
                 String value = param[1];
-                if(hasDecode){
+                if (hasDecode) {
                     value = URLDecoder.decode(value, MarsConstant.ENCODING);
                 }
                 values.add(value);
-                marsParams.put(key,values);
+                marsParams.put(key, values);
             }
         }
         return marsParams;
@@ -131,13 +134,14 @@ public class InitRequestDefault implements InitRequest {
 
     /**
      * RAW提交处理
+     *
      * @param inputStream 输入流
      * @return httpMarsRequest的参数对象
      * @throws Exception 异常
      */
     private JSONObject raw(InputStream inputStream) throws Exception {
         String paramStr = getParamStr(inputStream);
-        if(paramStr == null || paramStr.trim().equals("")){
+        if (paramStr == null || paramStr.trim().equals("")) {
             return null;
         }
 
@@ -147,13 +151,14 @@ public class InitRequestDefault implements InitRequest {
 
     /**
      * formData提交处理
-     * @param exchange 请求对象
+     *
+     * @param exchange    请求对象
      * @param contentType 内容类型
      * @return httpMarsRequest的参数对象 和 httpMarsRequest的文件参数对象
      * @throws Exception 异常
      */
-    private Map<String,Object> formData(MarsHttpExchange exchange, String contentType) throws Exception {
-        UploadContext uploadContext = new HttpExchangeRequestContext(exchange,contentType);
+    private Map<String, Object> formData(MarsHttpExchange exchange, String contentType) throws Exception {
+        UploadContext uploadContext = new HttpExchangeRequestContext(exchange, contentType);
         return ParsingFormData.parsing(uploadContext);
     }
 }

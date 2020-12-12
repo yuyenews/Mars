@@ -91,7 +91,6 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
      * @param inputStream
      */
     public void downLoad(String fileName, InputStream inputStream) {
-        OutputStream out = null;
         try {
             if(fileName == null || inputStream == null){
                 logger.error("downLoad方法的传参不可以为空");
@@ -100,27 +99,11 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
             crossDomain();
             httpExchange.setResponseHeader(MarsConstant.CONTENT_DISPOSITION, "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
 
-            int len=0;
-            byte[] buffer = new byte[1024];
+            /* 设置要下载的文件 */
+            httpExchange.setResponseBody(inputStream);
 
-            //设置响应码和响应体长度
-            out = httpExchange.getResponseBody();
-            while((len=inputStream.read(buffer))!=-1){
-                out.write(buffer, 0, len);
-            }
         } catch (Exception e){
             logger.error("响应数据异常",e);
-        } finally {
-            try{
-                if(out != null){
-                    out.flush();
-                    out.close();
-                }
-                if(inputStream != null){
-                    inputStream.close();
-                }
-            } catch (Exception e){
-            }
         }
     }
 

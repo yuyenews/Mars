@@ -43,11 +43,11 @@ public abstract class MarsConfig {
 
     /**
      * 读取请求报文的缓冲区大小
-     * 默认 5M
+     * 默认 1024M
      * @return
      */
     public int readSize(){
-        return 5 * 1024 * 1024;
+        return 1024 * 1024 * 1024;
     }
 
     /**
