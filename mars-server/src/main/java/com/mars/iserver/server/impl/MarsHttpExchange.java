@@ -24,9 +24,9 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     private Logger log = LoggerFactory.getLogger(MarsHttpExchange.class);
 
     /**
-     * 请求数据的缓冲区大小(每次读多少字节)
+     * 每次从通道读多少字节
      */
-    private static int requestSize;
+    private static int readSize;
 
     /**
      * 回车换行符
@@ -54,14 +54,14 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      */
     public MarsHttpExchange(){
         super();
-        requestSize = MarsConfiguration.getConfig().readSize();
+        readSize = MarsConfiguration.getConfig().readSize();
     }
 
     /**
      * 解析与处理请求
      */
     public void handleSelectKey() {
-        ByteBuffer readBuffer = ByteBuffer.allocate(requestSize);
+        ByteBuffer readBuffer = ByteBuffer.allocate(readSize);
         readBuffer.clear();
 
         socketChannel = (SocketChannel) selectionKey.channel();
@@ -81,12 +81,12 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                 readBuffer.get(bytes);
                 readBuffer.clear();
 
-                /* 将本此读取到的数据追加到输出流 */
+                /* 将本次读取到的数据追加到输出流 */
                 outputStream.write(bytes);
 
                 if(!readHead){
                     String headStr = new String(outputStream.toByteArray());
-                    /* 判断是否已经把头读完了，如果出现了两次换行，则代表头已经读完了 */
+                    /* 判断是否已经把头读完了，如果出现了连续的两个换行，则代表头已经读完了 */
                     if(headStr.indexOf(headEnd) < 0){
                         continue;
                     }
@@ -108,7 +108,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                     if(contentLength < 0){
                         /*
                          * 能进入到这里，就说明头肯定读完了，
-                         * 但是头读完了就说明Content-Length必定有值，因为上面对GET做了break处理，而其他请求方式必定有值
+                         * 头读完了就说明Content-Length必定有值，因为上面对GET做了break处理，而其他请求方式必定有值
                          * 所以如果没值的话就不正常了，需要停止掉，防止死循环
                          */
                         break;
@@ -122,8 +122,8 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                 }
             }
 
-            /* 解析请求 */
-            parseRequest(outputStream, headLength);
+            /* 从报文中获取body */
+            getBody(outputStream, headLength);
 
             /* 执行handler */
             MarsServerHandler marsServerHandler = new MarsServerHandler();
@@ -204,11 +204,11 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     }
 
     /**
-     * 解析请求
+     * 从报文中获取body
      * @param outputStream
      * @throws Exception
      */
-    private void parseRequest(ByteArrayOutputStream outputStream, int headLen) throws Exception {
+    private void getBody(ByteArrayOutputStream outputStream, int headLen) throws Exception {
         if (outputStream == null || outputStream.size() < 1) {
             return;
         }
@@ -222,10 +222,11 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * @throws IOException
      */
     private void responseData() throws IOException {
-        if(responseBody == null){
-            responseText(null);
-        } else {
+        if(responseBody != null){
+            /* 只要响应流不为空，就按文件下载处理 */
             responseFile();
+        } else {
+            responseText(null);
         }
     }
 

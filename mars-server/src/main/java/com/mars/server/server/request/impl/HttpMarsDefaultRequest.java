@@ -88,12 +88,15 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	 * @return 头数据
 	 */
 	public List<String> getHeaders(String key) {
-		return httpExchange.getResponseHeaders().get(key);
+		return httpExchange.getRequestHeaders().get(key);
 	}
 
 	@Override
 	public String getInetSocketAddress() {
-		httpExchange.getRequestHeaders().get("Host-Name");
-		return null;
+		List<String> hostList = httpExchange.getRequestHeaders().get("Host");
+		if(hostList == null || hostList.size() < 1){
+			return null;
+		}
+		return hostList.get(0);
 	}
 }

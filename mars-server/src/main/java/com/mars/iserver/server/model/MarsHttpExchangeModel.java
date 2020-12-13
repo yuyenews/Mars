@@ -9,6 +9,10 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 请求处理器的父类
+ * 因为成员变量太多，所以放了一部分到这里
+ */
 public class MarsHttpExchangeModel {
 
     protected SelectionKey selectionKey;

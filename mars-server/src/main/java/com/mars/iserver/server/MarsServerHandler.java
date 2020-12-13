@@ -10,10 +10,17 @@ import com.mars.server.server.request.impl.HttpMarsDefaultResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 联络器
+ */
 public class MarsServerHandler {
 
     private Logger log = LoggerFactory.getLogger(MarsServerHandler.class);
 
+    /**
+     * 开始联络业务逻辑为本次请求做服务
+     * @param exchange
+     */
     public void request(MarsHttpExchange exchange){
         /* 组装httpRequest对象 */
         HttpMarsRequest request = new HttpMarsDefaultRequest(exchange);;
