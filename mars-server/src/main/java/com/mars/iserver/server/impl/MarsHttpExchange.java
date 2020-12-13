@@ -1,9 +1,9 @@
 package com.mars.iserver.server.impl;
 
+import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.common.util.StringUtil;
-import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.iserver.server.MarsServerHandler;
 import com.mars.iserver.server.model.MarsHttpExchangeModel;
 import com.mars.iserver.server.model.RequestURI;
@@ -24,7 +24,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     private Logger log = LoggerFactory.getLogger(MarsHttpExchange.class);
 
     /**
-     * 请求数据大小
+     * 请求数据的缓冲区大小(每次读多少字节)
      */
     private static int requestSize;
 
@@ -32,6 +32,11 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * 回车换行符
      */
     private static String carriageReturn = "\r\n";
+
+    /**
+     * 头结束标识
+     */
+    private static String headEnd = "\r\n\r\n";
 
     /**
      * 冒号分割符
@@ -61,16 +66,64 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
 
         socketChannel = (SocketChannel) selectionKey.channel();
         try {
-            // TODO
-            while (socketChannel.read(readBuffer) > 0) {}
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            /* 获取请求报文 */
-            readBuffer.flip();
-            byte[] bytes = new byte[readBuffer.limit()];
-            readBuffer.get(bytes);
+            /* 是否已经读完head了 */
+            boolean readHead = false;
+            /* head的长度，用来计算body长度 */
+            int headLength = 0;
+
+            /* 开始读数据 */
+            while (socketChannel.read(readBuffer) > -1) {
+                /* 获取请求报文 */
+                readBuffer.flip();
+                byte[] bytes = new byte[readBuffer.limit()];
+                readBuffer.get(bytes);
+                readBuffer.clear();
+
+                /* 将本此读取到的数据追加到输出流 */
+                outputStream.write(bytes);
+
+                if(!readHead){
+                    String headStr = new String(outputStream.toByteArray());
+                    /* 判断是否已经把头读完了，如果出现了两次换行，则代表头已经读完了 */
+                    if(headStr.indexOf(headEnd) < 0){
+                        continue;
+                    }
+
+                    /* 解析头并获取Content-Length */
+                    headLength = parseHeader(headStr);
+                    readHead = true;
+
+                    /*
+                     * 如果头读完了，并且此次请求是GET，则停止，
+                     * 因为GET没有Content-Length如果不停止会死循环
+                     */
+                    if(requestMethod.toUpperCase().equals(ReqMethod.GET.toString())){
+                        break;
+                    }
+                } else {
+                    /* 从head获取到Content-Length */
+                    long contentLength = getRequestContentLength();
+                    if(contentLength < 0){
+                        /*
+                         * 能进入到这里，就说明头肯定读完了，
+                         * 但是头读完了就说明Content-Length必定有值，因为上面对GET做了break处理，而其他请求方式必定有值
+                         * 所以如果没值的话就不正常了，需要停止掉，防止死循环
+                         */
+                        break;
+                    }
+
+                    /* 判断已经读取的body长度是否等于Content-Length，如果条件满足则说明读取完成 */
+                    int streamLength = outputStream.size();
+                    if((streamLength - headLength) >= contentLength){
+                        break;
+                    }
+                }
+            }
 
             /* 解析请求 */
-            parseRequest(bytes);
+            parseRequest(outputStream, headLength);
 
             /* 执行handler */
             MarsServerHandler marsServerHandler = new MarsServerHandler();
@@ -93,68 +146,40 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     }
 
     /**
-     * 解析请求
-     * @param bytes
+     * 读取请求头
      * @throws Exception
      */
-    private void parseRequest(byte[] bytes) throws Exception {
-        if (bytes == null || bytes.length < 1) {
-            return;
+    private int parseHeader(String headStr) throws Exception {
+        if(StringUtil.isNull(headStr)){
+            return 0;
+        }
+        int index = headStr.indexOf(headEnd);
+        if(index > -1){
+            headStr = headStr.substring(0, index);
         }
 
-        InputStream body = new ByteArrayInputStream(bytes);
-        BufferedReader br = new BufferedReader(new InputStreamReader(body, MarsConstant.ENCODING));
-
-        boolean isFirst = true;
-        boolean isFirstContent = true;
-        StringBuffer buffer = null;
-
-        String line = null;
-        while ((line = br.readLine()) != null) {
-            if(isFirst){
+        String[] headers = headStr.split(carriageReturn);
+        for(int i=0;i<headers.length;i++){
+            String head = headers[i];
+            if(i == 0){
                 /* 读取第一行 */
-                readFirstLine(line);
-                isFirst = false;
+                readFirstLine(head);
                 continue;
             }
 
-            /* 判断头读完了没 */
-            if (StringUtil.isNull(line) && buffer == null){
-                /* 遇到空行就说明从下一行开始是内容了 */
-                buffer = new StringBuffer();
-
-                boolean isContinue = isFormData();
-                if(isContinue){
-                    /* 如果formData就不需要读内容了，直接将整个请求体返回即可 */
-                    break;
-                } else {
-                    continue;
-                }
+            if(StringUtil.isNull(head)){
+                continue;
             }
 
-            if(buffer != null){
-                /* 读取内容 */
-                if(!isFirstContent){
-                    buffer.append(carriageReturn);
-                }
-                buffer.append(line);
-                isFirstContent = false;
-            } else {
-                /* 读取头信息 */
-                String[] header = line.split(separator);
-                if (header.length < 2) {
-                    continue;
-                }
-                setRequestHeader(header[0].trim(), header[1].trim());
+            /* 读取头信息 */
+            String[] header = head.split(separator);
+            if (header.length < 2) {
+                continue;
             }
+            setRequestHeader(header[0].trim(), header[1].trim());
         }
 
-        /* 保存本次的请求体 */
-        if(isFormData()){
-            requestBody = new ByteArrayInputStream(bytes);
-        } else if(buffer != null){
-            requestBody = new ByteArrayInputStream(buffer.toString().getBytes(MarsConstant.ENCODING));
-        }
+        return (headStr + headEnd).getBytes(MarsConstant.ENCODING).length;
     }
 
     /**
@@ -179,6 +204,20 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     }
 
     /**
+     * 解析请求
+     * @param outputStream
+     * @throws Exception
+     */
+    private void parseRequest(ByteArrayOutputStream outputStream, int headLen) throws Exception {
+        if (outputStream == null || outputStream.size() < 1) {
+            return;
+        }
+        requestBody = new ByteArrayInputStream(outputStream.toByteArray());
+        /* 跳过head，剩下的就是body */
+        requestBody.skip(headLen);
+    }
+
+    /**
      * 执行响应操作
      * @throws IOException
      */
@@ -196,10 +235,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     private void responseFile() throws IOException {
         /* 加载响应头 */
         setResponseHeader(MarsConstant.CONTENT_TYPE, "application/octet-stream");
-
-        /* 加载响应头 */
         StringBuffer buffer = getCommonResponse(responseBody.length);
-        buffer.append(carriageReturn);
 
         /* 转成ByteBuffer */
         byte[] bytes = buffer.toString().getBytes(MarsConstant.ENCODING);
@@ -233,7 +269,6 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
         StringBuffer buffer = getCommonResponse(text.getBytes().length);
 
         /* 加载要响应的数据 */
-        buffer.append(carriageReturn);
         buffer.append(text);
 
         /* 转成ByteBuffer */
@@ -292,20 +327,8 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             buffer.append(entry.getKey() + ":" + valueStr.toString());
             buffer.append(carriageReturn);
         }
-
+        buffer.append(carriageReturn);
         return buffer;
-    }
-
-    /**
-     * 是否是formData
-     * @return
-     */
-    private boolean isFormData(){
-        String contentType = getContentType();
-        if(ParamTypeConstant.isFormData(contentType)){
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -322,5 +345,22 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             return null;
         }
         return headList.get(0);
+    }
+
+    /**
+     * 获取请求长度
+     * @return
+     */
+    public long getRequestContentLength(){
+        List<String> lengthList = requestHeaders.get(MarsConstant.CONTENT_LENGTH);
+        if(lengthList == null || lengthList.size() < 1){
+            lengthList = requestHeaders.get(MarsConstant.CONTENT_LENGTH_LOW);
+        }
+
+        if(lengthList == null || lengthList.size() < 1){
+            return -1;
+        }
+
+        return Long.parseLong(lengthList.get(0));
     }
 }

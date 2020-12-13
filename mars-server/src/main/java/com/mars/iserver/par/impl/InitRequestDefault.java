@@ -10,7 +10,6 @@ import com.mars.iserver.par.formdata.ParsingFormData;
 import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
-import com.sun.net.httpserver.HttpExchange;
 import org.apache.commons.fileupload.UploadContext;
 
 import java.io.BufferedReader;

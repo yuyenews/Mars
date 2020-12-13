@@ -17,19 +17,18 @@
 
 <div align=center>
 
-声明式API编程 (DAP) 框架
+基于NIO的Web编程框架
 
 </div>
 
 ## 项目简介
 
-Martian 是一个声明式API编程 (DAP) 的Java开发框架
+Martian 是一个基于NIO的JavaWeb编程框架
 
-- 以HttpServer作为 http服务，彻底脱离Tomcat这一类的Web容器和Servlet，同时也让项目减少了几个依赖
+- 基于NIO，彻底脱离Tomcat，JBoss等容器
 - 声明式API，让Controller变成了一个interface，降低了开发的工作量
 - 拥有其他web框架 拥有的大部分功能，比如AOP,IOC,声明式事务,异常监听等
 - 拥有自主开发的 半ORM持久层框架，并天然的集成到了Martian中
-- 如果你不喜欢HttpServer，我们也提供了Tomcat启动器
 
 ## 项目生态
 - 【分布式组件】[Martian-cloud](https://github.com/yuyenews/Martian-Cloud)

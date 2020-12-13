@@ -22,13 +22,12 @@ import org.apache.commons.fileupload.UploadContext;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import static java.lang.String.format;
 
 /**
  * 这个类拷贝自apache的common-fileupload项目
- * 做了少量的修改，将servletRequest换成了HttpExchange，同时修改了多个方法的实现
+ * 做了少量的修改，将servletRequest换成了MarsHttpExchange，同时修改了多个方法的实现
  * 类名也做了更改
  *
  * <p>Provides access to the request information needed for a request made to
@@ -116,14 +115,11 @@ public class HttpExchangeRequestContext implements UploadContext {
     public long contentLength() {
         long size = 0;
         try {
-            List<String> ctList = request.getRequestHeaders().get(MarsConstant.CONTENT_LENGTH);
-            if(ctList == null || ctList.size() < 1){
-                ctList = request.getRequestHeaders().get(MarsConstant.CONTENT_LENGTH_LOW);
+            size = request.getRequestContentLength();
+            if(size < 0){
+                throw new Exception();
             }
-            if(ctList != null && ctList.size() > 0){
-                size = Long.parseLong(ctList.get(0));
-            }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             try {
                 size = request.getRequestBody().available();
             } catch (Exception e2){
