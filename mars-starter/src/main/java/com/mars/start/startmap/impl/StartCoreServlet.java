@@ -17,6 +17,6 @@ public class StartCoreServlet implements StartMap {
      */
     @Override
     public void load(StartParam startParam) throws Exception {
-        CoreServletClass.setCls(MarsCoreServlet.class);
+        CoreServletClass.setObject(new MarsCoreServlet());
     }
 }

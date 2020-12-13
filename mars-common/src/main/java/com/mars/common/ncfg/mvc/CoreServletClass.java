@@ -8,13 +8,13 @@ public class CoreServletClass {
     /**
      * 核心servlet类
      */
-    private static Class<?> cls;
+    private static Object object;
 
-    public static Class<?> getCls() {
-        return cls;
+    public static Object getObject() {
+        return object;
     }
 
-    public static void setCls(Class<?> cls) {
-        CoreServletClass.cls = cls;
+    public static void setObject(Object object) {
+        CoreServletClass.object = object;
     }
 }

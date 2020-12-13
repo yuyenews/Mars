@@ -3,10 +3,10 @@ package com.mars.iserver.execute;
 import com.mars.common.ncfg.mvc.CoreServletClass;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
-import com.mars.iserver.constant.ExecConstant;
 import com.mars.iserver.par.factory.InitRequestFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.server.server.servlet.MarsServlet;
 import com.mars.server.util.RequestUtil;
 import com.mars.iserver.execute.access.PathAccess;
 import com.mars.iserver.par.factory.ParamAndResultFactory;
@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * 处理请求的线程
@@ -37,11 +36,9 @@ public class RequestExecute {
 				/* 如果是合法请求，那就获取请求的参数数据，并填充request对象 */
 				request = InitRequestFactory.getInitRequest().getHttpMarsRequest(request);
 
-				/* 通过反射执行核心控制器 */
-				Class<?> cls = CoreServletClass.getCls();
-				Object object = cls.getDeclaredConstructor().newInstance();
-				Method helloMethod = cls.getDeclaredMethod(ExecConstant.DO_REQUEST, new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
-				result = helloMethod.invoke(object, new Object[]{request, response});
+				/* 执行核心控制器 */
+				MarsServlet marsServlet = (MarsServlet)CoreServletClass.getObject();
+				result = marsServlet.doRequest(request, response);
 			}
 
 			/* 响应 */
