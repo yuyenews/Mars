@@ -78,6 +78,8 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             boolean readHead = false;
             /* head的长度，用来计算body长度 */
             int headLength = 0;
+            /* 内容长度 */
+            long contentLength = -1;
 
             /* 开始读数据 */
             while (socketChannel.read(readBuffer) > -1) {
@@ -110,15 +112,8 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                         break;
                     }
 
-                    /*
-                     * 当请求头读完了以后，并且本次请求不是get
-                     * 则加大每次读取的量，提高速度来继续读body
-                     */
-                    readBuffer = ByteBuffer.allocate(readSize);
-                    readBuffer.clear();
-                } else {
                     /* 从head获取到Content-Length */
-                    long contentLength = getRequestContentLength();
+                    contentLength = getRequestContentLength();
                     if(contentLength < 0){
                         /*
                          * 能进入到这里，就说明头肯定读完了，
@@ -128,6 +123,13 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                         break;
                     }
 
+                    /*
+                     * 当请求头读完了以后，并且本次请求不是get
+                     * 则加大每次读取的量，提高速度来继续读body
+                     */
+                    readBuffer = ByteBuffer.allocate(readSize);
+                    readBuffer.clear();
+                } else {
                     /* 判断已经读取的body长度是否等于Content-Length，如果条件满足则说明读取完成 */
                     int streamLength = outputStream.size();
                     if((streamLength - headLength) >= contentLength){
