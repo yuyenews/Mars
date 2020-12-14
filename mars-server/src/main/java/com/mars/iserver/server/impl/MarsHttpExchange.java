@@ -151,9 +151,9 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             errorResponseText(e);
         } finally {
             try {
+                socketChannel.close();
                 selectionKey.cancel();
                 selector.wakeup();
-                socketChannel.close();
             } catch (Exception e){
             }
         }
