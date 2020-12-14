@@ -47,7 +47,7 @@ public class MarsDefaultServer implements MarsServer {
             log.info("启动成功");
 
             /* 开始监听 */
-            doStart(selector);
+            doMonitor(selector);
         } catch (Exception e) {
             log.error("NIO发生异常", e);
         }
@@ -59,7 +59,7 @@ public class MarsDefaultServer implements MarsServer {
      * @param selector
      * @throws Exception
      */
-    private void doStart(Selector selector) throws Exception {
+    private void doMonitor(Selector selector) throws Exception {
         while (true) {
             int eventCountTriggered = selector.select();
             if (eventCountTriggered == 0) {

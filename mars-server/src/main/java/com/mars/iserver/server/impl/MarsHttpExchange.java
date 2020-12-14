@@ -61,11 +61,17 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * 解析与处理请求
      */
     public void handleSelectKey() {
-        ByteBuffer readBuffer = ByteBuffer.allocate(readSize);
+        /*
+         * 一开始需要先读取请求头，所以这里要设置小一点，防止读出过多的数据
+         * 为什么设置为800字节，因为经过测试，一次很常规的请求头部大小基本在300 - 600字节左右
+         * get比较特别，因为地址栏会带参数，但是get一般用来查数据，所以传参不会特别大
+         */
+        ByteBuffer readBuffer = ByteBuffer.allocate(800);
         readBuffer.clear();
 
         socketChannel = (SocketChannel) selectionKey.channel();
         try {
+            /* 用来储存从socketChannel读出来的数据 */
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
             /* 是否已经读完head了 */
@@ -91,17 +97,25 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                         continue;
                     }
 
-                    /* 解析头并获取Content-Length */
+                    /* 解析头并获取头的长度 */
                     headLength = parseHeader(headStr);
                     readHead = true;
 
                     /*
                      * 如果头读完了，并且此次请求是GET，则停止，
                      * 因为GET没有Content-Length如果不停止会死循环
+                     * 而且GET的信息都在头里，没有body，不停止也没意义
                      */
                     if(requestMethod.toUpperCase().equals(ReqMethod.GET.toString())){
                         break;
                     }
+
+                    /*
+                     * 当请求头读完了以后，并且本次请求不是get
+                     * 则加大每次读取的量，提高速度来继续读body
+                     */
+                    readBuffer = ByteBuffer.allocate(readSize);
+                    readBuffer.clear();
                 } else {
                     /* 从head获取到Content-Length */
                     long contentLength = getRequestContentLength();
