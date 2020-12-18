@@ -59,10 +59,18 @@ public class RequestExecute {
 		String msg = null;
 		if(e instanceof InvocationTargetException){
 			InvocationTargetException invocationTargetException = (InvocationTargetException)e;
-			msg = invocationTargetException.getTargetException().getMessage();
+			Object obj = invocationTargetException.getTargetException().getCause();
+			msg = obj.getClass().getName() + ":" + ((Throwable)obj).getMessage();
 		} else {
 			msg = e.getMessage();
+			if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
+				Object eObj = e.getCause();
+				msg = eObj.getClass().getName() + ":" + ((Throwable)eObj).getMessage();
+			} else {
+				msg = e.getClass().getName() + ":" + msg;
+			}
 		}
+
 		if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
 			msg = "服务端出现异常,请查看日志以及检查您的代码进行排查";
 		}
