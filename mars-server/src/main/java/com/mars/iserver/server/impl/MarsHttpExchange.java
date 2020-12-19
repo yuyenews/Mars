@@ -5,6 +5,7 @@ import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.common.util.StringUtil;
 import com.mars.iserver.server.MarsServerHandler;
+import com.mars.iserver.server.factory.MarsServerHandlerFactory;
 import com.mars.iserver.server.model.MarsHttpExchangeModel;
 import com.mars.iserver.server.model.RequestURI;
 import org.slf4j.Logger;
@@ -142,7 +143,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             getBody(outputStream, headLength);
 
             /* 执行handler */
-            MarsServerHandler marsServerHandler = new MarsServerHandler();
+            MarsServerHandler marsServerHandler = MarsServerHandlerFactory.getMarsServerHandler();
             marsServerHandler.request(this);
 
             /* 响应数据 */
