@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 处理请求的线程
@@ -59,13 +61,12 @@ public class RequestExecute {
 		String msg = null;
 		if(e instanceof InvocationTargetException){
 			InvocationTargetException invocationTargetException = (InvocationTargetException)e;
-			Object obj = invocationTargetException.getTargetException().getCause();
-			msg = obj.getClass().getName() + ":" + ((Throwable)obj).getMessage();
+			Throwable obj = invocationTargetException.getTargetException().getCause();
+			msg = obj.getClass().getName() + ":" + obj.getMessage();
 		} else {
 			msg = e.getMessage();
 			if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
-				Object eObj = e.getCause();
-				msg = eObj.getClass().getName() + ":" + ((Throwable)eObj).getMessage();
+				msg = e.getCause().getClass().getName() + ":" + e.getCause().getMessage();
 			} else {
 				msg = e.getClass().getName() + ":" + msg;
 			}
