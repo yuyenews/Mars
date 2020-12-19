@@ -23,11 +23,6 @@ public class MarsDefaultServer implements MarsServer {
     private Logger log = LoggerFactory.getLogger(MarsDefaultServer.class);
 
     /**
-     * hostName
-     */
-    private String hostName = "localhost";
-
-    /**
      * 开启服务
      *
      * @param portNumber
@@ -37,7 +32,7 @@ public class MarsDefaultServer implements MarsServer {
         try {
             ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.configureBlocking(false);
-            serverSocketChannel.bind(new InetSocketAddress(hostName, portNumber));
+            serverSocketChannel.bind(new InetSocketAddress(portNumber));
 
             Selector selector = Selector.open();
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
