@@ -64,8 +64,6 @@ public class RequestExecute {
 		} else {
 			msg = e.getMessage();
 			if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
-				msg = e.getCause().getClass().getName() + ":" + e.getCause().getMessage();
-			} else {
 				msg = e.getClass().getName() + ":" + msg;
 			}
 		}
