@@ -6,8 +6,6 @@ import java.io.*;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 请求处理器的父类
@@ -72,10 +70,8 @@ public class MarsHttpExchangeModel {
     public MarsHttpExchangeModel(){
         requestHeaders = new HttpHeaders();
         responseHeaders = new HttpHeaders();
-        List<String> values = new ArrayList<>();
-        values.add("text/json;charset="+ MarsConstant.ENCODING);
-        responseHeaders.put(MarsConstant.CONTENT_TYPE, values);
 
+        responseHeaders.put(MarsConstant.CONTENT_TYPE, "text/json;charset="+ MarsConstant.ENCODING);
         sendText = MarsConstant.VOID;
         statusCode = 200;
     }
@@ -101,44 +97,12 @@ public class MarsHttpExchangeModel {
     }
 
     /**
-     * 追加请求头
-     * @param name
-     * @param value
-     */
-    public void addRequestHeader(String name, String value){
-        List<String> values = requestHeaders.get(name);
-        if(values == null){
-            values = new ArrayList<>();
-        }
-
-        values.add(value);
-        requestHeaders.put(name, values);
-    }
-
-    /**
      * 设置请求头
      * @param name
      * @param value
      */
     public void setRequestHeader(String name, String value){
-        List<String> values = new ArrayList<>();
-        values.add(value);
-        requestHeaders.put(name, values);
-    }
-
-    /**
-     * 追加响应头
-     * @param name
-     * @param value
-     */
-    public void addResponseHeader(String name, String value){
-        List<String> values = responseHeaders.get(name);
-        if(values == null){
-            values = new ArrayList<>();
-        }
-
-        values.add(value);
-        responseHeaders.put(name, values);
+        requestHeaders.put(name, value);
     }
 
     /**
@@ -147,9 +111,7 @@ public class MarsHttpExchangeModel {
      * @param value
      */
     public void setResponseHeader(String name, String value){
-        List<String> values = new ArrayList<>();
-        values.add(value);
-        responseHeaders.put(name, values);
+        responseHeaders.put(name, value);
     }
 
     /**

@@ -93,13 +93,6 @@ public abstract class HttpMarsRequest {
 	public abstract String getHeader(String key);
 
 	/**
-	 * 获取请求头数据
-	 * @param key 键
-	 * @return 头数据
-	 */
-	public abstract List<String> getHeaders(String key);
-
-	/**
 	 * 获取请求的参数集
 	 * @return 请求参数
 	 */

@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -328,21 +327,12 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
         buffer.append(carriageReturn);
 
         /* 加载自定义头 */
-        for(Map.Entry<String, List<String>> entry : responseHeaders.entrySet()){
-            List<String> values = entry.getValue();
-            if(values == null || values.size() < 1){
+        for(Map.Entry<String, String> entry : responseHeaders.entrySet()){
+            String value = entry.getValue();
+            if(value == null){
                 continue;
             }
-            StringBuffer valueStr = new StringBuffer();
-            for(int i=0;i<values.size();i++){
-                String value = values.get(i);
-                if(i > 0){
-                    valueStr.append(",");
-                }
-                valueStr.append(value);
-            }
-
-            buffer.append(entry.getKey() + ":" + valueStr.toString());
+            buffer.append(entry.getKey() + ":" + value);
             buffer.append(carriageReturn);
         }
         buffer.append(carriageReturn);
@@ -354,15 +344,11 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * @return
      */
     public String getContentType(){
-        List<String> headList = requestHeaders.get(MarsConstant.CONTENT_TYPE);
-        if(headList == null || headList.size() < 1){
-            headList = requestHeaders.get(MarsConstant.CONTENT_TYPE_LOW);
+        String contentType = requestHeaders.get(MarsConstant.CONTENT_TYPE);
+        if(contentType == null){
+            contentType = requestHeaders.get(MarsConstant.CONTENT_TYPE_LOW);
         }
-
-        if(headList == null || headList.size() < 1){
-            return null;
-        }
-        return headList.get(0);
+       return contentType;
     }
 
     /**
@@ -370,15 +356,14 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * @return
      */
     public long getRequestContentLength(){
-        List<String> lengthList = requestHeaders.get(MarsConstant.CONTENT_LENGTH);
-        if(lengthList == null || lengthList.size() < 1){
-            lengthList = requestHeaders.get(MarsConstant.CONTENT_LENGTH_LOW);
+        String contentLength = requestHeaders.get(MarsConstant.CONTENT_LENGTH);
+        if(contentLength == null){
+            contentLength = requestHeaders.get(MarsConstant.CONTENT_LENGTH_LOW);
         }
 
-        if(lengthList == null || lengthList.size() < 1){
+        if(contentLength == null){
             return -1;
         }
-
-        return Long.parseLong(lengthList.get(0));
+        return Long.parseLong(contentLength);
     }
 }

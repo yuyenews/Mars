@@ -4,8 +4,6 @@ import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsRequest;
 
-import java.util.List;
-
 /**
  * 请求对象
  * @author yuye
@@ -68,35 +66,18 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	public String getUrl() {
 		return httpExchange.getRequestURI().toString();
 	}
-	
+
 	/**
 	 * 获取请求头数据
 	 * @param key 键
 	 * @return 头数据
 	 */
 	public String getHeader(String key) {
-		List<String> headers = getHeaders(key);
-		if(headers == null || headers.size() < 1){
-			return null;
-		}
-		return headers.get(0);
-	}
-
-	/**
-	 * 获取请求头数据
-	 * @param key 键
-	 * @return 头数据
-	 */
-	public List<String> getHeaders(String key) {
 		return httpExchange.getRequestHeaders().get(key);
 	}
 
 	@Override
 	public String getInetSocketAddress() {
-		List<String> hostList = httpExchange.getRequestHeaders().get("Host");
-		if(hostList == null || hostList.size() < 1){
-			return null;
-		}
-		return hostList.get(0);
+		return httpExchange.getRequestHeaders().get("Host");
 	}
 }
