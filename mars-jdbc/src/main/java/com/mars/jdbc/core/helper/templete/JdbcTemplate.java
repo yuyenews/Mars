@@ -176,17 +176,17 @@ public class JdbcTemplate extends BaseJdbcTemplate {
      * @return
      * @throws Exception
      */
-    public long getLastInsertID() throws Exception {
+    public Object getLastInsertID() throws Exception {
         Map<String,Object> result =  selectOne("select LAST_INSERT_ID()");
         if(result == null || result.size() < 1){
-            return 0;
+            return null;
         }
         for (Map.Entry<String, Object> entry : result.entrySet()) {
             Object obj = entry.getValue();
             if (obj != null) {
-                return Long.parseLong(obj.toString());
+                return obj;
             }
         }
-        return 0;
+        return null;
     }
 }
