@@ -63,7 +63,7 @@ public class RequestExecute {
 			msg = obj.getClass().getName() + ":" + obj.getMessage();
 		} else {
 			msg = e.getMessage();
-			if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
+			if (!StringUtil.isNull(msg) && !msg.trim().toUpperCase().equals("NULL")) {
 				msg = e.getClass().getName() + ":" + msg;
 			}
 		}

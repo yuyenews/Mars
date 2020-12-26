@@ -10,6 +10,7 @@ import com.mars.common.util.StringUtil;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 执行api引用的资源
@@ -20,6 +21,11 @@ public class ExecuteRef {
      * 所有的bean对象
      */
     private static Map<String, MarsBeanModel> beanModelMap = LoadHelper.getBeanObjectMap();
+
+    /**
+     * 方法缓存
+     */
+    private static Map<String, Method> methodMap = new ConcurrentHashMap<>();
 
     /**
      * 指定服务层的方法
@@ -95,17 +101,40 @@ public class ExecuteRef {
      * @return 返回值
      * @throws Exception 异常
      */
-    private static Object executeRefMethod(Class<?> cls,Object obj,Object[] args, String refName) throws Exception {
+    private static Object executeRefMethod(Class<?> cls, Object obj, Object[] args, String refName) throws Exception {
+        /* 先从缓存取，如果取不到方法，再查找 */
+        Method method = methodMap.get(cls.getName() + refName);
+        if(method != null){
+            return execMethod(obj, method, args);
+        }
+
+        /* 缓存中没有，就遍历查找 */
         Method[] methods = cls.getDeclaredMethods();
         for(Method methodItem : methods){
             if(methodItem.getName().equals(refName)){
-                if(args == null || args.length < 1){
-                    return methodItem.invoke(obj);
-                }
-                return methodItem.invoke(obj,args);
+                Object result = execMethod(obj, methodItem, args);
+
+                /* 把执行过的方法都缓存下来，下次就不用再遍历查找了 */
+                methodMap.put(cls.getName() + methodItem.getName(), methodItem);
+                return result;
             }
         }
         return "errorRef";
+    }
+
+    /**
+     * 执行方法
+     * @param obj
+     * @param method
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    private static Object execMethod(Object obj, Method method, Object[] args) throws Exception {
+        if(args == null || args.length < 1){
+            return method.invoke(obj);
+        }
+        return method.invoke(obj,args);
     }
 
     /**

@@ -87,7 +87,7 @@ public class ExecuteMars {
 	 */
 	private Object executeMarsApiMethod(MarsMappingModel marsMappingModel, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		Object obj = marsMappingModel.getObject();
-		Method method = getMethod(marsMappingModel);
+		Method method = marsMappingModel.getExeMethod();
 
 		/* 获取前端传参 */
 		Object[] params = ParamAndResultFactory.getBaseParamAndResult().getParam(method,request,response);
@@ -110,25 +110,6 @@ public class ExecuteMars {
 		}
 
 		return result;
-	}
-
-	/**
-	 * 根据方法名获取到要执行的方法
-	 * 这里的复杂度为O(n)，是为了给方法的参数注入
-	 * 如果直接通过name去get，必须事先指定参数类型
-	 *
-	 * @param marsMappingModel
-	 * @return
-	 */
-	private Method getMethod(MarsMappingModel marsMappingModel){
-		Class<?> cls = marsMappingModel.getCls();
-		Method[] methods = cls.getMethods();
-		for(Method methodItem : methods){
-			if(methodItem.getName().equals(marsMappingModel.getMethod())){
-				return methodItem;
-			}
-		}
-		return null;
 	}
 
 	/**
