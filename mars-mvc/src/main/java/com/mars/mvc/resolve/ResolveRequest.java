@@ -10,7 +10,6 @@ import com.mars.mvc.load.model.MarsMappingModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,9 +22,12 @@ public class ResolveRequest {
 	private Logger log = LoggerFactory.getLogger(ResolveRequest.class);
 
 	private static ResolveRequest resolveRequest = new ResolveRequest();
-	
-	private MarsSpace constants = MarsSpace.getEasySpace();
-	
+
+	/**
+	 * MarsApi集合
+	 */
+	private Map<String, MarsMappingModel> marsApiList;
+
 	/**
 	 * 执行器对象
 	 */
@@ -46,14 +48,16 @@ public class ResolveRequest {
 	public Object resolve(HttpMarsRequest request, HttpMarsResponse response) throws Exception {
 		
 		try {
-			Map<String, MarsMappingModel> maps = getMarsApis();
+			if(marsApiList == null){
+				initMarsApis();
+			}
 			String uri = getRequestPath(request).toUpperCase();
 			if(uri.equals("/")){
 				/* 如果请求的是根目录，则返回欢迎语 */
 				return MvcConstant.WELCOME;
 			}
 
-			return executeMars.execute(maps.get(uri),request.getMethod(),request,response);
+			return executeMars.execute(marsApiList.get(uri),request.getMethod(),request,response);
 		} catch (Exception e) {
 			log.error("解释请求的时候报错",e);
 			throw e;
@@ -78,14 +82,10 @@ public class ResolveRequest {
 	 * 获取所有的MarsApi对象
 	 * @return duix
 	 */
-	private Map<String, MarsMappingModel> getMarsApis() {
-		
-		Map<String, MarsMappingModel> controlObjects = new HashMap<>();
-		Object obj = constants.getAttr(MarsConstant.CONTROLLER_OBJECTS);
+	private void initMarsApis() {
+		Object obj = MarsSpace.getEasySpace().getAttr(MarsConstant.CONTROLLER_OBJECTS);
 		if(obj != null) {
-			controlObjects = (Map<String, MarsMappingModel>)obj;
+			marsApiList = (Map<String, MarsMappingModel>)obj;
 		}
-		
-		return controlObjects;
 	}
 }

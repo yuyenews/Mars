@@ -17,11 +17,26 @@ public class RequestUtil {
 	public static String getUriName(HttpMarsRequest request) {
 		/* 获取路径 */
 		String uri = request.getUrl();
-		if(uri.indexOf("?")>-1) {
-			uri = uri.substring(uri.lastIndexOf("/"),uri.indexOf("?"));
+		if(uri.startsWith("/")){
+			return subUri(uri, 0);
 		} else {
-			uri = uri.substring(uri.lastIndexOf("/"));
+			int start = uri.lastIndexOf("/");
+			return subUri(uri, start);
 		}
-		return uri;
+	}
+
+	/**
+	 * 截取请求路径
+	 * @param uri
+	 * @param start
+	 * @return
+	 */
+	private static String subUri(String uri, int start){
+		int end = uri.indexOf("?");
+		if(end > -1){
+			return uri.substring(start, end);
+		} else {
+			return uri.substring(start);
+		}
 	}
 }

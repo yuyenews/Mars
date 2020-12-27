@@ -22,12 +22,12 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class RequestExecute {
 
-	private Logger log = LoggerFactory.getLogger(RequestExecute.class);
+	private static Logger log = LoggerFactory.getLogger(RequestExecute.class);
 
 	/**
 	 * 执行请求
 	 */
-	public void execute(HttpMarsRequest request, HttpMarsResponse response) {
+	public static void execute(HttpMarsRequest request, HttpMarsResponse response) {
 		try {
 			Object result = "ok";
 			/* 如果请求路径合法，则继续往下执行 */
@@ -55,7 +55,7 @@ public class RequestExecute {
 	 * @param e 异常对象
 	 * @return 信息
 	 */
-	private String getErrorMsg(Exception e) {
+	private static String getErrorMsg(Exception e) {
 		String msg = null;
 		if(e instanceof InvocationTargetException){
 			InvocationTargetException invocationTargetException = (InvocationTargetException)e;

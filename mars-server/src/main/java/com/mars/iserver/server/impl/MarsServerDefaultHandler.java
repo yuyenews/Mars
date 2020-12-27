@@ -30,8 +30,7 @@ public class MarsServerDefaultHandler implements MarsServerHandler {
         HttpMarsResponse response = new HttpMarsDefaultResponse(exchange);
 
         try {
-            RequestExecute requestExecute = new RequestExecute();
-            requestExecute.execute(request, response);
+            RequestExecute.execute(request, response);
         } catch (Exception e) {
             log.error("处理请求失败!", e);
             ResponseUtil.sendServerError(response,"处理请求发生错误"+e.getMessage());
