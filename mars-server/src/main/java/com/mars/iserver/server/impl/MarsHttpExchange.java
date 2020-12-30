@@ -1,6 +1,7 @@
 package com.mars.iserver.server.impl;
 
 import com.mars.common.annotation.enums.ReqMethod;
+import com.mars.common.base.config.model.RequestConfig;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.common.util.StringUtil;
@@ -29,6 +30,11 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     private static int readSize;
 
     /**
+     * 读取超时时间
+     */
+    private static int readTimeout;
+
+    /**
      * 回车换行符
      */
     private static String carriageReturn = "\r\n";
@@ -54,7 +60,9 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      */
     public MarsHttpExchange(){
         super();
-        readSize = MarsConfiguration.getConfig().readSize();
+        RequestConfig requestConfig = MarsConfiguration.getConfig().requestConfig();
+        readSize = requestConfig.getReadSize();
+        readTimeout = requestConfig.getReadTimeout();
     }
 
     /**
@@ -80,9 +88,17 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             int headLength = 0;
             /* 内容长度 */
             long contentLength = -1;
+            /* 开始读取时间 */
+            long start = System.currentTimeMillis();
 
             /* 开始读数据 */
             while (socketChannel.read(readBuffer) > -1) {
+                /* 计算是否超时 */
+                long end = System.currentTimeMillis();
+                if((end - start) > readTimeout){
+                    throw new Exception("读取请求数据超时");
+                }
+
                 /* 获取请求报文 */
                 readBuffer.flip();
                 byte[] bytes = new byte[readBuffer.limit()];
@@ -103,11 +119,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                     headLength = parseHeader(headStr);
                     readHead = true;
 
-                    /*
-                     * 如果头读完了，并且此次请求是GET，则停止，
-                     * 因为GET没有Content-Length如果不停止会死循环
-                     * 而且GET的信息都在头里，没有body，不停止也没意义
-                     */
+                    /* 如果头读完了，并且此次请求是GET，则停止 */
                     if(requestMethod.toUpperCase().equals(ReqMethod.GET.toString())){
                         break;
                     }
@@ -115,18 +127,10 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                     /* 从head获取到Content-Length */
                     contentLength = getRequestContentLength();
                     if(contentLength < 0){
-                        /*
-                         * 能进入到这里，就说明头肯定读完了，
-                         * 头读完了就说明Content-Length必定有值，因为上面对GET做了break处理，而其他请求方式必定有值
-                         * 所以如果没值的话就不正常了，需要停止掉，防止死循环
-                         */
                         break;
                     }
 
-                    /*
-                     * 当请求头读完了以后，并且本次请求不是get
-                     * 则加大每次读取的量，提高速度来继续读body
-                     */
+                    /* 当请求头读完了以后，并且本次请求不是get, 就加大每次读取大小 加快速度 */
                     readBuffer = ByteBuffer.allocate(readSize);
                     readBuffer.clear();
                 } else {

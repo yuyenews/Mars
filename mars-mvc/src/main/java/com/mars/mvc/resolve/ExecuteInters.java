@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 执行拦截器
@@ -23,119 +25,137 @@ import java.util.List;
  *
  */
 public class ExecuteInters {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(ExecuteInters.class);
 
 	/**
+	 * 拦截器缓存，按照请求的URL分好类
+	 */
+	private static Map<String, List<MarsInterModel>> interList = new ConcurrentHashMap<>();
+
+	/**
 	 * 执行拦截器的开始方法
-	 * @param list 拦截器集合
-	 * @param request 请求对象
+	 *
+	 * @param list     拦截器集合
+	 * @param request  请求对象
 	 * @param response 响应对象
 	 * @return 拦截器的返回数据
 	 */
 	public static Object executeIntersStart(List<MarsInterModel> list, HttpMarsRequest request, HttpMarsResponse response) throws Exception {
-		String className = "";
+		Class className = null;
 		try {
-			for(MarsInterModel marsInterModel : list) {
-				className = marsInterModel.getCls().getName();
+			for (MarsInterModel marsInterModel : list) {
+				className = marsInterModel.getCls();
 
-				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.BEFORE_REQUEST, new Class[] { HttpMarsRequest.class, HttpMarsResponse.class });
-				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response });
-				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
+				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.BEFORE_REQUEST, new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
+				Object result = method2.invoke(marsInterModel.getObj(), new Object[]{request, response});
+				if (result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
 			}
 			return BaseInterceptor.SUCCESS;
 		} catch (Exception e) {
-			logger.error("执行拦截器报错，拦截器类型["+className+"]",e);
-			throw new Exception(errorResult(className,e),e) ;
+			logger.error("执行拦截器报错，拦截器类型[" + className.getName() + "]", e);
+			throw new Exception(errorResult(className.getName(), e), e);
 		}
 	}
-	
+
 	/**
 	 * 执行拦截器的结束方法
-	 * @param list 拦截器集合
-	 * @param request 请求对象
-	 * @param response 响应对象
+	 *
+	 * @param list      拦截器集合
+	 * @param request   请求对象
+	 * @param response  响应对象
 	 * @param conResult api的返回数据
 	 * @return 拦截器的返回数据
 	 */
 	public static Object executeIntersEnd(List<MarsInterModel> list, HttpMarsRequest request, HttpMarsResponse response, Object conResult) throws Exception {
-		String className = "";
+		Class className = null;
 		try {
-			
-			for(MarsInterModel marsInterModel : list) {
-				className = marsInterModel.getCls().getName();
 
-				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.AFTER_REQUEST, new Class[] { HttpMarsRequest.class, HttpMarsResponse.class, Object.class });
-				Object result = method2.invoke(marsInterModel.getObj(), new Object[] { request, response, conResult });
-				if(result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
+			for (MarsInterModel marsInterModel : list) {
+				className = marsInterModel.getCls();
+
+				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.AFTER_REQUEST, new Class[]{HttpMarsRequest.class, HttpMarsResponse.class, Object.class});
+				Object result = method2.invoke(marsInterModel.getObj(), new Object[]{request, response, conResult});
+				if (result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
 			}
-			
+
 			return BaseInterceptor.SUCCESS;
 		} catch (Exception e) {
-			logger.error("执行拦截器报错，拦截器类型["+className+"]",e);
-			throw new Exception(errorResult(className,e),e) ;
-		} 
+			logger.error("执行拦截器报错，拦截器类型[" + className.getName() + "]", e);
+			throw new Exception(errorResult(className.getName(), e), e);
+		}
 	}
-	
+
 	/**
 	 * 获取所有符合条件的拦截器
+	 *
 	 * @param uriEnd url
 	 * @return 拦截器集合
 	 */
 	public static List<MarsInterModel> getInters(String uriEnd) {
 		try {
-			List<MarsInterModel> list = new ArrayList<>();
-
-			Object interceptorsObj = MarsSpace.getEasySpace().getAttr(MarsConstant.INTERCEPTOR_OBJECTS);
-			if(interceptorsObj == null) {
+			/* 先从缓存中直接取，如果有就返回 */
+			List<MarsInterModel> list = interList.get(uriEnd);
+			if (list != null && list.size() > 0) {
 				return list;
 			}
 
-			List<MarsInterModel> interceptors = (List<MarsInterModel>)interceptorsObj;
-			for(MarsInterModel marsInterModel : interceptors) {
-				if(MatchUtil.isMatch(marsInterModel.getPattern(), uriEnd.toUpperCase())){
-					if(hasExclude(marsInterModel,uriEnd)){
+			/* 如果缓存中没有，那就从MarsSpace中查找 */
+			list = new ArrayList<>();
+			Object interceptorsObj = MarsSpace.getEasySpace().getAttr(MarsConstant.INTERCEPTOR_OBJECTS);
+			if (interceptorsObj == null) {
+				return list;
+			}
+
+			/* 遍历拦截器，一个个的匹配 */
+			List<MarsInterModel> interceptors = (List<MarsInterModel>) interceptorsObj;
+			for (MarsInterModel marsInterModel : interceptors) {
+				if (MatchUtil.isMatch(marsInterModel.getPattern(), uriEnd.toUpperCase())) {
+					if (hasExclude(marsInterModel, uriEnd)) {
 						/* 如果此url在此拦截器的排除名单中，则不进行拦截 */
 						continue;
 					}
 					list.add(marsInterModel);
 				}
 			}
+			interList.put(uriEnd, list);
 			return list;
 		} catch (Exception e) {
-			logger.error("读取拦截器报错",e);
+			logger.error("读取拦截器报错", e);
 			return new ArrayList<>();
 		}
 	}
 
 	/**
 	 * 判断拦截器是否需要拦截此接口
+	 *
 	 * @param marsInterModel
 	 * @return
 	 * @throws Exception
 	 */
-	private static Boolean hasExclude(MarsInterModel marsInterModel,String uriEnd) throws Exception {
-		Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.EXCLUDE);
-		Object result = method2.invoke(marsInterModel.getObj());
-		if(result == null) {
+	private static Boolean hasExclude(MarsInterModel marsInterModel, String uriEnd) throws Exception {
+		Method method = marsInterModel.getCls().getDeclaredMethod(InterConstant.EXCLUDE);
+		Object result = method.invoke(marsInterModel.getObj());
+		if (result == null) {
 			return false;
 		}
-		List<String> excludeList = (List<String>)result;
+		List<String> excludeList = (List<String>) result;
 		Boolean hasExc = excludeList.contains(uriEnd);
 		return hasExc;
 	}
 
 	/**
 	 * 返回错误信息
+	 *
 	 * @param className 拦截器类名
 	 * @return
 	 */
-	private static String errorResult(String className,Exception e) {
-		JSONObject jsonObject = MesUtil.getMes(500,"执行拦截器报错，拦截器类型["+className+"],"+e.getMessage());
+	private static String errorResult(String className, Exception e) {
+		JSONObject jsonObject = MesUtil.getMes(500, "执行拦截器报错，拦截器类型[" + className + "]," + e.getMessage());
 		return jsonObject.toJSONString();
 	}
 }

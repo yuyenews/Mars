@@ -1,9 +1,6 @@
 package com.mars.common.base.config;
 
-import com.mars.common.base.config.model.CrossDomainConfig;
-import com.mars.common.base.config.model.FileUploadConfig;
-import com.mars.common.base.config.model.JedisConfig;
-import com.mars.common.base.config.model.ThreadPoolConfig;
+import com.mars.common.base.config.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +39,11 @@ public abstract class MarsConfig {
     }
 
     /**
-     * 读取请求报文的缓冲区大小(每次读多少字节)
-     * 默认 1M
+     * 请求设置
      * @return
      */
-    public int readSize(){
-        return 1 * 1024 * 1024;
+    public RequestConfig requestConfig(){
+        return new RequestConfig();
     }
 
     /**
