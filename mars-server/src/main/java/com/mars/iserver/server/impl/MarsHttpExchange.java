@@ -94,16 +94,10 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             /* 开始读数据 */
             while (socketChannel.read(readBuffer) > -1) {
                 /* 计算是否超时 */
-                long end = System.currentTimeMillis();
-                if((end - start) > readTimeout){
-                    throw new Exception("读取请求数据超时");
-                }
+                isReadTimeout(start);
 
                 /* 获取请求报文 */
-                readBuffer.flip();
-                byte[] bytes = new byte[readBuffer.limit()];
-                readBuffer.get(bytes);
-                readBuffer.clear();
+                byte[] bytes = getReadData(readBuffer);
 
                 /* 将本次读取到的数据追加到输出流 */
                 outputStream.write(bytes);
@@ -111,12 +105,13 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                 if(!readHead){
                     String headStr = new String(outputStream.toByteArray());
                     /* 判断是否已经把头读完了，如果出现了连续的两个换行，则代表头已经读完了 */
-                    if(headStr.indexOf(headEnd) < 0){
+                    int headEndIndex = headStr.indexOf(headEnd);
+                    if(headEndIndex < 0){
                         continue;
                     }
 
                     /* 解析头并获取头的长度 */
-                    headLength = parseHeader(headStr);
+                    headLength = parseHeader(headStr, headEndIndex);
                     readHead = true;
 
                     /* 如果头读完了，并且此次请求是GET，则停止 */
@@ -166,17 +161,36 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     }
 
     /**
+     * 读取数据
+     * @param readBuffer
+     * @return
+     */
+    private byte[] getReadData(ByteBuffer readBuffer){
+        readBuffer.flip();
+        byte[] bytes = new byte[readBuffer.limit()];
+        readBuffer.get(bytes);
+        readBuffer.clear();
+        return bytes;
+    }
+
+    /**
+     * 是否超时了
+     * @param start
+     * @throws Exception
+     */
+    private void isReadTimeout(long start) throws Exception {
+        long end = System.currentTimeMillis();
+        if((end - start) > readTimeout){
+            throw new Exception("读取请求数据超时");
+        }
+    }
+
+    /**
      * 读取请求头
      * @throws Exception
      */
-    private int parseHeader(String headStr) throws Exception {
-        if(StringUtil.isNull(headStr)){
-            return 0;
-        }
-        int index = headStr.indexOf(headEnd);
-        if(index > -1){
-            headStr = headStr.substring(0, index);
-        }
+    private int parseHeader(String headStr, int headEndIndex) throws Exception {
+        headStr = headStr.substring(0, headEndIndex);
 
         String[] headers = headStr.split(carriageReturn);
         for(int i=0;i<headers.length;i++){
