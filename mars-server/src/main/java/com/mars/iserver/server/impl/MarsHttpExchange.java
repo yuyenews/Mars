@@ -153,7 +153,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             responseData();
 
         } catch (Exception e) {
-            log.error("处理请求异常异常", e);
+            log.error("处理请求异常", e);
             errorResponseText(e);
         } finally {
             try {
@@ -312,7 +312,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     private void errorResponseText(Exception e){
         try {
             setResponseHeader(MarsConstant.CONTENT_TYPE, "text/json;charset="+MarsConstant.ENCODING);
-            responseText("处理请求异常异常" + e.getMessage());
+            responseText("处理请求异常:" + e.getMessage());
         } catch (Exception ex){
         }
     }

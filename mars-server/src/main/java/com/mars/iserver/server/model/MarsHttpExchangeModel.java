@@ -1,6 +1,9 @@
 package com.mars.iserver.server.model;
 
+import com.mars.common.base.config.MarsConfig;
+import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.constant.MarsConstant;
+import com.mars.common.util.MarsConfiguration;
 
 import java.io.*;
 import java.nio.channels.SelectionKey;
@@ -72,6 +75,8 @@ public class MarsHttpExchangeModel {
         responseHeaders = new HttpHeaders();
 
         responseHeaders.put(MarsConstant.CONTENT_TYPE, "text/json;charset="+ MarsConstant.ENCODING);
+        crossDomain();
+
         sendText = MarsConstant.VOID;
         statusCode = 200;
     }
@@ -185,5 +190,18 @@ public class MarsHttpExchangeModel {
     public void sendText(int statusCode, String text){
         this.statusCode = statusCode;
         this.sendText = text;
+    }
+
+    /**
+     * 设置跨域
+     */
+    private void crossDomain() {
+        MarsConfig marsConfig = MarsConfiguration.getConfig();
+        CrossDomainConfig crossDomainConfig = marsConfig.crossDomainConfig();
+        setResponseHeader("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
+        setResponseHeader("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
+        setResponseHeader("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
+        setResponseHeader("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
+        setResponseHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
     }
 }

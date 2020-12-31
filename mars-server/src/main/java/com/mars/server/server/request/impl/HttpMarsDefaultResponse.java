@@ -1,9 +1,6 @@
 package com.mars.server.server.request.impl;
 
-import com.mars.common.base.config.MarsConfig;
-import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.constant.MarsConstant;
-import com.mars.common.util.MarsConfiguration;
 import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
@@ -71,7 +68,6 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
      */
     public void send(String context) {
         try {
-            crossDomain();
             loadHeader();
 
             /* 设置响应头，必须在sendResponseHeaders方法之前设置 */
@@ -95,7 +91,6 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
                 logger.error("downLoad方法的传参不可以为空");
                 return;
             }
-            crossDomain();
             httpExchange.setResponseHeader(MarsConstant.CONTENT_DISPOSITION, "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
 
             /* 设置要下载的文件 */
@@ -115,18 +110,5 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
                 httpExchange.setResponseHeader(key, header.get(key));
             }
         }
-    }
-
-    /**
-     * 设置跨域
-     */
-    private void crossDomain() {
-        MarsConfig marsConfig = MarsConfiguration.getConfig();
-        CrossDomainConfig crossDomainConfig = marsConfig.crossDomainConfig();
-        httpExchange.setResponseHeader("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
-        httpExchange.setResponseHeader("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
-        httpExchange.setResponseHeader("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
-        httpExchange.setResponseHeader("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
-        httpExchange.setResponseHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
     }
 }
