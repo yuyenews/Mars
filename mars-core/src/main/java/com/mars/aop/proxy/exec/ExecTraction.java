@@ -1,11 +1,9 @@
 package com.mars.aop.proxy.exec;
 
-import com.mars.aop.constant.AopConstant;
+import com.mars.aop.base.BaseTraction;
 import com.mars.aop.model.AopModel;
 import com.mars.common.annotation.jdbc.Traction;
-import com.mars.common.ncfg.traction.TractionClass;
-
-import java.lang.reflect.Method;
+import com.mars.common.ncfg.traction.TractionFactory;
 
 public class ExecTraction {
 
@@ -18,8 +16,8 @@ public class ExecTraction {
         if (aopModel == null) {
             return;
         }
-        Method m2 = aopModel.getCls().getDeclaredMethod(AopConstant.START_METHOD, new Class[]{AopModel.class});
-        m2.invoke(aopModel.getObj(), new Object[]{aopModel});
+        BaseTraction baseTraction = (BaseTraction)aopModel.getObj();
+        baseTraction.beginTraction(aopModel);
     }
 
     /**
@@ -31,8 +29,8 @@ public class ExecTraction {
         if (aopModel == null) {
             return;
         }
-        Method m2 = aopModel.getCls().getDeclaredMethod(AopConstant.END_METHOD);
-        m2.invoke(aopModel.getObj());
+        BaseTraction baseTraction = (BaseTraction)aopModel.getObj();
+        baseTraction.commit();
     }
 
     /**
@@ -45,8 +43,8 @@ public class ExecTraction {
         if (aopModel == null) {
             return;
         }
-        Method m4 = aopModel.getCls().getDeclaredMethod(AopConstant.EXP_METHOD, new Class[]{Throwable.class});
-        m4.invoke(aopModel.getObj(), new Object[]{e});
+        BaseTraction baseTraction = (BaseTraction)aopModel.getObj();
+        baseTraction.rollback(e);
     }
 
     /**
@@ -60,9 +58,8 @@ public class ExecTraction {
            return null;
         }
         AopModel aopModel = new AopModel();
-        aopModel.setCls(TractionClass.getCls());
         aopModel.setTractionLevel(traction.level());
-        aopModel.setObj(TractionClass.getCls().getDeclaredConstructor().newInstance());
+        aopModel.setObj(TractionFactory.getTraction());
         return aopModel;
     }
 }

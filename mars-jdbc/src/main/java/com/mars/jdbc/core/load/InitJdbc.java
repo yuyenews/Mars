@@ -3,7 +3,7 @@ package com.mars.jdbc.core.load;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
-import com.mars.common.ncfg.traction.TractionClass;
+import com.mars.common.ncfg.traction.TractionFactory;
 import com.mars.jdbc.core.helper.base.DBHelper;
 import com.mars.jdbc.core.traction.TractionAop;
 
@@ -24,7 +24,7 @@ public class InitJdbc {
 	public void init() throws Exception{
 
 		/* 设置处理事务的类 */
-		TractionClass.setCls(TractionAop.class);
+		TractionFactory.setTraction(new TractionAop());
 
 		/* 加载数据源 */
 		loadDataSource();
