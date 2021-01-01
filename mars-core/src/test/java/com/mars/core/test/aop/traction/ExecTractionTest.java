@@ -15,7 +15,6 @@ public class ExecTractionTest {
     public void testBeginTraction(){
         try {
             AopModel aopModel = new AopModel();
-            aopModel.setCls(TractionTest.class);
             aopModel.setObj(new TractionTest());
             aopModel.setTractionLevel(TractionLevel.READ_UNCOMMITTED);
             ExecTraction.beginTraction(aopModel);
@@ -34,7 +33,6 @@ public class ExecTractionTest {
     public void testCommit(){
         try {
             AopModel aopModel = new AopModel();
-            aopModel.setCls(TractionTest.class);
             aopModel.setObj(new TractionTest());
             ExecTraction.commit(aopModel);
         } catch (Exception e){
@@ -46,7 +44,6 @@ public class ExecTractionTest {
     public void testRollback(){
         try {
             AopModel aopModel = new AopModel();
-            aopModel.setCls(TractionTest.class);
             aopModel.setObj(new TractionTest());
             ExecTraction.rollback(aopModel,new Exception("单测看一下事务异常"));
         } catch (Exception e){
