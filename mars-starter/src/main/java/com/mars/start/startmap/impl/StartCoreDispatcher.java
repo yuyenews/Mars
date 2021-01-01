@@ -1,14 +1,14 @@
 package com.mars.start.startmap.impl;
 
-import com.mars.common.ncfg.mvc.CoreServletClass;
-import com.mars.mvc.servlet.MarsCoreServlet;
+import com.mars.common.ncfg.mvc.DispatcherFactory;
+import com.mars.mvc.servlet.MarsCoreDispatcher;
 import com.mars.start.startmap.StartMap;
 import com.mars.start.startmap.StartParam;
 
 /**
  * 配置核心servlet
  */
-public class StartCoreServlet implements StartMap {
+public class StartCoreDispatcher implements StartMap {
 
     /**
      * 配置核心servlet
@@ -17,6 +17,6 @@ public class StartCoreServlet implements StartMap {
      */
     @Override
     public void load(StartParam startParam) throws Exception {
-        CoreServletClass.setObject(new MarsCoreServlet());
+        DispatcherFactory.setDispatcher(new MarsCoreDispatcher());
     }
 }

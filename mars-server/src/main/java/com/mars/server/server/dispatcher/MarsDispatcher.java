@@ -1,4 +1,4 @@
-package com.mars.server.server.servlet;
+package com.mars.server.server.dispatcher;
 
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
@@ -8,7 +8,7 @@ import com.mars.server.server.request.HttpMarsResponse;
  * @author yuye
  *
  */
-public interface MarsServlet {
+public interface MarsDispatcher {
 
 
 	/**

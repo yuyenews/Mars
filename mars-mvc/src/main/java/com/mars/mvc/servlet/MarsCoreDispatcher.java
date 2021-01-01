@@ -3,18 +3,18 @@ package com.mars.mvc.servlet;
 import com.mars.mvc.resolve.ResolveRequest;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
-import com.mars.server.server.servlet.MarsServlet;
+import com.mars.server.server.dispatcher.MarsDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 核心servlet，用于接收所有请求，并调用相应的方法进行处理
+ * 核心控制器，用于接收所有请求，并调用相应的方法进行处理
  * @author yuye
  *
  */
-public class MarsCoreServlet implements MarsServlet {
+public class MarsCoreDispatcher implements MarsDispatcher {
 	
-	private Logger log = LoggerFactory.getLogger(MarsCoreServlet.class);
+	private Logger log = LoggerFactory.getLogger(MarsCoreDispatcher.class);
 	
 	@Override
 	public Object doRequest(HttpMarsRequest request, HttpMarsResponse response) throws Exception {

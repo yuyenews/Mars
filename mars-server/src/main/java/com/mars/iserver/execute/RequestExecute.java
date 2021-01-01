@@ -1,12 +1,12 @@
 package com.mars.iserver.execute;
 
-import com.mars.common.ncfg.mvc.CoreServletClass;
+import com.mars.common.ncfg.mvc.DispatcherFactory;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.iserver.par.factory.InitRequestFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
-import com.mars.server.server.servlet.MarsServlet;
+import com.mars.server.server.dispatcher.MarsDispatcher;
 import com.mars.server.util.RequestUtil;
 import com.mars.iserver.execute.access.PathAccess;
 import com.mars.iserver.par.factory.ParamAndResultFactory;
@@ -37,8 +37,8 @@ public class RequestExecute {
 				request = InitRequestFactory.getInitRequest().getHttpMarsRequest(request);
 
 				/* 执行核心控制器 */
-				MarsServlet marsServlet = (MarsServlet)CoreServletClass.getObject();
-				result = marsServlet.doRequest(request, response);
+				MarsDispatcher marsDispatcher = (MarsDispatcher) DispatcherFactory.getDispatcher();
+				result = marsDispatcher.doRequest(request, response);
 			}
 
 			/* 响应 */

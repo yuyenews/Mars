@@ -18,7 +18,7 @@ public class StartLoadList {
 
         Map<Integer, StartMap> startList = new HashMap<>();
 
-        startList.put(0, new StartCoreServlet());
+        startList.put(0, new StartCoreDispatcher());
         startList.put(1, new StartLoadClass());
         startList.put(2, new StartBeans());
         startList.put(3, new StartJDBC());
