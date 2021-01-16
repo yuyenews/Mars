@@ -4,7 +4,7 @@ import com.mars.jdbc.core.annotation.DataSource;
 import com.mars.jdbc.core.annotation.MarsGet;
 import com.mars.jdbc.core.annotation.MarsSelect;
 import com.mars.jdbc.core.annotation.MarsUpdate;
-import com.mars.jdbc.core.proxy.oper.ProxyOpertion;
+import com.mars.jdbc.core.proxy.oper.ProxyOperation;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -79,11 +79,11 @@ public class MjProxy implements MethodInterceptor {
             dataSourceName = dataSource.value();
         }
         if (marsGet != null) {
-            return ProxyOpertion.get(marsGet, dataSourceName, param, method);
+            return ProxyOperation.get(marsGet, dataSourceName, param, method);
         } else if (marsSelect != null) {
-            return ProxyOpertion.select(marsSelect, dataSourceName, param, method);
+            return ProxyOperation.select(marsSelect, dataSourceName, param, method);
         } else if (marsUpdate != null) {
-            return ProxyOpertion.update(marsUpdate, dataSourceName, param);
+            return ProxyOperation.update(marsUpdate, dataSourceName, param);
         }
         return null;
     }
