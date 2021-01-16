@@ -103,11 +103,18 @@ public class ProxyOperation {
         StringBuffer sql = new StringBuffer();
         sql.append("delete from ");
         sql.append(marsUpdate.tableName());
-        sql.append(" where ");
-        sql.append(marsUpdate.primaryKey());
-        sql.append(" = ?");
 
-        return JdbcTemplate.get(dataSourceName).update(sql.toString(), new Object[]{param});
+        if(StringUtil.isNull(marsUpdate.where())){
+            sql.append(" where ");
+            sql.append(marsUpdate.primaryKey());
+            sql.append(" = ?");
+            param = new Object[]{param};
+        } else {
+            sql.append(" where ");
+            sql.append(marsUpdate.where());
+        }
+
+        return JdbcTemplate.get(dataSourceName).update(sql.toString(), param);
     }
 
     /**
