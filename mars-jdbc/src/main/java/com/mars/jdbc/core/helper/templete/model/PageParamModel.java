@@ -1,6 +1,7 @@
 package com.mars.jdbc.core.helper.templete.model;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class PageParamModel {
         if(param == null){
             return this;
         }
-        String strParam = JSON.toJSONString(param);
-        this.param = JSON.parseObject(strParam,Map.class);
+        JSONObject strParam = (JSONObject)JSON.toJSON(param);
+        this.param = strParam.toJavaObject(Map.class);
         return this;
     }
 

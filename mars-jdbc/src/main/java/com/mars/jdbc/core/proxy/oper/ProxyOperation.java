@@ -120,7 +120,7 @@ public class ProxyOperation {
      * @throws Exception 异常
      */
     private static Object doInsert(MarsUpdate marsUpdate, String dataSourceName, Object param) throws Exception {
-        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(param));
+        JSONObject jsonObject = (JSONObject)JSON.toJSON(param);
 
         StringBuffer sql = new StringBuffer();
         sql.append("insert into ");
@@ -166,7 +166,8 @@ public class ProxyOperation {
      * @throws Exception 异常
      */
     private static Object doUpdate(MarsUpdate marsUpdate, String dataSourceName, Object param) throws Exception {
-        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(param));
+        JSONObject jsonObject = (JSONObject)JSON.toJSON(param);
+
         StringBuffer sql = new StringBuffer();
         sql.append("update ");
         sql.append(marsUpdate.tableName());
