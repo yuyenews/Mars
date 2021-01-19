@@ -6,14 +6,12 @@ import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.common.util.MatchUtil;
 import com.mars.common.util.MesUtil;
-import com.mars.mvc.constant.InterConstant;
 import com.mars.mvc.load.model.MarsInterModel;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +45,9 @@ public class ExecuteInters {
 			for (MarsInterModel marsInterModel : list) {
 				className = marsInterModel.getCls();
 
-				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.BEFORE_REQUEST, new Class[]{HttpMarsRequest.class, HttpMarsResponse.class});
-				Object result = method2.invoke(marsInterModel.getObj(), new Object[]{request, response});
+				BaseInterceptor interceptor = (BaseInterceptor)marsInterModel.getObj();
+				Object result = interceptor.beforeRequest(request, response);
+
 				if (result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
@@ -76,8 +75,9 @@ public class ExecuteInters {
 			for (MarsInterModel marsInterModel : list) {
 				className = marsInterModel.getCls();
 
-				Method method2 = marsInterModel.getCls().getDeclaredMethod(InterConstant.AFTER_REQUEST, new Class[]{HttpMarsRequest.class, HttpMarsResponse.class, Object.class});
-				Object result = method2.invoke(marsInterModel.getObj(), new Object[]{request, response, conResult});
+				BaseInterceptor interceptor = (BaseInterceptor)marsInterModel.getObj();
+				Object result = interceptor.afterRequest(request, response, conResult);
+
 				if (result == null || !result.toString().equals(BaseInterceptor.SUCCESS)) {
 					return result;
 				}
@@ -138,12 +138,12 @@ public class ExecuteInters {
 	 * @throws Exception
 	 */
 	private static Boolean hasExclude(MarsInterModel marsInterModel, String uriEnd) throws Exception {
-		Method method = marsInterModel.getCls().getDeclaredMethod(InterConstant.EXCLUDE);
-		Object result = method.invoke(marsInterModel.getObj());
-		if (result == null) {
+		BaseInterceptor interceptor = (BaseInterceptor)marsInterModel.getObj();
+		List<String> excludeList = interceptor.exclude();
+		if (excludeList == null || excludeList.size() < 1) {
 			return false;
 		}
-		List<String> excludeList = (List<String>) result;
+
 		Boolean hasExc = excludeList.contains(uriEnd);
 		return hasExc;
 	}
