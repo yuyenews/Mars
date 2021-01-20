@@ -57,18 +57,22 @@ public class RequestExecute {
 	 */
 	private static String getErrorMsg(Exception e) {
 		String msg = null;
-		if(e instanceof InvocationTargetException){
-			InvocationTargetException invocationTargetException = (InvocationTargetException)e;
-			Throwable obj = invocationTargetException.getTargetException().getCause();
-			msg = obj.getClass().getName() + ":" + obj.getMessage();
-		} else {
-			msg = e.getMessage();
-			if (!StringUtil.isNull(msg) && !msg.trim().toUpperCase().equals("NULL")) {
-				msg = e.getClass().getName() + ":" + msg;
+		try {
+			if(e instanceof InvocationTargetException){
+				InvocationTargetException invocationTargetException = (InvocationTargetException)e;
+				Throwable obj = invocationTargetException.getTargetException().getCause();
+				msg = obj.getClass().getName() + ":" + obj.getMessage();
+			} else {
+				msg = e.getMessage();
+				if (!StringUtil.isNull(msg) && !msg.trim().toUpperCase().equals("NULL")) {
+					msg = e.getClass().getName() + ":" + msg;
+				}
 			}
-		}
 
-		if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
+			if (StringUtil.isNull(msg) || msg.trim().toUpperCase().equals("NULL")) {
+				msg = "服务端出现异常,请查看日志以及检查您的代码进行排查";
+			}
+		} catch (Exception ex){
 			msg = "服务端出现异常,请查看日志以及检查您的代码进行排查";
 		}
 		return msg;
