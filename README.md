@@ -39,6 +39,10 @@ Martian 是一个基于NIO的JavaWeb编程框架
 
 [http://mars-framework.com/doc.html?tag=martian](http://mars-framework.com/doc.html?tag=martian)
 
+## 视频教程
+
+[https://www.bilibili.com/video/BV1dv4y1Z7Wt](https://www.bilibili.com/video/BV1dv4y1Z7Wt)
+
 ## 使用示例
 
 [https://github.com/yuyenews/Mars-Example](https://github.com/yuyenews/Mars-Example)
