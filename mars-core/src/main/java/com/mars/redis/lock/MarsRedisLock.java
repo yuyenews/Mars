@@ -6,7 +6,7 @@ import com.mars.redis.lock.model.LockModel;
 import com.mars.redis.template.MarsRedisTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;
 
 import java.util.Date;
@@ -31,8 +31,8 @@ public class MarsRedisLock {
      */
     public boolean lock(LockModel lockModel) {
         try {
-            ShardedJedis shardedJedis = marsRedisTemplate.getShardedJedis();
-            return lock(lockModel, shardedJedis);
+            Jedis jedis = marsRedisTemplate.getJedis();
+            return lock(lockModel, jedis);
         } catch (Exception e) {
             logger.error("获取redis锁发生异常", e);
             return false;
@@ -43,17 +43,17 @@ public class MarsRedisLock {
      * 加锁，使用你自己创建的jedis对象
      *
      * @param lockModel
-     * @param shardedJedis 自己创建的jedis对象
+     * @param jedis 自己创建的jedis对象
      * @return
      */
-    public boolean lock(LockModel lockModel, ShardedJedis shardedJedis) {
+    public boolean lock(LockModel lockModel, Jedis jedis) {
         try {
-            if (shardedJedis == null) {
+            if (jedis == null) {
                 return false;
             }
 
             SetParams params = SetParams.setParams().nx().px(lockModel.getTimeOut());
-            String result = shardedJedis.set(lockModel.getKey(), lockModel.getValue(), params);
+            String result = jedis.set(lockModel.getKey(), lockModel.getValue(), params);
 
             /* 如果加锁成功，则直接返回 */
             if(isLockSuccess(result)){
@@ -74,7 +74,7 @@ public class MarsRedisLock {
                 Thread.sleep(lockModel.getRetryRate());
 
                 /* 发起重试 */
-                result = shardedJedis.set(lockModel.getKey(), lockModel.getValue(), params);
+                result = jedis.set(lockModel.getKey(), lockModel.getValue(), params);
                 if(isLockSuccess(result)){
                     /* 如果重试成功了，则返回加锁成功 */
                     return true;
@@ -91,7 +91,7 @@ public class MarsRedisLock {
             logger.error("获取redis锁发生异常", e);
             return false;
         } finally {
-            marsRedisTemplate.recycleJedis(shardedJedis);
+            marsRedisTemplate.recycleJedis(jedis);
         }
     }
 
@@ -104,8 +104,8 @@ public class MarsRedisLock {
      */
     public boolean unlock(String key, String value) {
         try {
-            ShardedJedis shardedJedis = marsRedisTemplate.getShardedJedis();
-            return unlock(key, value, shardedJedis);
+            Jedis jedis = marsRedisTemplate.getJedis();
+            return unlock(key, value, jedis);
         } catch (Exception e) {
             logger.error("释放redis锁发生异常", e);
             return false;
@@ -117,24 +117,24 @@ public class MarsRedisLock {
      *
      * @param key          键
      * @param value        值
-     * @param shardedJedis 自己创建的jedis对象
+     * @param jedis 自己创建的jedis对象
      * @return
      */
-    public boolean unlock(String key, String value, ShardedJedis shardedJedis) {
+    public boolean unlock(String key, String value, Jedis jedis) {
         try {
-            if (shardedJedis == null) {
+            if (jedis == null) {
                 return false;
             }
-            String val = shardedJedis.get(key);
+            String val = jedis.get(key);
             if (val != null && val.equals(value)) {
-                shardedJedis.del(key);
+                jedis.del(key);
             }
             return true;
         } catch (Exception e) {
             logger.error("释放redis锁发生异常", e);
             return false;
         } finally {
-            marsRedisTemplate.recycleJedis(shardedJedis);
+            marsRedisTemplate.recycleJedis(jedis);
         }
     }
 

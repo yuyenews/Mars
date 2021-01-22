@@ -1,14 +1,11 @@
 package com.mars.redis.template;
 
 import com.mars.common.base.config.MarsConfig;
+import com.mars.common.base.config.model.JedisConfig;
 import com.mars.common.util.MarsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedisPool;
-
-import java.util.List;
+import redis.clients.jedis.*;
 
 /**
  * jedisPool工厂，用于获取JedisPool对象
@@ -19,21 +16,30 @@ public class JedisPoolFactory {
 
     private static JedisPoolConfig jedisPoolConfig;
 
-    private static ShardedJedisPool shardedJedisPool;
+    private static JedisPool jedisPool;
 
     /**
-     * 获取ShardedJedisPool对象
+     * 获取getJedis对象
      * @return
      */
-    protected static ShardedJedisPool getShardedJedisPool() throws Exception {
-        try{
-            if(shardedJedisPool == null){
+    protected static Jedis getJedis() throws Exception {
+        try {
+            if (jedisPool == null) {
                 initJedisPoolConfig();
-                shardedJedisPool = new ShardedJedisPool(jedisPoolConfig,getJedisShardInfoList());
+
+                MarsConfig marsConfig = MarsConfiguration.getConfig();
+                JedisConfig jedisConfig = marsConfig.jedisConfig();
+
+                jedisPool = new JedisPool(jedisPoolConfig, jedisConfig.getHost(),
+                        jedisConfig.getPort(), jedisConfig.getTimeout(),
+                        jedisConfig.getUser(), jedisConfig.getPassword(),
+                        jedisConfig.getDatabase(),jedisConfig.isSsl());
             }
-            return shardedJedisPool;
+
+            Jedis jedis = jedisPool.getResource();
+            return jedis;
         } catch (Exception e) {
-            logger.error("获取JedisPool对象出错",e);
+            logger.error("获取JedisPool对象出错", e);
             throw e;
         }
     }
@@ -46,14 +52,5 @@ public class JedisPoolFactory {
             MarsConfig marsConfig = MarsConfiguration.getConfig();
             jedisPoolConfig = marsConfig.jedisConfig().getJedisPoolConfig();
         }
-    }
-
-    /**
-     * 获取JedisShardInfoList
-     * @return
-     */
-    private static List<JedisShardInfo>  getJedisShardInfoList() throws Exception {
-        MarsConfig marsConfig = MarsConfiguration.getConfig();
-        return marsConfig.jedisConfig().getJedisShardInfoList();
     }
 }

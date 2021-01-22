@@ -1,15 +1,45 @@
 package com.mars.common.base.config.model;
 
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-
-import java.util.List;
 
 public class JedisConfig {
 
-    private JedisPoolConfig jedisPoolConfig;
+    /**
+     * 用哪个库
+     */
+    private int database;
 
-    private List<JedisShardInfo> jedisShardInfoList;
+    /**
+     * redis服务ip
+     */
+    private String host;
+
+    /**
+     * redis服务的端口号
+     */
+    private int port;
+
+    /**
+     * 是否是ssl
+     */
+    private boolean ssl = false;
+
+    /**
+     * 超时时间
+     */
+    private int timeout;
+
+    /**
+     * 用户
+     */
+    private String user;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    private JedisPoolConfig jedisPoolConfig;
 
     public JedisPoolConfig getJedisPoolConfig() {
         if(jedisPoolConfig == null){
@@ -35,11 +65,59 @@ public class JedisConfig {
         this.jedisPoolConfig = jedisPoolConfig;
     }
 
-    public List<JedisShardInfo> getJedisShardInfoList() {
-        return jedisShardInfoList;
+    public int getDatabase() {
+        return database;
     }
 
-    public void setJedisShardInfoList(List<JedisShardInfo> jedisShardInfoList) {
-        this.jedisShardInfoList = jedisShardInfoList;
+    public void setDatabase(int database) {
+        this.database = database;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public boolean isSsl() {
+        return ssl;
+    }
+
+    public void setSsl(boolean ssl) {
+        this.ssl = ssl;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

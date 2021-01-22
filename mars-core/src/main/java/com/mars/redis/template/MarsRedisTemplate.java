@@ -5,7 +5,7 @@ import com.mars.redis.template.ops.Hash;
 import com.mars.redis.template.ops.Values;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.Jedis;
 
 /**
  * Redis操作
@@ -49,9 +49,9 @@ public class MarsRedisTemplate<K, V> extends BaseRedisTemplate<K, V> {
      * @param key
      */
     public void del(K key) {
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             jedis.del(getSerKey(key));
         } catch (Exception e) {
             logger.error("删除异常，key:{}", key, e);
@@ -66,9 +66,9 @@ public class MarsRedisTemplate<K, V> extends BaseRedisTemplate<K, V> {
      * @param expireTimeSecond
      */
     public void expire(K key, int expireTimeSecond) {
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             jedis.expire(getSerKey(key), expireTimeSecond);
         } catch (Exception e) {
             logger.error("expire 异常:" + key, e);

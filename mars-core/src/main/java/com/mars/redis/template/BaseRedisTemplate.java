@@ -3,7 +3,7 @@ package com.mars.redis.template;
 import com.mars.common.util.SerializableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.Jedis;
 
 /**
  * redis模板基类
@@ -18,10 +18,10 @@ public class BaseRedisTemplate<K, V> {
      * 从连接池获取redis连接
      * @return
      */
-    public ShardedJedis getShardedJedis() throws Exception {
-        ShardedJedis jedis = null;
+    public Jedis getJedis() throws Exception {
+        Jedis jedis = null;
         try {
-            jedis = JedisPoolFactory.getShardedJedisPool().getResource();
+            jedis = JedisPoolFactory.getJedis();
         } catch (Exception e) {
             throw new Exception("获取redis连接失败",e);
         }
@@ -33,7 +33,7 @@ public class BaseRedisTemplate<K, V> {
      * 回收redis连接
      * @param jedis
      */
-    public void recycleJedis(ShardedJedis jedis) {
+    public void recycleJedis(Jedis jedis) {
         if (jedis != null) {
             try {
                 jedis.close();

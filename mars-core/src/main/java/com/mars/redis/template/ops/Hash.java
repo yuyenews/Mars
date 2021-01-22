@@ -3,7 +3,7 @@ package com.mars.redis.template.ops;
 import com.mars.redis.template.BaseRedisTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +25,9 @@ public class Hash<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public boolean setHash(String group,K key, V value) {
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             jedis.hset(group.getBytes(),getSerKey(key), getSerValue(value));
             return true;
         } catch (Exception e) {
@@ -45,9 +45,9 @@ public class Hash<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public V getHash(String group, K key){
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             byte[] result = jedis.hget(group.getBytes(), getSerKey(key));
             return getDeValue(result);
         } catch (Exception e) {
@@ -65,9 +65,9 @@ public class Hash<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public boolean delHash(String group, K key){
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             jedis.hdel(group.getBytes(), getSerKey(key));
             return true;
         } catch (Exception e) {
@@ -84,9 +84,9 @@ public class Hash<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public Map<K, V> getAllHash(String group){
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             Map<byte[], byte[]> result = jedis.hgetAll(group.getBytes());
             Map<K, V> deResult = new HashMap<>();
             for(Map.Entry<byte[], byte[]> entry : result.entrySet()){

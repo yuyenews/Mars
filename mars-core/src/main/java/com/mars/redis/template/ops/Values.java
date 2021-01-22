@@ -3,7 +3,7 @@ package com.mars.redis.template.ops;
 import com.mars.redis.template.BaseRedisTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.Jedis;
 
 /**
  * value操作
@@ -22,9 +22,9 @@ public class Values<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public boolean setValue(K key, V value) {
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             jedis.set(getSerKey(key), getSerValue(value));
             return true;
         } catch (Exception e) {
@@ -43,9 +43,9 @@ public class Values<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public boolean setValueEx(K key, V value,Integer ex) {
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             jedis.setex(getSerKey(key), ex, getSerValue(value));
             return true;
         } catch (Exception e) {
@@ -63,9 +63,9 @@ public class Values<K, V> extends BaseRedisTemplate<K, V> {
      * @return
      */
     public V getValue(K key) {
-        ShardedJedis jedis = null;
+        Jedis jedis = null;
         try {
-            jedis = getShardedJedis();
+            jedis = getJedis();
             byte[] result = jedis.get(getSerKey(key));
             return getDeValue(result);
         } catch (Exception e) {
