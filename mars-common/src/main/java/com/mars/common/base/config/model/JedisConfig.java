@@ -7,7 +7,7 @@ public class JedisConfig {
     /**
      * 用哪个库
      */
-    private int database;
+    private int database = 0;
 
     /**
      * redis服务ip
