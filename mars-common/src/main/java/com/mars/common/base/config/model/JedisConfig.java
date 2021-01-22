@@ -27,7 +27,7 @@ public class JedisConfig {
     /**
      * 超时时间
      */
-    private int timeout;
+    private int timeout = 5000;
 
     /**
      * 用户
