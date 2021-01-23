@@ -2,6 +2,9 @@ package com.mars.common.base.config.model;
 
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ * redis连接配置
+ */
 public class JedisConfig {
 
     /**
