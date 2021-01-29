@@ -16,10 +16,17 @@ import java.nio.channels.SocketChannel;
  */
 public class MarsHttpExchangeModel {
 
+    /**
+     * 选择Key
+     */
     protected SelectionKey selectionKey;
-
+    /**
+     * 选择器
+     */
     protected Selector selector;
-
+    /**
+     * 通道
+     */
     protected SocketChannel socketChannel;
 
     /**
@@ -87,6 +94,26 @@ public class MarsHttpExchangeModel {
 
     public void setSelector(Selector selector) {
         this.selector = selector;
+    }
+
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    public void setRequestURI(RequestURI requestURI) {
+        this.requestURI = requestURI;
+    }
+
+    public void setRequestBody(InputStream requestBody) {
+        this.requestBody = requestBody;
+    }
+
+    public void setRequestMethod(String requestMethod) {
+        this.requestMethod = requestMethod;
+    }
+
+    public void setHttpVersion(String httpVersion) {
+        this.httpVersion = httpVersion;
     }
 
     public SocketChannel getSocketChannel() {

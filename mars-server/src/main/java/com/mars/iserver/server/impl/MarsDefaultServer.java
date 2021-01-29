@@ -3,15 +3,14 @@ package com.mars.iserver.server.impl;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.iserver.server.MarsServer;
+import com.mars.iserver.server.helper.MarsHttpHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -66,20 +65,16 @@ public class MarsDefaultServer implements MarsServer {
                 SelectionKey selectionKey = it.next();
                 it.remove();
 
+                if(!selectionKey.isValid()){
+                    continue;
+                }
+
                 if (selectionKey.isAcceptable()) {
-                    ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
-                    try {
-                        SocketChannel socketChannel = serverSocketChannel.accept();
-                        socketChannel.configureBlocking(false);
-                        socketChannel.register(selector, SelectionKey.OP_READ);
-                    } catch (IOException e) {
-                        log.error("注册SocketChannel异常", e);
-                    }
+                    MarsHttpHelper.acceptable(selector, selectionKey);
                 } else if (selectionKey.isReadable()) {
-                    MarsHttpExchange marsHttpExchange = new MarsHttpExchange();
-                    marsHttpExchange.setSelectionKey(selectionKey);
-                    marsHttpExchange.setSelector(selector);
-                    marsHttpExchange.handleSelectKey();
+                    MarsHttpHelper.read(selector, selectionKey);
+                } else if(selectionKey.isWritable()){
+                    MarsHttpHelper.write(selector, selectionKey);
                 }
             }
         }
