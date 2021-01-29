@@ -74,9 +74,10 @@ public class MarsDefaultServer implements MarsServer {
                 } else if (selectionKey.isReadable()) {
                     MarsHttpHelper.read(selector, selectionKey);
                 } else if(selectionKey.isWritable()){
-                    MarsHttpHelper.write(selector, selectionKey);
+                    MarsHttpHelper.write(selectionKey);
                 }
             }
+            selector.wakeup();
         }
     }
 }

@@ -9,7 +9,6 @@ import com.mars.iserver.constant.HttpConstant;
 import com.mars.iserver.server.MarsServerHandler;
 import com.mars.iserver.server.factory.MarsServerHandlerFactory;
 import com.mars.iserver.server.impl.MarsHttpExchange;
-import com.mars.iserver.server.model.RequestURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +61,7 @@ public class MarsHttpHelper {
             socketChannel.register(selector, SelectionKey.OP_READ);
         } catch (IOException e) {
             log.error("注册SocketChannel异常", e);
-            close(socketChannel, selector, selectionKey);
+            close(socketChannel, selectionKey);
         }
     }
 
@@ -143,13 +142,21 @@ public class MarsHttpHelper {
             /* 从报文中获取body */
             getBody(outputStream, headLength, marsHttpExchange);
 
+            /* 过滤掉非法读取 */
+            if(marsHttpExchange.getRequestURI() == null
+                    || marsHttpExchange.getRequestMethod() == null
+                    || marsHttpExchange.getHttpVersion() == null){
+                close(socketChannel, selectionKey);
+                return;
+            }
+
             /* 注册成可写状态 */
             socketChannel.register(selector, SelectionKey.OP_WRITE, marsHttpExchange);
 
         } catch (Exception e) {
             log.error("处理请求异常", e);
             errorResponseText(e, marsHttpExchange);
-            close(socketChannel, selector, selectionKey);
+            close(socketChannel, selectionKey);
         }
     }
 
@@ -229,7 +236,7 @@ public class MarsHttpHelper {
      * @param firstLine
      */
     private static void readFirstLine(String firstLine, MarsHttpExchange marsHttpExchange){
-        String[] parts = firstLine.split(" ");
+        String[] parts = firstLine.split("\\s+");
 
         /*
          * 请求头的第一行必须由三部分构成，分别为 METHOD PATH VERSION
@@ -238,10 +245,9 @@ public class MarsHttpHelper {
         if (parts.length < 3) {
             return;
         }
-
         /* 解析开头的三个信息(METHOD PATH VERSION) */
         marsHttpExchange.setRequestMethod(parts[0]);
-        marsHttpExchange.setRequestURI(new RequestURI(parts[1]));
+        marsHttpExchange.setRequestURI(parts[1]);
         marsHttpExchange.setHttpVersion(parts[2]);
     }
 
@@ -265,7 +271,7 @@ public class MarsHttpHelper {
      * 响应
      * @param selectionKey
      */
-    public static void write(Selector selector, SelectionKey selectionKey){
+    public static void write(SelectionKey selectionKey){
         SocketChannel socketChannel = (SocketChannel)selectionKey.channel();
         try {
             MarsHttpExchange marsHttpExchange = (MarsHttpExchange)selectionKey.attachment();
@@ -283,7 +289,7 @@ public class MarsHttpHelper {
         } catch (Exception e){
             log.error("给客户端响应异常", e);
         } finally {
-            close(socketChannel, selector, selectionKey);
+            close(socketChannel, selectionKey);
         }
     }
 
@@ -302,19 +308,15 @@ public class MarsHttpHelper {
     /**
      * 释放资源
      * @param socketChannel
-     * @param selector
      * @param selectionKey
      */
-    private static void close(SocketChannel socketChannel, Selector selector, SelectionKey selectionKey){
+    private static void close(SocketChannel socketChannel, SelectionKey selectionKey){
         try {
             if(socketChannel != null){
                 socketChannel.close();
             }
             if(selectionKey != null){
                 selectionKey.cancel();
-            }
-            if(selector != null){
-                selector.wakeup();
             }
         } catch (Exception e){
         }

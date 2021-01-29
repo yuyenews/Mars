@@ -100,8 +100,8 @@ public class MarsHttpExchangeModel {
         this.socketChannel = socketChannel;
     }
 
-    public void setRequestURI(RequestURI requestURI) {
-        this.requestURI = requestURI;
+    public void setRequestURI(String url) {
+        this.requestURI = new RequestURI(url);
     }
 
     public void setRequestBody(InputStream requestBody) {
