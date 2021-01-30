@@ -100,7 +100,6 @@ public class MarsHttpHelper {
 
                 /* 获取请求报文 */
                 byte[] bytes = getReadData(readBuffer);
-
                 /* 将本次读取到的数据追加到输出流 */
                 outputStream.write(bytes);
 
@@ -115,7 +114,6 @@ public class MarsHttpHelper {
                     /* 解析头并获取头的长度 */
                     headLength = parseHeader(headStr, headEndIndex, marsHttpExchange);
                     readHead = true;
-
                     /* 如果头读完了，并且此次请求是GET，则停止 */
                     if(marsHttpExchange.getRequestMethod().toUpperCase().equals(ReqMethod.GET.toString())){
                         break;
@@ -145,12 +143,13 @@ public class MarsHttpHelper {
             /* 过滤掉非法读取 */
             if(marsHttpExchange.getRequestURI() == null
                     || marsHttpExchange.getRequestMethod() == null
-                    || marsHttpExchange.getHttpVersion() == null){
+                    || marsHttpExchange.getHttpVersion() == null) {
                 close(socketChannel, selectionKey);
                 return;
             }
 
             /* 注册成可写状态 */
+            socketChannel.configureBlocking(false);
             socketChannel.register(selector, SelectionKey.OP_WRITE, marsHttpExchange);
 
         } catch (Exception e) {
@@ -279,6 +278,7 @@ public class MarsHttpHelper {
                 return;
             }
             socketChannel = marsHttpExchange.getSocketChannel();
+            socketChannel.configureBlocking(false);
 
             /* 执行handler */
             MarsServerHandler marsServerHandler = MarsServerHandlerFactory.getMarsServerHandler();
