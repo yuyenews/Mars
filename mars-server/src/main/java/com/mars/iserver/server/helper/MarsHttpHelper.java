@@ -4,6 +4,7 @@ import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.base.config.model.RequestConfig;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
+import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.iserver.constant.HttpConstant;
 import com.mars.iserver.server.MarsServerHandler;
@@ -300,7 +301,7 @@ public class MarsHttpHelper {
     private static void errorResponseText(Exception e, MarsHttpExchange marsHttpExchange){
         try {
             marsHttpExchange.setResponseHeader(MarsConstant.CONTENT_TYPE, "text/json;charset="+MarsConstant.ENCODING);
-            marsHttpExchange.responseText("处理请求异常:" + e.getMessage());
+            marsHttpExchange.responseText(MesUtil.getMes(500,"处理请求异常:" + e.getMessage()).toJSONString());
         } catch (Exception ex){
         }
     }
