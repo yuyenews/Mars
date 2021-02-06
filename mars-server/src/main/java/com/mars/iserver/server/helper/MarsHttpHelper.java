@@ -272,9 +272,10 @@ public class MarsHttpHelper {
      * @param selectionKey
      */
     public static void write(SelectionKey selectionKey){
+        MarsHttpExchange marsHttpExchange = null;
         SocketChannel socketChannel = (SocketChannel)selectionKey.channel();
         try {
-            MarsHttpExchange marsHttpExchange = (MarsHttpExchange)selectionKey.attachment();
+            marsHttpExchange = (MarsHttpExchange)selectionKey.attachment();
             if(marsHttpExchange == null){
                 return;
             }
@@ -289,6 +290,7 @@ public class MarsHttpHelper {
             marsHttpExchange.responseData();
         } catch (Exception e){
             log.error("给客户端响应异常", e);
+            errorResponseText(e, marsHttpExchange);
         } finally {
             close(socketChannel, selectionKey);
         }

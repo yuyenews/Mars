@@ -49,7 +49,7 @@ Martian 是一个基于NIO的JavaWeb编程框架
 
 ## 项目特性
 ### 一、声明式API
-只需要在你的interface上加上一个注解，即可对外提供一个接口，并且我们还支持传统的Controller写法
+只需要在你的interface上加上一个注解，即可对外提供一个http接口，并且我们还支持传统的Controller写法
 ```java
 @MarsApi(refBean="要引用的bean的name")
 public interface TestApi {
@@ -60,19 +60,19 @@ public interface TestApi {
 ### 二、单表增删改查无sql
 ```java
 // 根据主键查询一条数据
-@MarsGet(tableName = "userinfo",primaryKey = "id")
+@MarsGet(tableName = "表名称",primaryKey = "主键字段名")
 public abstract 要返回的实体类 selectById(int id);
 
 // 单表新增
-@MarsUpdate(tableName = "userinfo",operType = OperType.INSERT)
+@MarsUpdate(tableName = "表名称",operType = OperType.INSERT)
 public abstract int insert(实体对象参数);
 
 // 单表根据主键删除
-@MarsUpdate(tableName = "userinfo",operType = OperType.DELETE,primaryKey = "id")
+@MarsUpdate(tableName = "表名称",operType = OperType.DELETE,primaryKey = "主键字段名")
 public abstract int delete(int id);
 
 // 单表根据主键修改
-@MarsUpdate(tableName = "userinfo",operType = OperType.UPDATE,primaryKey = "id")
+@MarsUpdate(tableName = "表名称",operType = OperType.UPDATE,primaryKey = "主键字段名")
 public abstract int update(实体对象参数);
 ```
 
