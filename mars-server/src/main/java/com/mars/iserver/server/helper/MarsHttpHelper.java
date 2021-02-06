@@ -302,7 +302,7 @@ public class MarsHttpHelper {
      */
     private static void errorResponseText(Exception e, MarsHttpExchange marsHttpExchange){
         try {
-            marsHttpExchange.setResponseHeader(MarsConstant.CONTENT_TYPE, "application/json;charset="+MarsConstant.ENCODING);
+            marsHttpExchange.setResponseHeader(MarsConstant.CONTENT_TYPE, HttpConstant.RESPONSE_CONTENT_TYPE);
             marsHttpExchange.responseText(MesUtil.getMes(500,"处理请求异常:" + e.getMessage()).toJSONString());
         } catch (Exception ex){
         }

@@ -1,6 +1,7 @@
 package com.mars.server.server.request.impl;
 
 import com.mars.common.constant.MarsConstant;
+import com.mars.iserver.constant.HttpConstant;
 import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
@@ -71,7 +72,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
             loadHeader();
 
             /* 设置响应头，必须在sendResponseHeaders方法之前设置 */
-            httpExchange.setResponseHeader(MarsConstant.CONTENT_TYPE, "application/json;charset="+MarsConstant.ENCODING);
+            httpExchange.setResponseHeader(MarsConstant.CONTENT_TYPE, HttpConstant.RESPONSE_CONTENT_TYPE);
 
             /* 设置响应码和响应体长度，必须在getResponseBody方法之前调用 */
             httpExchange.sendText(200, context);

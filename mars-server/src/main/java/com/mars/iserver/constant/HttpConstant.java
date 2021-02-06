@@ -1,5 +1,7 @@
 package com.mars.iserver.constant;
 
+import com.mars.common.constant.MarsConstant;
+
 public class HttpConstant {
 
     /**
@@ -22,4 +24,9 @@ public class HttpConstant {
      */
     public static final String BASIC_RESPONSE = "HTTP/1.1 {statusCode} OK" + CARRIAGE_RETURN +
             "Vary: Accept-Encoding";
+
+    /**
+     * 响应的内容类型
+     */
+    public static final String RESPONSE_CONTENT_TYPE = "application/json;charset=" + MarsConstant.ENCODING;
 }

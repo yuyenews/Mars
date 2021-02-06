@@ -4,6 +4,7 @@ import com.mars.common.base.config.MarsConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
+import com.mars.iserver.constant.HttpConstant;
 
 import java.io.*;
 import java.nio.channels.SelectionKey;
@@ -81,7 +82,7 @@ public class MarsHttpExchangeModel {
         requestHeaders = new HttpHeaders();
         responseHeaders = new HttpHeaders();
 
-        responseHeaders.put(MarsConstant.CONTENT_TYPE, "application/json;charset="+ MarsConstant.ENCODING);
+        responseHeaders.put(MarsConstant.CONTENT_TYPE, HttpConstant.RESPONSE_CONTENT_TYPE);
         crossDomain();
 
         sendText = MarsConstant.VOID;
