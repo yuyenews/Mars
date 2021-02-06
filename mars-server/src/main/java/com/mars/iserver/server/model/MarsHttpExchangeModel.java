@@ -81,7 +81,7 @@ public class MarsHttpExchangeModel {
         requestHeaders = new HttpHeaders();
         responseHeaders = new HttpHeaders();
 
-        responseHeaders.put(MarsConstant.CONTENT_TYPE, "text/json;charset="+ MarsConstant.ENCODING);
+        responseHeaders.put(MarsConstant.CONTENT_TYPE, "application/json;charset="+ MarsConstant.ENCODING);
         crossDomain();
 
         sendText = MarsConstant.VOID;
