@@ -54,9 +54,9 @@ public class MarsHttpHelper {
      * @param selectionKey
      */
     public static void acceptable(Selector selector, SelectionKey selectionKey){
-        ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
         SocketChannel socketChannel = null;
         try {
+            ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
             socketChannel = serverSocketChannel.accept();
             socketChannel.configureBlocking(false);
             socketChannel.register(selector, SelectionKey.OP_READ);
