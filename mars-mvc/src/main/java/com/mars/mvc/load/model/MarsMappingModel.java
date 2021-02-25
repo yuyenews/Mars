@@ -20,7 +20,7 @@ public class MarsMappingModel {
 	/**
 	 * 请求方式
 	 */
-	private ReqMethod reqMethod;
+	private ReqMethod[] reqMethod;
 
 	/**
 	 * 映射的方法名称
@@ -45,11 +45,11 @@ public class MarsMappingModel {
 		this.object = object;
 	}
 
-	public ReqMethod getReqMethod() {
+	public ReqMethod[] getReqMethod() {
 		return reqMethod;
 	}
 
-	public void setReqMethod(ReqMethod reqMethod) {
+	public void setReqMethod(ReqMethod[] reqMethod) {
 		this.reqMethod = reqMethod;
 	}
 

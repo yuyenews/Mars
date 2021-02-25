@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 @Documented
 public @interface RequestMethod {
 
-	ReqMethod value() default ReqMethod.GET;
+	ReqMethod[] value() default ReqMethod.GET;
 }

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.github.yuyenews</groupId>
 		<artifactId>Martian</artifactId>
-		<version>3.2.13</version>
+		<version>3.2.15</version>
 	</parent>
 	<artifactId>mars-server</artifactId>
 

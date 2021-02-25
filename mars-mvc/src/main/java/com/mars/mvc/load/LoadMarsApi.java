@@ -112,12 +112,12 @@ public class LoadMarsApi {
 	 * @param method
 	 * @return
 	 */
-	private static ReqMethod getReqMethod(Method method){
+	private static ReqMethod[] getReqMethod(Method method){
 		RequestMethod requestMethod = method.getAnnotation(RequestMethod.class);
 		if(requestMethod != null){
 			return requestMethod.value();
 		}
-		return ReqMethod.GET;
+		return new ReqMethod[]{ReqMethod.GET};
 	}
 
 	/**

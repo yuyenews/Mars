@@ -1,6 +1,8 @@
 package com.mars.mvc.resolve;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.load.model.MarsInterModel;
@@ -135,18 +137,21 @@ public class ExecuteMars {
 		}
 
 		String strMethod = method.toLowerCase();
-		String requestMethod = marsMappingModel.getReqMethod().name().toLowerCase();
 
 		/* 如果请求方式是options，那就说明这是一个试探性的请求，直接响应即可 */
 		if(strMethod.equals(MarsConstant.OPTIONS.toLowerCase())){
 			return MarsConstant.OPTIONS;
 		}
 
-		if (!strMethod.equals(requestMethod)) {
-			/* 如果请求方式和MarsApi的映射不一致，则提示客户端 */
-			throw new Exception("此接口的请求方式为[" + requestMethod + "]");
+		/* 校验请求方法 是否一致 */
+		ReqMethod[] reqMethods = marsMappingModel.getReqMethod();
+		for(ReqMethod reqMethod : reqMethods){
+			if (strMethod.equals(reqMethod.name().toLowerCase())) {
+				return null;
+			}
 		}
 
-		return null;
+		/* 如果请求方式和MarsApi的映射不一致，则提示客户端 */
+		throw new Exception("此接口支持的请求方式为[" + JSON.toJSONString(reqMethods) + "]");
 	}
 }
