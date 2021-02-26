@@ -117,7 +117,7 @@ public class LoadMarsApi {
 		if(requestMethod != null){
 			return requestMethod.value();
 		}
-		return new ReqMethod[]{ReqMethod.GET};
+		return MarsConstant.REQ_METHODS;
 	}
 
 	/**

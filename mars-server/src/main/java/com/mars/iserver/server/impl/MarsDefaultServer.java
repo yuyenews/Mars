@@ -2,8 +2,9 @@ package com.mars.iserver.server.impl;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
+import com.mars.iserver.server.MarsRequest;
 import com.mars.iserver.server.MarsServer;
-import com.mars.iserver.server.helper.MarsHttpHelper;
+import com.mars.iserver.server.threadpool.ThreadPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * 默认服务（采用NIO）
@@ -60,6 +62,12 @@ public class MarsDefaultServer implements MarsServer {
                 continue;
             }
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
+            if(selectionKeys == null || selectionKeys.size() < 1){
+                continue;
+            }
+
+            CountDownLatch countDownLatch = new CountDownLatch(selectionKeys.size());
+
             Iterator<SelectionKey> it = selectionKeys.iterator();
             while (it.hasNext()) {
                 SelectionKey selectionKey = it.next();
@@ -69,14 +77,15 @@ public class MarsDefaultServer implements MarsServer {
                     continue;
                 }
 
-                if (selectionKey.isAcceptable()) {
-                    MarsHttpHelper.acceptable(selector, selectionKey);
-                } else if (selectionKey.isReadable()) {
-                    MarsHttpHelper.read(selector, selectionKey);
-                } else if(selectionKey.isWritable()){
-                    MarsHttpHelper.write(selectionKey);
-                }
+                MarsRequest marsRequest = new MarsRequest();
+                marsRequest.setCountDownLatch(countDownLatch);
+                marsRequest.setSelectionKey(selectionKey);
+                marsRequest.setSelector(selector);
+
+                ThreadPool.getThreadPoolExecutor().execute(marsRequest);
             }
+
+            countDownLatch.await();
             selector.wakeup();
         }
     }

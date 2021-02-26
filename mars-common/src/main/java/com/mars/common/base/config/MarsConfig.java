@@ -30,10 +30,8 @@ public abstract class MarsConfig {
 
     /**
      * 线程池配置
-     * 3.1.1版本开始废弃了，暂时用不到了，未来不确定用不用
      * @return 线程池配置
      */
-    @Deprecated
     public ThreadPoolConfig threadPoolConfig(){
         return new ThreadPoolConfig();
     }

@@ -2,6 +2,9 @@ package com.mars.iserver.constant;
 
 import com.mars.common.constant.MarsConstant;
 
+/**
+ * Http常量
+ */
 public class HttpConstant {
 
     /**
