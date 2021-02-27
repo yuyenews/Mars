@@ -20,6 +20,11 @@ public class ThreadPoolConfig {
      */
     private int keepAliveTime = 20;
 
+    /**
+     * 最大连接数
+     */
+    private int backLog = 2000;
+
     public int getMaxPoolSize() {
         if(maxPoolSize < 10){
             return 10;
@@ -51,5 +56,13 @@ public class ThreadPoolConfig {
 
     public void setKeepAliveTime(int keepAliveTime) {
         this.keepAliveTime = keepAliveTime;
+    }
+
+    public int getBackLog() {
+        return backLog;
+    }
+
+    public void setBackLog(int backLog) {
+        this.backLog = backLog;
     }
 }

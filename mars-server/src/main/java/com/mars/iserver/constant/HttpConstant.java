@@ -25,11 +25,19 @@ public class HttpConstant {
     /**
      * 响应的基础信息
      */
-    public static final String BASIC_RESPONSE = "HTTP/1.1 {statusCode} OK" + CARRIAGE_RETURN +
-            "Vary: Accept-Encoding";
+    public static final String BASIC_RESPONSE = "HTTP/1.1 {statusCode} OK";
 
     /**
      * 响应的内容类型
      */
     public static final String RESPONSE_CONTENT_TYPE = "application/json;charset=" + MarsConstant.ENCODING;
+
+    /**
+     * 响应头Vary
+     */
+    public static final String VARY = "Vary";
+    /**
+     * 响应头Vary的值
+     */
+    public static final String VARY_VALUE = "Accept-Encoding";
 }

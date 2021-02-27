@@ -57,7 +57,7 @@
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>1.2.74</version>
+				<version>1.2.75</version>
 			</dependency>
 
 			<dependency>
@@ -69,7 +69,7 @@
 			<dependency>
 				<groupId>org.ow2.asm</groupId>
 				<artifactId>asm</artifactId>
-				<version>9.0</version>
+				<version>9.1</version>
 			</dependency>
 			<dependency>
 				<groupId>cglib</groupId>
@@ -86,19 +86,19 @@
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
-				<version>1.2.1</version>
+				<version>1.2.5</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.auth0</groupId>
 				<artifactId>java-jwt</artifactId>
-				<version>3.11.0</version>
+				<version>3.13.0</version>
 			</dependency>
 
 			<dependency>
 				<groupId>redis.clients</groupId>
 				<artifactId>jedis</artifactId>
-				<version>3.3.0</version>
+				<version>3.5.1</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.slf4j</groupId>

@@ -2,6 +2,7 @@ package com.mars.iserver.server.impl;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
+import com.mars.common.util.MarsConfiguration;
 import com.mars.iserver.server.MarsRequest;
 import com.mars.iserver.server.MarsServer;
 import com.mars.iserver.server.threadpool.ThreadPool;
@@ -31,9 +32,13 @@ public class MarsDefaultServer implements MarsServer {
     @Override
     public void start(int portNumber) {
         try {
+            /* 获取配置的最大连接数 */
+            int backLog = MarsConfiguration.getConfig().threadPoolConfig().getBackLog();
+
+            /* 开始监听端口 */
             ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.configureBlocking(false);
-            serverSocketChannel.bind(new InetSocketAddress(portNumber));
+            serverSocketChannel.bind(new InetSocketAddress(portNumber), backLog);
 
             Selector selector = Selector.open();
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
@@ -66,8 +71,10 @@ public class MarsDefaultServer implements MarsServer {
                 continue;
             }
 
+            /* 计数器，用来记录当前的key是否都已经处理完了 */
             CountDownLatch countDownLatch = new CountDownLatch(selectionKeys.size());
 
+            /* 处理获取到的这一批key */
             Iterator<SelectionKey> it = selectionKeys.iterator();
             while (it.hasNext()) {
                 SelectionKey selectionKey = it.next();
@@ -85,7 +92,10 @@ public class MarsDefaultServer implements MarsServer {
                 ThreadPool.getThreadPoolExecutor().execute(marsRequest);
             }
 
+            /* 等待这一批key处理完了，再进行下一次循环 */
             countDownLatch.await();
+
+            /* 唤醒selector */
             selector.wakeup();
         }
     }
