@@ -150,7 +150,6 @@ public class MarsHttpHelper {
             }
 
             /* 注册成可写状态 */
-            socketChannel.configureBlocking(false);
             socketChannel.register(selector, SelectionKey.OP_WRITE, marsHttpExchange);
 
         } catch (Exception e) {
@@ -280,7 +279,6 @@ public class MarsHttpHelper {
                 return;
             }
             socketChannel = marsHttpExchange.getSocketChannel();
-            socketChannel.configureBlocking(false);
 
             /* 执行handler */
             MarsServerHandler marsServerHandler = MarsServerHandlerFactory.getMarsServerHandler();

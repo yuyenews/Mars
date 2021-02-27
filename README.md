@@ -26,7 +26,7 @@
 Martian 是一个基于NIO的JavaWeb编程框架
 
 - 基于NIO，彻底脱离Tomcat，JBoss等容器
-- 声明式API，让Controller变成了一个interface，降低了开发的工作量
+- 让Controller变成了一个interface，降低了开发的工作量
 - 拥有其他web框架 拥有的大部分功能，比如AOP,IOC,声明式事务,异常监听等
 - 拥有自主开发的 半ORM持久层框架，并天然的集成到了Martian中
 
@@ -48,7 +48,7 @@ Martian 是一个基于NIO的JavaWeb编程框架
 [https://github.com/yuyenews/Mars-Example](https://github.com/yuyenews/Mars-Example)
 
 ## 项目特性
-### 一、声明式API
+### 一、编写Http接口不需要方法体
 只需要在你的interface上加上一个注解，即可对外提供一个http接口，并且我们还支持传统的Controller写法
 ```java
 @MarsApi(refBean="要引用的bean的name")
