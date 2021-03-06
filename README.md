@@ -33,17 +33,16 @@ Martian 是一个基于NIO的JavaWeb编程框架，可以帮助你快速的开�
 - 拥有自主开发的 半ORM持久层框架，并天然的集成到了Martian中
 
 ## 项目生态
+
 - 【分布式组件】[Martian-cloud](https://github.com/yuyenews/Martian-Cloud)
 - 【网关及其他组件】[Martian-Component](https://github.com/yuyenews/Martian-Component)
 - 【更多组件】筹划中
 
 ## 官方资源
 
-开发文档: [http://mars-framework.com/doc.html?tag=martian](http://mars-framework.com/doc.html?tag=martian)
-
-视频教程: [https://www.bilibili.com/video/BV1dv4y1Z7Wt](https://www.bilibili.com/video/BV1dv4y1Z7Wt)
-
-使用示例: [https://github.com/yuyenews/Mars-Example](https://github.com/yuyenews/Mars-Example)
+- 开发文档: [http://mars-framework.com/doc.html?tag=martian](http://mars-framework.com/doc.html?tag=martian)
+- 视频教程: [https://www.bilibili.com/video/BV1dv4y1Z7Wt](https://www.bilibili.com/video/BV1dv4y1Z7Wt)
+- 使用示例: [https://github.com/yuyenews/Mars-Example](https://github.com/yuyenews/Mars-Example)
 
 ## 项目特性
 ### 一、编写Http接口不需要方法体
@@ -114,6 +113,6 @@ public int insert(){
 ## 官网社区以及联系方式
 
 - QQ群: 773291321
-- 社区: [github的discussions](https://github.com/yuyenews/Martian/discussions)
-
-如有任何疑问，并且不方便使用上面的渠道，可以进入官网的页尾，查找电子邮件和微博，给我发送信息。
+- 邮箱: yuyemail@163.com
+- 微博: @Ye卡布奇诺
+- 社区: [https://github.com/yuyenews/Martian/discussions](https://github.com/yuyenews/Martian/discussions)
