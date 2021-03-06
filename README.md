@@ -23,7 +23,9 @@
 
 ## 项目简介
 
-Martian 是一个基于NIO的JavaWeb编程框架
+Martian 是一个基于NIO的JavaWeb编程框架，可以帮助你快速的开发后端服务。 设计理念是 极致精简，专注于前后端分离，只保留必要的功能，并且使用最简洁的方式来实现这些功能。
+
+在 声明式API 和 DAO 的加持下，Controller没有了方法体，数据库操作变得很简洁，极大的降低了Controller和数据库操作的代码量，让用户专注在Service层
 
 - 基于NIO，彻底脱离Tomcat，JBoss等容器
 - 让Controller变成了一个interface，降低了开发的工作量
