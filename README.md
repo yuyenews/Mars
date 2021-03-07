@@ -114,5 +114,6 @@ public int insert(){
 
 - QQ群: 773291321
 - 邮箱: yuyemail@163.com
+- B站: [贝克街的天才](https://space.bilibili.com/41981562)
 - 微博: [@Ye卡布奇诺](https://weibo.com/tcyuye?sudaref=mars-framework.com&is_all=1)
 - 社区: [https://github.com/yuyenews/Martian/discussions](https://github.com/yuyenews/Martian/discussions)
