@@ -24,10 +24,6 @@ public class DBHelper {
      */
     private static Map<String, DruidDataSource> druidDataSources;
     /**
-     * sql语句预编译处理接口
-     */
-    private static PreparedStatement preparedStatement;
-    /**
      * 默认数据源名称
      */
     private static String defaultDataSourceName;
@@ -89,7 +85,7 @@ public class DBHelper {
         if(logger.isDebugEnabled()){
             logger.debug("sql:{},params:{}",sql, JSON.toJSONString(params));
         }
-        preparedStatement = connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
         if(params != null && params.length > 0){
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
@@ -123,7 +119,7 @@ public class DBHelper {
         if(logger.isDebugEnabled()){
             logger.debug("sql:{},params:{}",sql, JSON.toJSONString(params));
         }
-        preparedStatement = connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
         if(params != null && params.length > 0){
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
