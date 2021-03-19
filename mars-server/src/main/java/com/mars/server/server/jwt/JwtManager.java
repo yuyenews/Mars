@@ -22,17 +22,30 @@ public class JwtManager {
     /**
      * token秘钥
      */
-    private final String SECRET = "MartianCloudConfigNo1";
+    private String secret = "jwtDefaultSecret20210319";
     /**
      * token 过期时间: 1天
      */
-    private final int calendarField = Calendar.SECOND;
+    private int calendarField = Calendar.SECOND;
     private int calendarInterval = 86400;
 
     private static JwtManager jwtManager = new JwtManager();
     private JwtManager(){}
 
-    public static JwtManager getJwtManager(){
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public void setCalendarField(int calendarField) {
+        this.calendarField = calendarField;
+    }
+
+    public static JwtManager getJwtManager(String secret) {
+        jwtManager.setSecret(secret);
+        return getJwtManager();
+    }
+
+    public static JwtManager getJwtManager() {
         jwtManager.calendarInterval =  MarsConfiguration.getConfig().jwtTime();
         return jwtManager;
     }
@@ -60,7 +73,7 @@ public class JwtManager {
 
         builder.withIssuedAt(iatDate); // sign time
         builder.withExpiresAt(expiresDate); // expire time
-        String token = builder.sign(Algorithm.HMAC256(SECRET)); // signature
+        String token = builder.sign(Algorithm.HMAC256(secret)); // signature
 
         return token;
     }
@@ -106,7 +119,7 @@ public class JwtManager {
     private Map<String, Claim> decryptToken(String token) {
         DecodedJWT jwt = null;
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret)).build();
             jwt = verifier.verify(token);
             return jwt.getClaims();
         } catch (Exception e) {
