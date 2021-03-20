@@ -27,7 +27,7 @@ public class JSONUtil {
         }
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            if(obj instanceof  String){
+            if(obj instanceof String){
                 return objectMapper.readValue(obj.toString(), cls);
             } else {
                 return objectMapper.readValue(objectMapper.writeValueAsString(obj), cls);
