@@ -1,6 +1,5 @@
 package com.mars.mvc.resolve;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
@@ -155,7 +154,7 @@ public class ExecuteInters {
 	 * @return
 	 */
 	private static String errorResult(String className, Exception e) {
-		JSONObject jsonObject = MesUtil.getMes(500, "执行拦截器报错，拦截器类型[" + className + "]," + e.getMessage());
-		return jsonObject.toJSONString();
+		String jsonString = MesUtil.getMes(500, "执行拦截器报错，拦截器类型[" + className + "]," + e.getMessage());
+		return jsonString;
 	}
 }

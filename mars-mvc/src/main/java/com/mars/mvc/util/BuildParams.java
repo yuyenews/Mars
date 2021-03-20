@@ -1,8 +1,8 @@
 package com.mars.mvc.util;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mars.common.constant.MarsConstant;
+import com.mars.common.util.JSONUtil;
 import com.mars.core.enums.DataType;
 import com.mars.common.util.StringUtil;
 import com.mars.iserver.constant.ParamTypeConstant;
@@ -71,11 +71,11 @@ public class BuildParams {
     private static Object getObject(Class cls, HttpMarsRequest request) throws Exception {
         /* 如果是Json传参，那就直接转成Java对象返回 */
         if(ParamTypeConstant.isJSON(request.getContentType())){
-            JSONObject paramJson = request.getJsonParam();
+            String paramJson = request.getJsonParam();
             if(paramJson == null){
                 return null;
             }
-            return paramJson.toJavaObject(cls);
+            return JSONUtil.toJavaObject(paramJson, cls);
         }
 
         /* 如果不是Json传参，那就用反射来处理 */
@@ -165,9 +165,9 @@ public class BuildParams {
                 break;
             case DataType.DATE:
                 String fmt = "yyyy-MM-dd HH:mm:ss";
-                JSONField jsonField = field.getAnnotation(JSONField.class);
-                if(jsonField != null && !StringUtil.isNull(jsonField.format())){
-                    fmt = jsonField.format();
+                JsonFormat jsonFormat = field.getAnnotation(JsonFormat.class);
+                if(jsonFormat != null && !StringUtil.isNull(jsonFormat.pattern())){
+                    fmt = jsonFormat.pattern();
                 }
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(fmt);
                 field.set(obj,simpleDateFormat.parse(valStr));

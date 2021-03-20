@@ -1,6 +1,5 @@
 package com.mars.server.server.request;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 import java.util.*;
 
@@ -19,7 +18,7 @@ public abstract class HttpMarsRequest {
 	/**
 	 * json参数
 	 */
-	private JSONObject jsonParam;
+	private String jsonParam;
 
 	/**
 	 * 上传的文件
@@ -44,7 +43,7 @@ public abstract class HttpMarsRequest {
 	 * 获取json传参
 	 * @return json参数
 	 */
-	public JSONObject getJsonParam() {
+	public String getJsonParam() {
 		return jsonParam;
 	}
 
@@ -52,7 +51,7 @@ public abstract class HttpMarsRequest {
 	 * 设置json传参
 	 * @param jsonParam
 	 */
-	public void setJsonParam(JSONObject jsonParam) {
+	public void setJsonParam(String jsonParam) {
 		this.jsonParam = jsonParam;
 	}
 

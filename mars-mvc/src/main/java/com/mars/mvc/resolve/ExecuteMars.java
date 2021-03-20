@@ -1,9 +1,8 @@
 package com.mars.mvc.resolve;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
+import com.mars.common.util.JSONUtil;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.load.model.MarsInterModel;
 import com.mars.mvc.util.ParamsCheckUtil;
@@ -95,7 +94,7 @@ public class ExecuteMars {
 		Object[] params = ParamAndResultFactory.getBaseParamAndResult().getParam(method,request,response);
 
 		/* 校验传参 */
-		JSONObject checkResult = ParamsCheckUtil.checkParam(params,method);
+		String checkResult = ParamsCheckUtil.checkParam(params,method);
 		if(checkResult != null){
 			return checkResult;
 		}
@@ -152,6 +151,6 @@ public class ExecuteMars {
 		}
 
 		/* 如果请求方式和MarsApi的映射不一致，则提示客户端 */
-		throw new Exception("此接口支持的请求方式为[" + JSON.toJSONString(reqMethods) + "]");
+		throw new Exception("此接口支持的请求方式为[" + JSONUtil.toJSONString(reqMethods) + "]");
 	}
 }

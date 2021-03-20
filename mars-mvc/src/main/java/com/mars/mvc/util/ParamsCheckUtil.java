@@ -1,6 +1,5 @@
 package com.mars.mvc.util;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mars.common.annotation.api.MarsDataCheck;
 import com.mars.common.util.MatchUtil;
 import com.mars.common.util.MesUtil;
@@ -29,7 +28,7 @@ public class ParamsCheckUtil {
      * @param method 要执行的方法
      * @return 校验结果
      */
-    public static JSONObject checkParam(Object[] params, Method method){
+    public static String checkParam(Object[] params, Method method){
         if(params == null){
             return null;
         }
@@ -45,7 +44,7 @@ public class ParamsCheckUtil {
             if(requestClass.equals(cls) || responseClass.equals(cls) || mapClass.equals(cls)){
                 continue;
             }
-            JSONObject result = checkParam(cls,obj,method);
+            String result = checkParam(cls,obj,method);
             if(result != null){
                 return result;
             }
@@ -59,7 +58,7 @@ public class ParamsCheckUtil {
      * @param obj 参数对象
      * @return 校验结果
      */
-    private static JSONObject checkParam(Class<?> cls, Object obj, Method method) {
+    private static String checkParam(Class<?> cls, Object obj, Method method) {
         try {
             Field[] fields = cls.getDeclaredFields();
             for(Field field : fields){

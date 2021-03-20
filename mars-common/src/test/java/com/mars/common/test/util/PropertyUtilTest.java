@@ -11,13 +11,17 @@ public class PropertyUtilTest {
 
     @Test
     public void testCopy(){
-        TestModel testModel = new TestModel();
-        testModel.setId(1);
-        testModel.setName("mars");
+        try {
+            TestModel testModel = new TestModel();
+            testModel.setId(1);
+            testModel.setName("mars");
 
-        TestModelTwo testModelTwo = PropertyUtil.copy(testModel,TestModelTwo.class);
-        Assert.assertEquals(testModel.getId(),testModelTwo.getId());
-        Assert.assertEquals(testModel.getName(),testModelTwo.getName());
+            TestModelTwo testModelTwo = PropertyUtil.copy(testModel,TestModelTwo.class);
+            Assert.assertEquals(testModel.getId(),testModelTwo.getId());
+            Assert.assertEquals(testModel.getName(),testModelTwo.getName());
+        } catch (Exception e){
+            Assert.fail(e.getMessage());
+        }
     }
 }
 

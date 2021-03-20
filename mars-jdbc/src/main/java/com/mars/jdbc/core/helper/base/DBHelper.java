@@ -1,10 +1,9 @@
 package com.mars.jdbc.core.helper.base;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
+import com.mars.common.util.JSONUtil;
 import com.mars.jdbc.core.util.JdbcConfigUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,7 @@ public class DBHelper {
      * @return 结果集
      * @throws Exception
      */
-    public static List<JSONObject> selectList(String sql, Connection connection) throws Exception {
+    public static List<Map<String, Object>> selectList(String sql, Connection connection) throws Exception {
         return selectList(sql, connection, new Object[]{});
     }
 
@@ -53,15 +52,15 @@ public class DBHelper {
      * @return 结果集
      * @throws Exception
      */
-    public static List<JSONObject> selectList(String sql, Connection connection, Object[] params) throws Exception {
+    public static List<Map<String, Object>> selectList(String sql, Connection connection, Object[] params) throws Exception {
         ResultSet resultSet = select(sql, connection, params);
-        List<JSONObject> list = new ArrayList<>();
+        List<Map<String, Object>> list = new ArrayList<>();
 
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         int count = resultSetMetaData.getColumnCount();
 
         while (resultSet.next()) {
-            JSONObject rows = new JSONObject();
+            Map<String, Object> rows = new HashMap<>();
             for (int i = 1; i <= count; i++) {
                 String key = resultSetMetaData.getColumnLabel(i);
                 Object value = resultSet.getObject(i);
@@ -83,7 +82,7 @@ public class DBHelper {
      */
     public static ResultSet select(String sql, Connection connection, Object[] params) throws Exception {
         if(logger.isDebugEnabled()){
-            logger.debug("sql:{},params:{}",sql, JSON.toJSONString(params));
+            logger.debug("sql:{},params:{}",sql, JSONUtil.toJSONString(params));
         }
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         if(params != null && params.length > 0){
@@ -117,7 +116,7 @@ public class DBHelper {
      */
     public static int update(String sql, Connection connection, Object[] params) throws Exception {
         if(logger.isDebugEnabled()){
-            logger.debug("sql:{},params:{}",sql, JSON.toJSONString(params));
+            logger.debug("sql:{},params:{}",sql, JSONUtil.toJSONString(params));
         }
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         if(params != null && params.length > 0){

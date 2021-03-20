@@ -1,7 +1,6 @@
 package com.mars.jdbc.core.proxy.oper;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.mars.common.util.JSONUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.jdbc.core.annotation.MarsGet;
 import com.mars.jdbc.core.annotation.MarsSelect;
@@ -12,6 +11,7 @@ import com.mars.jdbc.core.helper.templete.model.PageParamModel;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 代理操作数据库
@@ -127,7 +127,7 @@ public class ProxyOperation {
      * @throws Exception 异常
      */
     private static Object doInsert(MarsUpdate marsUpdate, String dataSourceName, Object param) throws Exception {
-        JSONObject jsonObject = (JSONObject)JSON.toJSON(param);
+        Map<String, Object> jsonObject = JSONUtil.toMap(param);
 
         StringBuffer sql = new StringBuffer();
         sql.append("insert into ");
@@ -173,7 +173,7 @@ public class ProxyOperation {
      * @throws Exception 异常
      */
     private static Object doUpdate(MarsUpdate marsUpdate, String dataSourceName, Object param) throws Exception {
-        JSONObject jsonObject = (JSONObject)JSON.toJSON(param);
+        Map<String, Object> jsonObject = JSONUtil.toMap(param);
 
         StringBuffer sql = new StringBuffer();
         sql.append("update ");

@@ -1,7 +1,6 @@
 package com.mars.mvc.logs;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.mars.common.util.JSONUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
@@ -28,16 +27,21 @@ public class LogAop {
      */
     public void startMethod(Object[] args) {
         String params = "";
-        if(args != null && args.length > 0){
-            JSONObject jsonObject = new JSONObject();
-            for(Object obj : args){
-                if(obj == null || obj instanceof HttpMarsResponse || obj instanceof HttpMarsRequest){
-                    continue;
+        try {
+            if(args != null && args.length > 0){
+                StringBuffer stringBuffer = new StringBuffer();
+                for(Object obj : args){
+                    if(obj == null || obj instanceof HttpMarsResponse || obj instanceof HttpMarsRequest){
+                        continue;
+                    }
+
+                    String resultStr = JSONUtil.toJSONString(obj);
+                    stringBuffer.append(resultStr);
                 }
-                JSONObject param = JSONObject.parseObject(JSON.toJSONString(obj));
-                jsonObject.putAll(param);
+                params = stringBuffer.toString();
             }
-            params = jsonObject.toJSONString();
+        } catch (Exception e){
+            params = "无";
         }
 
         StringBuffer buffer = getLogInfo("开始执行","参数",params);
@@ -51,9 +55,14 @@ public class LogAop {
      */
     public void endMethod(Object[] args,Object result) {
         String resultInfo = "";
-        if(result != null){
-            resultInfo = JSON.toJSONString(result);
+        try{
+            if(result != null){
+                resultInfo = JSONUtil.toJSONString(result);
+            }
+        } catch (Exception e){
+            resultInfo = "无";
         }
+
         StringBuffer buffer = getLogInfo("执行结束","返回数据", resultInfo);
         logger.info(buffer.toString());
     }

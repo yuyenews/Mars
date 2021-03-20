@@ -1,7 +1,7 @@
 package com.mars.mvc.util;
 
-import com.alibaba.fastjson.JSON;
 import com.mars.common.constant.MarsConstant;
+import com.mars.common.util.JSONUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.core.enums.DataType;
 import com.mars.server.server.request.HttpMarsRequest;
@@ -42,7 +42,7 @@ public class ParamAndResult implements BaseParamAndResult {
         } else if(resultObj.toString().equals(MarsConstant.VOID)) {
             return;
         } else if(!isNotObject(resultObj)){
-            resultObj = JSON.toJSONString(resultObj);
+            resultObj = JSONUtil.toJSONString(resultObj);
         }
 
         response.send(String.valueOf(resultObj));

@@ -1,8 +1,8 @@
 package com.mars.core.load;
 
-import com.alibaba.fastjson.JSON;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
+import com.mars.common.util.JSONUtil;
 import com.mars.common.util.ReadClass;
 
 import java.util.HashSet;
@@ -40,7 +40,7 @@ public class LoadClass {
 			marsSpace.setAttr(MarsConstant.SCAN_ALL_CLASS,scanClassList);
 
 		} catch (Exception e){
-			throw new Exception("扫描["+ JSON.toJSONString(packageName)+"]包下的类发生错误",e);
+			throw new Exception("扫描["+ JSONUtil.toJSONString(packageName) +"]包下的类发生错误",e);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package com.mars.jdbc.core.helper.templete.base;
 
-import com.alibaba.fastjson.JSONObject;
+import com.mars.common.util.JSONUtil;
 import com.mars.jdbc.core.helper.base.DBHelper;
 import com.mars.jdbc.core.helper.manager.ConnectionManager;
 import com.mars.jdbc.core.helper.templete.model.SqlBuilderModel;
@@ -8,6 +8,7 @@ import com.mars.jdbc.core.helper.templete.model.SqlBuilderModel;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 查询父类
@@ -25,11 +26,11 @@ public class BaseSelect {
     public static <T> List<T> selectList(String sql, Object param, Class<T> cls,String dataSourceName) throws Exception {
         ConnectionManager connectionManager = BaseJdbcTemplate.getConnection(dataSourceName);
         try {
-            List<JSONObject> result = select(sql, param, connectionManager.getConnection());
+            List<Map<String, Object>> result = select(sql, param, connectionManager.getConnection());
             if (result != null && result.size() > 0) {
                 List<T> resultList = new ArrayList<>();
-                for (JSONObject item : result) {
-                    resultList.add(item.toJavaObject(cls));
+                for (Map<String, Object> item : result) {
+                    resultList.add(JSONUtil.toJavaObject(item, cls));
                 }
                 return resultList;
             }
@@ -49,8 +50,8 @@ public class BaseSelect {
      * @return
      * @throws Exception
      */
-    protected static List<JSONObject> select(String sql, Object args, Connection connection) throws Exception {
-        List<JSONObject> result = null;
+    protected static List<Map<String, Object>> select(String sql, Object args, Connection connection) throws Exception {
+        List<Map<String, Object>> result = null;
         if (args != null) {
             if (args instanceof Object[]) {
                 result = DBHelper.selectList(sql, connection, (Object[]) args);

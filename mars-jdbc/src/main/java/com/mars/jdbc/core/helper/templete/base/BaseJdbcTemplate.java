@@ -1,9 +1,8 @@
 package com.mars.jdbc.core.helper.templete.base;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
+import com.mars.common.util.JSONUtil;
 import com.mars.common.util.ThreadUtil;
 import com.mars.jdbc.core.helper.base.DBHelper;
 import com.mars.jdbc.core.helper.manager.ConnectionManager;
@@ -73,7 +72,7 @@ public class BaseJdbcTemplate {
 
         SqlBuilderModel sqlBuilderModel = new SqlBuilderModel();
 
-        JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(args));
+        Map<String, Object> jsonObject = JSONUtil.toMap(args);
 
         List<Object> params = new ArrayList<>();
 
@@ -93,7 +92,7 @@ public class BaseJdbcTemplate {
      * @param jsonObject
      * @return
      */
-    private static String formatMatcher(String sql,List<Object> params,JSONObject jsonObject){
+    private static String formatMatcher(String sql,List<Object> params, Map<String, Object> jsonObject){
         Pattern pattern = Pattern.compile("(#\\{((?!}).)*\\})");
         Matcher matcher = pattern.matcher(sql);
         while (matcher.find()) {
@@ -112,13 +111,13 @@ public class BaseJdbcTemplate {
      * @param jsonObject
      * @return
      */
-    private static String replaceMatcher(String sql,List<Object> params,JSONObject jsonObject){
+    private static String replaceMatcher(String sql,List<Object> params,Map<String, Object> jsonObject){
         Pattern pattern = Pattern.compile("(\\$\\{((?!}).)*\\})");
         Matcher matcher = pattern.matcher(sql);
         while (matcher.find()) {
             String matcherName = matcher.group();
             String filedName = getFiledName(matcherName,"$");
-            sql = sql.replace(matcherName,jsonObject.getString(filedName));
+            sql = sql.replace(matcherName,String.valueOf(jsonObject.get(filedName)));
         }
         return sql;
     }

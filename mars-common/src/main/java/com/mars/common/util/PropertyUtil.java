@@ -1,7 +1,5 @@
 package com.mars.common.util;
 
-import com.alibaba.fastjson.JSONObject;
-
 /**
  * 属性工具类
  */
@@ -14,11 +12,10 @@ public class PropertyUtil {
      * @param <T> 要拷贝到的对象类型
      * @return 拷贝到的对象
      */
-    public static <T> T copy(Object from, Class<T> to){
+    public static <T> T copy(Object from, Class<T> to) throws Exception {
         if(from == null){
             return null;
         }
-        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(from));
-        return jsonObject.toJavaObject(to);
+        return JSONUtil.toJavaObject(from, to);
     }
 }

@@ -46,7 +46,7 @@ public class RequestExecute {
 		} catch (Exception e) {
 			log.error("处理请求的时候出错", e);
 			String msg = getErrorMsg(e);
-			response.send(MesUtil.getMes(500, msg).toJSONString());
+			response.send(MesUtil.getMes(500, msg));
 		}
 	}
 

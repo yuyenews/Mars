@@ -13,6 +13,6 @@ public class ResponseUtil {
      * @param marsResponse
      */
     public static void sendServerError(HttpMarsResponse marsResponse, String ex){
-        marsResponse.send(MesUtil.getMes(500,ex).toJSONString());
+        marsResponse.send(MesUtil.getMes(500,ex));
     }
 }
