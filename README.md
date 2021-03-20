@@ -35,7 +35,7 @@ Martian 是一个基于NIO的JavaWeb编程框架，可以帮助你快速的开�
 ## 项目生态
 
 - 【分布式组件】[Martian-cloud](https://github.com/yuyenews/Martian-Cloud)
-- 【网关及其他组件】[Martian-Component](https://github.com/yuyenews/Martian-Component)
+- 【网关组件】[Martian-gateway](https://github.com/yuyenews/Martian-gateway)
 - 【更多组件】筹划中
 
 ## 官方资源
