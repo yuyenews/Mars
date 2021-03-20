@@ -1,8 +1,8 @@
 package com.mars.core.test.aop.traction;
 
-import com.alibaba.fastjson.JSON;
 import com.mars.aop.base.BaseTraction;
 import com.mars.aop.model.AopModel;
+import com.mars.common.util.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ public class TractionTest implements BaseTraction {
     private Logger logger = LoggerFactory.getLogger(TractionTest.class);
 
     public void beginTraction(AopModel aopModel) {
-        logger.info("单测开始执行事务开启方法，事务级别:{}", JSON.toJSONString(aopModel.getTractionLevel()));
+        logger.info("单测开始执行事务开启方法，事务级别:{}", JSONUtil.toJSONString(aopModel.getTractionLevel()));
     }
 
     public void commit() {
