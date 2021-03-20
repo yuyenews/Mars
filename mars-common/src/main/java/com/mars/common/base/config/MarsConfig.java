@@ -21,11 +21,11 @@ public abstract class MarsConfig {
     }
 
     /**
-     * jwt失效时间
-     * @return jwt失效时间
+     * jwt配置
+     * @return jwt配置
      */
-    public int jwtTime(){
-        return 86400;
+    public JWTConfig jwtConfig(){
+        return new JWTConfig();
     }
 
     /**

@@ -6,6 +6,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.mars.common.base.config.model.JWTConfig;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.core.enums.DataType;
 
@@ -22,31 +23,29 @@ public class JwtManager {
     /**
      * token秘钥
      */
-    private String secret = "jwtDefaultSecret20210319";
+    private String secret;
     /**
-     * token 过期时间: 1天
+     * token 过期时间的单位
      */
-    private int calendarField = Calendar.SECOND;
-    private int calendarInterval = 86400;
+    private int calendarField;
+    /**
+     * token 过期时间
+     */
+    private int calendarInterval;
 
     private static JwtManager jwtManager = new JwtManager();
     private JwtManager(){}
 
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public void setCalendarField(int calendarField) {
-        this.calendarField = calendarField;
-    }
-
-    public static JwtManager getJwtManager(String secret) {
-        jwtManager.setSecret(secret);
-        return getJwtManager();
-    }
-
     public static JwtManager getJwtManager() {
-        jwtManager.calendarInterval =  MarsConfiguration.getConfig().jwtTime();
+        JWTConfig jwtConfig = MarsConfiguration.getConfig().jwtConfig();
+        if(jwtConfig == null){
+            jwtConfig = new JWTConfig();
+        }
+
+        jwtManager.calendarInterval = jwtConfig.getCalendarInterval();
+        jwtManager.secret = jwtConfig.getSecret();
+        jwtManager.calendarField = jwtConfig.getCalendarField();
+
         return jwtManager;
     }
 
