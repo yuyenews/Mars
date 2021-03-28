@@ -112,14 +112,6 @@ public class MarsHttpHelper {
 
         /* 从报文中获取body */
         getBody(outputStream, headLength, marsHttpExchange);
-
-        /* 过滤掉非法读取 */
-        if (marsHttpExchange.getRequestURI() == null
-                || marsHttpExchange.getRequestMethod() == null
-                || marsHttpExchange.getHttpVersion() == null) {
-            close(channel);
-            return;
-        }
     }
 
     /**
@@ -230,19 +222,5 @@ public class MarsHttpHelper {
 
         /* 响应数据 */
         marsHttpExchange.responseData();
-    }
-
-    /**
-     * 释放资源
-     *
-     * @param socketChannel
-     */
-    public static void close(AsynchronousSocketChannel socketChannel) {
-        try {
-            if (socketChannel != null) {
-                socketChannel.close();
-            }
-        } catch (Exception e) {
-        }
     }
 }
