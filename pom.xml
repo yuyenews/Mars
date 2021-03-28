@@ -17,7 +17,7 @@
 	</modules>
 
 	<properties>
-		<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+		<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 	</properties>
 
 	<dependencyManagement>
