@@ -36,7 +36,7 @@ public class MarsDefaultServer implements MarsServer {
             /* 开始监听端口 */
             serverSocketChannel.bind(new InetSocketAddress(portNumber), backLog);
             /* 添加handler */
-            serverSocketChannel.accept(serverSocketChannel , new MarsAioServerHandler());
+            serverSocketChannel.accept(serverSocketChannel, new MarsAioServerHandler());
 
             /* 标识服务是否已经启动 */
             MarsSpace.getEasySpace().setAttr(MarsConstant.HAS_SERVER_START, "yes");
