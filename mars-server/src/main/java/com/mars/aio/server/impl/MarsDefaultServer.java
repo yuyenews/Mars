@@ -41,6 +41,10 @@ public class MarsDefaultServer implements MarsServer {
             /* 标识服务是否已经启动 */
             MarsSpace.getEasySpace().setAttr(MarsConstant.HAS_SERVER_START, "yes");
             log.info("启动成功");
+
+            while (true){
+                Thread.sleep(10000);
+            }
         } catch (Exception e) {
             log.error("NIO发生异常", e);
         }
