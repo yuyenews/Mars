@@ -11,7 +11,7 @@ import com.mars.common.constant.MarsSpace;
 import com.mars.core.model.MarsBeanModel;
 import com.mars.mvc.load.model.MarsMappingModel;
 import com.mars.mvc.util.ParamAndResult;
-import com.mars.iserver.par.factory.ParamAndResultFactory;
+import com.mars.aio.par.factory.ParamAndResultFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

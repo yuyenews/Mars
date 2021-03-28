@@ -1,7 +1,7 @@
 package com.mars.server.server.request.impl;
 
 import com.mars.common.annotation.enums.ReqMethod;
-import com.mars.iserver.server.impl.MarsHttpExchange;
+import com.mars.aio.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsRequest;
 
 /**

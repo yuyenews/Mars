@@ -5,7 +5,7 @@ import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.JSONUtil;
 import com.mars.core.enums.DataType;
 import com.mars.common.util.StringUtil;
-import com.mars.iserver.constant.ParamTypeConstant;
+import com.mars.aio.constant.ParamTypeConstant;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;

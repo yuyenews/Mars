@@ -6,7 +6,7 @@ import com.mars.common.util.JSONUtil;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.load.model.MarsInterModel;
 import com.mars.mvc.util.ParamsCheckUtil;
-import com.mars.iserver.par.factory.ParamAndResultFactory;
+import com.mars.aio.par.factory.ParamAndResultFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.util.RequestUtil;
