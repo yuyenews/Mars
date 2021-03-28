@@ -200,7 +200,7 @@ public class MarsHttpHelper {
      * @param outputStream
      * @throws Exception
      */
-    private static void getBody(ByteArrayOutputStream outputStream, int headLen, MarsHttpExchange marsHttpExchange) throws Exception {
+    private static void getBody(ByteArrayOutputStream outputStream, int headLen, MarsHttpExchange marsHttpExchange) {
         if (outputStream == null || outputStream.size() < 1) {
             return;
         }
