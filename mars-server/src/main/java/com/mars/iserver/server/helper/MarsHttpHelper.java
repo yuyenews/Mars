@@ -1,4 +1,4 @@
-package com.mars.iserver.server.handler;
+package com.mars.iserver.server.helper;
 
 import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.base.config.model.RequestConfig;

@@ -3,7 +3,6 @@ package com.mars.iserver.server.impl;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.common.util.MarsConfiguration;
-import com.mars.iserver.server.handler.MarsAioServerHandler;
 import com.mars.iserver.server.MarsServer;
 import com.mars.iserver.server.threadpool.ThreadPool;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ import java.net.InetSocketAddress;
 import java.nio.channels.*;
 
 /**
- * 默认服务（采用NIO）
+ * 默认服务（采用AIO）
  */
 public class MarsDefaultServer implements MarsServer {
 
