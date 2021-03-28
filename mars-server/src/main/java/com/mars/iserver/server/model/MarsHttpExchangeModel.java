@@ -7,9 +7,7 @@ import com.mars.common.util.MarsConfiguration;
 import com.mars.iserver.constant.HttpConstant;
 
 import java.io.*;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.AsynchronousSocketChannel;
 
 /**
  * 请求处理器的父类
@@ -18,17 +16,9 @@ import java.nio.channels.SocketChannel;
 public class MarsHttpExchangeModel {
 
     /**
-     * 选择Key
-     */
-    protected SelectionKey selectionKey;
-    /**
-     * 选择器
-     */
-    protected Selector selector;
-    /**
      * 通道
      */
-    protected SocketChannel socketChannel;
+    protected AsynchronousSocketChannel socketChannel;
 
     /**
      * 请求的地址
@@ -90,15 +80,11 @@ public class MarsHttpExchangeModel {
         statusCode = 200;
     }
 
-    public void setSelectionKey(SelectionKey selectionKey) {
-        this.selectionKey = selectionKey;
+    public AsynchronousSocketChannel getSocketChannel() {
+        return socketChannel;
     }
 
-    public void setSelector(Selector selector) {
-        this.selector = selector;
-    }
-
-    public void setSocketChannel(SocketChannel socketChannel) {
+    public void setSocketChannel(AsynchronousSocketChannel socketChannel) {
         this.socketChannel = socketChannel;
     }
 
@@ -116,10 +102,6 @@ public class MarsHttpExchangeModel {
 
     public void setHttpVersion(String httpVersion) {
         this.httpVersion = httpVersion;
-    }
-
-    public SocketChannel getSocketChannel() {
-        return socketChannel;
     }
 
     /**
