@@ -15,7 +15,13 @@ public class RequestConfig {
      * 读取超时时间
      * 默认10秒
      */
-    private int readTimeout = 10000;
+    private long readTimeout = 10000;
+
+    /**
+     * 响应超时时间
+     * 默认10秒
+     */
+    private long writeTimeout = 10000;
 
     public int getReadSize() {
         return readSize;
@@ -25,11 +31,19 @@ public class RequestConfig {
         this.readSize = readSize;
     }
 
-    public int getReadTimeout() {
+    public long getReadTimeout() {
         return readTimeout;
     }
 
-    public void setReadTimeout(int readTimeout) {
+    public void setReadTimeout(long readTimeout) {
         this.readTimeout = readTimeout;
+    }
+
+    public long getWriteTimeout() {
+        return writeTimeout;
+    }
+
+    public void setWriteTimeout(long writeTimeout) {
+        this.writeTimeout = writeTimeout;
     }
 }

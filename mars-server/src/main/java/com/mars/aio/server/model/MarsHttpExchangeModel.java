@@ -38,7 +38,7 @@ public class MarsHttpExchangeModel {
     /**
      * 响应文件流
      */
-    protected byte[] responseBody;
+    protected ByteArrayOutputStream responseBody;
 
     /**
      * 请求头
@@ -171,11 +171,28 @@ public class MarsHttpExchangeModel {
     }
 
     /**
+     * 获取要发送的文字
+     * @return
+     */
+    public String getSendText() {
+        return sendText;
+    }
+
+    /**
+     * 获取要发送的文件流
+     * @return
+     */
+    public ByteArrayOutputStream getResponseBody() {
+        return responseBody;
+    }
+
+    /**
      * 设置响应文件流
      * @param responseBody
      */
-    public void setResponseBody(byte[] responseBody) {
-        this.responseBody = responseBody;
+    public void setResponseBody(byte[] responseBody) throws Exception {
+        this.responseBody = new ByteArrayOutputStream();
+        this.responseBody.write(responseBody);
     }
 
     /**
@@ -185,12 +202,12 @@ public class MarsHttpExchangeModel {
      */
     public void setResponseBody(InputStream inputStream) throws Exception {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] buff = new byte[100];
+        byte[] buff = new byte[1024];
         int rc = 0;
-        while((rc=inputStream.read(buff, 0, 100))>0) {
+        while((rc=inputStream.read(buff, 0, buff.length))>0) {
             byteArrayOutputStream.write(buff, 0, rc);
         }
-        this.responseBody = byteArrayOutputStream.toByteArray();
+        this.responseBody = byteArrayOutputStream;
     }
 
     /**

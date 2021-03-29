@@ -1,17 +1,31 @@
 package com.mars.aio.server.impl;
 
+import com.mars.aio.server.helper.MarsHttpHelper;
+import com.mars.common.base.config.model.RequestConfig;
 import com.mars.common.constant.MarsConstant;
 import com.mars.aio.constant.HttpConstant;
 import com.mars.aio.server.model.MarsHttpExchangeModel;
+import com.mars.common.util.MarsConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.nio.channels.CompletionHandler;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 请求解析器
  */
 public class MarsHttpExchange extends MarsHttpExchangeModel  {
+
+    private Logger logger = LoggerFactory.getLogger(MarsHttpExchange.class);
+
+    /**
+     * 请求配置
+     */
+    private RequestConfig requestConfig = MarsConfiguration.getConfig().requestConfig();
 
     /**
      * 实例化
@@ -24,7 +38,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      * 执行响应操作
      * @throws IOException
      */
-    public void responseData() throws IOException {
+    public void responseData() throws Exception {
         if(responseBody != null){
             /* 只要响应流不为空，就按文件下载处理 */
             responseFile();
@@ -36,25 +50,21 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
     /**
      * 响应文件流
      */
-    private void responseFile() throws IOException {
+    private void responseFile() throws Exception {
         /* 加载响应头 */
         setResponseHeader(MarsConstant.CONTENT_TYPE, "application/octet-stream");
-        StringBuffer buffer = getCommonResponse(responseBody.length);
+        StringBuffer buffer = getCommonResponse(responseBody.size());
 
         /* 转成ByteBuffer */
         byte[] bytes = buffer.toString().getBytes(MarsConstant.ENCODING);
 
         /* 加载要响应的数据 */
-        ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length + responseBody.length);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length + responseBody.size());
         byteBuffer.put(bytes);
-        byteBuffer.put(responseBody);
+        byteBuffer.put(responseBody.toByteArray());
 
         byteBuffer.flip();
-
-        /* 开始响应 */
-        while (byteBuffer.hasRemaining()){
-            socketChannel.write(byteBuffer);
-        }
+        doWrite(byteBuffer);
     }
 
     /**
@@ -62,7 +72,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
      *
      * @return
      */
-    public void responseText(String text) throws IOException {
+    public void responseText(String text) throws Exception {
         if(text == null){
             text = sendText;
         }
@@ -83,9 +93,37 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
         byteBuffer.flip();
 
         /* 开始响应 */
-        while (byteBuffer.hasRemaining()){
-            socketChannel.write(byteBuffer);
-        }
+        doWrite(byteBuffer);
+    }
+
+    /**
+     * 往客户端写数据
+     * @param byteBuffer
+     */
+    private void doWrite(ByteBuffer byteBuffer) {
+        socketChannel.write(byteBuffer, requestConfig.getWriteTimeout(), TimeUnit.MILLISECONDS, byteBuffer,
+                new CompletionHandler<Integer, ByteBuffer>() {
+            @Override
+            public void completed(Integer result, ByteBuffer attachment) {
+                try {
+                    if(result > 0 && attachment.hasRemaining()){
+                        socketChannel.write(attachment,requestConfig.getWriteTimeout(),
+                                TimeUnit.MILLISECONDS, attachment,this);
+                    } else {
+                        MarsHttpHelper.close(socketChannel, false);
+                    }
+                } catch (Exception e){
+                    logger.error("给客户端写入响应数据异常", e);
+                    MarsHttpHelper.close(socketChannel, false);
+                }
+            }
+
+            @Override
+            public void failed(Throwable exc, ByteBuffer attachment) {
+                logger.error("给客户端写入响应数据异常", exc);
+                MarsHttpHelper.close(socketChannel, false);
+            }
+        });
     }
 
     /**
@@ -123,7 +161,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
         if(contentType == null){
             contentType = requestHeaders.get(MarsConstant.CONTENT_TYPE_LOW);
         }
-       return contentType;
+        return contentType;
     }
 
     /**
