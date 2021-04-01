@@ -50,6 +50,10 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
      */
     private long contentLength = Long.MAX_VALUE;
     /**
+     * 读完了没
+     */
+    private boolean readOver = false;
+    /**
      * 读取到的数据缓存到这里
      */
     private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -76,9 +80,9 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
     @Override
     public void completed(Integer result, ByteBuffer attachment) {
         try {
-            /* 如果客户端没断开，那就从通道读取数据 */
+            /* 解析读到的数据 */
             if(result > 0){
-                ByteBuffer readBuffer = read(attachment);
+                ByteBuffer readBuffer = parsingByByteBuffer(attachment);
                 if(readBuffer != null){
                     /* 如果数据没读完，就接着读 */
                     channel.read(readBuffer, requestConfig.getReadTimeout(), TimeUnit.MILLISECONDS, readBuffer, this);
@@ -86,22 +90,31 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
                 }
             }
 
-            channel.shutdownInput();
-
-            /* 过滤掉非法请求 */
-            if(marsHttpExchange.getRequestURI() == null
-                    || marsHttpExchange.getRequestMethod() == null
-                    || marsHttpExchange.getHttpVersion() == null){
-                MarsHttpHelper.close(channel, false);
+            /* 如果读到的数据小于0，说明此次请求是一个无效请求 */
+            if(!readOver){
+                MarsHttpHelper.close(channel,true);
                 return;
             }
-            /* 如果数据没读完，会在第一段的if里被return掉，所以执行到这肯定是已经读完了，所以接着执行业务逻辑，并关闭通道 */
-            getBody();
-            write();
+
+            /* 如果读完了，就执行业务逻辑 */
+            if(readOver){
+                channel.shutdownInput();
+
+                /* 过滤掉非法请求 */
+                if(marsHttpExchange.getRequestURI() == null
+                        || marsHttpExchange.getRequestMethod() == null
+                        || marsHttpExchange.getHttpVersion() == null){
+                    MarsHttpHelper.close(channel,false);
+                    return;
+                }
+                /* 如果数据没读完，会在第一段的if里被return掉，所以执行到这肯定是已经读完了，所以接着执行业务逻辑，并关闭通道 */
+                getBody();
+                write();
+            }
         } catch (Exception e){
             logger.error("读取数据异常", e);
             MarsHttpHelper.errorResponseText(e, marsHttpExchange);
-            MarsHttpHelper.close(channel, true);
+            MarsHttpHelper.close(channel,true);
         }
     }
 
@@ -118,12 +131,12 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
     }
 
     /**
-     * 从通道读取数据
+     * 从ByteBuffer解析数据
      * @param readBuffer
      * @return
      * @throws Exception
      */
-    private ByteBuffer read(ByteBuffer readBuffer) throws Exception {
+    private ByteBuffer parsingByByteBuffer(ByteBuffer readBuffer) throws Exception {
         /* 获取请求报文 */
         byte[] bytes = getReadData(readBuffer);
         /* 将本次读取到的数据追加到输出流 */
@@ -134,6 +147,7 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
             /* 判断是否已经把头读完了，如果出现了连续的两个换行，则代表头已经读完了 */
             int headEndIndex = headStr.indexOf(HttpConstant.HEAD_END);
             if (headEndIndex < 0) {
+                readOver = false;
                 return readBuffer;
             }
 
@@ -142,12 +156,14 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
             readHead = true;
             /* 如果头读完了，并且此次请求是GET，则停止 */
             if (marsHttpExchange.getRequestMethod().toUpperCase().equals(ReqMethod.GET.toString())) {
+                readOver = true;
                 return null;
             }
 
             /* 从head获取到Content-Length */
             contentLength = marsHttpExchange.getRequestContentLength();
             if (contentLength < 0) {
+                readOver = true;
                 return null;
             }
         }
@@ -155,8 +171,11 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
         /* 判断已经读取的body长度是否等于Content-Length，如果条件满足则说明读取完成 */
         int streamLength = outputStream.size();
         if ((streamLength - headLength) >= contentLength) {
+            readOver = true;
             return null;
         }
+
+        readOver = false;
 
         /* 当请求头读完了以后，就加大每次读取大小 加快速度 */
         readBuffer = ByteBuffer.allocate(requestConfig.getReadSize());

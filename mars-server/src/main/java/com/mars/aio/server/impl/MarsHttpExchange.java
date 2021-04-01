@@ -106,7 +106,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             @Override
             public void completed(Integer result, ByteBuffer attachment) {
                 try {
-                    if(result > 0 && attachment.hasRemaining()){
+                    if(attachment.hasRemaining()){
                         socketChannel.write(attachment,requestConfig.getWriteTimeout(),
                                 TimeUnit.MILLISECONDS, attachment,this);
                     } else {
@@ -114,14 +114,14 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                     }
                 } catch (Exception e){
                     logger.error("给客户端写入响应数据异常", e);
-                    MarsHttpHelper.close(socketChannel, false);
+                    MarsHttpHelper.close(socketChannel,false);
                 }
             }
 
             @Override
             public void failed(Throwable exc, ByteBuffer attachment) {
                 logger.error("给客户端写入响应数据异常", exc);
-                MarsHttpHelper.close(socketChannel, false);
+                MarsHttpHelper.close(socketChannel,false);
             }
         });
     }

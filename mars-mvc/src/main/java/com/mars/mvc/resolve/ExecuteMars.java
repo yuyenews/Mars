@@ -3,6 +3,7 @@ package com.mars.mvc.resolve;
 import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.JSONUtil;
+import com.mars.common.util.MesUtil;
 import com.mars.mvc.base.BaseInterceptor;
 import com.mars.mvc.load.model.MarsInterModel;
 import com.mars.mvc.util.ParamsCheckUtil;
@@ -132,7 +133,7 @@ public class ExecuteMars {
 	 */
 	private String checkRequestMethod(String method,MarsMappingModel marsMappingModel) throws Exception {
 		if(marsMappingModel == null){
-			throw new Exception("服务器上没有相应的接口");
+			return MesUtil.getMes(500, "服务器上没有相应的接口");
 		}
 
 		String strMethod = method.toLowerCase();
@@ -151,6 +152,6 @@ public class ExecuteMars {
 		}
 
 		/* 如果请求方式和MarsApi的映射不一致，则提示客户端 */
-		throw new Exception("此接口支持的请求方式为[" + JSONUtil.toJSONString(reqMethods) + "]");
+		return MesUtil.getMes(500, "此接口支持的请求方式为[" + JSONUtil.toJSONString(reqMethods) + "]");
 	}
 }
