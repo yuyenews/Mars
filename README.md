@@ -7,7 +7,7 @@
 <div align=center>
 
 <img src="https://img.shields.io/badge/licenes-MIT-brightgreen.svg"/>
-<img src="https://img.shields.io/badge/jdk-1.8+-brightgreen.svg"/>
+<img src="https://img.shields.io/badge/jdk-11+-brightgreen.svg"/>
 <img src="https://img.shields.io/badge/maven-3.5.4+-brightgreen.svg"/>
 <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
 
@@ -43,6 +43,12 @@ Martian 是一个基于AIO的JavaWeb编程框架，可以帮助你快速的开�
 - 开发文档: [http://mars-framework.com/doc.html?tag=martian](http://mars-framework.com/doc.html?tag=martian)
 - 视频教程: [https://www.bilibili.com/video/BV1dv4y1Z7Wt](https://www.bilibili.com/video/BV1dv4y1Z7Wt)
 - 使用示例: [https://github.com/yuyenews/Mars-Example](https://github.com/yuyenews/Mars-Example)
+
+## 运行环境
+
+- 从3.3.x开始，最低支持JDK 11+
+- 如果想用JDK8，可以自己下载源码在本地编译（随着版本的升级，会引入JDK11的特性，到那时将彻底无法在JDK11以下的运行）
+- 完美支持JDK8的最后一个版本是3.2.18，是NIO版本
 
 ## 项目特性
 ### 一、编写Http接口不需要方法体
