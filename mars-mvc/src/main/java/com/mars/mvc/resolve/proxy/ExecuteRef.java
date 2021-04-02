@@ -9,8 +9,8 @@ import com.mars.common.util.StringUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 执行api引用的资源
@@ -25,7 +25,7 @@ public class ExecuteRef {
     /**
      * 方法缓存
      */
-    private static Map<String, Method> methodMap = new ConcurrentHashMap<>();
+    private static Map<String, Method> methodMap = new HashMap<>();
 
     /**
      * 指定服务层的方法

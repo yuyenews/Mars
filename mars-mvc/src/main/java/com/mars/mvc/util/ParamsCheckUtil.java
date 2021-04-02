@@ -38,7 +38,7 @@ public class ParamsCheckUtil {
 
         for(Object obj : params){
             if(obj == null){
-                return null;
+                continue;
             }
             Class cls = obj.getClass();
             if(requestClass.equals(cls) || responseClass.equals(cls) || mapClass.equals(cls)){

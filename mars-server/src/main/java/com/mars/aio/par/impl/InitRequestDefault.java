@@ -82,13 +82,22 @@ public class InitRequestDefault implements InitRequest {
      * @throws Exception 异常
      */
     private String getParamStr(InputStream inputStream) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, MarsConstant.ENCODING));
-        String line = null;
-        StringBuffer paramsStr = new StringBuffer();
-        while ((line = br.readLine()) != null) {
-            paramsStr.append(line);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, MarsConstant.ENCODING);
+        BufferedReader br = new BufferedReader(inputStreamReader);
+        try {
+            String line = null;
+            StringBuffer paramsStr = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                paramsStr.append(line);
+            }
+            return paramsStr.toString();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            br.close();
+            inputStreamReader.close();
+            inputStream.close();
         }
-        return paramsStr.toString();
     }
 
     /**

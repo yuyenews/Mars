@@ -111,10 +111,12 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
                                 TimeUnit.MILLISECONDS, attachment,this);
                     } else {
                         MarsHttpHelper.close(socketChannel, false);
+                        MarsHttpHelper.closeOutputStream(responseBody);
                     }
                 } catch (Exception e){
                     logger.error("给客户端写入响应数据异常", e);
                     MarsHttpHelper.close(socketChannel,false);
+                    MarsHttpHelper.closeOutputStream(responseBody);
                 }
             }
 
@@ -122,6 +124,7 @@ public class MarsHttpExchange extends MarsHttpExchangeModel  {
             public void failed(Throwable exc, ByteBuffer attachment) {
                 logger.error("给客户端写入响应数据异常", exc);
                 MarsHttpHelper.close(socketChannel,false);
+                MarsHttpHelper.closeOutputStream(responseBody);
             }
         });
     }

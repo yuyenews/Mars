@@ -7,6 +7,7 @@ import com.mars.common.util.MesUtil;
 import com.mars.aio.constant.HttpConstant;
 import com.mars.aio.server.impl.MarsHttpExchange;
 
+import java.io.OutputStream;
 import java.nio.channels.*;
 
 /**
@@ -55,5 +56,19 @@ public class MarsHttpHelper {
 
         /* 响应数据 */
         marsHttpExchange.responseData();
+    }
+
+    /**
+     * 关闭输出流
+     * @param outputStream
+     */
+    public static void closeOutputStream(OutputStream outputStream) {
+        if(outputStream == null){
+            return;
+        }
+        try {
+            outputStream.close();
+        } catch (Exception e){
+        }
     }
 }
