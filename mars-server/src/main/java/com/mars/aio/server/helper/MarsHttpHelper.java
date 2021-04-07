@@ -32,12 +32,10 @@ public class MarsHttpHelper {
      *
      * @param socketChannel
      */
-    public static void close(AsynchronousSocketChannel socketChannel, boolean shutInput) {
+    public static void close(AsynchronousSocketChannel socketChannel) {
         try {
             if (socketChannel != null) {
-                if(shutInput){
-                    socketChannel.shutdownInput();
-                }
+                socketChannel.shutdownInput();
                 socketChannel.shutdownOutput();
                 socketChannel.close();
             }

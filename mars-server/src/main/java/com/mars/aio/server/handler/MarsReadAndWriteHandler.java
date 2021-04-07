@@ -17,7 +17,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.Channels;
 import java.nio.channels.CompletionHandler;
+import java.nio.channels.WritableByteChannel;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -92,19 +94,17 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
 
             /* 如果读到的数据小于0，说明此次请求是一个无效请求 */
             if(!readOver){
-                MarsHttpHelper.close(channel,true);
+                MarsHttpHelper.close(channel);
                 return;
             }
 
             /* 如果读完了，就执行业务逻辑 */
             if(readOver){
-                channel.shutdownInput();
-
                 /* 过滤掉非法请求 */
                 if(marsHttpExchange.getRequestURI() == null
                         || marsHttpExchange.getRequestMethod() == null
                         || marsHttpExchange.getHttpVersion() == null){
-                    MarsHttpHelper.close(channel,false);
+                    MarsHttpHelper.close(channel);
                     return;
                 }
                 /* 如果数据没读完，会在第一段的if里被return掉，所以执行到这肯定是已经读完了，所以接着执行业务逻辑，并关闭通道 */
@@ -114,7 +114,7 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
         } catch (Exception e){
             logger.error("读取数据异常", e);
             MarsHttpHelper.errorResponseText(e, marsHttpExchange);
-            MarsHttpHelper.close(channel,true);
+            MarsHttpHelper.close(channel);
         }
     }
 
@@ -127,7 +127,7 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
     public void failed(Throwable exc, ByteBuffer attachment) {
         logger.error("读取数据异常", exc);
         MarsHttpHelper.errorResponseText(exc, marsHttpExchange);
-        MarsHttpHelper.close(channel, true);
+        MarsHttpHelper.close(channel);
     }
 
     /**
@@ -137,14 +137,13 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
      * @throws Exception
      */
     private ByteBuffer parsingByByteBuffer(ByteBuffer readBuffer) throws Exception {
-        /* 获取请求报文 */
-        byte[] bytes = getReadData(readBuffer);
         /* 将本次读取到的数据追加到输出流 */
-        outputStream.write(bytes);
+        readData(readBuffer);
 
+        /* 判断是否已经把头读完了 */
         if (!readHead) {
             String headStr = new String(outputStream.toByteArray());
-            /* 判断是否已经把头读完了，如果出现了连续的两个换行，则代表头已经读完了 */
+            /* 如果出现了连续的两个换行，则代表头已经读完了 */
             int headEndIndex = headStr.indexOf(HttpConstant.HEAD_END);
             if (headEndIndex < 0) {
                 readOver = false;
@@ -190,12 +189,11 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
      * @param readBuffer
      * @return
      */
-    private byte[] getReadData(ByteBuffer readBuffer) {
+    private void readData(ByteBuffer readBuffer) throws Exception {
         readBuffer.flip();
-        byte[] bytes = new byte[readBuffer.limit()];
-        readBuffer.get(bytes);
+        WritableByteChannel writableByteChannel = Channels.newChannel(outputStream);
+        writableByteChannel.write(readBuffer);
         readBuffer.clear();
-        return bytes;
     }
 
     /**

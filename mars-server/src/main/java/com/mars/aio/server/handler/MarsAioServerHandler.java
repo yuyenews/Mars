@@ -46,7 +46,7 @@ public class MarsAioServerHandler implements CompletionHandler<AsynchronousSocke
          } catch (Exception e) {
             logger.error("处理请求异常", e);
             MarsHttpHelper.errorResponseText(e, marsHttpExchange);
-            MarsHttpHelper.close(channel, true);
+            MarsHttpHelper.close(channel);
         }
     }
 
