@@ -74,6 +74,7 @@ public class MarsHttpExchangeModel {
 
         responseHeaders.put(MarsConstant.CONTENT_TYPE, HttpConstant.RESPONSE_CONTENT_TYPE);
         responseHeaders.put(HttpConstant.VARY, HttpConstant.VARY_VALUE);
+        responseHeaders.put(HttpConstant.CONNECTION, HttpConstant.CONNECTION_CLOSE);
         crossDomain();
 
         sendText = MarsConstant.VOID;

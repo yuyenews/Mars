@@ -40,4 +40,22 @@ public class HttpConstant {
      * 响应头Vary的值
      */
     public static final String VARY_VALUE = "Accept-Encoding";
+
+    /**
+     * 连接状态
+     */
+    public static final String KEEP_ALIVE = "Keep-Alive";
+    /**
+     * 连接保留时间
+     */
+    public static final String KEEP_ALIVE_VALUE = "timeout=60, max=100";
+
+    /**
+     * 连接状态
+     */
+    public static final String CONNECTION = "Connection";
+    /**
+     * 连接状态:关闭
+     */
+    public static final String CONNECTION_CLOSE = "close";
 }

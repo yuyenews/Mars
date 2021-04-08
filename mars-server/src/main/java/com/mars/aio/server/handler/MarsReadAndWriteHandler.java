@@ -142,7 +142,7 @@ public class MarsReadAndWriteHandler implements CompletionHandler<Integer, ByteB
 
         /* 判断是否已经把头读完了 */
         if (!readHead) {
-            String headStr = new String(outputStream.toByteArray());
+            String headStr = outputStream.toString(MarsConstant.ENCODING);
             /* 如果出现了连续的两个换行，则代表头已经读完了 */
             int headEndIndex = headStr.indexOf(HttpConstant.HEAD_END);
             if (headEndIndex < 0) {
