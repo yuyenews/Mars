@@ -1,7 +1,6 @@
 package com.mars.mvc.load;
 
 import com.mars.common.annotation.api.RequestMethod;
-import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.load.WriteFields;
 import com.mars.core.model.MarsBeanClassModel;
@@ -12,6 +11,7 @@ import com.mars.core.model.MarsBeanModel;
 import com.mars.mvc.load.model.MarsMappingModel;
 import com.mars.mvc.util.ParamAndResult;
 import com.mars.aio.par.factory.ParamAndResultFactory;
+import com.mars.server.http.constant.ReqMethod;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

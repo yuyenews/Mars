@@ -1,6 +1,6 @@
 package com.mars.common.annotation.api;
 
-import com.mars.common.annotation.enums.ReqMethod;
+import com.mars.server.http.constant.ReqMethod;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

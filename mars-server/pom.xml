@@ -22,10 +22,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
-			<artifactId>Martian-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.github.yuyenews</groupId>
 			<artifactId>mars-core</artifactId>
 		</dependency>
 	</dependencies>

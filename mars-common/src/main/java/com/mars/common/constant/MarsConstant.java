@@ -1,6 +1,6 @@
 package com.mars.common.constant;
 
-import com.mars.common.annotation.enums.ReqMethod;
+import com.mars.server.http.constant.ReqMethod;
 
 /**
  * 框架常量

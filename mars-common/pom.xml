@@ -24,6 +24,10 @@
             <artifactId>asm</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.github.yuyenews</groupId>
+            <artifactId>Martian-server</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
         </dependency>

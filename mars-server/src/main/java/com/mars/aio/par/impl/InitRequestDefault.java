@@ -1,8 +1,8 @@
 package com.mars.aio.par.impl;
 
-import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.aio.constant.ParamTypeConstant;
+import com.mars.server.http.constant.ReqMethod;
 import com.mars.server.http.request.MartianHttpExchange;
 import com.mars.aio.par.InitRequest;
 import com.mars.aio.par.formdata.HttpExchangeRequestContext;

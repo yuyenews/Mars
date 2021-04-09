@@ -1,6 +1,5 @@
 package com.mars.mvc.resolve;
 
-import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.JSONUtil;
 import com.mars.common.util.MesUtil;
@@ -12,6 +11,7 @@ import com.mars.aio.server.request.HttpMarsRequest;
 import com.mars.aio.server.request.HttpMarsResponse;
 import com.mars.aio.util.RequestUtil;
 import com.mars.mvc.load.model.MarsMappingModel;
+import com.mars.server.http.constant.ReqMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
