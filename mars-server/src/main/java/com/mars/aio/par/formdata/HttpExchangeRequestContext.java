@@ -17,9 +17,8 @@
 package com.mars.aio.par.formdata;
 
 import com.mars.common.constant.MarsConstant;
-import com.mars.aio.server.impl.MarsHttpExchange;
 import org.apache.commons.fileupload.UploadContext;
-
+import com.mars.server.http.request.MartianHttpExchange;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -42,7 +41,7 @@ public class HttpExchangeRequestContext implements UploadContext {
     /**
      * The request for which the context is being provided.
      */
-    private final MarsHttpExchange request;
+    private final MartianHttpExchange request;
 
     /**
      * 请求类型
@@ -57,7 +56,7 @@ public class HttpExchangeRequestContext implements UploadContext {
      * @param request The request to which this context applies.
      * @param contentType 请求类型
      */
-    public HttpExchangeRequestContext(MarsHttpExchange request, String contentType) {
+    public HttpExchangeRequestContext(MartianHttpExchange request, String contentType) {
         this.request = request;
         this.contentType = contentType;
     }

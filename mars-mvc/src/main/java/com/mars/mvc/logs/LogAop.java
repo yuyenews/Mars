@@ -1,8 +1,8 @@
 package com.mars.mvc.logs;
 
 import com.mars.common.util.JSONUtil;
-import com.mars.server.server.request.HttpMarsRequest;
-import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.aio.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

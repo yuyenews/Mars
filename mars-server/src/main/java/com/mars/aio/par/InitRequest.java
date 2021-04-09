@@ -1,6 +1,6 @@
 package com.mars.aio.par;
 
-import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.HttpMarsRequest;
 
 /**
  * 初始化request

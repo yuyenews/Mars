@@ -3,7 +3,7 @@ package com.mars.aio.par.formdata;
 import com.mars.common.base.config.model.FileUploadConfig;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.MarsConfiguration;
-import com.mars.server.server.request.model.MarsFileUpLoad;
+import com.mars.aio.server.request.model.MarsFileUpLoad;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadBase;

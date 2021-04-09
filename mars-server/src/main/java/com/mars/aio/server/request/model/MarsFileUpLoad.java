@@ -1,4 +1,4 @@
-package com.mars.server.server.request.model;
+package com.mars.aio.server.request.model;
 
 import java.io.InputStream;
 

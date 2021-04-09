@@ -1,7 +1,7 @@
 package com.mars.aio.util;
 
 import com.mars.common.util.MesUtil;
-import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.aio.server.request.HttpMarsResponse;
 
 /**
  * 响应工具类

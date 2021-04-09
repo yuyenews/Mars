@@ -1,4 +1,4 @@
-package com.mars.server.server.jwt;
+package com.mars.mvc.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;

@@ -1,7 +1,7 @@
 package com.mars.mvc.base;
 
-import com.mars.server.server.request.HttpMarsRequest;
-import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.aio.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.HttpMarsResponse;
 
 import java.util.List;
 

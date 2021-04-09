@@ -1,6 +1,6 @@
-package com.mars.server.util;
+package com.mars.aio.util;
 
-import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.HttpMarsRequest;
 
 /**
  * 请求工具类

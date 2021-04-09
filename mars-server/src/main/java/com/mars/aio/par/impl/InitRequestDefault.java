@@ -3,12 +3,12 @@ package com.mars.aio.par.impl;
 import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.aio.constant.ParamTypeConstant;
+import com.mars.server.http.request.MartianHttpExchange;
 import com.mars.aio.par.InitRequest;
 import com.mars.aio.par.formdata.HttpExchangeRequestContext;
 import com.mars.aio.par.formdata.ParsingFormData;
-import com.mars.aio.server.impl.MarsHttpExchange;
-import com.mars.server.server.request.HttpMarsRequest;
-import com.mars.server.server.request.model.MarsFileUpLoad;
+import com.mars.aio.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.model.MarsFileUpLoad;
 import org.apache.commons.fileupload.UploadContext;
 
 import java.io.BufferedReader;
@@ -38,7 +38,7 @@ public class InitRequestDefault implements InitRequest {
         Map<String, MarsFileUpLoad> files = new HashMap<>();
         Map<String, List<String>> marsParams = new HashMap<>();
 
-        MarsHttpExchange httpExchange = marsRequest.getNativeRequest(MarsHttpExchange.class);
+        MartianHttpExchange httpExchange = marsRequest.getNativeRequest(MartianHttpExchange.class);
         if (httpExchange.getRequestMethod().toUpperCase().equals(ReqMethod.GET.toString())) {
             /* 从get请求中获取参数 */
             String paramStr = httpExchange.getRequestURI().getQuery();
@@ -162,7 +162,7 @@ public class InitRequestDefault implements InitRequest {
      * @return httpMarsRequest的参数对象 和 httpMarsRequest的文件参数对象
      * @throws Exception 异常
      */
-    private Map<String, Object> formData(MarsHttpExchange exchange, String contentType) throws Exception {
+    private Map<String, Object> formData(MartianHttpExchange exchange, String contentType) throws Exception {
         UploadContext uploadContext = new HttpExchangeRequestContext(exchange, contentType);
         return ParsingFormData.parsing(uploadContext);
     }

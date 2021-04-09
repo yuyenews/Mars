@@ -1,7 +1,7 @@
-package com.mars.server.server.dispatcher;
+package com.mars.aio.server.dispatcher;
 
-import com.mars.server.server.request.HttpMarsRequest;
-import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.aio.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.HttpMarsResponse;
 
 /**
  * servlet 模板

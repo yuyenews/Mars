@@ -6,9 +6,9 @@ import com.mars.common.util.JSONUtil;
 import com.mars.core.enums.DataType;
 import com.mars.common.util.StringUtil;
 import com.mars.aio.constant.ParamTypeConstant;
-import com.mars.server.server.request.HttpMarsRequest;
-import com.mars.server.server.request.HttpMarsResponse;
-import com.mars.server.server.request.model.MarsFileUpLoad;
+import com.mars.aio.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.HttpMarsResponse;
+import com.mars.aio.server.request.model.MarsFileUpLoad;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

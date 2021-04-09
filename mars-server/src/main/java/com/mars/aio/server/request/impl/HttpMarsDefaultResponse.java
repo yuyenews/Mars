@@ -1,9 +1,9 @@
-package com.mars.server.server.request.impl;
+package com.mars.aio.server.request.impl;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.aio.constant.HttpConstant;
-import com.mars.aio.server.impl.MarsHttpExchange;
-import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.server.http.request.MartianHttpExchange;
+import com.mars.aio.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
     /**
      * java原生通道
      */
-    private MarsHttpExchange httpExchange;
+    private MartianHttpExchange httpExchange;
 
     /**
      * 响应头
@@ -39,7 +39,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
      *
      * @param httpExchange java原生通道
      */
-    public HttpMarsDefaultResponse(MarsHttpExchange httpExchange) {
+    public HttpMarsDefaultResponse(MartianHttpExchange httpExchange) {
         this.httpExchange = httpExchange;
         this.header = new HashMap<>();
     }

@@ -1,8 +1,8 @@
-package com.mars.server.server.request.impl;
+package com.mars.aio.server.request.impl;
 
 import com.mars.common.annotation.enums.ReqMethod;
-import com.mars.aio.server.impl.MarsHttpExchange;
-import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.http.request.MartianHttpExchange;
+import com.mars.aio.server.request.HttpMarsRequest;
 
 /**
  * 请求对象
@@ -14,13 +14,13 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	/**
 	 * java原生request
 	 */
-	private MarsHttpExchange httpExchange;
+	private MartianHttpExchange httpExchange;
 
 	/**
 	 * 构造函数，框架自己用的，程序员用不到，用了也没意义
 	 * @param httpExchange
 	 */
-	public HttpMarsDefaultRequest(MarsHttpExchange httpExchange) {
+	public HttpMarsDefaultRequest(MartianHttpExchange httpExchange) {
 		this.httpExchange = httpExchange;
 	}
 

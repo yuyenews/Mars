@@ -4,8 +4,8 @@ import com.mars.common.annotation.api.MarsDataCheck;
 import com.mars.common.util.MatchUtil;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
-import com.mars.server.server.request.HttpMarsRequest;
-import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.aio.server.request.HttpMarsRequest;
+import com.mars.aio.server.request.HttpMarsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
