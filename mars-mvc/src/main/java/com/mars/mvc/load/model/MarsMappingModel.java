@@ -1,6 +1,6 @@
 package com.mars.mvc.load.model;
 
-import com.mars.server.http.constant.ReqMethod;
+import com.mars.server.tcp.http.constant.ReqMethod;
 
 import java.lang.reflect.Method;
 

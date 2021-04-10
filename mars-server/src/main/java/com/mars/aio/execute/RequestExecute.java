@@ -3,13 +3,13 @@ package com.mars.aio.execute;
 import com.mars.common.ncfg.mvc.DispatcherFactory;
 import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
-import com.mars.aio.par.factory.InitRequestFactory;
 import com.mars.aio.server.request.HttpMarsRequest;
 import com.mars.aio.server.request.HttpMarsResponse;
 import com.mars.aio.server.dispatcher.MarsDispatcher;
 import com.mars.aio.util.RequestUtil;
 import com.mars.aio.execute.access.PathAccess;
 import com.mars.aio.par.factory.ParamAndResultFactory;
+import com.mars.server.tcp.http.request.MartianHttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ public class RequestExecute {
 			String uri = RequestUtil.getUriName(request);
 			if(!PathAccess.hasAccess(uri)){
 				/* 如果是合法请求，那就获取请求的参数数据，并填充request对象 */
-				request = InitRequestFactory.getInitRequest().getHttpMarsRequest(request);
+				request = initHttpMarsRequest(request);
 
 				/* 执行核心控制器 */
 				MarsDispatcher marsDispatcher = (MarsDispatcher) DispatcherFactory.getDispatcher();
@@ -48,6 +48,19 @@ public class RequestExecute {
 			String msg = getErrorMsg(e);
 			response.send(MesUtil.getMes(500, msg));
 		}
+	}
+
+	/**
+	 * 组装参数
+	 * @param request
+	 * @return
+	 */
+	private static HttpMarsRequest initHttpMarsRequest(HttpMarsRequest request){
+		MartianHttpRequest martianHttpRequest = request.getNativeRequest(MartianHttpRequest.class);
+		request.setJsonParam(martianHttpRequest.getJsonParam());
+		request.setParams(martianHttpRequest.getMarsParams());
+		request.setFiles(martianHttpRequest.getFiles());
+		return request;
 	}
 
 	/**

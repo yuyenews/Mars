@@ -8,7 +8,7 @@ import com.mars.common.util.StringUtil;
 import com.mars.aio.constant.ParamTypeConstant;
 import com.mars.aio.server.request.HttpMarsRequest;
 import com.mars.aio.server.request.HttpMarsResponse;
-import com.mars.aio.server.request.model.MarsFileUpLoad;
+import com.mars.server.tcp.http.model.MarsFileUpLoad;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -90,7 +90,7 @@ public class BuildParams {
             f.setAccessible(true);
 
             String[] valList = request.getParameterValues(f.getName());
-            Map<String,MarsFileUpLoad> marsFileUpLoadMap = request.getFiles();
+            Map<String, MarsFileUpLoad> marsFileUpLoadMap = request.getFiles();
 
             if(f.getType().equals(MarsFileUpLoad.class) && marsFileUpLoadMap != null){
                 f.set(obj, marsFileUpLoadMap.get(f.getName()));

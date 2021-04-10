@@ -1,6 +1,7 @@
 package com.mars.aio.server.request;
 
-import com.mars.aio.server.request.model.MarsFileUpLoad;
+import com.mars.server.tcp.http.model.MarsFileUpLoad;
+
 import java.util.*;
 
 /**

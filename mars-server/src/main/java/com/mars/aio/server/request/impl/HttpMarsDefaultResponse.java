@@ -2,8 +2,9 @@ package com.mars.aio.server.request.impl;
 
 import com.mars.common.constant.MarsConstant;
 import com.mars.aio.constant.HttpConstant;
-import com.mars.server.http.request.MartianHttpExchange;
 import com.mars.aio.server.request.HttpMarsResponse;
+import com.mars.server.tcp.http.request.MartianHttpExchange;
+import com.mars.server.tcp.http.request.MartianHttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
     /**
      * java原生通道
      */
-    private MartianHttpExchange httpExchange;
+    private MartianHttpRequest httpExchange;
 
     /**
      * 响应头
@@ -39,7 +40,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
      *
      * @param httpExchange java原生通道
      */
-    public HttpMarsDefaultResponse(MartianHttpExchange httpExchange) {
+    public HttpMarsDefaultResponse(MartianHttpRequest httpExchange) {
         this.httpExchange = httpExchange;
         this.header = new HashMap<>();
     }
@@ -75,7 +76,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
             httpExchange.setResponseHeader(MarsConstant.CONTENT_TYPE, HttpConstant.RESPONSE_CONTENT_TYPE);
 
             /* 设置响应码和响应体长度，必须在getResponseBody方法之前调用 */
-            httpExchange.sendText(200, context);
+            httpExchange.getMartianHttpExchange().sendText(200, context);
         } catch (Exception e){
             logger.error("响应数据异常",e);
         }
@@ -95,7 +96,7 @@ public class HttpMarsDefaultResponse extends HttpMarsResponse {
             httpExchange.setResponseHeader(MarsConstant.CONTENT_DISPOSITION, "attachment; filename="+ URLEncoder.encode(fileName,MarsConstant.ENCODING));
 
             /* 设置要下载的文件 */
-            httpExchange.setResponseBody(inputStream);
+            httpExchange.sendResponseBody(inputStream);
 
         } catch (Exception e){
             logger.error("响应数据异常",e);

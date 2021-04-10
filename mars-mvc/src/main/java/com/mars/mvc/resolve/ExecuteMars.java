@@ -11,7 +11,7 @@ import com.mars.aio.server.request.HttpMarsRequest;
 import com.mars.aio.server.request.HttpMarsResponse;
 import com.mars.aio.util.RequestUtil;
 import com.mars.mvc.load.model.MarsMappingModel;
-import com.mars.server.http.constant.ReqMethod;
+import com.mars.server.tcp.http.constant.ReqMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

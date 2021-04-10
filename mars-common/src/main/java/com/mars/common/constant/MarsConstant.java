@@ -1,7 +1,5 @@
 package com.mars.common.constant;
 
-import com.mars.server.http.constant.ReqMethod;
-
 /**
  * 框架常量
  */
@@ -122,9 +120,4 @@ public class MarsConstant {
      * 内容描述
      */
     public static final String CONTENT_DISPOSITION = "Content-Disposition";
-
-    /**
-     * 所有的请求方式
-     */
-    public static final ReqMethod[] REQ_METHODS = new ReqMethod[]{ReqMethod.GET, ReqMethod.POST, ReqMethod.DELETE, ReqMethod.PUT};
 }

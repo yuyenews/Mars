@@ -1,5 +1,8 @@
 package com.mars.aio.server.impl;
 
+import com.mars.common.base.config.MarsConfig;
+import com.mars.common.base.config.model.FileUploadConfig;
+import com.mars.common.base.config.model.RequestConfig;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.aio.server.MarsServer;
 import com.mars.server.MartianServer;
@@ -14,6 +17,8 @@ public class MarsDefaultServer implements MarsServer {
 
     private Logger log = LoggerFactory.getLogger(MarsDefaultServer.class);
 
+    private MarsConfig marsConfig = MarsConfiguration.getConfig();
+
     /**
      * 开启服务
      *
@@ -22,17 +27,24 @@ public class MarsDefaultServer implements MarsServer {
     @Override
     public void start(int portNumber) {
         try {
-            /* 获取配置的最大连接数 */
-            int backLog = MarsConfiguration.getConfig().threadPoolConfig().getBackLog();
+            int backLog = marsConfig.threadPoolConfig().getBackLog();
+            FileUploadConfig fileUploadConfig = marsConfig.fileUploadConfig();
+            RequestConfig requestConfig = marsConfig.requestConfig();
 
+            /* 创建服务，并启动 */
             MartianServer.builder()
                     .bind(portNumber, backLog)
+                    .fileSizeMax(fileUploadConfig.getFileSizeMax())
+                    .sizeMax(fileUploadConfig.getSizeMax())
+                    .readSize(requestConfig.getReadSize())
+                    .readTimeout(requestConfig.getReadTimeout())
+                    .writeTimeout(requestConfig.getWriteTimeout())
                     .threadPool(ThreadPool.getThreadPoolExecutor())
-                    .handler(new MarsServerDefaultHandler())
+                    .httpHandler("/",new MarsServerDefaultHandler())
                     .start();
 
         } catch (Exception e) {
-            log.error("AIO发生异常", e);
+            log.error("启动服务发生异常", e);
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.mars.aio.server.request.impl;
 
-import com.mars.server.http.constant.ReqMethod;
-import com.mars.server.http.request.MartianHttpExchange;
 import com.mars.aio.server.request.HttpMarsRequest;
+import com.mars.server.tcp.http.constant.ReqMethod;
+import com.mars.server.tcp.http.request.MartianHttpRequest;
 
 /**
  * 请求对象
@@ -14,13 +14,13 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	/**
 	 * java原生request
 	 */
-	private MartianHttpExchange httpExchange;
+	private MartianHttpRequest httpExchange;
 
 	/**
 	 * 构造函数，框架自己用的，程序员用不到，用了也没意义
 	 * @param httpExchange
 	 */
-	public HttpMarsDefaultRequest(MartianHttpExchange httpExchange) {
+	public HttpMarsDefaultRequest(MartianHttpRequest httpExchange) {
 		this.httpExchange = httpExchange;
 	}
 
@@ -56,7 +56,7 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	 * @return 请求方法
 	 */
 	public String getMethod() {
-		return httpExchange.getRequestMethod();
+		return httpExchange.getMethod();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	 * @return 请求方法
 	 */
 	public String getUrl() {
-		return httpExchange.getRequestURI().toString();
+		return httpExchange.getUrl().toString();
 	}
 
 	/**
@@ -73,11 +73,11 @@ public class HttpMarsDefaultRequest extends HttpMarsRequest {
 	 * @return 头数据
 	 */
 	public String getHeader(String key) {
-		return httpExchange.getRequestHeaders().get(key);
+		return httpExchange.getRequestHeader(key.toUpperCase());
 	}
 
 	@Override
 	public String getInetSocketAddress() {
-		return httpExchange.getRequestHeaders().get("Host");
+		return httpExchange.getRequestHeader("HOST");
 	}
 }
