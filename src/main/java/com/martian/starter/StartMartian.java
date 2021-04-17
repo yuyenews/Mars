@@ -49,6 +49,7 @@ public class StartMartian {
      * @throws Exception
      */
     private static void loadServer() throws Exception {
+        logger.info("开始加载Server模块");
         LoadServer.load();
     }
 
@@ -57,6 +58,7 @@ public class StartMartian {
      * @throws Exception
      */
     private static void loadWeb() throws Exception {
+        logger.info("开始加载Web模块");
         LoadWeb.load();
     }
 
@@ -65,6 +67,7 @@ public class StartMartian {
      * @throws Exception
      */
     private static void loadJDBC() throws Exception {
+        logger.info("开始加载JDBC模块");
         LoadJDBC.load();
 
         Map<String, DruidDataSource> druidDataSourceMap = LoadJDBC.getDruidDataSourceMap();
