@@ -56,6 +56,10 @@ public class Start {
 }
 ```
 
+## 使用示例
+
+[https://github.com/yuyenews/Martian-newExample](https://github.com/yuyenews/Martian-newExample)
+
 ## 社区以及联系方式
 
 - QQ群: 773291321
