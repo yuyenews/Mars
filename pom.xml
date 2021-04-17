@@ -5,128 +5,47 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Martian</artifactId>
-	<version>3.3.5</version>
-	<packaging>pom</packaging>
-	<modules>
-		<module>mars-core</module>
-		<module>mars-mvc</module>
-		<module>mars-server</module>
-		<module>mars-jdbc</module>
-		<module>mars-starter</module>
-		<module>mars-common</module>
-	</modules>
+	<version>4.0.0</version>
+	<packaging>jar</packaging>
 
 	<properties>
 		<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 	</properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-mvc</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-core</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-server</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-jdbc</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>mars-common</artifactId>
-				<version>${version}</version>
-			</dependency>
+	<dependencies>
+		<dependency>
+			<groupId>com.github.yuyenews</groupId>
+			<artifactId>Magician</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.yuyenews</groupId>
+			<artifactId>Magician-Web</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.yuyenews</groupId>
+			<artifactId>Magician-JDBC</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.yuyenews</groupId>
+			<artifactId>Magician-Transaction</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 
-			<dependency>
-				<groupId>com.github.yuyenews</groupId>
-				<artifactId>Martian-server</artifactId>
-				<version>1.1.0</version>
-			</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.20</version>
+		</dependency>
 
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>2.8.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>2.12.2</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>1.7.30</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.ow2.asm</groupId>
-				<artifactId>asm</artifactId>
-				<version>9.1</version>
-			</dependency>
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib</artifactId>
-				<version>3.3.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>8.0.20</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>1.2.5</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.auth0</groupId>
-				<artifactId>java-jwt</artifactId>
-				<version>3.13.0</version>
-				<exclusions>
-					<exclusion>
-						<groupId>com.fasterxml.jackson.core</groupId>
-						<artifactId>jackson-databind</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>redis.clients</groupId>
-				<artifactId>jedis</artifactId>
-				<version>3.5.1</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.13</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+	</dependencies>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
