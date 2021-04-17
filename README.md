@@ -36,12 +36,24 @@ Martian框架是 Magician项目的一个超集，
 ```
 ### 二、创建配置类
 ```java
+public class DemoConfig extends MartianConfig {
 
+    @Override
+    public int port() {
+        return super.port();
+    }
+}
 ```
 
 ### 三、启动服务
 ```java
+@MartianScan(scanPackage = {"com.demo.controller"})
+public class Start {
 
+    public static void main(String[] args) {
+        StartMartian.start(Start.class, new DemoConfig());
+    }
+}
 ```
 
 ## 社区以及联系方式
