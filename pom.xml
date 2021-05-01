@@ -16,12 +16,12 @@
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
 			<artifactId>Magician</artifactId>
-			<version>1.1.2</version>
+			<version>1.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
 			<artifactId>Magician-Web</artifactId>
-			<version>1.1.2</version>
+			<version>1.1.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>

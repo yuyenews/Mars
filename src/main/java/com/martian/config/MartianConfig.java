@@ -3,11 +3,12 @@ package com.martian.config;
 import com.martian.config.model.CrossDomainConfig;
 import com.martian.config.model.FileUploadConfig;
 import com.martian.config.model.RequestConfig;
-import com.martian.config.model.ThreadPoolConfig;
+import io.magician.common.event.EventGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.Executors;
 
 /**
  * 配置信息
@@ -23,11 +24,11 @@ public abstract class MartianConfig {
     }
 
     /**
-     * 线程池配置
-     * @return 线程池配置
+     * worker事件管理器配置
+     * @return worker事件管理器
      */
-    public ThreadPoolConfig threadPoolConfig(){
-        return new ThreadPoolConfig();
+    public EventGroup workerEventGroup(){
+        return new EventGroup(5, Executors.newCachedThreadPool());
     }
 
     /**

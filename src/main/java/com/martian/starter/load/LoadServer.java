@@ -5,9 +5,12 @@ import com.martian.config.MartianConfig;
 import com.martian.config.model.CrossDomainConfig;
 import com.martian.config.model.FileUploadConfig;
 import com.martian.config.model.RequestConfig;
-import com.martian.config.model.ThreadPoolConfig;
-import com.martian.thread.ThreadPool;
 import io.magician.Magician;
+import io.magician.common.event.EventGroup;
+import io.magician.tcp.TCPServerConfig;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
+
+import java.util.concurrent.Executors;
 
 /**
  * 加载服务
@@ -22,31 +25,32 @@ public class LoadServer {
 
         /* 获取配置 */
         MartianConfig martianConfig = MartianConfigCache.getMartianConfig();
-
-        ThreadPoolConfig threadPoolConfig = martianConfig.threadPoolConfig();
         FileUploadConfig fileUploadConfig = martianConfig.fileUploadConfig();
         RequestConfig requestConfig = martianConfig.requestConfig();
         CrossDomainConfig crossDomainConfig = martianConfig.crossDomainConfig();
 
+        /* 创建TCPServer配置 */
+        TCPServerConfig tcpServerConfig = new TCPServerConfig();
+        tcpServerConfig.setSizeMax(fileUploadConfig.getFileSizeMax());
+        tcpServerConfig.setSizeMax(fileUploadConfig.getSizeMax());
+        tcpServerConfig.setReadSize(requestConfig.getReadSize());
+
+        EventGroup ioEventGroup = new EventGroup(1, Executors.newCachedThreadPool());
+        EventGroup workerEventGroup = martianConfig.workerEventGroup();
 
         /* 创建服务 */
-        Magician.createHttpServer()
-                .bind(martianConfig.port(), threadPoolConfig.getBackLog())
-                .fileSizeMax(fileUploadConfig.getFileSizeMax())
-                .sizeMax(fileUploadConfig.getSizeMax())
-                .readSize(requestConfig.getReadSize())
-                .readTimeout(requestConfig.getReadTimeout())
-                .writeTimeout(requestConfig.getWriteTimeout())
-                .threadPool(ThreadPool.getThreadPoolExecutor())
-                .httpHandler("/", req -> {
+        Magician.createTCPServer(ioEventGroup, workerEventGroup)
+                .bind(martianConfig.port(), 1000)
+                .config(tcpServerConfig)
+                .handler("/", req -> {
+                    MagicianRequest magicianRequest = (MagicianRequest)req;
+                    magicianRequest.getResponse().setResponseHeader("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
+                    magicianRequest.getResponse().setResponseHeader("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
+                    magicianRequest.getResponse().setResponseHeader("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
+                    magicianRequest.getResponse().setResponseHeader("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
+                    magicianRequest.getResponse().setResponseHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
 
-                    req.getResponse().setResponseHeader("Access-Control-Allow-Origin", crossDomainConfig.getOrigin());
-                    req.getResponse().setResponseHeader("Access-Control-Allow-Methods", crossDomainConfig.getMethods());
-                    req.getResponse().setResponseHeader("Access-Control-Max-Age", crossDomainConfig.getMaxAge());
-                    req.getResponse().setResponseHeader("Access-Control-Allow-Headers", crossDomainConfig.getHeaders());
-                    req.getResponse().setResponseHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
-
-                    LoadWeb.getMagicianWeb().request(req);
+                    LoadWeb.getMagicianWeb().request(magicianRequest);
                 }).start();
     }
 }
