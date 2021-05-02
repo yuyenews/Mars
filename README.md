@@ -30,7 +30,7 @@ Martian框架是 Magician项目的一个超集，
 <dependency>
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Martian</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 
 ```
