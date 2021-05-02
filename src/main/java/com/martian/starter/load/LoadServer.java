@@ -31,7 +31,7 @@ public class LoadServer {
 
         /* 创建TCPServer配置 */
         TCPServerConfig tcpServerConfig = new TCPServerConfig();
-        tcpServerConfig.setSizeMax(fileUploadConfig.getFileSizeMax());
+        tcpServerConfig.setFileSizeMax(fileUploadConfig.getFileSizeMax());
         tcpServerConfig.setSizeMax(fileUploadConfig.getSizeMax());
         tcpServerConfig.setReadSize(requestConfig.getReadSize());
 
@@ -40,7 +40,6 @@ public class LoadServer {
 
         /* 创建服务 */
         Magician.createTCPServer(ioEventGroup, workerEventGroup)
-                .bind(martianConfig.port(), 1000)
                 .config(tcpServerConfig)
                 .handler("/", req -> {
                     MagicianRequest magicianRequest = (MagicianRequest)req;
@@ -51,6 +50,6 @@ public class LoadServer {
                     magicianRequest.getResponse().setResponseHeader("Access-Control-Allow-Credentials", crossDomainConfig.getCredentials());
 
                     LoadWeb.getMagicianWeb().request(magicianRequest);
-                }).start();
+                }).bind(martianConfig.port(), 1000);
     }
 }
