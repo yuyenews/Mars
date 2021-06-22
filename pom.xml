@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yuyenews</groupId>
 	<artifactId>Martian</artifactId>
-	<version>4.0.2</version>
+	<version>4.0.3</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
 			<artifactId>Magician</artifactId>
-			<version>1.1.7</version>
+			<version>1.1.10</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
 			<artifactId>Magician-JDBC</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.yuyenews</groupId>
